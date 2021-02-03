@@ -3,12 +3,8 @@ title: "Getting Started"
 linkTitle: "Getting Started"
 weight: 2
 description: >
-  What does your user need to know to try your project?
+  The first steps in working with runxc.
 ---
-
-{{% pageinfo %}}
-This is a placeholder page that shows you how to use this template site.
-{{% /pageinfo %}}
 
 Information in this section helps your user try your project themselves.
 
@@ -19,12 +15,17 @@ Information in this section helps your user try your project themselves.
 Consider using the headings below for your getting started page. You can delete any that are not applicable to your project.
 
 ## Prerequisites
-
-Are there any system requirements for using your project? What languages are supported (if any)? Do users need to already have any software or tools installed?
+Runxc currently has the following system prerequisites to operate normally:
+* A supported macos or debian distro release.
+* An installation of [terraform](https://www.terraform.io/downloads.html) (v0.14+)  in your system's path.
+* An installation of [docker](https://docker.com/products/docker-desktop) (v19+)  in your system's path
+* An installation of [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) (also packaged with 
+  docker-for-mac) in your system's path.
+* An installation of the 
 
 ## Installation
 
-Where can your user find your project code? How can they install it (binaries, installable package, build from source)? Are there multiple options/versions they can install and how should they choose the right one for them?
+Runxc is a binary which can currently be gotten by contacting Ankur at his ankur@dev.runx email.
 
 ## Setup
 

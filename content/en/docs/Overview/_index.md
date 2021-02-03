@@ -3,36 +3,46 @@ title: "Overview"
 linkTitle: "Overview"
 weight: 1
 description: >
-  Here's where your user finds out if your project is for them.
+  What is the Runx CLI?
 ---
 
-{{% pageinfo %}}
-This is a placeholder page that shows you how to use this template site.
-{{% /pageinfo %}}
 
-
-The Overview is where your users find out about your project. Depending on the size of your docset, you can have a separate overview page (like this one) or put your overview contents in the Documentation landing page (like in the Docsy User Guide). 
-
-Try answering these questions for your user in this page:
-
-## What is it?
-
-Introduce your project, including what it does or lets you do, why you would use it, and its primary goal (and how it achieves it). This should be similar to your README description, though you can go into a little more detail here if you want.
+The Runx CLI, runxc, is an opinionated cloud infrastructure setup tool designed to handle the default resources and
+settings, allowing the user to focus on their app. It takes as input a yaml file containing the specification
+of the resources required, and then uses [terraform](https://www.terraform.io/) under the hood to create said 
+resources and keep track of state changes. It is designed to be cloud agnostic but for now it only support 
+[AWS](https://aws.amazon.com/) as a  provider, and [Kubernetes](https://kubernetes.io/) for application deployment.
 
 ## Why do I want it?
 
-Help your user know if your project will help them. Useful information can include: 
+Modern cloud infrastructure has become an engineering field in and of itself, with a high learning curve and limited
+hiring pool. Unfortunately, good cloud infrastructure is also required by software products if one wishes it to
+be highly available and scalable. While there are platform-as-a-service (PaaS) products in the market offering to 
+handle the complexity of the cloud providers, running customer applications in their simplified cloud, these products
+replace the old problems with new ones. By having a middleman between them and the servers, customers will naturally
+have higher infrastructure prices (that's how middleman businesses work), which grow and become more severe as they
+scale. Debugging will become more difficult by the same principles. Most importantly of all, the customers will be
+surrendering ownership and control of their infrastructure, meaning:
+* Difficult integration with custom resources even if the PaaS' underlying cloud provider has it.
+* Added delay of release of new features/version from the underlying cloud provider.
+* Inheriting deficiencies of the new layer with limited abilities to configure and remediate
+* Inheritance of security vulnerabilities.
 
-* **What is it good for?**: What types of problems does your project solve? What are the benefits of using it?
+Runxc provides an alternative model by deploying and maintaining resources directly in the cloud provider and under the
+customers own account, while yet offering an opinionated framework taking care of default settings and "golden path"
+resource integrations automatically. Required infrastructure knowledge is kept to a minimum while the customer reaps
+the benefits of "directly" managing their cloud resources.
 
-* **What is it not good for?**: For example, point out situations that might intuitively seem suited for your project, but aren't for some reason. Also mention known limitations, scaling issues, or anything else that might let your users know if the project is not for them.
-
-* **What is it *not yet* good for?**: Highlight any useful features that are coming soon.
+### What is it good for?
+Runxc was designed with the following use cases in mind:
+  - A young startup seeking to quickly create reliable and scalable infrastructure while keeping their engineers 
+    focused on the app
+  - A mature business seeking to move legacy infrastructure to the cloud.
 
 ## Where should I go next?
 
 Give your users next steps from the Overview. For example:
 
-* [Getting Started](/docs/getting-started/): Get started with $project
+* [Getting Started](/docs/getting-started/): Get started with runxc
 * [Examples](/docs/examples/): Check out some example code!
 

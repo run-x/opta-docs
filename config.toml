@@ -1,5 +1,5 @@
 baseURL = "/"
-title = "Runx"
+title = "Opta"
 
 enableRobotsTXT = true
 
@@ -97,7 +97,7 @@ version = "0.0"
 
 # A link to latest version of the docs. Used in the "version-banner" partial to
 # point people to the main doc site.
-url_latest_version = "https://run-x.github.io"
+url_latest_version = "https://docs.runx.dev"
 
 # Repository configuration (URLs for in-page links to opening issues and suggesting changes)
 # github_repo = "https://github.com/google/docsy-example"
@@ -155,25 +155,9 @@ enable = false
 	url = "support@runx.dev"
 	icon = "fa fa-envelope"
         desc = "Help from your fellow users"
-[[params.links.user]]
-	name ="Twitter"
-	url = "https://example.org/twitter"
-	icon = "fab fa-twitter"
-        desc = "Nitin and Ankur need to add here"
-# Developer relevant links. These will show up on right side of footer and in the community page if you have one.
-[[params.links.developer]]
-	name = "GitHub"
-	url = "https://github.com/google/docsy"
-	icon = "fab fa-github"
-        desc = "Development takes place here!"
 [[params.links.developer]]
 	name = "Slack"
-	url = "https://example.org/slack"
+	url = "https://join.slack.com/share/zt-m55nvh0w-8V7HAqdHKHEUAU40K2h~BQ"
 	icon = "fab fa-slack"
-        desc = "Nitin and Ankur need to add here"
-[[params.links.developer]]
-	name = "Developer mailing list"
-	url = "https://example.org/mail"
-	icon = "fa fa-envelope"
-        desc = "Discuss development issues around the project"
+        desc = "RunX community slack"
 

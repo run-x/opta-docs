@@ -3,16 +3,9 @@ title: "Getting Started"
 linkTitle: "Getting Started"
 weight: 2
 description: >
-  The first steps in working with runxc.
+  The first steps in working with opta.
 ---
 
-Information in this section helps your user try your project themselves.
-
-* What do your users need to do to start using your project? This could include downloading/installation instructions, including any prerequisites or system requirements.
-
-* Introductory “Hello World” example, if appropriate. More complex tutorials should live in the Tutorials section.
-
-Consider using the headings below for your getting started page. You can delete any that are not applicable to your project.
 
 ## Prerequisites
 Runxc currently has the following system prerequisites to operate normally:

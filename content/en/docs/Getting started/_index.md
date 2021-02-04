@@ -3,7 +3,7 @@ title: "Getting Started"
 linkTitle: "Getting Started"
 weight: 2
 description: >
-  The first steps in working with opta.
+  The first steps in working with Opta.
 ---
 
 

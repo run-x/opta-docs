@@ -17,12 +17,12 @@ Opta currently has the following system prerequisites to operate normally:
   docker-for-mac)
 
 ## Installation
-### MacOS
-```
-curl https://dev-runx-opta-binaries.s3.amazonaws.com/mac/0.3/opta -o /usr/local/bin/opta && chmod u+x /usr/local/bin/opta && xattr -d com.apple.quarantine /usr/local/bin/opta
-```
+> Latest version: 0.4
 
-This installs the `opta` cli.
+### MacOS or Linux
+```
+/bin/bash -c "$(curl -fsSL {{% base_url %}}/install.sh)"
+```
 
 ## Env creation
 In this step we will create an environment (example staging, qa, prod) for your organization.

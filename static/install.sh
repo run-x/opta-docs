@@ -18,8 +18,6 @@ OS="$(uname)"
 # Latest version
 VERSION=0.4
 
-# TODO: Handle opta already installed
-
 echo "Welcome to the opta installer."
 echo "Going to install opta v$VERSION"
 
@@ -32,12 +30,17 @@ else
 fi
 
 if [[ -d ~/.opta ]]; then
-  read -p "Opta already installed. Overwrite? " -n 1 -r
-  echo
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
+  if [[ -n "${NONINTERACTIVE-}" ]]; then
+    echo "Opta already installed. Overwriting..."
     rm -rf ~/.opta
   else
-    exit 0
+    read -p "Opta already installed. Overwrite? " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      rm -rf ~/.opta
+    else
+      exit 0
+    fi
   fi
 fi
 

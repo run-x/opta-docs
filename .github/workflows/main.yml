@@ -30,12 +30,10 @@ jobs:
         with:
           node-version: '14'
           
-      - uses: oleksiyrudenko/gha-git-credentials@v2-latest
+      - name: Setup ssh
+        uses: webfactory/ssh-agent@v0.4.1
         with:
-          actor: 'NitinAgg'
-          name: 'Nitin'
-          email: 'nitin@runx.dev'
-          token: ${{ secrets.NITIN_GITHUB_ACCESS_TOKEN }}
+          ssh-private-key: ${{ secrets.DOCS_DEPLOY_KEY }}
       
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2

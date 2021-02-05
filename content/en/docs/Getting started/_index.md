@@ -10,11 +10,11 @@ description: >
 ## Prerequisites
 Opta currently has the following system prerequisites to operate normally:
 * A supported macos or debian distro release.
-* An installation of [terraform](https://www.terraform.io/downloads.html) (v0.14+)  in your system's path.
-* An installation of [docker](https://docker.com/products/docker-desktop) (v19+)  in your system's path.
-* Working AWS CLI configured with proper credentials
-* An installation of [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) (also packaged with 
-  docker-for-mac) in your system's path.
+* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
+* [terraform](https://www.terraform.io/downloads.html) (v0.14+)
+* [docker](https://docker.com/products/docker-desktop) (v19+)
+* [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) (also packaged with 
+  docker-for-mac)
 
 ## Installation
 ### MacOS
@@ -26,7 +26,9 @@ This installs the `opta` cli.
 
 ## Env creation
 In this step we will create an environment (example staging, qa, prod) for your organization.
-For this we need to create an `opta.yml` file which defines the environment. Here's how this file should look like:
+For this we need to create an `opta.yml` file which defines the environment.
+
+Create the following file at `staging/opta.yml` directory and update the fields specific to your AWS account setup.
 ```
 meta:
   name: staging
@@ -49,15 +51,17 @@ This step will create an EKS cluster for you and set up VPC, networking and vari
 
 ## Service creation
 In this step we will create a service with your application's logic.
-We will create another `opta.yml` file, which defines high level configuration of this service. Here is how this file should look like:
+We will create another `opta.yml` file, which defines high level configuration of this service.
+
+Create this file at `MyApp/opta.yml` and update the fields specific to your service setup.
 
 ```
 meta:
+  name: MyApp 
   envs:
     - parent: "staging/opta.yml"
       variables:
         ENV: staging # You can set any environment variables you want here
-  name: MyApp 
   variables:
     tag: ""
 modules:
@@ -74,3 +78,12 @@ modules:
   - MyRdsDb:
       type: aws-rds  # Creates an AWS RDS DB for you
 ```
+
+Save this file at `MyApp/opta.yml` and run:
+```
+opta apply MyApp/opta.yml
+```
+Now your service's infrastructure and networking is ready to be deployed
+
+## Service Deployment
+TBD

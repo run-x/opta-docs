@@ -38,7 +38,10 @@ jobs:
           extended: true
       
       - name: Install postcss
-        run: npm install postcss-cli
+        run: |
+          npm install -D autoprefixer
+          npm install -D postcss-cli
+          npm install -D postcss
 
       # Runs a single command using the runners shell
       - name: Deploy

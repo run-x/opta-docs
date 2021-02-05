@@ -18,6 +18,8 @@ OS="$(uname)"
 # Latest version
 VERSION=0.4
 
+# TODO: Handle opta already installed
+
 if [[ "$OS" == "Linux" ]]; then
   echo "Downloading opta zip file"
   curl https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$VERSION/opta.zip -o /tmp/opta.zip

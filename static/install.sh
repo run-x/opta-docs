@@ -20,30 +20,44 @@ VERSION=0.4
 
 # TODO: Handle opta already installed
 
+echo "Welcome to the opta installer."
+echo "Going to install opta v$VERSION"
+
 if [[ "$OS" == "Linux" ]]; then
-  echo "Downloading opta zip file"
-  curl https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$VERSION/opta.zip -o /tmp/opta.zip
-
-  # Unzip
-  unzip -q /tmp/opta.zip -d ~/.opta
-  # Enable execution
-  chmod u+x ~/.opta/opta
-
-  # TODO: Automatically set up path for github action and other runners
-  # TODO: Automatically add to PATH (by adding to profile) for linux users
-  echo "Successfully installed! Now you can run opta via invoking ~/.opta/opta"
+  PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$VERSION/opta.zip
 elif [[ "$OS" == "Darwin" ]]; then
-  echo "Downloading opta zip file"
-  curl https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$VERSION/opta.zip -o /tmp/opta.zip
-
-  # Unzip
-  unzip -q /tmp/opta.zip -d ~/.opta
-  # Symlink
-  ln -s ~/.opta/opta /usr/local/bin/opta
-  # Enable execution
-  chmod u+x /usr/local/bin/opta
-
-  echo "Successfully installed! Now you can run opta via invoking opta"
+  PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/mac/$VERSION/opta.zip
 else
   abort "Opta is only supported on macOS and Linux."
 fi
+
+if [[ -d ~/.opta ]]; then
+  read -p "Opta already installed. Overwrite? " -n 1 -r
+  echo
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    rm -rf ~/.opta
+  else
+    exit 0
+  fi
+fi
+
+
+echo "Downloading installation package..."
+curl -s $PACKAGE -o /tmp/opta.zip
+echo "Downloaded"
+
+echo "Installing..."
+unzip -q /tmp/opta.zip -d ~/.opta
+chmod u+x ~/.opta/opta
+
+if [[ "$OS" == "Darwin" ]];then
+  # Add symlink
+  ln -fs ~/.opta/opta /usr/local/bin/opta
+  RUNPATH=opta
+else
+  # TODO: Automatically set up path for github action and other runners
+  # TODO: Automatically add to PATH (by adding to profile) for linux users
+  RUNPATH=~/.opta/opta
+fi
+
+echo "Successfully installed! Now you can run it via invoking $RUNPATH"

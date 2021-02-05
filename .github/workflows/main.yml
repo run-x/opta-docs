@@ -27,11 +27,18 @@ jobs:
           fetch-depth: 1    # Fetch all history for .GitInfo and .Lastmod
           token: ${{ secrets.ALL_GITHUB_TOKEN }}
       
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
           hugo-version: '0.80.0'
           extended: true
+      
+      - name: Install postcss
+        run: npm install postcss-cli
 
       # Runs a single command using the runners shell
       - name: Deploy

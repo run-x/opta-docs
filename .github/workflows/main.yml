@@ -30,11 +30,12 @@ jobs:
         with:
           node-version: '14'
           
-      - uses: frankdejonge/use-github-token
+      - uses: oleksiyrudenko/gha-git-credentials@v2-latest
         with:
-          authentication: 'nitinagg:${{ secrets.NITIN_GITHUB_ACCESS_TOKEN }}'
+          actor: 'NitinAgg'
           name: 'Nitin'
           email: 'nitin@runx.dev'
+          token: ${{ secrets.NITIN_GITHUB_ACCESS_TOKEN }}
       
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2

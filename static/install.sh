@@ -27,12 +27,9 @@ if [[ "$OS" == "Linux" ]]; then
   # Enable execution
   chmod u+x ~/.opta/opta
 
-  if [[ -n "${GITHUB_PATH-}" ]]; then
-    echo "~/.opta" >> $GITHUB_PATH
-    echo "Successfully installed! Now you can run opta via invoking opta"
-  else
-    echo "Successfully installed! Now you can run opta via invoking ~/.opta/opta"
-  fi
+  # TODO: Automatically set up path for github action and other runners
+  # TODO: Automatically add to PATH (by adding to profile) for linux users
+  echo "Successfully installed! Now you can run opta via invoking ~/.opta/opta"
 elif [[ "$OS" == "Darwin" ]]; then
   echo "Downloading opta zip file"
   curl https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$VERSION/opta.zip -o /tmp/opta.zip

@@ -21,7 +21,7 @@ Opta currently has the following system prerequisites to operate normally:
 
 ### MacOS or Linux
 ```
-/bin/bash -c "$(curl -fsSL {{% base_url %}}/install.sh)"
+/bin/bash -c "$(curl -fsSL https://docs.runx.dev/install.sh)"
 ```
 
 ## Env creation

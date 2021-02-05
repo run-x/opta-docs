@@ -8,22 +8,69 @@ description: >
 
 
 ## Prerequisites
-Runxc currently has the following system prerequisites to operate normally:
+Opta currently has the following system prerequisites to operate normally:
 * A supported macos or debian distro release.
 * An installation of [terraform](https://www.terraform.io/downloads.html) (v0.14+)  in your system's path.
-* An installation of [docker](https://docker.com/products/docker-desktop) (v19+)  in your system's path
+* An installation of [docker](https://docker.com/products/docker-desktop) (v19+)  in your system's path.
+* Working AWS CLI configured with proper credentials
 * An installation of [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) (also packaged with 
   docker-for-mac) in your system's path.
-* An installation of the 
 
 ## Installation
+### MacOS
+```
+curl https://dev-runx-opta-binaries.s3.amazonaws.com/mac/0.3/opta -o /usr/local/bin/opta && chmod u+x /usr/local/bin/opta && xattr -d com.apple.quarantine /usr/local/bin/opta
+```
 
-Runxc is a binary which can currently be gotten by contacting Ankur at his ankur@dev.runx email.
+This installs the `opta` cli.
 
-## Setup
+## Env creation
+In this step we will create an environment (example staging, qa, prod) for your organization.
+For this we need to create an `opta.yml` file which defines the environment. Here's how this file should look like:
+```
+meta:
+  name: staging
+  providers:
+    aws:
+      region: us-east-1
+      allowed_account_ids: [ 889760294590 ]  # replace this with your AWS account id
+  variables:
+    domain: "staging.example.com"  # replace this with a domain you own
+    datadog_api_key: ""
 
-Is there any initial setup users need to do after installation to try your project?
+_init: {}
+```
+Save this file at `staging/opta.yml` and run:
+```
+opta apply staging/opta.yml
+```
 
-## Try it out!
+This step will create an EKS cluster for you and set up VPC, networking and various other infrastructure pieces transparently.
 
-Can your users test their installation, for example by running a command or deploying a Hello World example?
+## Service creation
+In this step we will create a service with your application's logic.
+We will create another `opta.yml` file, which defines high level configuration of this service. Here is how this file should look like:
+
+```
+meta:
+  envs:
+    - parent: "staging/opta.yml"
+      variables:
+        ENV: staging # You can set any environment variables you want here
+  name: MyApp 
+  variables:
+    tag: ""
+modules:
+  - MyApp:
+      type: k8s-service
+      target_port: 5000  # Change this based on your
+      domain: "{parent[domain]}"  # optional: used to expose the service to the internet at this domain
+      tag: "{tag}"
+      env_vars:
+        - _link: MyRdsDb  # This is defined below
+        - ENV: "{parent[name]}"
+      secrets:
+        - ALGOLIA_ADMIN_KEY
+  - MyRdsDb:
+      type: aws-rds  # Creates an AWS RDS DB for you
+```

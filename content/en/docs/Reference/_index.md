@@ -5,5 +5,3 @@ weight: 9
 description: >
   Opta config reference
 ---
-
-Coming soon!

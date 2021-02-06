@@ -12,4 +12,4 @@ menu:
 Table of Contents
 {{% /pageinfo %}}
 
-Here you can find all the documentations for the Runx CLI product, runxc.
+Here you can find all the documentations for the Opta CLI.

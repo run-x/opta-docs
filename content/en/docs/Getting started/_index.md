@@ -24,7 +24,7 @@ Opta currently has the following system prerequisites to operate normally:
 /bin/bash -c "$(curl -fsSL https://docs.runx.dev/install.sh)"
 ```
 
-## Env creation
+## Environment creation
 In this step we will create an environment (example staging, qa, prod) for your organization.
 For this we need to create an `opta.yml` file which defines the environment.
 
@@ -62,14 +62,12 @@ meta:
     - parent: "staging/opta.yml"
       variables:
         ENV: staging # You can set any environment variables you want here
-  variables:
-    tag: ""
 modules:
   - MyApp:
       type: k8s-service
       target_port: 5000  # Change this based on your
       domain: "{parent[domain]}"  # optional: used to expose the service to the internet at this domain
-      tag: "{tag}"
+      tag: "{tag}"  # this is needed right now for deploys to work
       env_vars:
         - _link: MyRdsDb  # This is defined below
         - ENV: "{parent[name]}"

@@ -16,7 +16,7 @@ abort() {
 OS="$(uname)"
 
 # Latest version
-VERSION=0.4
+VERSION="${VERSION:-0.4}"
 
 echo "Welcome to the opta installer."
 echo "Going to install opta v$VERSION"

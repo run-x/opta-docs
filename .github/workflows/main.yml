@@ -2,9 +2,6 @@ name: CD
 on:
   push:
     branches: [main]
-  # TODO: remove this before merging
-  pull_request:
-    branches: [main]
 
 jobs:
   build:

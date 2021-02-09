@@ -20,16 +20,16 @@ Opta currently has the following system prerequisites to operate normally:
 > Latest version: 0.4
 
 ### MacOS or Linux
-```
+```bash
 /bin/bash -c "$(curl -fsSL https://docs.runx.dev/install.sh)"
 ```
 
-## Env creation
+## Environment creation
 In this step we will create an environment (example staging, qa, prod) for your organization.
 For this we need to create an `opta.yml` file which defines the environment.
 
 Create the following file at `staging/opta.yml` directory and update the fields specific to your AWS account setup.
-```
+```yaml
 meta:
   name: staging
   providers:
@@ -43,7 +43,7 @@ meta:
 _init: {}
 ```
 Save this file at `staging/opta.yml` and run:
-```
+```bash
 opta apply staging/opta.yml
 ```
 
@@ -55,32 +55,30 @@ We will create another `opta.yml` file, which defines high level configuration o
 
 Create this file at `MyApp/opta.yml` and update the fields specific to your service setup.
 
-```
+```yaml
 meta:
   name: MyApp 
   envs:
     - parent: "staging/opta.yml"
       variables:
         ENV: staging # You can set any environment variables you want here
-  variables:
-    tag: ""
 modules:
   - MyApp:
       type: k8s-service
       target_port: 5000  # Change this based on your
       domain: "{parent[domain]}"  # optional: used to expose the service to the internet at this domain
-      tag: "{tag}"
+      tag: "{tag}"  # this is needed right now for deploys to work
       env_vars:
         - _link: MyRdsDb  # This is defined below
         - ENV: "{parent[name]}"
       secrets:
-        - ALGOLIA_ADMIN_KEY
+        - MY_SECRET
   - MyRdsDb:
       type: aws-rds  # Creates an AWS RDS DB for you
 ```
 
 Save this file at `MyApp/opta.yml` and run:
-```
+```bash
 opta apply MyApp/opta.yml
 ```
 Now your service's infrastructure and networking is ready to be deployed

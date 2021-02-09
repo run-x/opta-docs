@@ -50,5 +50,5 @@ jobs:
         run: |
           cd public
           git add -A
-          git commit -m "Rebuilding site $(date)"
+          git commit -m "Rebuilding from opta-docs $GITHUB_SHA"
           git push origin main

@@ -2,54 +2,52 @@ name: CD
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/main' }}
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-        with:
-          submodules: recursive  # Fetch Hugo themes (true OR recursive)
-          fetch-depth: 1    # Fetch all history for .GitInfo and .Lastmod
-          token: ${{ secrets.ALL_GITHUB_TOKEN }}
       
+      - name: Setup ssh
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.DOCS_DEPLOY_KEY }}
+
+      - name: Checkout gh pages
+        uses: actions/checkout@v2
+        with:
+          repository: "run-x/run-x.github.io"
+          path: "public"
+          ssh-key: ${{ secrets.DOCS_DEPLOY_KEY }}
+
+      - name: Fetch submodules
+        run: git submodule update --init --recursive
+
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '15'
           
-      - uses: oleksiyrudenko/gha-git-credentials@v2-latest
-        with:
-          actor: 'NitinAgg'
-          name: 'Nitin'
-          email: 'nitin@runx.dev'
-          token: ${{ secrets.NITIN_GITHUB_ACCESS_TOKEN }}
-      
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
           hugo-version: '0.80.0'
           extended: true
       
-      - name: Install postcss
+      - name: NPM install
         run: |
-          npm install -D autoprefixer
-          npm install -D postcss-cli
-          npm install -D postcss
+          npm install
 
-      # Runs a single command using the runners shell
+      - name: Build
+        env:
+          HUGO_ENV: production
+        run: hugo
+
       - name: Deploy
         run: |
-          ./deploy.sh
+          cd public
+          git config user.email "bot@runx.dev"
+          git config user.name "Bot"
+          git add -A
+          git commit -m "Rebuilding from opta-docs $GITHUB_SHA"
+          git push origin main

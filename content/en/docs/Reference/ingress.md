@@ -24,7 +24,7 @@ meta:
 _init: {}
 ```
 
-Before opta can start using this name server, you also need to delegate the domain's nameservers to AWS.
+Before opta can start using this domain, you also need to delegate the domain's nameservers to AWS.
 
 Let's say you own startup.com and want to map staging.startup.com to this environment. Then you'd add the following NS records in your domain registrar:
 ```

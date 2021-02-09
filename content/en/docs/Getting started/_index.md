@@ -94,7 +94,8 @@ This sets up your service's infrastructure (database, etc) and now it's ready to
 ## Service Deployment
 
 To deploy the service:
-- Build docker image (via `docker build ...`)
-- Run `opta deploy --tag <tag> image` where `<tag>` is what you want to call this version. Usually the git sha.
+- Build docker image: `docker build ...`
+- Upload docker image: `opta upload --tag <tag> image` where `<tag>` is what you want to call this version. Usually the git sha.
+- Apply the change: `opta apply --var tag=<tag>`
 
 Now your service will be accessible at https://my_app.staging.startup.com! Congrats!

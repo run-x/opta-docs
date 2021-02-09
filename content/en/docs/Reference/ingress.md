@@ -24,16 +24,16 @@ meta:
 _init: {}
 ```
 
-Before opta can start using this name server, you also need to delegate the domain's nameservers to AWS.
-
-Let's say you own startup.com and want to map staging.startup.com to this environment. Then you'd add the following NS records in your domain registrar:
-```
-staging				1h			ns-1053.awsdns-03.org.
-staging				1h			ns-1557.awsdns-02.co.uk.
-staging				1h			ns-914.awsdns-50.net.
-staging				1h			ns-145.awsdns-18.com.
-```
-
+Before opta can start using this domain name, you also need to update the domain's nameservers to point to AWS. This is how you do it:
+- Run `opta apply` on the yaml file to create the underlying resources
+- Run `opta output` and note down the nameservers that get printed. It's usually a set of 4 servers.
+- Assuming you own startup.com and want to map staging.startup.com to this environment. Then you'd add the following NS records in your domain registrar, where ns1-ns4 are the nameservers from the previous step.
+  ```
+  staging				1h			ns1
+  staging				1h			ns2
+  staging				1h			ns3
+  staging				1h			ns4
+  ```
 ### Exposing a service
 
 A service can be exposed on a subdomain of the environment domain or on a path.

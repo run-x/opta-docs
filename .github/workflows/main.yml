@@ -46,5 +46,6 @@ jobs:
       - name: Deploy
         run: |
           cd public
+          git add -A
           git commit -m "Rebuilding site $(date)"
           git push origin main

@@ -3,15 +3,20 @@ title: "Overview"
 linkTitle: "Overview"
 weight: 1
 description: >
-  What is the Runx CLI?
+  What is Opta?
 ---
 
 
-The Runx CLI, runxc, is an opinionated cloud infrastructure setup tool designed to handle the default resources and
-settings, allowing the user to focus on their app. It takes as input a yaml file containing the specification
-of the resources required, and then uses [terraform](https://www.terraform.io/) under the hood to create said 
-resources and keep track of state changes. It is designed to be cloud agnostic but for now it only support 
-[AWS](https://aws.amazon.com/) as a  provider, and [Kubernetes](https://kubernetes.io/) for application deployment.
+Opta, is a cloud infrastructure management tool specifically designed to reduce
+complexity and improve iteration speed. 
+
+Opta enables you to set up infra on your AWS account via high-level config files
+(that describe microservices and databases) and low level details like access 
+permissions, network and secret management are handled automatically.
+
+This way setting up a new environment takes <30min and setting up a new service 
+takes <10min. All without any Infra/AWS/Kubernetes expertise PLUS you get an 
+industry standard setup (including monitoring) from day 1.
 
 ## Why do I want it?
 
@@ -28,21 +33,17 @@ surrendering ownership and control of their infrastructure, meaning:
 * Inheriting deficiencies of the new layer with limited abilities to configure and remediate
 * Inheritance of security vulnerabilities.
 
-Runxc provides an alternative model by deploying and maintaining resources directly in the cloud provider and under the
+Opta provides an alternative model by deploying and maintaining resources directly in the cloud provider and under the
 customers own account, while yet offering an opinionated framework taking care of default settings and "golden path"
 resource integrations automatically. Required infrastructure knowledge is kept to a minimum while the customer reaps
 the benefits of "directly" managing their cloud resources.
 
 ### What is it good for?
-Runxc was designed with the following use cases in mind:
+Opta was designed with the following use cases in mind:
   - A young startup seeking to quickly create reliable and scalable infrastructure while keeping their engineers 
     focused on the app
   - A mature business seeking to move legacy infrastructure to the cloud.
 
 ## Where should I go next?
 
-Give your users next steps from the Overview. For example:
-
-* [Getting Started](/docs/getting-started/): Get started with runxc
-* [Examples](/docs/examples/): Check out some example code!
-
+Read the [Getting Started Guide](/docs/getting-started/) or check out some [Examples](/docs/examples/).

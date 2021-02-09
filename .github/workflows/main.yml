@@ -24,6 +24,9 @@ jobs:
           path: "public"
           ssh-key: ${{ secrets.DOCS_DEPLOY_KEY }}
 
+      - name: Fetch latest docsy
+        run: git submodule update
+
       - uses: actions/setup-node@v2
         with:
           node-version: '14'

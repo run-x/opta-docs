@@ -34,14 +34,16 @@ meta:
   name: staging
   providers:
     aws:
+      # Provide your AWS account and region here
       region: us-east-1
-      allowed_account_ids: [ 889760294590 ]  # replace this with your AWS account id
+      allowed_account_ids: [ 889760294590 ]
   variables:
-    domain: "staging.example.com"  # replace this with a domain you own
-    datadog_api_key: ""
+    # Provide your domain here
+    domain: "<domain>"
 
 _init: {}
 ```
+
 Save this file at `staging/opta.yml` and run:
 ```bash
 opta apply staging/opta.yml
@@ -53,35 +55,44 @@ This step will create an EKS cluster for you and set up VPC, networking and vari
 In this step we will create a service with your application's logic.
 We will create another `opta.yml` file, which defines high level configuration of this service.
 
-Create this file at `MyApp/opta.yml` and update the fields specific to your service setup.
+Create this file at `my_app/opta.yml` and update the fields specific to your service setup.
 
 ```yaml
 meta:
-  name: MyApp 
+  name: my_app 
   envs:
+    # The environment to deploy to
     - parent: "staging/opta.yml"
-      variables:
-        ENV: staging # You can set any environment variables you want here
 modules:
-  - MyApp:
+  - my_app:
       type: k8s-service
-      target_port: 5000  # Change this based on your
-      domain: "{parent[domain]}"  # optional: used to expose the service to the internet at this domain
-      tag: "{tag}"  # this is needed right now for deploys to work
+      # The docker port your service listens on
+      target_port: 5000
+      # The path to expose this app on
+      domain: "my_app.{parent[domain]}"
       env_vars:
-        - _link: MyRdsDb  # This is defined below
+        # Use parent variables to distinguish b/w various environments
         - ENV: "{parent[name]}"
+      link: 
+        # DB credentials will be passed down to your app as env variables
+        - my_db
       secrets:
         - MY_SECRET
-  - MyRdsDb:
-      type: aws-rds  # Creates an AWS RDS DB for you
+  - my_db:
+      type: aws-rds
 ```
 
-Save this file at `MyApp/opta.yml` and run:
+Save this file at `my_app/opta.yml` and run:
 ```bash
-opta apply MyApp/opta.yml
+opta apply my_app/opta.yml
 ```
-Now your service's infrastructure and networking is ready to be deployed
+This sets up your service's infrastructure (database, etc) and now it's ready to be deployed
+(next section).
 
 ## Service Deployment
-TBD
+
+To deploy the service:
+- Build docker image (via `docker build ...`)
+- Run `opta deploy --tag <tag> image` where `<tag>` is what you want to call this version. Usually the git sha.
+
+Now your service will be accessible at https://my_app.\<domain\>! Congrats!

@@ -22,6 +22,7 @@ jobs:
         with:
           repository: "run-x/run-x.github.io"
           path: "public"
+          ssh-key: ${{ secrets.DOCS_DEPLOY_KEY }}
 
       - uses: actions/setup-node@v2
         with:

@@ -38,8 +38,8 @@ meta:
       region: us-east-1
       allowed_account_ids: [ 889760294590 ]
   variables:
-    # Provide your domain here
-    domain: "<domain>"
+    # Provide your domain here, assuming you own startup.com :)
+    domain: "staging.startup.com"
 
 _init: {}
 ```
@@ -50,6 +50,8 @@ opta apply staging/opta.yml
 ```
 
 This step will create an EKS cluster for you and set up VPC, networking and various other infrastructure pieces transparently.
+
+_Note: using a domain needs extra setup, please check out the [Ingress docs](/docs/reference/ingress)._
 
 ## Service creation
 In this step we will create a service with your application's logic.
@@ -95,4 +97,4 @@ To deploy the service:
 - Build docker image (via `docker build ...`)
 - Run `opta deploy --tag <tag> image` where `<tag>` is what you want to call this version. Usually the git sha.
 
-Now your service will be accessible at https://my_app.\<domain\>! Congrats!
+Now your service will be accessible at https://my_app.staging.startup.com! Congrats!

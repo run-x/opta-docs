@@ -49,6 +49,8 @@ jobs:
       - name: Deploy
         run: |
           cd public
+          git config user.email "bot@runx.dev"
+          git config user.name "Bot"
           git add -A
           git commit -m "Rebuilding from opta-docs $GITHUB_SHA"
           git push origin main

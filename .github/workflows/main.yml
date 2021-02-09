@@ -45,6 +45,7 @@ jobs:
 
       - name: Deploy
         run: |
+          env HUGO_ENV="production" hugo
           cd public
           git config user.email "bot@runx.dev"
           git config user.name "Bot"

@@ -67,11 +67,10 @@ meta:
   envs:
     # The environment to deploy to
     - parent: "staging/opta.yml"
-  variables:
-    tag: ""
 modules:
   - my_app:
       type: k8s-service
+      tag: "{tag}"
       # The docker port your service listens on
       target_port: 5000
       # The path to expose this app on

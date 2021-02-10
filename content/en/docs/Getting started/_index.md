@@ -67,6 +67,8 @@ meta:
   envs:
     # The environment to deploy to
     - parent: "staging/opta.yml"
+  variables:
+    tag: ""
 modules:
   - my_app:
       type: k8s-service

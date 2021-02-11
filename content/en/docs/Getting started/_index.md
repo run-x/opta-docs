@@ -34,6 +34,8 @@ Create the following file at `staging/opta.yml` directory and update the fields 
 ```yaml
 meta:
   name: staging
+  # Provide a unique org_id here, usually your company name
+  org_id: runx
   providers:
     aws:
       # Provide your AWS account and region here

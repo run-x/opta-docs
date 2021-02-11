@@ -14,15 +14,13 @@ Opta provides in-built secret management for your applications.
 
 ```yaml
 meta:
-  name: MyApp 
+  name: my_app
   envs:
     - parent: "staging/opta.yml"
-      variables:
-        ENV: staging # You can set any environment variables you want here
 modules:
-  - MyApp:
+  - my_app:
       type: k8s-service
-      target_port: 5000  # Change this based on your
+      target_port: 5000
       tag: "{tag}"
       env_vars:
         - ENV: "{parent[name]}"

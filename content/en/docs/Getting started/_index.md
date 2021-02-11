@@ -76,7 +76,7 @@ modules:
         - ENV: "{parent[name]}"
       links: 
         # DB credentials will be passed down to your app as env variables
-        my_db: {}
+        my_db: []
       secrets:
         - MY_SECRET
   - my_db:

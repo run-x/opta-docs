@@ -22,7 +22,7 @@ modules:
       env_vars:
         - ENV: "{parent[name]}"
       links:
-        my_db: {}  # Sets the DB access keys as env variables in your app
+        my_db: []  # Sets the DB access keys as env variables in your app
       secrets:
         - MY_SECRET
   - my_db:  # Database name

@@ -166,31 +166,61 @@ An aws-s3 link adds the necessary IAM permissions to read (e.g. list objects and
 create, destroy, and update objects) to the given s3 bucket. The current permissions are (wait for it), "read" and "write"
 
 # Current Module Types
-Here is the list of module types for the user to use, with their inputs and outputs
+Here is the list of module types for the user to use, with their inputs and outputs:
 
 
 ## aws-documentdb
+This module creates an AWS Documentdb  cluster. It is made in the private subnets created by the _init
+macro and so can only be accessed in the VPC or through some proxy (e.g. VPN). It is encrypted
+at rest with a kms key created in the env setup via the _init macro and in transit via tls.
 
+*Variables*
+* `instance_class` -- Optional. This is the RDS instance type used for the documentdb cluster [instances](https://aws.amazon.com/documentdb/pricing/).
+  Default db.r5.large
+
+*Outputs*
+* `db_user` -- DB user
+* `db_password` -- DB password
+* `db_host` -- DB host
+
+_NOTE_ For documentdb to work with SSL encryption (and password authentication requires that), it needs to fetch the
+[SSL certificates and have them ready in the local machine](https://docs.aws.amazon.com/documentdb/latest/developerguide/connect_programmatically.html).
+Fortunately, the opta k8s-service module has already taken care of that. You'll find them at `/config/rds_ca.pem"`
 
 ## aws-rds
+This module creates a postgres Aurora RDS database instance. It is made in the private subnets created by the _init 
+macro and so can only be accessed in the VPC or through some proxy (e.g. VPN).
 
 *Variables*
-* `instance_class` -- Optional
+* `instance_class` -- Optional. This is the RDS instance type used for the Auror cluster [instances](https://aws.amazon.com/rds/instance-types/).
+  Default db.r5.large
+* `engine_version` -- Optional. The version of the database to use. Default 11.9.
 
 *Outputs*
-
-
+* `db_user` -- DB user
+* `db_password` -- DB password
+* `db_host` -- DB host
+* `db_name` -- DB name
 
 ## aws-redis
-This module create a redis cache via elasticache
+This module creates a redis cache via elasticache. It is made with one failover instance across azs, and is encrypted
+at rest with a kms key created in the env setup via the _init macro and in transit via tls. It is made in the private
+subnets created by the _init macro and so can only be accessed in the VPC or through some proxy (e.g. VPN).
 
 *Variables*
-* `node_type` -- Optional
+* `node_type` -- Optional. This is the redis instance type used for the [instances](https://aws.amazon.com/elasticache/pricing/). 
+  Default cache.m4.large.
 
 *Outputs*
+* `cache_auth_token` -- The auth token/password of the cluster.
+* `cache_host` -- The host to contact to access the cluster.
 
+
+_NOTE_ Redis CLI will not work against this cluster because redis cli does not support the TLS transit encryption. There
+should be no trouble with any of the language sdks however, and they should all support ssl enabled.
 
 ## aws-s3-bucket
+This module creates an S3 bucket for storage purposes. It is created with server-side AES256 encryption.
 
 *Variables*
 * `bucket_name`-- Required. The name of the bucket to create.
@@ -198,7 +228,8 @@ This module create a redis cache via elasticache
 * `bucket_policy` -- Optional. A custom s3 policy json/yaml to add.
 
 *Outputs*
-
+* `bucket_id` -- The id/name of the bucket.
+* `bucket_arn` -- The arn of the bucket.
 
 ## k8s-service
 The most import module for deploying apps, k8s-service deploys a k8s app into your EKS cluster as a [helm chart](https://helm.sh/docs/topics/charts/).
@@ -294,8 +325,7 @@ to be supported in the future by opta.
   cpu: "100"
   memory: "128"
   ```
-* `domain` -- Optional. The full domain to expose your app under. Must be the full parent domain or a subdomain referencing the parent as such: "dummy.{parent[domain]}"
-* `path_prefix` -- Optional. The path prefix for when exposing the app under the given domain. Defaults to "/" (full path)
+* `public_uri` -- Optional. The full domain to expose your app under as well as path prefix. Must be the full parent domain or a subdomain referencing the parent as such: "dummy.{parent[domain]}/my/path/prefix"
 * `additional_iam_roles` -- Optional. A list of extra IAM role arns not captured by opta which you wish to give to your service.
 
 

@@ -74,9 +74,9 @@ modules:
       env_vars:
         # Use parent variables to distinguish b/w various environments
         - ENV: "{parent[name]}"
-      link: 
+      links: 
         # DB credentials will be passed down to your app as env variables
-        - my_db
+        my_db: {}
       secrets:
         - MY_SECRET
   - my_db:

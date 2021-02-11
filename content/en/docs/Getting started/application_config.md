@@ -21,8 +21,8 @@ modules:
       tag: "{tag}"
       env_vars:
         - ENV: "{parent[name]}"
-      link:
-        - my_db  # Sets the DB access keys as env variables in your app
+      links:
+        my_db: {}  # Sets the DB access keys as env variables in your app
       secrets:
         - MY_SECRET
   - my_db:  # Database name

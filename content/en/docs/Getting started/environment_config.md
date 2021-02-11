@@ -16,7 +16,6 @@ meta:
       allowed_account_ids: [ 889760294590 ]  # replace this with your AWS account id
   variables:
     domain: "staging.example.com"  # replace this with a domain you own
-    datadog_api_key: ""
 
 _init: {}
 ```

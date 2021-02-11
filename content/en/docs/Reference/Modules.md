@@ -10,8 +10,8 @@ description: >
 
 The heart of Opta is a set of "Modules" which are our wrapper over [terraform modules](https://www.terraform.io/docs/language/modules/index.html).
 Just like regular software libraries/packages, our modules are groups of distinct resources which we want to create over
-and over for different users/environments. Opta yamls either directly or indeirectly (via macros) reference these constructs
-under the `modules` field, of either the Layer's base
+and over for different users/environments. Opta yamls either directly or indirectly (via macros) reference these constructs
+under the `modules` field, of either the Layer's base as follows:
 
 
 ```yaml
@@ -40,7 +40,7 @@ modules:
   redis: # This is an instance of the aws-redis module type called redis
     type: aws-redis
 ```
-or on the Layer's `blocks` fields.
+Or on the Layer's `blocks` fields, as follows:
 ```yaml
 meta:
   parent: "../env/opta.yml"

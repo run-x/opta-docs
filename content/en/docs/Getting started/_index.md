@@ -41,9 +41,9 @@ meta:
 _init: {}
 ```
 
-Save this file at `staging/opta.yml` and run:
+Now, cd to the `staging` dir and run:
 ```bash
-opta apply staging/opta.yml
+opta apply
 ```
 
 This step will create an EKS cluster for you and set up VPC, networking and various other infrastructure pieces transparently.
@@ -65,6 +65,7 @@ meta:
 modules:
   - my_app:
       type: k8s-service
+      # This is needed for deploys to work properly!
       tag: "{tag}"
       # The docker port your service listens on
       target_port: 5000
@@ -82,9 +83,9 @@ modules:
       type: aws-rds
 ```
 
-Save this file at `my_app/opta.yml` and run:
+Now, cd to the `my_app` dir and run:
 ```bash
-opta apply my_app/opta.yml
+opta apply
 ```
 This sets up your service's infrastructure (database, etc) and now it's ready to be deployed
 (next section).

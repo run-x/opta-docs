@@ -17,14 +17,7 @@ Opta currently has the following system prerequisites to operate normally:
   docker-for-mac)
 
 ## Installation
-> Latest version: 0.5
-
-### MacOS or Linux
-```bash
-/bin/bash -c "$(curl -fsSL https://docs.runx.dev/install.sh)"
-```
-
-_If you want a different version, just set the env var `VERSION=<v>` before running the above script_
+Check out the [Installation instructions](/docs/installation).
 
 ## Environment creation
 In this step we will create an environment (example staging, qa, prod) for your organization.
@@ -34,6 +27,8 @@ Create the following file at `staging/opta.yml` directory and update the fields 
 ```yaml
 meta:
   name: staging
+  # Provide a unique org_id here, usually your company name
+  org_id: runx
   providers:
     aws:
       # Provide your AWS account and region here
@@ -46,9 +41,9 @@ meta:
 _init: {}
 ```
 
-Save this file at `staging/opta.yml` and run:
+Now, cd to the `staging` dir and run:
 ```bash
-opta apply staging/opta.yml
+opta apply
 ```
 
 This step will create an EKS cluster for you and set up VPC, networking and various other infrastructure pieces transparently.
@@ -70,6 +65,8 @@ meta:
 modules:
   - my_app:
       type: k8s-service
+      # This is needed for deploys to work properly!
+      tag: "{tag}"
       # The docker port your service listens on
       target_port: 5000
       # The path to expose this app on
@@ -77,18 +74,18 @@ modules:
       env_vars:
         # Use parent variables to distinguish b/w various environments
         - ENV: "{parent[name]}"
-      link: 
+      links: 
         # DB credentials will be passed down to your app as env variables
-        - my_db
+        my_db: []
       secrets:
         - MY_SECRET
   - my_db:
       type: aws-rds
 ```
 
-Save this file at `my_app/opta.yml` and run:
+Now, cd to the `my_app` dir and run:
 ```bash
-opta apply my_app/opta.yml
+opta apply
 ```
 This sets up your service's infrastructure (database, etc) and now it's ready to be deployed
 (next section).

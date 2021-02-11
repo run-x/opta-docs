@@ -15,10 +15,18 @@ abort() {
 # Check OS
 OS="$(uname)"
 
-# Latest version
-VERSION="${VERSION:-0.5}"
-
 echo "Welcome to the opta installer."
+
+# Set version
+VERSION="${VERSION:-}"
+
+if [[ -z "$VERSION" ]]
+then
+  # Determine latest version
+  echo "Determining latest version"
+  VERSION="$(curl -s https://dev-runx-opta-binaries.s3.amazonaws.com/latest)"
+fi
+
 echo "Going to install opta v$VERSION"
 
 if [[ "$OS" == "Linux" ]]; then

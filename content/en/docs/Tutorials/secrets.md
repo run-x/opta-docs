@@ -14,15 +14,13 @@ Opta provides in-built secret management for your applications.
 
 ```yaml
 meta:
-  name: MyApp 
+  name: my_app
   envs:
     - parent: "staging/opta.yml"
-      variables:
-        ENV: staging # You can set any environment variables you want here
 modules:
-  - MyApp:
+  - my_app:
       type: k8s-service
-      target_port: 5000  # Change this based on your
+      target_port: 5000
       tag: "{tag}"
       env_vars:
         - ENV: "{parent[name]}"
@@ -35,16 +33,16 @@ So when you run `opta apply` on this file, it will provision the secrets for you
 
 2. Now you can use the following command (from the dir where above file) to list all your secrets
 ```bash
-opta secret list MyApp --env staging
+opta secret list my_app --env staging
 ```
 
 3. To set the values of the secrets, you can use the cli
 ```bash
-opta secret update MyApp MY_SECRET_1 SECRET_VALUE --env staging
+opta secret update my_app MY_SECRET_1 SECRET_VALUE --env staging
 ```
 Note: The secret needs to be set individually for each service and environment
 
 4. You can print the value of an existing secret with the cli
 ```bash
-opta secret view MyApp MY_SECRET_1 --evn staging
+opta secret view my_app MY_SECRET_1 --evn staging
 ```

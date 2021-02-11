@@ -13,6 +13,7 @@ the services running in that environment.
 ```yaml
 meta:
   name: staging
+  org_id: runx
   providers:
     aws:
       region: <region>

@@ -17,14 +17,7 @@ Opta currently has the following system prerequisites to operate normally:
   docker-for-mac)
 
 ## Installation
-> Latest version: 0.5
-
-### MacOS or Linux
-```bash
-/bin/bash -c "$(curl -fsSL https://docs.runx.dev/install.sh)"
-```
-
-_If you want a different version, just set the env var `VERSION=<v>` before running the above script_
+Check out the [Installation instructions](/docs/installation).
 
 ## Environment creation
 In this step we will create an environment (example staging, qa, prod) for your organization.

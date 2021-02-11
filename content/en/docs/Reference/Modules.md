@@ -27,11 +27,11 @@ modules:
     domain: "dummy.{parent[domain]}"
     liveness_probe_path: "/get"
     readiness_probe_path: "/get"
-    uri_prefix: "/showoff"
+    path_prefix: "/showoff"
     external_image: true
     env_vars:
-      - name: APPENV
-        value: prod
+      - name: BLAH
+        value: malarkey
     links:
       database: []
       redis: []
@@ -168,156 +168,36 @@ create, destroy, and update objects) to the given s3 bucket. The current permiss
 # Current Module Types
 Here is the list of module types for the user to use, with their inputs and outputs
 
-## aws-acm-cert
-
-*Variables*
-*
-
-*Outputs*
-
-_Note_: part of the _init macro which is heavily recommended (i.e. use the _init macro and don't worry about this)
-
-
-## aws-dns
-
-*Variables*
-*
-
-*Outputs*
 
 ## aws-documentdb
-
-*Variables*
-*
-
-*Outputs*
-
-## aws-eks-init
-
-*Variables*
-*
-
-*Outputs*
-
-_Note_: part of the _init macro which is heavily recommended (i.e. use the _init macro and don't worry about this)
-
-
-## aws-eks-nodegroup
-
-*Variables*
-*
-
-*Outputs*
-
-_Note_: part of the _init macro which is heavily recommended (i.e. use the _init macro and don't worry about this)
-
-
-## aws-network-init
-
-*Variables*
-*
-
-*Outputs*
-
-_Note_: part of the _init macro which is heavily recommended (i.e. use the _init macro and don't worry about this)
 
 
 ## aws-rds
 
 *Variables*
-*
+* `instance_class` -- Optional
 
 *Outputs*
 
-_Note_: part of the _init macro which is heavily recommended (i.e. use the _init macro and don't worry about this)
 
 
 ## aws-redis
 This module create a redis cache via elasticache
 
 *Variables*
-*
+* `node_type` -- Optional
 
 *Outputs*
-
-_Note_: part of the _init macro which is heavily recommended (i.e. use the _init macro and don't worry about this)
 
 
 ## aws-s3-bucket
 
 *Variables*
-*
+* `bucket_name`-- Required. The name of the bucket to create.
+* `block_public` -- Optional. Block all public access. Default true
+* `bucket_policy` -- Optional. A custom s3 policy json/yaml to add.
 
 *Outputs*
-
-_Note_: part of the _init macro which is heavily recommended (i.e. use the _init macro and don't worry about this)
-
-
-## aws-state-init
-This should be the first module of any env layer for AWS. It does the "base" setup for the account and state, including
-setting up the service linked roles, state bucket, state lock table, and main kms key for all the standard account 
-encryption needs.
-
-*Variables*
-* `bucket_name`: Name of bucket to use for [terraform state storage](https://www.terraform.io/docs/language/settings/backends/s3.html).
-* `dynamodb_lock_table_name`: Name of the dynamodb lock table to use for state locking (i.e. stop simultaneous writes).
-
-*Outputs*
-* `state_bucket_id`: Name of state bucket.
-* `state_bucket_arn`: Arn of the state bucket.
-* `kms_account_key_arn`: Arn of the kms account key
-* `kms_account_key_id`: Id of the kms account key (yeah sometimes they want the id, sometimes they want the arn lol)
-
-_Note_: part of the _init macro which is heavily recommended (i.e. use the _init macro and don't worry about this)
-
-## datadog
-
-*Variables*
-*
-
-*Outputs*
-
-_Note_: part of the _init macro which is heavily recommended (i.e. use the _init macro and don't worry about this)
-
-
-## ingress-nginx-init
-
-*Variables*
-*
-
-*Outputs*
-
-_Note_: part of the _init macro which is heavily recommended (i.e. use the _init macro and don't worry about this)
-
-
-## k8s-cluster-autoscaler
-
-*Variables*
-*
-
-*Outputs*
-
-_Note_: part of the _init macro which is heavily recommended (i.e. use the _init macro and don't worry about this)
-
-
-## k8s-external-dns
-
-*Variables*
-*
-
-*Outputs*
-
-_Note_: part of the _init macro which is heavily recommended (i.e. use the _init macro and don't worry about this)
-
-
-## k8s-metric-server
-
-*Variables*
-*
-
-*Outputs*
-
-_Note_: part of the _init macro which is heavily recommended (i.e. use the _init macro and don't worry about this)
 
 
 ## k8s-service
@@ -338,7 +218,7 @@ It creates the following for you in K8s:
 * Optionally, an [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/) to expose your app to the
   world if you set a domain.
 
-Under the hood, it expects you to have [linkerd setup]({{< relref "#linkerd-init" >}}), which is taken care of for you
+Under the hood, it expects you to have linkerd setup, which is taken care of for you
 with the _init macro. With the service mesh set up, you app will be efficiently load balanced and reap all of the
 lightweight service meshes [benefits](https://linkerd.io/2/features/).
 
@@ -346,30 +226,79 @@ tl;dr
 It deploys your service in kubernetes as a rolling update securely and with simple autoscaling right off the bat-- you
 can even expose it to the world, complete with load balancing both internally and externally.
 
+#### External/Internal Image
+Furthermore, this module supports deploying from an "external" image repository (currently only public ones supported)
+by setting the `image` variable to the repo (e.g. "kennethreitz/httpbin" in the examples). If that's not set then
+it will automatically create a secure container repository with ECR on your account. You can then use the `opta push`
+command to push to it!
+
+#### Liveness/Readiness Probe
+One of the benefits of K8s is that it comes with built in checks for the responsiveness of your server. These are called
+[_liveness_ and _readiness_ probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
+
+tl;dr A liveness probe determines whether your server should be restarted, and readiness probe determines if traffic should
+be sent to a replica or be temporarily rerouted to other replicas. Essentially smart healthchecks. Opta requires the
+user to have such health check endpoints for all http apps (a hello world get endpoint would do) but for websockets it
+just checks the tcp connection on the given port.
+
+#### Autoscaling
+As mentioned, autoscaling is handled by the official Horizontal Pod Autoscaler. We currently only support autoscaling
+based on the pod's cpu and memory usage, but we hope to soon offer the ability to use 3rd party metrics like datadog
+to scale. As mentioned in the k8s docs, the horizontal pod autoscaler assumes a linear relationship between # of replicas
+and cpu (twice the replicas means half expected cpu usage), which works well assuming low overhead.
+The autoscaler then uses this logic to try and balance the cpu/memory usage at the percentage of request. So, for example,
+if the target memory is 80% and we requested 100mb, then it'll try to keep the memory usage at 80mb. If it finds that
+the average memory usage was 160mb, it would logically try to double the number of replicas.
+
+#### Container Resources
+One of the other benefits of kubernetes is that a user can have fine control over the [resources used by each of their containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
+A user can control the cpu, memory and disk usage with which scheduling is made, and the max limit after which the container is killed.
+With opta, we expose such settings to the user, while keeping sensible defaults.
+
+#### Ingress
+Yet another benefit of K8s is a standardized form of exposing your app to the world via ingress and api gateways. Our
+environment _init macro adds the [nginx ingress controller](https://kubernetes.github.io/ingress-nginx/) to the K8s
+clusters. This ingress is bound to a Network Load Balancer which is in turn bound to the hosted zone created by the same 
+macro. Assuming that the nameservers where delegated properly, traffic should be coming into your cluster automatically.
+The ingress can then be used to control where the traffic flows depending on host and path_prefix among other fields
+to be supported in the future by opta.
+
 *Variables*
-* `port` -- Required. Specifies
-* `replicas`
-* `image`
-* `tag`
-* `env_vars`
-* `secrets`
-* `autoscaling_cpu_percentage_threshold`
-* `autoscaling_mem_percentage_threshold`
-* `liveness_probe_path`
-* `readiness_probe_path`
-* `pod_resource_requests`
-* `domain`
-* `uri_prefix`
-* `iam_policy`
+* `port` -- Required. Specifies what port your app was made to be listened to. Currently it must be a map of the form
+  `http: [PORT_NUMBER_HERE]` or `tcp: [PORT_NUMBER_HERE]`. Use http if you just have a vanilla http server and tcp for
+  websockets.
+* `min_autoscaling` -- Optional. The minimum number of replicas your app can autoscale to. Default 1
+* `max_autoscaling` -- Optional. The maximum number of replicas your app can autoscale to. Default 3
+* `image` -- Optional. If you specify this, then it will use the image specified for its deploys and not make an ECR
+  repo itself.
+* `tag` -- Optional, use this if you are using an internal image whose repo is managed by the module. The tag specifies
+  what image tag to pull from the image repo. We recommend tagging based on git commit sha
+* `env_vars` -- Optional. A list of maps holding name+value fields for envars to add to your container
+  ```yaml
+    - name: BLAH
+      value: malarkey
+  ```
+* `secrets` -- Optional. Same format as env_vars, but these values will be stored in the secrets resource, not directly
+  in the pod spec.
+* `autoscaling_target_cpu_percentage` --  Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
+* `autoscaling_target_mem_percentage` -- Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
+* `liveness_probe_path` -- Optional. See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default "/healthcheck"
+* `readiness_probe_path` -- Optional. See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default "/healthcheck"
+* `container_resource_limits` -- Optional. See the [container resources]({{< relref "#container-resources" >}}) section. Default
+  ```yaml
+  cpu: "200m"
+  memory: "256Mi"
+  ```
+* `container_resource_requests` -- Optional. See the [container resources]({{< relref "#container-resources" >}}) section. Default
+  ```yaml
+  cpu: "100"
+  memory: "128"
+  ```
+* `domain` -- Optional. The full domain to expose your app under. Must be the full parent domain or a subdomain referencing the parent as such: "dummy.{parent[domain]}"
+* `path_prefix` -- Optional. The path prefix for when exposing the app under the given domain. Defaults to "/" (full path)
+* `additional_iam_roles` -- Optional. A list of extra IAM role arns not captured by opta which you wish to give to your service.
 
 
 *Outputs*
-
-## linkerd-init
-
-*Variables*
-*
-
-*Outputs*
-
-_Note_: part of the _init macro which is heavily recommended (i.e. use the _init macro and don't worry about this)
+* `docker_repo_url` -- The url of the docker repo created to host this app's images in this environment. Does not exist
+when using external images.

@@ -52,7 +52,7 @@ id = "UA-188763285-1"
 
 [languages]
 [languages.en]
-title = ""
+title = "Opta"
 description = "Documentation for the Runx products."
 languageName ="English"
 # Weight used for sorting.

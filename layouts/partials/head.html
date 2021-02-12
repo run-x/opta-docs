@@ -63,5 +63,9 @@
         ;e.amplitude=n})(window,document);
 
     amplitude.getInstance().init("3c2edcd34808a6431499f4cd9b034e34");
+
+    amplitude.getInstance().logEvent("Viewed " + document.title + " Page", {
+        url: window.location.href,
+    });
 </script>
 {{ partial "hooks/head-end.html" . }}

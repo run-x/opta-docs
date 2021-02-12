@@ -43,31 +43,31 @@ A service can be exposed on a subdomain of the environment domain or on a path.
 
 ```yaml
 meta:
-  name: my_app 
+  name: myapp 
   envs:
     - parent: "staging/opta.yml"
 modules:
-  - my_app:
-      type: k8s-service
-      domain: "my_app.{parent[domain]}"
-      ...
+  myapp:
+    type: k8s-service
+    domain: "myapp.{parent[domain]}"
+    ...
 ```
 
-Following the domain examples above, this will expose the service at https://my_app.staging.startup.com
+Following the domain examples above, this will expose the service at https://myapp.staging.startup.com
 
 
 #### Exposing on a path
 
 ```yaml
 meta:
-  name: my_app 
+  name: myapp 
   envs:
     - parent: "staging/opta.yml"
 modules:
-  - my_app:
-      type: k8s-service
-      path: /my_app
-      ...
+  myapp:
+    type: k8s-service
+    path: /myapp
+    ...
 ```
 
-Following the domain examples above, this will expose the service at https://staging.startup.com/my_app
+Following the domain examples above, this will expose the service at https://staging.startup.com/myapp

@@ -54,36 +54,38 @@ _Note: using a domain needs extra setup, please check out the [Ingress docs](/do
 In this step we will create a service with your application's logic.
 We will create another `opta.yml` file, which defines high level configuration of this service.
 
-Create this file at `my_app/opta.yml` and update the fields specific to your service setup.
+Create this file at `myapp/opta.yml` and update the fields specific to your service setup.
 
 ```yaml
 meta:
-  name: my_app 
+  name: myapp 
   envs:
     # The environment to deploy to
     - parent: "staging/opta.yml"
 modules:
-  - my_app:
-      type: k8s-service
-      # This is needed for deploys to work properly!
-      tag: "{tag}"
-      # The docker port your service listens on
-      target_port: 5000
-      # The path to expose this app on
-      domain: "my_app.{parent[domain]}"
-      env_vars:
-        # Use parent variables to distinguish b/w various environments
-        - ENV: "{parent[name]}"
-      links: 
-        # DB credentials will be passed down to your app as env variables
-        my_db: []
-      secrets:
-        - MY_SECRET
-  - my_db:
-      type: aws-rds
+  app:
+    type: k8s-service
+    # This is needed for deploys to work properly!
+    tag: "{tag}"
+    # The docker port your service listens on
+    port:
+      http: 5000
+    # The path to expose this app on
+    domain: "myapp.{parent[domain]}"
+    env_vars:
+      # Use parent variables to distinguish b/w various environments
+      - name: ENV
+        value: "{parent[name]}"
+    links: 
+      # DB credentials will be passed down to your app as env variables
+      db: []
+    secrets:
+      - MY_SECRET
+  db:
+    type: aws-rds
 ```
 
-Now, cd to the `my_app` dir and run:
+Now, cd to the `myapp` dir and run:
 ```bash
 opta apply
 ```
@@ -97,4 +99,4 @@ To deploy the service:
 - Upload docker image: `opta push --tag <tag> image` where `<tag>` is what you want to call this version. Usually the git sha.
 - Apply the change: `opta apply --var tag=<tag>`
 
-Now your service will be accessible at https://my_app.staging.startup.com! Congrats!
+Now your service will be accessible at https://myapp.staging.startup.com! Congrats!

@@ -2,6 +2,7 @@
 title: "Environment configuration"
 linkTitle: "Environment configuration"
 date: 2020-02-01
+draft: true
 description: >
   Configuration details for the environment yaml
 ---

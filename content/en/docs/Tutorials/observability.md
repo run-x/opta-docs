@@ -6,7 +6,7 @@ description: >
   Configuring observability tool for your applications
 ---
 
-Current Opta's observability tool of choice is Datadog. We will be adding support for more tools in near future. Reach out to us at support@runx.dev if you have a preference for which tool you would like to see here.
+Opta's current observability tool of choice is Datadog. We will be adding support for more tools in near future. Reach out to us at support@runx.dev if you have a preference for which tool you would like to see here.
 
 ## Datadog
 Opta makes it very easy to setup Datadog monitoring and logging for your applications. All you have to do is provide your Datadog api key during creation of the [environment](/docs/reference/environment_config).

@@ -15,4 +15,4 @@ opta configure-kubectl --env staging
 ```
 
 Each service gets created in it's own kubernetes namespace.
-You can use `kubctl get namespaces` to list all the namespaces. The name of the namespace should be same as the name of the service.
+You can use `kubctl get namespaces` to list all the namespaces. The name of the namespace for a given service should be the same as the name of the service.

@@ -6,7 +6,7 @@ description: >
   Reference on the structure, input and output of different Modules
 ---
 
-# What's an opta module?
+# What's an Opta module?
 
 The heart of Opta is a set of "Modules" which basically map to AWS resources that
 need to get created. Opta yamls reference these under the `modules` field.
@@ -44,7 +44,7 @@ You'll note that the module instance can have user-specified names which will co
 ## Variables
 You'll note that there can be many, varying, fields per module instance such 
 as "type", "env_vars", "api_key" etc...  These are called _variables_ and this 
-is how specific data passed into the modules
+is how specific data is passed into the modules.
 
 ### Types
 All modules have their own list of supported variables, but the one common to all is _type_. The type variable is simply
@@ -91,9 +91,9 @@ Here is the list of module types for the user to use, with their inputs and outp
 
 
 ## aws-documentdb
-This module creates an AWS Documentdb  cluster. It is made in the private subnets created by the _init
+This module creates an AWS Documentdb  cluster. It is made in the private subnets automatically created for the environment.
 macro and so can only be accessed in the VPC or through some proxy (e.g. VPN). It is encrypted
-at rest with a kms key created in the env setup via the _init macro and in transit via tls.
+at rest with a kms key created in the env setup and in transit via tls.
 
 *Variables*
 * `instance_class` -- Optional. This is the RDS instance type used for the documentdb cluster [instances](https://aws.amazon.com/documentdb/pricing/).
@@ -111,7 +111,7 @@ as _{module_name}\_db\_user_, _{module_name}\_db\_password_, and _{module_name}\
 
 In addition to these credentials, you also need to enable SSL encryption when
 connecting ([AWS docs](https://docs.aws.amazon.com/documentdb/latest/developerguide/connect_programmatically.html)).
-Fortunately, the opta k8s-service module has already taken care of that. On linking, you'll 
+Fortunately, the Opta k8s-service module has already taken care of that. On linking, you'll 
 find the AWS CA at `/config/rds_ca.pem"`
 
 As an example, this is how the mongoose/node connection looks like:
@@ -124,11 +124,11 @@ await mongoose.connect("mongodb://<USER>:<PASSWORD>@<HOST>, {
 
 ## aws-rds
 This module creates a postgres Aurora RDS database instance. It is made in the 
-private subnets created by the _init_ macro and so can only be accessed in the 
+private subnets automatically created during environment setup and so can only be accessed in the 
 VPC or through some proxy (e.g. VPN).
 
 *Variables*
-* `instance_class` -- Optional. This is the RDS instance type used for the Auror cluster [instances](https://aws.amazon.com/rds/instance-types/).
+* `instance_class` -- Optional. This is the RDS instance type used for the Aurora cluster [instances](https://aws.amazon.com/rds/instance-types/).
   Default db.r5.large
 * `engine_version` -- Optional. The version of the database to use. Default 11.9.
 
@@ -162,7 +162,7 @@ subnets created by the _init macro and so can only be accessed in the VPC or thr
 
 *Linking*
 
-When linked to a k8s-service, it adds connection credentials to yourcontainer
+When linked to a k8s-service, it adds connection credentials to your container
 as _{module_name}\_cache\_host_ and _{module_name}\_cache\_auth\_token_.
 
 _NOTE_ Redis CLI will not work against this cluster because redis cli does not 
@@ -194,39 +194,6 @@ The most import module for deploying apps, k8s-service deploys a kubernetes app.
 It deploys your service as a rolling update securely and with simple autoscaling right off the bat-- you
 can even expose it to the world, complete with load balancing both internally and externally.
 
-#### External/Internal Image
-Furthermore, this module supports deploying from an "external" image repository (currently only public ones supported)
-by setting the `image` variable to the repo (e.g. "kennethreitz/httpbin" in the examples). If that's not set then
-it will automatically create a secure container repository with ECR on your account. You can then use the `opta push`
-command to push to it!
-
-#### Liveness/Readiness Probe
-One of the benefits of K8s is that it comes with built in checks for the responsiveness of your server. These are called
-[_liveness_ and _readiness_ probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
-
-tl;dr A liveness probe determines whether your server should be restarted, and readiness probe determines if traffic should
-be sent to a replica or be temporarily rerouted to other replicas. Essentially smart healthchecks. Opta requires the
-user to have such health check endpoints for all http apps (a hello world get endpoint would do) but for websockets it
-just checks the tcp connection on the given port.
-
-#### Autoscaling
-As mentioned, autoscaling is available out of the box. We currently only support autoscaling
-based on the pod's cpu and memory usage, but we hope to soon offer the ability to use 3rd party metrics like datadog
-to scale. As mentioned in the k8s docs, the horizontal pod autoscaler (which is what we use) assumes a linear relationship between # of replicas
-and cpu (twice the replicas means half expected cpu usage), which works well assuming low overhead.
-The autoscaler then uses this logic to try and balance the cpu/memory usage at the percentage of request. So, for example,
-if the target memory is 80% and we requested 100mb, then it'll try to keep the memory usage at 80mb. If it finds that
-the average memory usage was 160mb, it would logically try to double the number of replicas.
-
-#### Container Resources
-One of the other benefits of kubernetes is that a user can have fine control over the [resources used by each of their containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
-A user can control the cpu, memory and disk usage with which scheduling is made, and the max limit after which the container is killed.
-With opta, we expose such settings to the user, while keeping sensible defaults.
-
-#### Ingress
-You can control if and how you want to expose your app to the world! Check out
-the [Ingress](/docs/tutorials/ingress) docs for more details.
-
 *Variables*
 * `port` -- Required. Specifies what port your app was made to be listened to. Currently it must be a map of the form
   `http: [PORT_NUMBER_HERE]` or `tcp: [PORT_NUMBER_HERE]`. Use http if you just have a vanilla http server and tcp for
@@ -255,13 +222,46 @@ the [Ingress](/docs/tutorials/ingress) docs for more details.
   ```
 * `container_resource_requests` -- Optional. See the [container resources]({{< relref "#container-resources" >}}) section. Default
   ```yaml
-  cpu: "100"
-  memory: "128"
+  cpu: "100m"
+  memory: "128Mi"
   ```
 * `public_uri` -- Optional. The full domain to expose your app under as well as path prefix. Must be the full parent domain or a subdomain referencing the parent as such: "dummy.{parent[domain]}/my/path/prefix"
-* `additional_iam_roles` -- Optional. A list of extra IAM role arns not captured by opta which you wish to give to your service.
+* `additional_iam_roles` -- Optional. A list of extra IAM role arns not captured by Opta which you wish to give to your service.
 
 
 *Outputs*
 * `docker_repo_url` -- The url of the docker repo created to host this app's images in this environment. Does not exist
 when using external images.
+
+#### External/Internal Image
+Furthermore, this module supports deploying from an "external" image repository (currently only public ones supported)
+by setting the `image` variable to the repo (e.g. "kennethreitz/httpbin" in the examples). If that's not set then
+it will automatically create a secure container repository with ECR on your account. You can then use the `opta push`
+command to push to it!
+
+#### Liveness/Readiness Probe
+One of the benefits of K8s is that it comes with built in checks for the responsiveness of your server. These are called
+[_liveness_ and _readiness_ probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
+
+tl;dr A liveness probe determines whether your server should be restarted, and readiness probe determines if traffic should
+be sent to a replica or be temporarily rerouted to other replicas. Essentially smart healthchecks. Opta requires the
+user to have such health check endpoints for all http apps (a hello world get endpoint would do) but for websockets it
+just checks the tcp connection on the given port.
+
+#### Autoscaling
+As mentioned, autoscaling is available out of the box. We currently only support autoscaling
+based on the pod's cpu and memory usage, but we hope to soon offer the ability to use 3rd party metrics like datadog
+to scale. As mentioned in the k8s docs, the horizontal pod autoscaler (which is what we use) assumes a linear relationship between # of replicas
+and cpu (twice the replicas means half expected cpu usage), which works well assuming low overhead.
+The autoscaler then uses this logic to try and balance the cpu/memory usage at the percentage of request. So, for example,
+if the target memory is 80% and we requested 100mb, then it'll try to keep the memory usage at 80mb. If it finds that
+the average memory usage was 160mb, it would logically try to double the number of replicas.
+
+#### Container Resources
+One of the other benefits of kubernetes is that a user can have fine control over the [resources used by each of their containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
+A user can control the cpu, memory and disk usage with which scheduling is made, and the max limit after which the container is killed.
+With Opta, we expose such settings to the user, while keeping sensible defaults.
+
+#### Ingress
+You can control if and how you want to expose your app to the world! Check out
+the [Ingress](/docs/tutorials/ingress) docs for more details.

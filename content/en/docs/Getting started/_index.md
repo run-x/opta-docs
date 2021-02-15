@@ -10,7 +10,7 @@ description: >
 ## Prerequisites
 Opta currently has the following system prerequisites to operate normally:
 * A supported macos or debian distro release.
-* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
+* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) (v2)
 * [terraform](https://www.terraform.io/downloads.html) (v0.14+)
 * [docker](https://docker.com/products/docker-desktop) (v19+)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) (also packaged with 
@@ -23,7 +23,7 @@ Check out the [Installation instructions](/docs/installation).
 In this step we will create an environment (example staging, qa, prod) for your organization.
 For this we need to create an `opta.yml` file which defines the environment.
 
-Create the following file at `staging/opta.yml` directory and update the fields specific to your AWS account setup.
+Create the following file at `staging/opta.yml` and update the fields specific to your AWS account setup.
 ```yaml
 meta:
   name: staging
@@ -35,8 +35,8 @@ meta:
       region: us-east-1
       allowed_account_ids: [ 889760294590 ]
   variables:
-    # Provide your domain here, assuming you own startup.com :)
-    domain: "staging.startup.com"
+    # Provide your domain here, assuming you own example.com :)
+    domain: "staging.example.com"
 
 _init: {}
 ```
@@ -48,7 +48,7 @@ opta apply
 
 This step will create an EKS cluster for you and set up VPC, networking and various other infrastructure pieces transparently.
 
-_Note: using a domain needs extra setup, please check out the [Ingress docs](/docs/reference/ingress)._
+_Note: using a domain needs extra setup, please check out the [Ingress docs](/docs/tutorials/ingress)._
 
 ## Service creation
 In this step we will create a service with your application's logic.
@@ -60,7 +60,8 @@ Create this file at `myapp/opta.yml` and update the fields specific to your serv
 meta:
   name: myapp 
   envs:
-    # The environment to deploy to
+    # The list environments where this app will be deployed.
+    # Relative path to the file from the directory where `opta apply` is called.
     - parent: "staging/opta.yml"
 modules:
   app:
@@ -77,11 +78,13 @@ modules:
       - name: ENV
         value: "{parent[name]}"
     links: 
-      # DB credentials will be passed down to your app as env variables
-      db: []
+      # DB credentials will be passed down to your app as env variables.
+      # The variables exported for `aws-rds` are:
+      # mydb_user, mydb_name, mydb_password, mydb_host
+      mydb: []
     secrets:
       - MY_SECRET
-  db:
+  mydb:
     type: aws-rds
 ```
 

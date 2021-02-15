@@ -41,7 +41,7 @@ the benefits of "directly" managing their cloud resources.
 ### What is it good for?
 Opta was designed with the following use cases in mind:
   - A young startup seeking to quickly create reliable and scalable infrastructure while keeping their engineers 
-    focused on the app
+    focused on the app.
   - A mature business seeking to move legacy infrastructure to the cloud.
 
 ## Where should I go next?

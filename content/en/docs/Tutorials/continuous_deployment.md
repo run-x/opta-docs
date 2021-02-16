@@ -53,7 +53,7 @@ jobs:
         run: docker build -t app:latest -f Dockerfile .
 
       - name: Update deployment
-        uses: run-x/deploy-action@v0.6
+        uses: run-x/deploy-action@v0.6 # Note that this version should be the same as your CLI version
         with:
           env: runx-staging
           image: app:latest

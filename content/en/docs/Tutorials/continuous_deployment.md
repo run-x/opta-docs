@@ -4,16 +4,16 @@ linkTitle: "Continuous Deployment"
 date: 2020-02-01
 draft: false
 description: >
-  Instructions to integrate with CI/CD platform of your choice
+  Instructions to integrate with the CI/CD platform of your choice
 ---
 
 ## Github Action
 If you are using Github Actions for your CI, you can use the [`run-x/deploy-action`](https://github.com/run-x/deploy-action) action. This action will push your local docker image up to a remote registry and then deploy that image.
 
 ### Authentication
-Before calling `run-x/deploy-action`, you will need to call two other Github actions:
-1. [`webfactory/ssh-agent`](https://github.com/run-x/webfactory/ssh-agent), to allow access to other repositories' opta configuration files.
-2. [`aws-actions/configure-aws-credentials`](https://github.com/run-x/aws-actions/configure-aws-credentials), to allow push and deploy to AWS.
+In order for the deploy action to execute properly, you will need to use other github actions for authentication.
+1. [`webfactory/ssh-agent`](https://github.com/run-x/webfactory/ssh-agent), to allow access to other repositories' opta configuration files. Note that you only need to use this if you have opta.yml files in other repos.
+2. [`aws-actions/configure-aws-credentials`](https://github.com/run-x/aws-actions/configure-aws-credentials), to allow push and deploy to AWS. Make sure that the API key associated with this account has admin permissions.
 
 ### Example
 
@@ -39,12 +39,14 @@ jobs:
       - name: Setup ssh
         uses: webfactory/ssh-agent@v0.4.1
         with:
-          # if you don't have a github SSH key, you can generate one here: https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+          # if you don't have a github SSH key, you can generate one here: 
+          # https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
           ssh-private-key: ${{ secrets.GITHUB_SSH_KEY }}
 
       - name: Configure AWS credentials	
         uses: aws-actions/configure-aws-credentials@v1	
         with:	
+          # This aws account should have admin permissions
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}	
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}	
           aws-region: us-east-1	
@@ -53,7 +55,8 @@ jobs:
         run: docker build -t app:latest -f Dockerfile .
 
       - name: Update deployment
-        uses: run-x/deploy-action@v0.6 # Note that this version should be the same as your CLI version
+        # Note that this version should be the same as your CLI version
+        uses: run-x/deploy-action@v0.6 
         with:
           env: runx-staging
           image: app:latest

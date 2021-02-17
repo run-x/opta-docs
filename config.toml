@@ -108,10 +108,12 @@ url_latest_version = "https://docs.runx.dev"
 # github_subdir = ""
 
 # Google Custom Search Engine ID. Remove or comment out to disable search.
-gcs_engine_id = "6481e923e996e4cf1"
+# gcs_engine_id = "6481e923e996e4cf1"
 
 # Enable Algolia DocSearch
-algolia_docsearch = false
+algolia_docsearch = true
+sidebar_search_disable = true  # Algolia not supported in sidebar search
+
 
 # Enable Lunr.js offline search
 offlineSearch = false

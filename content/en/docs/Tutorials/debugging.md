@@ -34,14 +34,27 @@ You can see the pods for a given service by running:
 ```
 kubectl get pods -n <service-name>
 ```
-Where `<service-name>` is the name you've specified in your opta yml.
-
 >If this doesn't show any pods, that means your service hasn't been deployed. Check out the [deployment docs](/docs/getting-started/#service-deployment) to fix that.
+
+Note that `<service-name>` is specified in your opta yml:
+```
+  meta:
+    name: blah # service-name
+  modules:
+    app: # module-name
+      type: k8s-service
+```
+
 
 ### View logs for a pod
 Note down the name of one of your pods and then run the following command to see it's logs:
 ```
 kubectl logs -f <pod-name> k8s-service -n <service-name>
+```
+
+To view logs from *all* your pods, you can run:
+```
+kubectl logs -f deployments/<service-name>-<module-name>-k8s-service k8s-service -n <service-name>
 ```
 
 ### SSH into a pod

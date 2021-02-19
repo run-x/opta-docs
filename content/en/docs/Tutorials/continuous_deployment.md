@@ -56,7 +56,7 @@ jobs:
 
       - name: Update deployment
         # Note that this version should be the same as your CLI version
-        uses: run-x/deploy-action@v0.6 
+        uses: run-x/deploy-action@v0.7.1
         with:
           env: runx-staging
           image: app:latest

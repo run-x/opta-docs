@@ -65,7 +65,7 @@ name: hello-world
 modules:
   - name: app
     type: k8s-service
-    image: "kennethreitz/httpbin" # external image, set to AUTO if you're building your own
+    image: "AUTO"
     min_containers: 2
     max_containers: "{vars.max_containers}"
     liveness_probe_path: "/get"
@@ -89,8 +89,19 @@ Now, cd to the `myapp` dir and run:
 ```bash
 opta apply
 ```
-This sets up your service's infrastructure (database, etc) and now it's ready to be deployed
+This sets up your service's infrastructure (database, private docker repo, etc) and now it's ready to be deployed
 (next section).
+
+## Service Deployment
+In the example above, we created all the resources for the service except the actual deployment. This is because we do
+not have a docker image for it in the cloud yet. To deploy, we need to first build the image, push it, and then apply
+the yaml again, this time specifying the now existing remote image and tag. You can do so by following these steps to 
+deploy the service:
+
+- Build docker image: `docker build -t test-service:v1 ...` set v1 to what you want to call this version. Usually the git sha
+  (if you don't have a dockerfile ready you can always pull an existing image and retag it `docker pull kennethreitz/httpbin && docker tag kennethreitz/httpbin:latest test-service:v1`)
+- Upload docker image: `opta push test-service:v1`
+- Apply the change: `opta apply ---image-tag v1`
 
 Now, once this step is complete, you should be to curl your service by specifying the url of the load balancer we
 created for you (again, can't use the domain until you finish the extra ingress steps outlined in the tutorial, but
@@ -102,16 +113,3 @@ curl --header "Host: subdomain.staging.example.com"  http://${DOMAIN}/get # NOTE
 ```
 
 To fully setup the public dns and ssl, please checkout the [Ingress docs](/docs/tutorials/ingress).
-
-## Service Deployment
-In the example above, we deployed a service using a public image from dockerhub, "kennethreitz/httpbin". You can totally
-deploy your own image, and we even setup the cloud storage of your image for you! All you gotta do is set the `image`
-field (the one which is "kennethreitz/httpbin" in the example) over to "AUTO". You'll then need to `opta apply` once
-more so that opta gets the memo to create the storage, but once that's done there's no extra setup! Just follow these
-steps to deploy the service:
-
-- Build docker image: `docker build -t test-service:v1 ...` set v1 to what you want to call this version. Usually the git sha
-- Upload docker image: `opta push test-service:v1`
-- Apply the change: `opta apply ---image-tag v1`
-
-_Note: you are responsible for setting up te Dockerfile as you wish.

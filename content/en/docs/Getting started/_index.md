@@ -46,7 +46,7 @@ opta apply
 
 This step will create an EKS cluster for you and set up VPC, networking and various other infrastructure pieces transparently.
 
-_Note: while we create the "domain" setting it up so that it actually receives internet traffic and has ssl takes some extra 
+_Note: while we create the "domain", setting it up so that it actually receives internet traffic and has ssl takes some extra 
 steps, please check out the [Ingress docs](/docs/tutorials/ingress)._
 
 ## Service creation
@@ -98,10 +98,10 @@ not have a docker image for it in the cloud yet. To deploy, we need to first bui
 the yaml again, this time specifying the now existing remote image and tag. You can do so by following these steps to 
 deploy the service:
 
-- Build docker image: `docker build -t test-service:v1 ...` set v1 to what you want to call this version. Usually the git sha
-  (if you don't have a dockerfile ready you can always pull an existing image and retag it `docker pull kennethreitz/httpbin && docker tag kennethreitz/httpbin:latest test-service:v1`)
-- Upload docker image: `opta push test-service:v1`
-- Apply the change: `opta apply ---image-tag v1`
+- Build docker image: `docker build -t test-service:v1 ...` set v1 to what you want to call this version. Usually the git sha. In this example you can pull an existing image and retag it
+  ```docker pull kennethreitz/httpbin && docker tag kennethreitz/httpbin:latest test-service:v1```
+- Upload docker image: ```opta push test-service:v1```
+- Apply the change: ```opta apply ---image-tag v1```
 
 Now, once this step is complete, you should be to curl your service by specifying the url of the load balancer we
 created for you (again, can't use the domain until you finish the extra ingress steps outlined in the tutorial, but

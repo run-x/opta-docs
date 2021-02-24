@@ -101,8 +101,7 @@ export DOMAIN=`kubectl get services -n ingress-nginx ingress-nginx-controller --
 curl --header "Host: subdomain.staging.example.com"  http://${DOMAIN}/get # NOTE: not https because ssl is part of the extra setup
 ```
 
-Once you complete the full domain/ingress setup your service will be accessible at https://subdomain.staging.example.com,
-no more ifs, or buts! Congrats!
+To fully setup the public dns and ssl, please checkout the [Ingress docs](/docs/tutorials/ingress).
 
 ## Service Deployment
 In the example above, we deployed a service using a public image from dockerhub, "kennethreitz/httpbin". You can totally
@@ -111,8 +110,8 @@ field (the one which is "kennethreitz/httpbin" in the example) over to "AUTO". Y
 more so that opta gets the memo to create the storage, but once that's done there's no extra setup! Just follow these
 steps to deploy the service:
 
-- Build docker image: `docker build -t test-service:blah ...` set blah to what you want to call this version. Usually the git sha
-- Upload docker image: `opta push test-service:blah`
-- Apply the change: `opta apply ---image-tag blah`
+- Build docker image: `docker build -t test-service:v1 ...` set v1 to what you want to call this version. Usually the git sha
+- Upload docker image: `opta push test-service:v1`
+- Apply the change: `opta apply ---image-tag v1`
 
 _Note: you are responsible for setting up te Dockerfile as you wish.

@@ -13,49 +13,56 @@ need to get created. Opta yamls reference these under the `modules` field.
 
 
 ```yaml
-meta:
-  parent: "../env/opta.yml"
-  name: baloney
+environments:
+  - name: staging
+    parent: "../env/opta.yml"
+name: baloney
+org_name: blah
 modules:
-  app: # This is an instance of the k8-service module type called app
+  - name: app # This is an instance of the k8-service module type called app
     type: k8s-service
     port: 
       http: 80
     image: "kennethreitz/httpbin"
-    tag: "latest"
-    domain: "dummy.{parent[domain]}"
+    public_uri: "dummy.{parent[domain]}/showoff"
     liveness_probe_path: "/get"
     readiness_probe_path: "/get"
-    path_prefix: "/showoff"
-    external_image: true
     env_vars:
       - name: BLAH
-        value: malarkey
+        value: "{env}"
     links:
-      database: []
-      redis: []
-  database: # This is an instance of the aws-rds module type called database
+      - database  # Equivalent to database: []
+      - redis  # Equivalent to redis: []
+  - name: database # This is an instance of the aws-rds module type called database
     type: aws-rds
-  redis: # This is an instance of the aws-redis module type called redis
+  - name: redis # This is an instance of the aws-redis module type called redis
     type: aws-redis
 ```
 You'll note that the module instance can have user-specified names which will come into play later with references.
 
-## Variables
+## Fields
 You'll note that there can be many, varying, fields per module instance such 
-as "type", "env_vars", "api_key" etc...  These are called _variables_ and this 
+as "type", "env_vars", "image" etc...  These are called _fields_ and this 
 is how specific data is passed into the modules.
 
+### Names
+All modules have a name field, which is used to create the name of the cloud resources in conjunction with the layer
+name (root name of opta.yml). A user can specify this with the `name` field, but it defaults to the module type (without
+the hyphens) if not given.
+
 ### Types
-All modules have their own list of supported variables, but the one common to all is _type_. The type variable is simply
+All modules have their own list of supported fields, but the one common to all is _type_. The type field is simply
 the module reference (e.g. the library/package to use in this "import"). Opta currently comes with its list of valid
 modules built in -- future work may allow users to specify their own.
 
 ### Linking
 The k8s-service module type is the first (but not the last) module to support 
-special processing. In this case, it's in regard to the _links_ variable. The 
-links variable takes as input a map where the key is the name of another module 
-in the file and the value a list of strings representing resource permissions. 
+special processing. In this case, it's in regard to the _links_ field. The 
+links field takes as input a list of maps with a single element where the 
+key is the name of another module in the file, and the value a list of 
+strings representing resource permissions. For a shortcode, you can just write
+the module name as a string, and we transform it to a map with the name as the
+key and the value an empty list.
 The module processor then transforms your module's input to intelligently
 integrate your k8's service deployment to the now "linked" resources (described
 in the next section).
@@ -65,7 +72,7 @@ meta:
   parent: "../env/opta.yml"
   name: baloney
 modules:
-  app: # This is an instance of the k8-service module type called app
+  - app: # This is an instance of the k8-service module type called app
 .
 .
 .
@@ -75,14 +82,14 @@ modules:
       docdb: []
       bucket:
         - write
-  database: # This is an instance of the aws-rds module type called database
+  - name: database # This is an instance of the aws-rds module type called database
     type: aws-rds
-  redis: # This is an instance of the aws-redis module type called redis
+  - name: redis # This is an instance of the aws-redis module type called redis
     type: aws-redis
-  docdb:
+  - name: docdb
     type: aws-documentdb
-  bucket:
-    type: aws-s3-bucket
+  - name: bucket
+    type: aws-s3
     bucket_name: "blah"
 ```
 
@@ -90,12 +97,52 @@ modules:
 Here is the list of module types for the user to use, with their inputs and outputs:
 
 
+## aws-base
+This module is the "base" module for creating an environment in aws. It sets up the VPCs, default kms key and the
+db/cache subnets. Defaults are set to work 99% of the time, assuming no funny networking constraints (you'll know them
+if you have them), so _no need to set any of the fields or no what the outputs do_.
+
+*Fields*
+* `total_ipv4_cidr_block` -- Optional. This is the total cidr block for the VPC. Defaults to "10.0.0.0/16"
+* `private_ipv4_cidr_blocks` -- Optional. These are the cidr blocks to use for the private subnets, one for each AZ. 
+  Defaults to ["10.0.128.0/21", "10.0.136.0/21", "10.0.144.0/21"] 
+* `public_ipv4_cidr_blocks` -- Optional. These are the cidr blocks to use for the public subnets, one for each AZ.
+  Defaults to ["10.0.0.0/21", "10.0.8.0/21", "10.0.16.0/21"]
+
+*Outputs*
+* `kms_account_key_arn` -- The [ARN](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html) of the default 
+  [KMS](https://aws.amazon.com/kms/) key (this is what handles encryption for redis, documentdb, eks, etc...)
+* `kms_account_key_id` -- The [ID](https://docs.aws.amazon.com/kms/latest/developerguide/find-cmk-id-arn.html) of the default 
+  KMS key (sometimes things need the ID, sometimes the ARN, so we're giving both)
+* `vpc_id` -- The ID of the [VPC](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html) we created for 
+  this environment
+* `private_subnet_ids` -- The IDs of the private [subnets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html) 
+  we setup for your environment
+* `public_subnets_ids` -- The IDs of the public [subnets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html) 
+  we setup for your environment
+
+## aws-dns
+This module creates a [Route53 hosted zone](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-working-with.html) for 
+your given domain. The [k8s-base]({{< relref "#k8s-base" >}}) module automatically hooks up the load balancer to it
+for the domain and subdomain specified, but in order for this to actually receive traffic you will need to complete
+the [dns setup](/docs/tutorials/ingress).
+
+*Fields*
+* domain -- Required. The domain you want (you will also get the subdomains for your use)
+
+*Outputs*
+* zone_id -- The ID of the hosted zone created
+* name_servers -- The name servers of your hosted zone (very important for the dns setup)
+* domain -- The domain again
+* cert_arn -- The arn of the [ACM certificate ](https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html) which
+  is used for ssl.
+
 ## aws-documentdb
 This module creates an AWS Documentdb  cluster. It is made in the private subnets automatically created for the environment.
 macro and so can only be accessed in the VPC or through some proxy (e.g. VPN). It is encrypted
 at rest with a kms key created in the env setup and in transit via tls.
 
-*Variables*
+*Fields*
 * `instance_class` -- Optional. This is the RDS instance type used for the documentdb cluster [instances](https://aws.amazon.com/documentdb/pricing/).
   Default db.r5.large
 
@@ -122,12 +169,25 @@ await mongoose.connect("mongodb://<USER>:<PASSWORD>@<HOST>, {
 });
 ```
 
-## aws-rds
+## aws-eks
+This module creates an [EKS cluster](https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html), and a default
+nodegroup to host your applications in. This needs to be added in the environment opta yml if you wish to deploy services
+as opta services run on Kubernetes (just EKS for now).
+
+*Fields*
+* `min_nodes` -- Optional. The minimum number of nodes to be set by the autoscaler in for the default nodegroup. Defaults to 3.
+* `max_nodes` -- Optional. The minimum number of nodes to be set by the autoscaler in for the default nodegroup. Defaults to 5.
+* `node_disk_size` -- Optional. The size of disk to give the nodes' ec2s. Defaults to 20(GB)
+* `node_instance_type` -- Optional. The [ec2 instance type](https://aws.amazon.com/ec2/instance-types/) for the nodes. Defaults
+  to t3.medium (highly unrecommended to set to smaller)
+* `k8s_version` -- Optional. The Kubernetes version for the cluster. Must be [supported by EKS](https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html)
+
+## aws-postgres
 This module creates a postgres Aurora RDS database instance. It is made in the 
 private subnets automatically created during environment setup and so can only be accessed in the 
 VPC or through some proxy (e.g. VPN).
 
-*Variables*
+*Fields*
 * `instance_class` -- Optional. This is the RDS instance type used for the Aurora cluster [instances](https://aws.amazon.com/rds/instance-types/).
   Default db.r5.large
 * `engine_version` -- Optional. The version of the database to use. Default 11.9.
@@ -152,7 +212,7 @@ This module creates a redis cache via elasticache. It is made with one failover 
 at rest with a kms key created in the env setup via the _init_ macro and in transit via tls. It is made in the private
 subnets created by the _init macro and so can only be accessed in the VPC or through some proxy (e.g. VPN).
 
-*Variables*
+*Fields*
 * `node_type` -- Optional. This is the redis instance type used for the [instances](https://aws.amazon.com/elasticache/pricing/). 
   Default cache.m4.large.
 
@@ -169,10 +229,10 @@ _NOTE_ Redis CLI will not work against this cluster because redis cli does not
 support the TLS transit encryption. There should be no trouble with any of the 
 language sdks however, as they all support TLS.
 
-## aws-s3-bucket
+## aws-s3
 This module creates an S3 bucket for storage purposes. It is created with server-side AES256 encryption.
 
-*Variables*
+*Fields*
 * `bucket_name`-- Required. The name of the bucket to create.
 * `block_public` -- Optional. Block all public access. Default true
 * `bucket_policy` -- Optional. A custom s3 policy json/yaml to add.
@@ -189,12 +249,26 @@ create, destroy, and update objects) to the given s3 bucket.
 The current permissions are (wait for it), "read" and "write". These need to be
 specified when you add the link.
 
+## datadog
+This module setups the [Datadog Kubernetes](https://docs.datadoghq.com/agent/kubernetes/?tab=helm) integration onto
+the EKS cluster created for this environment. Please read the [datadog tutorial](/docs/tutorials/datadog) for all the
+details of the features.
+
+*Fields*
+None. It'll prompt the use for a valid api key the first time it's run, but nothing else, and nothing in the yaml.
+
+*Outputs*
+None
+
+## k8s-base
+
+
 ## k8s-service
-The most import module for deploying apps, k8s-service deploys a kubernetes app.
+The most important module for deploying apps, k8s-service deploys a kubernetes app.
 It deploys your service as a rolling update securely and with simple autoscaling right off the bat-- you
 can even expose it to the world, complete with load balancing both internally and externally.
 
-*Variables*
+*Fields*
 * `port` -- Required. Specifies what port your app was made to be listened to. Currently it must be a map of the form
   `http: [PORT_NUMBER_HERE]` or `tcp: [PORT_NUMBER_HERE]`. Use http if you just have a vanilla http server and tcp for
   websockets.
@@ -235,7 +309,7 @@ when using external images.
 
 #### External/Internal Image
 Furthermore, this module supports deploying from an "external" image repository (currently only public ones supported)
-by setting the `image` variable to the repo (e.g. "kennethreitz/httpbin" in the examples). If that's not set then
+by setting the `image` field to the repo (e.g. "kennethreitz/httpbin" in the examples). If that's not set then
 it will automatically create a secure container repository with ECR on your account. You can then use the `opta push`
 command to push to it!
 

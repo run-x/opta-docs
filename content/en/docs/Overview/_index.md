@@ -1,7 +1,7 @@
 ---
 title: "Overview"
 linkTitle: "Overview"
-weight: 1
+weight: 0
 description: >
   What is Opta?
 ---

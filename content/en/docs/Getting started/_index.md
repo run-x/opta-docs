@@ -25,20 +25,18 @@ For this we need to create an `opta.yml` file which defines the environment.
 
 Create the following file at `staging/opta.yml` and update the fields specific to your AWS account setup.
 ```yaml
-meta:
-  name: staging
-  # Provide a unique org_id here, usually your company name
-  org_id: runx
-  providers:
-    aws:
-      # Provide your AWS account and region here
-      region: us-east-1
-      allowed_account_ids: [ 889760294590 ]
-  variables:
-    # Provide your domain here, assuming you own example.com :)
-    domain: "staging.example.com"
-
-_init: {}
+name: staging
+org_name: runx
+providers:
+  aws:
+    region: us-east-1
+    account_id: XXXX
+modules:
+  - type: aws-base
+  - type: aws-dns
+    domain: staging.example.com
+  - type: aws-eks
+  - type: k8s-base
 ```
 
 Now, cd to the `staging` dir and run:
@@ -48,7 +46,8 @@ opta apply
 
 This step will create an EKS cluster for you and set up VPC, networking and various other infrastructure pieces transparently.
 
-_Note: using a domain needs extra setup, please check out the [Ingress docs](/docs/tutorials/ingress)._
+_Note: while we create the "domain" setting it up so that it actually receives internet traffic and has ssl takes some extra 
+steps, please check out the [Ingress docs](/docs/tutorials/ingress)._
 
 ## Service creation
 In this step we will create a service with your application's logic.
@@ -57,49 +56,60 @@ We will create another `opta.yml` file, which defines high level configuration o
 Create this file at `myapp/opta.yml` and update the fields specific to your service setup.
 
 ```yaml
-meta:
-  name: myapp 
-  envs:
-    # The list environments where this app will be deployed.
-    # Relative path to the file from the directory where `opta apply` is called.
-    - parent: "staging/opta.yml"
+environments:
+  - name: staging
+    path: "../new_env/opta.yml"
+    vars:
+      - max_containers: 2
+name: hello-world
 modules:
-  app:
+  - name: app
     type: k8s-service
-    # This is needed for deploys to work properly!
-    tag: "{tag}"
-    # The docker port your service listens on
+    image: "AUTO"
+    min_containers: 2
+    max_containers: "{vars.max_containers}"
+    liveness_probe_path: "/get"
+    readiness_probe_path: "/get"
     port:
-      http: 5000
-    # The path to expose this app on
-    domain: "myapp.{parent[domain]}"
+      http: 80
     env_vars:
-      # Use parent variables to distinguish b/w various environments
-      - name: ENV
-        value: "{parent[name]}"
-    links: 
-      # DB credentials will be passed down to your app as env variables.
-      # The variables exported for `aws-rds` are:
-      # mydb_user, mydb_name, mydb_password, mydb_host
-      mydb: []
-    secrets:
-      - MY_SECRET
-  mydb:
-    type: aws-rds
+      - name: APPENV
+        value: "{env}"
+    public_uri: "subdomain.{parent.domain}"
+    links:
+      - db
+    secrets: # Checkout the secrets tutorial on how to use these
+      - API_KEY
+      - SECRET_1
+  - name: db
+    type: aws-postgres
 ```
 
 Now, cd to the `myapp` dir and run:
 ```bash
 opta apply
 ```
-This sets up your service's infrastructure (database, etc) and now it's ready to be deployed
+This sets up your service's infrastructure (database, private docker repo, etc) and now it's ready to be deployed
 (next section).
 
 ## Service Deployment
+In the example above, we created all the resources for the service except the actual deployment. This is because we do
+not have a docker image for it in the cloud yet. To deploy, we need to first build the image, push it, and then apply
+the yaml again, this time specifying the now existing remote image and tag. You can do so by following these steps to 
+deploy the service:
 
-To deploy the service:
-- Build docker image: `docker build ...`
-- Upload docker image: `opta push --tag <tag> image` where `<tag>` is what you want to call this version. Usually the git sha.
-- Apply the change: `opta apply --var tag=<tag>`
+- Build docker image: `docker build -t test-service:v1 ...` set v1 to what you want to call this version. Usually the git sha
+  (if you don't have a dockerfile ready you can always pull an existing image and retag it `docker pull kennethreitz/httpbin && docker tag kennethreitz/httpbin:latest test-service:v1`)
+- Upload docker image: `opta push test-service:v1`
+- Apply the change: `opta apply ---image-tag v1`
 
-Now your service will be accessible at https://myapp.staging.startup.com! Congrats!
+Now, once this step is complete, you should be to curl your service by specifying the url of the load balancer we
+created for you (again, can't use the domain until you finish the extra ingress steps outlined in the tutorial, but
+you can totally hit the load balancer directly) and setting the host header to match your desired domain:
+```bash
+opta configure-kubectl
+export DOMAIN=`kubectl get services -n ingress-nginx ingress-nginx-controller --output jsonpath='{.status.loadBalancer.ingress[0].hostname}'`
+curl --header "Host: subdomain.staging.example.com"  http://${DOMAIN}/get # NOTE: not https because ssl is part of the extra setup
+```
+
+To fully setup the public dns and ssl, please checkout the [Ingress docs](/docs/tutorials/ingress).

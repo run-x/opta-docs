@@ -129,6 +129,7 @@ the [dns setup](/docs/tutorials/ingress).
 
 *Fields*
 * domain -- Required. The domain you want (you will also get the subdomains for your use)
+* delegated -- Optional. Set to true once the extra dns setup is complete.
 
 *Outputs*
 * zone_id -- The ID of the hosted zone created
@@ -269,7 +270,7 @@ This module is responsible for all the base infrastructure we package into the o
 * [Linkerd](https://linkerd.io/) as our service mesh.
 
 *Fields*
-None for the user, we allow no ocnfiguration at the time.
+None for the user, we allow no configuration at the time.
 
 *Outputs*
 None

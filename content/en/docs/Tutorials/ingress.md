@@ -28,8 +28,7 @@ modules:
 As is, the aws-dns will create the "hosted zone" resource which you can think of as the object managing your dns rules
 for the domain you listed. Technically, you can put any domain you wish (e.g. google.com), but in order for it to
 receive public traffic and get ssl (to have https instead of http connections), you have to do some extra setup which
-_proves_ that you own it (e.g. you can say you own house X all you want, but unless you show some paperwork proving it
-the government isn't going to listen).
+_proves_ that you own it.
 
 This extra setup is updating the domain's nameservers to point to your opta environment's AWS "hosted zone". This is how you do it:
 - Run `opta apply` on the yaml file at least once to create the underlying resources
@@ -64,7 +63,7 @@ modules:
   - type: aws-base
   - type: aws-dns
     domain: staging.startup.com
-    delegated: true
+    delegated: true # <-- THIS
   - type: aws-eks
   - type: k8s-base
 ```

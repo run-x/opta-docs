@@ -78,7 +78,7 @@ modules:
     public_uri: "subdomain.{parent.domain}"
     links:
       - db
-    secrets:
+    secrets: # Checkout the secrets tutorial on how to use these
       - API_KEY
       - SECRET_1
   - name: db

@@ -14,10 +14,10 @@ Opta provides in-built secret management for your applications. Any secrets like
 1. You can define/provision all the secrets you would need for an application in the service's opta.yml file like this:
 
 ```yaml
-meta:
-  name: my_app
-  envs:
-    - parent: "staging/opta.yml"
+name: my_app
+environments:
+  - parent: "staging/opta.yml"
+    name: staging
 modules:
   - my_app:
       type: k8s-service

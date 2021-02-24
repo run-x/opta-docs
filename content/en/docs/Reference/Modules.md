@@ -317,7 +317,7 @@ when using external images.
 
 #### External/Internal Image
 Furthermore, this module supports deploying from an "external" image repository (currently only public ones supported)
-by setting the `image` field to the repo (e.g. "kennethreitz/httpbin" in the examples). If that's not set then
+by setting the `image` field to the repo (e.g. "kennethreitz/httpbin" in the examples). If you set the value to "AUTO" however,
 it will automatically create a secure container repository with ECR on your account. You can then use the `opta push`
 command to push to it!
 

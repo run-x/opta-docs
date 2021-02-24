@@ -4,7 +4,7 @@ linkTitle: "Datadog Integration"
 date: 2020-02-01
 draft: false
 description: >
-Instructions on how to integrate your environment with Datadog
+  Instructions on how to integrate your environment with Datadog
 ---
 
 So, just to make sure we're all on the same page, [Datadog](https://www.datadoghq.com/) is a cloud monitoring/security

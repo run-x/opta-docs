@@ -261,7 +261,18 @@ None. It'll prompt the use for a valid api key the first time it's run, but noth
 None
 
 ## k8s-base
+This module is responsible for all the base infrastructure we package into the opta K8s environments. This includes:
+* [Autoscaler](https://github.com/kubernetes/autoscaler) for scaling up and down the ec2s as needed
+* [External](https://github.com/kubernetes-sigs/external-dns) DNS to automatically hook up the ingress to the hosted zone and its domain
+* [Ingress Nginx](https://github.com/kubernetes/ingress-nginx) to expose services to the public
+* [Metrics server](https://github.com/kubernetes-sigs/metrics-server) for scaling different deployments based on cpu/memory usage
+* [Linkerd](https://linkerd.io/) as our service mesh.
 
+*Fields*
+None for the user, we allow no ocnfiguration at the time.
+
+*Outputs*
+None
 
 ## k8s-service
 The most important module for deploying apps, k8s-service deploys a kubernetes app.
@@ -272,12 +283,9 @@ can even expose it to the world, complete with load balancing both internally an
 * `port` -- Required. Specifies what port your app was made to be listened to. Currently it must be a map of the form
   `http: [PORT_NUMBER_HERE]` or `tcp: [PORT_NUMBER_HERE]`. Use http if you just have a vanilla http server and tcp for
   websockets.
-* `min_autoscaling` -- Optional. The minimum number of replicas your app can autoscale to. Default 1
-* `max_autoscaling` -- Optional. The maximum number of replicas your app can autoscale to. Default 3
-* `image` -- Optional. If you specify this, then it will use the image specified for its deploys and not make an ECR
-  repo itself.
-* `tag` -- Optional, use this if you are using an internal image whose repo is managed by the module. The tag specifies
-  what image tag to pull from the image repo. We recommend tagging based on git commit sha
+* `min_containers` -- Optional. The minimum number of replicas your app can autoscale to. Default 1
+* `max_containers` -- Optional. The maximum number of replicas your app can autoscale to. Default 3
+* `image` -- Required. Set to AUTO to create a private repo for your own images. Otherwises attempts to pull image from public dockerhub
 * `env_vars` -- Optional. A list of maps holding name+value fields for envars to add to your container
   ```yaml
     - name: BLAH

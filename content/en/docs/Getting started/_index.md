@@ -112,4 +112,4 @@ export DOMAIN=`kubectl get services -n ingress-nginx ingress-nginx-controller --
 curl --header "Host: subdomain.staging.example.com"  http://${DOMAIN}/get # NOTE: not https because ssl is part of the extra setup
 ```
 
-To fully setup the public dns and ssl, please checkout the [Ingress docs](/docs/tutorials/ingress).
+- To fully setup the public dns and ssl, please checkout the [Ingress docs](/docs/tutorials/ingress).

@@ -21,6 +21,16 @@ VERSION=0.x /bin/bash -c "$(curl -fsSL https://docs.runx.dev/install.sh)"
 
 ## Releases
 
+### 0.9
+
+#### Changelog
+- Revamped the Opta API
+- Implemented opta inspect
+- Bugfixes
+
+***
+
+
 ### 0.7
 
 #### Changelog

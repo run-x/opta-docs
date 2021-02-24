@@ -60,14 +60,14 @@ environments:
   - name: staging
     path: "../new_env/opta.yml"
     vars:
-      - max_nodes: 2
+      - max_containers: 2
 name: hello-world
 modules:
   - name: app
     type: k8s-service
     image: "kennethreitz/httpbin" # external image, set to AUTO if you're building your own
     min_containers: 2
-    max_containers: "{vars.max_nodes}"
+    max_containers: "{vars.max_containers}"
     liveness_probe_path: "/get"
     readiness_probe_path: "/get"
     port:

@@ -35,7 +35,10 @@ modules:
   - type: aws-base
   - type: aws-dns
     domain: staging.example.com
+    delegated: false
   - type: aws-eks
+    node_instance_type: t3.medium  # Optional
+    max_nodes: 15  # Optional
   - type: k8s-base
 ```
 
@@ -53,19 +56,19 @@ steps, please check out the [Ingress docs](/docs/tutorials/ingress)._
 In this step we will create a service with your application's logic.
 We will create another `opta.yml` file, which defines high level configuration of this service.
 
-Create this file at `myapp/opta.yml` and update the fields specific to your service setup.
+Create an `opta.yml` and update the fields specific to your service setup.
 
 ```yaml
 environments:
   - name: staging
-    path: "../new_env/opta.yml"
+    path: "staging/opta.yml"
     vars:
-      - max_containers: 2
+      - max_containers: 3
 name: hello-world
 modules:
   - name: app
     type: k8s-service
-    image: "AUTO"
+    image: AUTO
     min_containers: 2
     max_containers: "{vars.max_containers}"
     liveness_probe_path: "/get"
@@ -78,14 +81,24 @@ modules:
     public_uri: "subdomain.{parent.domain}"
     links:
       - db
+      - docdb
+      - redis
+      - bucket
     secrets: # Checkout the secrets tutorial on how to use these
       - API_KEY
       - SECRET_1
   - name: db
     type: aws-postgres
+  - name: docdb
+    type: aws-documentdb
+  - name: redis
+    type: aws-redis
+  - name: bucket
+    type: aws-s3
+    bucket_name: test  # change this or remove this module
 ```
 
-Now, cd to the `myapp` dir and run:
+Now run:
 ```bash
 opta apply
 ```
@@ -99,9 +112,13 @@ the yaml again, this time specifying the now existing remote image and tag. You 
 deploy the service:
 
 - Build docker image: `docker build -t test-service:v1 ...` set v1 to what you want to call this version. Usually the git sha. In this example you can pull an existing image and retag it
-  ```docker pull kennethreitz/httpbin && docker tag kennethreitz/httpbin:latest test-service:v1```
-- Upload docker image: ```opta push test-service:v1```
-- Apply the change: ```opta apply ---image-tag v1```
+```bash
+docker pull kennethreitz/httpbin && docker tag kennethreitz/httpbin:latest test-service:v1
+```
+- Deploy:
+```bash
+opta deploy test-service:v1
+```
 
 Now, once this step is complete, you should be to curl your service by specifying the url of the load balancer we
 created for you (again, can't use the domain until you finish the extra ingress steps outlined in the tutorial, but
@@ -113,3 +130,4 @@ curl --header "Host: subdomain.staging.example.com"  http://${DOMAIN}/get # NOTE
 ```
 
 - To fully setup the public dns and ssl, please checkout the [Ingress docs](/docs/tutorials/ingress).
+- Run `opta` to check various other options the cli provides, like streaming logs, or ssh into your container.

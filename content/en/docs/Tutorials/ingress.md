@@ -25,15 +25,15 @@ modules:
   - type: k8s-base
 ```
 
-As is, the aws-dns will create the "hosted zone" resource which you can think of as the object managing your dns rules
-for the domain you listed. Technically, you can put any domain you wish (e.g. google.com), but in order for it to
-receive public traffic and get ssl (to have https instead of http connections), you have to do some extra setup which
+As is, the aws-dns will create the "hosted zone" resource which manages your dns rules 
+for the domain you listed. In order for it to receive public traffic and get ssl 
+(to have https instead of http connections), you have to do some extra setup which
 _proves_ that you own it.
 
 This extra setup is updating the domain's nameservers to point to your opta environment's AWS "hosted zone". This is how you do it:
 - Run `opta apply` on the yaml file at least once to create the underlying resources
 - Run `opta output` and note down the nameservers that get printed. It's usually a set of 4 servers.
-- Assuming you own startup.com and want to map staging.startup.com to this environment. Then you'd add the following NS records in your domain registrar, where ns1-ns4 are the nameservers from the previous step.
+- Assuming you own example.com and want to map staging.example.com to this environment. Then you'd add the following NS records in your domain registrar, where ns1-ns4 are the nameservers from the previous step.
   ```
   staging				1h			ns1
   staging				1h			ns2
@@ -118,8 +118,8 @@ meta:
 modules:
   myapp:
     type: k8s-service
-    public_uri: "myapp.{parent.domain}/blah"
+    public_uri: "myapp.{parent.domain}/v1"
     ...
 ```
 
-Following the domain examples above, this will expose the service at https://myapp.staging.startup.com/blah
+Following the domain examples above, this will expose the service at https://myapp.staging.startup.com/v1

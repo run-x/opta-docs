@@ -298,16 +298,12 @@ can even expose it to the world, complete with load balancing both internally an
 * `autoscaling_target_mem_percentage` -- Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
 * `liveness_probe_path` -- Optional. See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default "/healthcheck"
 * `readiness_probe_path` -- Optional. See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default "/healthcheck"
-* `container_resource_limits` -- Optional. See the [container resources]({{< relref "#container-resources" >}}) section. Default
+* `resource_request` -- Optional. See the [container resources]({{< relref "#container-resources" >}}) section. Default
   ```yaml
-  cpu: "200m"
-  memory: "256Mi"
+  cpu: 100
+  memory: 128
   ```
-* `container_resource_requests` -- Optional. See the [container resources]({{< relref "#container-resources" >}}) section. Default
-  ```yaml
-  cpu: "100m"
-  memory: "128Mi"
-  ```
+  CPU is given in millicores, and Memory is in megabytes.
 * `public_uri` -- Optional. The full domain to expose your app under as well as path prefix. Must be the full parent domain or a subdomain referencing the parent as such: "dummy.{parent[domain]}/my/path/prefix"
 * `additional_iam_roles` -- Optional. A list of extra IAM role arns not captured by Opta which you wish to give to your service.
 
@@ -344,6 +340,8 @@ the average memory usage was 160mb, it would logically try to double the number 
 One of the other benefits of kubernetes is that a user can have fine control over the [resources used by each of their containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
 A user can control the cpu, memory and disk usage with which scheduling is made, and the max limit after which the container is killed.
 With Opta, we expose such settings to the user, while keeping sensible defaults.
+
+_NOTE_ We expose the resource requests and set the limits to twice the request values.
 
 #### Ingress
 You can control if and how you want to expose your app to the world! Check out

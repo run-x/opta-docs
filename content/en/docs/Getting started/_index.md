@@ -69,8 +69,11 @@ modules:
   - name: app
     type: k8s-service
     image: AUTO
+    resource_request:
+      cpu: 10  # in millicores
+      memory: 128  # in megabytes
     min_containers: 2
-    max_containers: "{vars.max_containers}"
+    max_containers: "{vars.max_containers}"  # autoscales to this limit
     liveness_probe_path: "/get"
     readiness_probe_path: "/get"
     port:
@@ -117,7 +120,7 @@ docker pull kennethreitz/httpbin && docker tag kennethreitz/httpbin:latest test-
 ```
 - Deploy:
 ```bash
-opta deploy test-service:v1
+opta deploy --image test-service:v1
 ```
 
 Now, once this step is complete, you should be to curl your service by specifying the url of the load balancer we

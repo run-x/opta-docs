@@ -3,7 +3,7 @@ title: "IAM Guidance for Opta"
 linkTitle: "IAM Guidance for Opta"
 date: 2020-02-01
 description: >
-How to configure your iam to work with Opta
+   How to configure your iam to work with Opta
 ---
 
 # Overview
@@ -39,17 +39,18 @@ Once that's settled, you can [assign user access](https://docs.aws.amazon.com/si
 to the different accounts in your organization. For opta usage, we recommend to use the SSO Admin access/permission set.
 
 _NOTE_ If you want to deploy opta in the root account (which we advise against), feel free to use the New Account section
-instructions from down belo
+instructions from down below
 
 ## New Account
-Outside of SSO, if one were to use opta then we highly recommend creating a new IAM for opta which your human teammates 
+Outside of SSO, if one were to use opta then you have to create a new IAM for opta which your human teammates 
 could then "[assume](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use.html)". This assumption allows IAM
 users (and other roles too) to get credentials for the assumed role (time limited) and interact with the AWS API on their
 behalf. _This way many people can get the same permissions and act as the same entity without compromising their own
 personal credentials_. For role assumption, two things are required:
-1. The role to be assumed must have what is going to be assuming it in its trust relationship (e.g. "I'm cool with
-   roles/users X, Y in account Z to be assuming me).
-2. The assumer role/user must have the IAM permission to assume the opta role (e.g. "I'm allowed to assume that role)
+1. The role to be assumed must have its trust policy include the role that would assume it (explicitly or through a group).
+   ![image alt text](/images/iam_tutorial_image_1.png)
+2. The assumer role/user must have the IAM permission to assume the opta role.
+   ![image alt text](/images/iam_tutorial_image_2.png)
 
 To create such a role and permission, you can start by following the official IAM role creation instructions
 [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user.html#roles-creatingrole-user-console).
@@ -57,6 +58,7 @@ When prompted "Specify accounts that can use this role" add the own account id. 
 the role will be ok with ANY IAM role/user in your account to assume it (you can refine the list later). Continue and 
 give it the Administrator Access policy (should be one of the first on the list), and create it (you can add tags if you 
 so wish). Now you have a role capable of executing AWS requests with admin privileges.
+![image alt text](/images/iam_tutorial_image_3.png)
 
 To satisfy requirement 2, all you have to do is follow this [guide](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_permissions-to-switch.html)
 for all the IAM users/roles you have in question. You can then test it out by running the following with you current credentials:
@@ -82,11 +84,21 @@ iam users/roles are) and make sure that you allowed role assumption in the assum
 For long term credentials (e.g. to hardcode into a CI system), we recommend you create an IAM user who can then assume
 the role used by opta and using its credentials, assuming the opta role as part of the process.
 
-## EKS Access
-By default, the IAM role who created an EKS cluster has the admin role within the cluster hard coded for it. Thus, if
-using just a single IAM role/user for opta commands there will never need to be additional steps for EKS access.
-Alternatively, if additional roles/users need access to the cluster then you may add them by using kubectl and the opta
-role to edit the [aws-auth configmap](https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html). This 
-configmap is special for EKS and basically says "IAM roles/users X, Y, Z have permissions to do A, B, C in this cluster".
-Make sure to not delete any pre-existing maps, and give your new roles the system:masters group for now (make sure
-to remove the slant brackets <> from the docs example).
+{
+"Version": "2012-10-17",
+"Statement": [
+{
+"Sid": "",
+"Effect": "Allow",
+"Principal": {
+"Federated": "arn:aws:iam::889760294590:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/E41D0A2CAFBA4E01C6DBDD6035DC52D3"
+},
+"Action": "sts:AssumeRoleWithWebIdentity",
+"Condition": {
+"StringEquals": {
+"oidc.eks.us-east-1.amazonaws.com/id/E41D0A2CAFBA4E01C6DBDD6035DC52D3:sub": "system:serviceaccount:ankur-test:app"
+}
+}
+}
+]
+}

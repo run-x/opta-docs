@@ -84,21 +84,11 @@ modules:
     public_uri: "subdomain.{parent.domain}"
     links:
       - db
-      - docdb
-      - redis
-      - bucket
     secrets: # Checkout the secrets tutorial on how to use these
       - API_KEY
       - SECRET_1
   - name: db
     type: aws-postgres
-  - name: docdb
-    type: aws-documentdb
-  - name: redis
-    type: aws-redis
-  - name: bucket
-    type: aws-s3
-    bucket_name: test  # change this or remove this module
 ```
 
 Now run:

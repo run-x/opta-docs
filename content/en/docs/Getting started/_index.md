@@ -70,8 +70,8 @@ modules:
     type: k8s-service
     image: AUTO
     resource_request:
-      cpu: 10  # in millicores
-      memory: 128  # in megabytes
+      cpu: 100  # in millicores
+      memory: 512  # in megabytes
     min_containers: 2
     max_containers: "{vars.max_containers}"  # autoscales to this limit
     liveness_probe_path: "/get"

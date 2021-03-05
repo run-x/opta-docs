@@ -1,9 +1,9 @@
 ---
-title: "Modules"
-linkTitle: "Modules"
+title: "Service Modules"
+linkTitle: "Service Modules"
 weight: 9
 description: >
-  Reference on the structure, input and output of different Modules
+  Input and output of different Service Modules
 ---
 
 # What's an Opta module?
@@ -16,26 +16,25 @@ need to get created. Opta yamls reference these under the `modules` field.
 environments:
   - name: staging
     parent: "../env/opta.yml"
-name: baloney
-org_name: blah
+name: myapp
 modules:
   - name: app # This is an instance of the k8-service module type called app
     type: k8s-service
     port: 
       http: 80
-    image: "kennethreitz/httpbin"
-    public_uri: "dummy.{parent[domain]}/showoff"
+    image: AUTO
+    public_uri: "app.{parent[domain]}/app"
     liveness_probe_path: "/get"
     readiness_probe_path: "/get"
     env_vars:
-      - name: BLAH
+      - name: ENV
         value: "{env}"
     links:
-      - database  # Equivalent to database: []
-      - redis  # Equivalent to redis: []
-  - name: database # This is an instance of the aws-rds module type called database
+      - database
+      - redis
+  - name: mydatabase # This is an instance of the aws-rds module type called mydatabase
     type: aws-rds
-  - name: redis # This is an instance of the aws-redis module type called redis
+  - name: myredis # This is an instance of the aws-redis module type called myredis
     type: aws-redis
 ```
 You'll note that the module instance can have user-specified names which will come into play later with references.
@@ -60,17 +59,11 @@ The k8s-service module type is the first (but not the last) module to support
 special processing. In this case, it's in regard to the _links_ field. The 
 links field takes as input a list of maps with a single element where the 
 key is the name of another module in the file, and the value a list of 
-strings representing resource permissions. For a shortcode, you can just write
-the module name as a string, and we transform it to a map with the name as the
-key and the value an empty list.
-The module processor then transforms your module's input to intelligently
-integrate your k8's service deployment to the now "linked" resources (described
-in the next section).
-
+strings representing resource permissions.
 ```yaml
 meta:
   parent: "../env/opta.yml"
-  name: baloney
+  name: balonstagingey
 modules:
   - app: # This is an instance of the k8-service module type called app
 .
@@ -90,53 +83,11 @@ modules:
     type: aws-documentdb
   - name: bucket
     type: aws-s3
-    bucket_name: "blah"
+    bucket_name: "test-bucket"
 ```
 
 # Module Types
 Here is the list of module types for the user to use, with their inputs and outputs:
-
-
-## aws-base
-This module is the "base" module for creating an environment in aws. It sets up the VPCs, default kms key and the
-db/cache subnets. Defaults are set to work 99% of the time, assuming no funny networking constraints (you'll know them
-if you have them), so _no need to set any of the fields or no what the outputs do_.
-
-*Fields*
-* `total_ipv4_cidr_block` -- Optional. This is the total cidr block for the VPC. Defaults to "10.0.0.0/16"
-* `private_ipv4_cidr_blocks` -- Optional. These are the cidr blocks to use for the private subnets, one for each AZ. 
-  Defaults to ["10.0.128.0/21", "10.0.136.0/21", "10.0.144.0/21"] 
-* `public_ipv4_cidr_blocks` -- Optional. These are the cidr blocks to use for the public subnets, one for each AZ.
-  Defaults to ["10.0.0.0/21", "10.0.8.0/21", "10.0.16.0/21"]
-
-*Outputs*
-* `kms_account_key_arn` -- The [ARN](https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html) of the default 
-  [KMS](https://aws.amazon.com/kms/) key (this is what handles encryption for redis, documentdb, eks, etc...)
-* `kms_account_key_id` -- The [ID](https://docs.aws.amazon.com/kms/latest/developerguide/find-cmk-id-arn.html) of the default 
-  KMS key (sometimes things need the ID, sometimes the ARN, so we're giving both)
-* `vpc_id` -- The ID of the [VPC](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html) we created for 
-  this environment
-* `private_subnet_ids` -- The IDs of the private [subnets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html) 
-  we setup for your environment
-* `public_subnets_ids` -- The IDs of the public [subnets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html) 
-  we setup for your environment
-
-## aws-dns
-This module creates a [Route53 hosted zone](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-working-with.html) for 
-your given domain. The [k8s-base]({{< relref "#k8s-base" >}}) module automatically hooks up the load balancer to it
-for the domain and subdomain specified, but in order for this to actually receive traffic you will need to complete
-the [dns setup](/docs/tutorials/ingress).
-
-*Fields*
-* domain -- Required. The domain you want (you will also get the subdomains for your use)
-* delegated -- Optional. Set to true once the extra dns setup is complete.
-
-*Outputs*
-* zone_id -- The ID of the hosted zone created
-* name_servers -- The name servers of your hosted zone (very important for the dns setup)
-* domain -- The domain again
-* cert_arn -- The arn of the [ACM certificate ](https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html) which
-  is used for ssl.
 
 ## aws-documentdb
 This module creates an AWS Documentdb  cluster. It is made in the private subnets automatically created for the environment.
@@ -169,19 +120,6 @@ await mongoose.connect("mongodb://<USER>:<PASSWORD>@<HOST>, {
   sslCA: require('fs').readFileSync(`/config/rds_ca.pem`)
 });
 ```
-
-## aws-eks
-This module creates an [EKS cluster](https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html), and a default
-nodegroup to host your applications in. This needs to be added in the environment opta yml if you wish to deploy services
-as opta services run on Kubernetes (just EKS for now).
-
-*Fields*
-* `min_nodes` -- Optional. The minimum number of nodes to be set by the autoscaler in for the default nodegroup. Defaults to 3.
-* `max_nodes` -- Optional. The minimum number of nodes to be set by the autoscaler in for the default nodegroup. Defaults to 5.
-* `node_disk_size` -- Optional. The size of disk to give the nodes' ec2s. Defaults to 20(GB)
-* `node_instance_type` -- Optional. The [ec2 instance type](https://aws.amazon.com/ec2/instance-types/) for the nodes. Defaults
-  to t3.medium (highly unrecommended to set to smaller)
-* `k8s_version` -- Optional. The Kubernetes version for the cluster. Must be [supported by EKS](https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html)
 
 ## aws-postgres
 This module creates a postgres Aurora RDS database instance. It is made in the 
@@ -249,31 +187,6 @@ When linked to a k8s-service, this adds the necessary IAM permissions to read
 create, destroy, and update objects) to the given s3 bucket. 
 The current permissions are (wait for it), "read" and "write". These need to be
 specified when you add the link.
-
-## datadog
-This module setups the [Datadog Kubernetes](https://docs.datadoghq.com/agent/kubernetes/?tab=helm) integration onto
-the EKS cluster created for this environment. Please read the [datadog tutorial](/docs/tutorials/datadog) for all the
-details of the features.
-
-*Fields*
-None. It'll prompt the use for a valid api key the first time it's run, but nothing else, and nothing in the yaml.
-
-*Outputs*
-None
-
-## k8s-base
-This module is responsible for all the base infrastructure we package into the opta K8s environments. This includes:
-* [Autoscaler](https://github.com/kubernetes/autoscaler) for scaling up and down the ec2s as needed
-* [External](https://github.com/kubernetes-sigs/external-dns) DNS to automatically hook up the ingress to the hosted zone and its domain
-* [Ingress Nginx](https://github.com/kubernetes/ingress-nginx) to expose services to the public
-* [Metrics server](https://github.com/kubernetes-sigs/metrics-server) for scaling different deployments based on cpu/memory usage
-* [Linkerd](https://linkerd.io/) as our service mesh.
-
-*Fields*
-None for the user, we allow no configuration at the time.
-
-*Outputs*
-None
 
 ## k8s-service
 The most important module for deploying apps, k8s-service deploys a kubernetes app.

@@ -91,16 +91,11 @@ modules:
     type: aws-postgres
 ```
 
-Now run:
-```bash
-opta apply
-```
-This sets up your service's infrastructure (database, private docker repo, etc) and now it's ready to be deployed
-(next section).
+Now you are ready to deploy your service.
 
 ## Service Deployment
-In the example above, we created all the resources for the service except the actual deployment. This is because we do
-not have a docker image for it in the cloud yet. To deploy, we need to first build the image, push it, and then apply
+In the example above, we have created all the resources for the environment but haven't yet created the resources for the service. We also haven't deployed your container to the service. Both of these things happens in a single next step. 
+To deploy, we need to first build the image, push it, and then apply
 the yaml again, this time specifying the now existing remote image and tag. You can do so by following these steps to 
 deploy the service:
 

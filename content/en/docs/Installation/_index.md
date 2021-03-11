@@ -21,6 +21,20 @@ VERSION=0.x /bin/bash -c "$(curl -fsSL https://docs.runx.dev/install.sh)"
 
 ## Releases
 
+### 0.11.2
+- Container logs and k8s events are streamed to shell during deploys
+- 10x faster CLI by reducing calls to terraform init
+- opta validate
+- opta deploy sets up infra and deploys in one go
+
+#### Changelog
+- opta deploy, opta logs and opta shell
+- Bugfixes
+
+***
+
+## Releases
+
 ### 0.10
 
 #### Changelog

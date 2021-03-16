@@ -62,7 +62,7 @@ Create an `opta.yml` and update the fields specific to your service setup.
 environments:
   - name: staging
     path: "staging/opta.yml"
-    vars:
+    variables:
       - max_containers: 3
 name: hello-world
 modules:
@@ -73,9 +73,8 @@ modules:
       cpu: 100  # in millicores
       memory: 512  # in megabytes
     min_containers: 2
-    max_containers: "{vars.max_containers}"  # autoscales to this limit
-    liveness_probe_path: "/get"
-    readiness_probe_path: "/get"
+    max_containers: "{var.max_containers}"  # autoscales to this limit
+    healthcheck_path: "/get"
     port:
       http: 80
     env_vars:

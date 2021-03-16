@@ -73,7 +73,7 @@ modules:
       cpu: 100  # in millicores
       memory: 512  # in megabytes
     min_containers: 2
-    max_containers: "{var.max_containers}"  # autoscales to this limit
+    max_containers: "{vars.max_containers}"  # autoscales to this limit
     healthcheck_path: "/get"
     port:
       http: 80

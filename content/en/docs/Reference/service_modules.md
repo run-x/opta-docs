@@ -13,19 +13,21 @@ need to get created. Opta yamls reference these under the `modules` field.
 
 
 ```yaml
+name: myapp
 environments:
   - name: staging
     parent: "../env/opta.yml"
-name: myapp
 modules:
   - name: app # This is an instance of the k8-service module type called app
     type: k8s-service
     port: 
       http: 80
     image: AUTO
-    public_uri: "app.{parent[domain]}/app"
-    liveness_probe_path: "/get"
-    readiness_probe_path: "/get"
+    public_uri: "app.{parent.domain}/app"
+    resource_request:
+      cpu: 100  # in millicores
+      memory: 512  # in megabytes
+    healthcheck_path: "/get"
     env_vars:
       - name: ENV
         value: "{env}"

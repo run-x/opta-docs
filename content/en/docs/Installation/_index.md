@@ -25,6 +25,7 @@ VERSION=0.x /bin/bash -c "$(curl -fsSL https://docs.runx.dev/install.sh)"
 - Pin linkerd version to avoid automatic updates
 - Schema validation bug fixes
 
+***
 
 ### 0.11.2
 - Container logs and k8s events are streamed to shell during deploys
@@ -37,8 +38,6 @@ VERSION=0.x /bin/bash -c "$(curl -fsSL https://docs.runx.dev/install.sh)"
 - Bugfixes
 
 ***
-
-## Releases
 
 ### 0.10
 

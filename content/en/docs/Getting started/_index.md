@@ -59,15 +59,18 @@ We will create another `opta.yml` file, which defines high level configuration o
 Create an `opta.yml` and update the fields specific to your service setup.
 
 ```yaml
+name: hello-world
 environments:
   - name: staging
     path: "staging/opta.yml"
-    variables:
+    vars:
       - max_containers: 3
-name: hello-world
 modules:
   - name: app
     type: k8s-service
+    port:
+      http: 80
+    public_uri: "subdomain.{parent.domain}"
     image: AUTO
     resource_request:
       cpu: 100  # in millicores
@@ -75,17 +78,13 @@ modules:
     min_containers: 2
     max_containers: "{vars.max_containers}"  # autoscales to this limit
     healthcheck_path: "/get"
-    port:
-      http: 80
     env_vars:
       - name: APPENV
         value: "{env}"
-    public_uri: "subdomain.{parent.domain}"
     links:
       - db
     secrets: # Checkout the secrets tutorial on how to use these
       - API_KEY
-      - SECRET_1
   - name: db
     type: aws-postgres
 ```

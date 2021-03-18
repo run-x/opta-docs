@@ -1,7 +1,7 @@
 ---
 title: "Tutorials"
 linkTitle: "Tutorials"
-weight: 3
+weight: 4
 description: >
   Tutorials on Opta
 ---

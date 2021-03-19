@@ -32,11 +32,11 @@ modules:
       - name: ENV
         value: "{env}"
     links:
-      - database
+      - rds
       - redis
-  - name: mydatabase # This is an instance of the aws-rds module type called mydatabase
-    type: aws-rds
-  - name: myredis # This is an instance of the aws-redis module type called myredis
+  - name: rds # This is an instance of the aws-rds module type called mydatabase
+    type: aws-postgres
+  - name: redis # This is an instance of the aws-redis module type called myredis
     type: aws-redis
 ```
 You'll note that the module instance can have user-specified names which will come into play later with references.
@@ -63,16 +63,17 @@ links field takes as input a list of maps with a single element where the
 key is the name of another module in the file, and the value a list of 
 strings representing resource permissions.
 ```yaml
-meta:
-  parent: "../env/opta.yml"
-  name: balonstagingey
+name: myapp
+environments:
+  - name: staging
+    parent: "../env/opta.yml"
 modules:
   - app: # This is an instance of the k8-service module type called app
 .
 .
 .
     links:
-      database: []
+      rds: []
       redis: []
       docdb: []
       bucket:
@@ -107,7 +108,7 @@ When linked to a k8s-service, this adds connection credentials to your container
 * `{module_name}_db_password`
 * `{module_name}_db_host`
 
-In the above example file, the _{module\_name}_ would be replaced `docdb`
+In the above example file, the _{module\_name}_ would be replaced with `docdb`
 
 In addition to these credentials, you also need to enable SSL encryption when
 connecting ([AWS docs](https://docs.aws.amazon.com/documentdb/latest/developerguide/connect_programmatically.html)).
@@ -141,7 +142,7 @@ When linked to a k8s-service, it adds connection credentials to your container's
 * `{module_name}_db_name`
 * `{module_name}_db_host`
 
-In the above example file, the _{module\_name}_ would be replaced `rds`
+In the above example file, the _{module\_name}_ would be replaced with `rds`
 
 The permission list is to be empty because we currently do not support giving 
 apps IAM permissions to manipulate a database.
@@ -161,6 +162,8 @@ When linked to a k8s-service, it adds connection credentials to your container's
 
 * `{module_name}_cache_auth_token` -- The auth token/password of the cluster.
 * `{module_name}_cache_host` -- The host to contact to access the cluster.
+
+In the above example file, the _{module\_name}_ would be replaced with `redis`
 
 _NOTE_ Redis CLI will not work against this cluster because redis cli does not 
 support the TLS transit encryption. There should be no trouble with any of the 

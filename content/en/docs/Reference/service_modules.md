@@ -77,8 +77,8 @@ modules:
       docdb: []
       bucket:
         - write
-  - name: database # This is an instance of the aws-rds module type called database
-    type: aws-rds
+  - name: rds # This is an instance of the aws-rds module type called database
+    type: aws-postgres
   - name: redis # This is an instance of the aws-redis module type called redis
     type: aws-redis
   - name: docdb
@@ -100,20 +100,19 @@ at rest with a kms key created in the env setup and in transit via tls.
 * `instance_class` -- Optional. This is the RDS instance type used for the documentdb cluster [instances](https://aws.amazon.com/documentdb/pricing/).
   Default db.r5.large
 
-*Outputs*
-* `db_user` -- DB user
-* `db_password` -- DB password
-* `db_host` -- DB host
-
 *Linking*
 
-When linked to a k8s-service, this adds connection credentials to your container
-as _{module_name}\_db\_user_, _{module_name}\_db\_password_, and _{module_name}\_db\_host_.
+When linked to a k8s-service, this adds connection credentials to your container's environment variables as:
+* `{module_name}_db_user`
+* `{module_name}_db_password`
+* `{module_name}_db_host`
+
+In the above example file, the _{module\_name}_ would be replaced `docdb`
 
 In addition to these credentials, you also need to enable SSL encryption when
 connecting ([AWS docs](https://docs.aws.amazon.com/documentdb/latest/developerguide/connect_programmatically.html)).
 Fortunately, the Opta k8s-service module has already taken care of that. On linking, you'll 
-find the AWS CA at `/config/rds_ca.pem"`
+find the AWS CA at `/config/rds_ca.pem`
 
 As an example, this is how the mongoose/node connection looks like:
 ```
@@ -133,17 +132,16 @@ VPC or through some proxy (e.g. VPN).
   Default db.r5.large
 * `engine_version` -- Optional. The version of the database to use. Default 11.9.
 
-*Outputs*
-* `db_user` -- DB user
-* `db_password` -- DB password
-* `db_host` -- DB host
-* `db_name` -- DB name
-
 *Linking*
 
-When linked to a k8s-service, it adds connection credentials to your container as 
-_{module_name}\_db\_user_, _{module_name}\_db\_password_, _{module_name}\_db\_name_, 
-and _{module_name}\_db\_host_.
+When linked to a k8s-service, it adds connection credentials to your container's environment variables as:
+
+* `{module_name}_db_user`
+* `{module_name}_db_password`
+* `{module_name}_db_name`
+* `{module_name}_db_host`
+
+In the above example file, the _{module\_name}_ would be replaced `rds`
 
 The permission list is to be empty because we currently do not support giving 
 apps IAM permissions to manipulate a database.
@@ -157,14 +155,12 @@ subnets created by the _init macro and so can only be accessed in the VPC or thr
 * `node_type` -- Optional. This is the redis instance type used for the [instances](https://aws.amazon.com/elasticache/pricing/). 
   Default cache.m4.large.
 
-*Outputs*
-* `cache_auth_token` -- The auth token/password of the cluster.
-* `cache_host` -- The host to contact to access the cluster.
-
 *Linking*
 
-When linked to a k8s-service, it adds connection credentials to your container
-as _{module_name}\_cache\_host_ and _{module_name}\_cache\_auth\_token_.
+When linked to a k8s-service, it adds connection credentials to your container's environment variables
+
+* `{module_name}_cache_auth_token` -- The auth token/password of the cluster.
+* `{module_name}_cache_host` -- The host to contact to access the cluster.
 
 _NOTE_ Redis CLI will not work against this cluster because redis cli does not 
 support the TLS transit encryption. There should be no trouble with any of the 
@@ -187,7 +183,7 @@ This module creates an S3 bucket for storage purposes. It is created with server
 When linked to a k8s-service, this adds the necessary IAM permissions to read 
 (e.g. list objects and get objects) and/or write (e.g. list, get,
 create, destroy, and update objects) to the given s3 bucket. 
-The current permissions are (wait for it), "read" and "write". These need to be
+The current permissions are, "read" and "write". These need to be
 specified when you add the link.
 
 ## k8s-service
@@ -204,19 +200,18 @@ can even expose it to the world, complete with load balancing both internally an
 * `image` -- Required. Set to AUTO to create a private repo for your own images. Otherwises attempts to pull image from public dockerhub
 * `env_vars` -- Optional. A list of maps holding name+value fields for envars to add to your container
   ```yaml
-    - name: BLAH
-      value: malarkey
+    - name: FLAG
+      value: "true"
   ```
 * `secrets` -- Optional. Same format as env_vars, but these values will be stored in the secrets resource, not directly
   in the pod spec.
 * `autoscaling_target_cpu_percentage` --  Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
 * `autoscaling_target_mem_percentage` -- Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
-* `liveness_probe_path` -- Optional. See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default "/healthcheck"
-* `readiness_probe_path` -- Optional. See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default "/healthcheck"
+* `healthcheck_path` -- Optional. See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default "/healthcheck"
 * `resource_request` -- Optional. See the [container resources]({{< relref "#container-resources" >}}) section. Default
   ```yaml
-  cpu: 100
-  memory: 128
+  cpu: 100  # in millicores
+  memory: 128  # in megabytes
   ```
   CPU is given in millicores, and Memory is in megabytes.
 * `public_uri` -- Optional. The full domain to expose your app under as well as path prefix. Must be the full parent domain or a subdomain referencing the parent as such: "dummy.{parent[domain]}/my/path/prefix"
@@ -233,7 +228,7 @@ by setting the `image` field to the repo (e.g. "kennethreitz/httpbin" in the exa
 it will automatically create a secure container repository with ECR on your account. You can then use the `opta push`
 command to push to it!
 
-#### Liveness/Readiness Probe
+#### Healthcheck Probe
 One of the benefits of K8s is that it comes with built in checks for the responsiveness of your server. These are called
 [_liveness_ and _readiness_ probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
 

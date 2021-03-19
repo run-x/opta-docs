@@ -7,15 +7,6 @@ description: >
 ---
 
 
-## Prerequisites
-Opta currently has the following system prerequisites to operate normally:
-* A supported macos or debian distro release.
-* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) (v2)
-* [terraform](https://www.terraform.io/downloads.html) (v0.14+)
-* [docker](https://docker.com/products/docker-desktop) (v19+)
-* [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) (also packaged with 
-  docker-for-mac)
-
 ## Installation
 Check out the [Installation instructions](/docs/installation).
 

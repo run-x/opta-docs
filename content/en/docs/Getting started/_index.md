@@ -55,7 +55,8 @@ environments:
   - name: staging
     path: "staging/opta.yml"
     vars:
-      - max_containers: 3
+      min_containers: 1
+      max_containers: 3
 modules:
   - name: app
     type: k8s-service
@@ -66,7 +67,7 @@ modules:
     resource_request:
       cpu: 100  # in millicores
       memory: 512  # in megabytes
-    min_containers: 2
+    min_containers: "{vars.min_containers}"
     max_containers: "{vars.max_containers}"  # autoscales to this limit
     healthcheck_path: "/get"
     env_vars:

@@ -1,20 +1,11 @@
 ---
 title: "Getting Started"
 linkTitle: "Getting Started"
-weight: 2
+weight: 3
 description: >
   The first steps in working with Opta.
 ---
 
-
-## Prerequisites
-Opta currently has the following system prerequisites to operate normally:
-* A supported macos or debian distro release.
-* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) (v2)
-* [terraform](https://www.terraform.io/downloads.html) (v0.14+)
-* [docker](https://docker.com/products/docker-desktop) (v19+)
-* [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) (also packaged with 
-  docker-for-mac)
 
 ## Installation
 Check out the [Installation instructions](/docs/installation).
@@ -66,7 +57,8 @@ environments:
   - name: staging
     path: "staging/opta.yml"
     vars:
-      - max_containers: 3
+      min_containers: 1
+      max_containers: 3
 modules:
   - name: app
     type: k8s-service
@@ -77,7 +69,7 @@ modules:
     resource_request:
       cpu: 100  # in millicores
       memory: 512  # in megabytes
-    min_containers: 2
+    min_containers: "{vars.min_containers}"
     max_containers: "{vars.max_containers}"  # autoscales to this limit
     healthcheck_path: "/get"
     env_vars:

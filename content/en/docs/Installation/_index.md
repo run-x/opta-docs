@@ -1,10 +1,19 @@
 ---
 title: "Installation"
 linkTitle: "Installation"
-weight: 1
+weight: 2
 description: >
   Installation Instructions
 ---
+
+## Prerequisites
+Opta currently has the following system prerequisites to operate normally:
+* A supported macos or debian distro release.
+* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) (v2)
+* [terraform](https://www.terraform.io/downloads.html) (v0.14+)
+* [docker](https://docker.com/products/docker-desktop) (v19+)
+* [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) (also packaged with 
+  docker-for-mac)
 
 ## MacOS or Linux
 Run this script to install the latest version of opta (see below for changelog
@@ -28,6 +37,7 @@ VERSION=0.x /bin/bash -c "$(curl -fsSL https://docs.runx.dev/install.sh)"
 - Pin linkerd version to avoid automatic updates
 - Schema validation bug fixes
 
+***
 
 ### 0.11.2
 - Container logs and k8s events are streamed to shell during deploys
@@ -40,8 +50,6 @@ VERSION=0.x /bin/bash -c "$(curl -fsSL https://docs.runx.dev/install.sh)"
 - Bugfixes
 
 ***
-
-## Releases
 
 ### 0.10
 

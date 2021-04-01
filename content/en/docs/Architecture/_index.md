@@ -55,12 +55,18 @@ zone directing to the load balancer via an open source integration (see K8s sect
 * Currently, the EKS cluster is built with a public endpoint for the simple usage (can add private option later on once
   VPN feature is added).
 
+## GCP
+_Coming soon!_
+
 ## K8s
 ![image alt text](/images/opta_internal_kubernetes_architecture.png)
 
 The K8s topology is divided into namespaces of 2 types: 3rd party integrations and opta services. The third party 
 integrations consist of respected open source projects which handle background tasks or features expansions. These
 currently consist of:
+
+_Note_: GCP does an awesome job in support K8s and actually includes several of the following integrations/features by
+default. Watch for the notes at the end of each description.
 
 [Linkerd](https://linkerd.io/): Linkerd is the second most popular service mesh currently out there (right behind 
 Istio) and is the one we provide for our users. We chose it over Istio due to its absurdly simple maintenance and 
@@ -70,15 +76,15 @@ security audits. The typical opta user should not even see it.
 
 [Metrics Server](https://github.com/kubernetes-sigs/metrics-server): The official metric server, distributed separately
 for EKS (comes with GKE) and used to power the standard horizontal pod autoscaler metrics (e.g. automatically scale up
-or scale down your server as needed for current load). 
+or scale down your server as needed for current load). _Builtin on GKE_
 
 [Cluster Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler): The official node 
 autoscaler, distributed separately for EKS (comes with GKE) and used to add/remove underlying machines (e.g. ec2s of 
-compute instances) serving as the nodes.
+compute instances) serving as the nodes. _Builtin on GKE_
 
 [Ingress Nginx](https://kubernetes.github.io/ingress-nginx/): An official ingress (i.e. how to expose the cluster to 
 the outside world) which uses a fleet of nginx containers to route incoming traffic from a load balancer to inside the
-cluster and a desired service.
+cluster and a desired service. _Not used on GKE_
 
 [External DNS](https://github.com/kubernetes-sigs/external-dns): An official project used to automatically add DNS 
 records for load balancers created by the cluster.

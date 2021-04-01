@@ -10,12 +10,12 @@ description: >
 Opta, is a cloud infrastructure management tool specifically designed to reduce
 complexity and improve iteration speed. 
 
-Opta enables you to set up infra on your AWS account via high-level config files
+Opta enables you to set up infra on your AWS/GCP account/project via high-level config files
 (that describe microservices and databases) and low level details like access 
 permissions, network and secret management are handled automatically.
 
 This way setting up a new environment takes <30min and setting up a new service 
-takes <10min. All without any Infra/AWS/Kubernetes expertise PLUS you get an 
+takes <10min. All without any Infra/AWS/GCP/Kubernetes expertise PLUS you get an 
 industry standard setup (including monitoring) from day 1.
 
 ## Why do I want it?

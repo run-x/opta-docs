@@ -16,10 +16,12 @@ Make sure, your AWS credentials are configured in the terminal for the AWS accou
 In this step we will create an environment (example staging, qa, prod) for your organization.
 For this we need to create an `opta.yml` file which defines the environment.
 
-Create the following file at `staging/opta.yml` and update the fields specific to your AWS account setup.
+Create the following file at `staging/opta.yml` and update the fields specific to your AWS/GCP account setup.
+{{< tabs tabTotal="2" tabID="1" tabName1="AWS" tabName2="GCP" >}}
+{{< tab tabNum="1" >}}
 ```yaml
-name: staging
-org_name: runx
+name: aws-staging
+org_name: runx # Add your own name/org_name -- the name + org_name must be universally unique
 providers:
   aws:
     region: us-east-1
@@ -34,7 +36,29 @@ modules:
     max_nodes: 15  # Optional
   - type: k8s-base
 ```
-
+{{< /tab >}}
+{{< tab tabNum="2" >}}
+```yaml
+name: gcp-staging
+org_name: runx # Add your own name/org_name -- the name + org_name must be universally unique
+providers:
+  google:
+    region: us-central1
+    project: jds-throwaway-1
+modules:
+  - type: gcp-base
+  - type: gcp-dns
+    domain: staging.example.com
+    subdomains: # Need to specify supported subdomains individually for GCP
+      - subdomain 
+    delegated: false
+  - type: gcp-gke
+    node_instance_type: "n2-highcpu-4" # Optional
+    max_nodes: 15  # Optional
+  - type: gcp-k8s-base
+```
+{{< /tab >}}
+{{< /tabs >}}
 Now, cd to the `staging` dir and run:
 ```bash
 opta apply
@@ -50,7 +74,8 @@ In this step we will create a service with your application's logic.
 We will create another `opta.yml` file, which defines high level configuration of this service.
 
 Create an `opta.yml` and update the fields specific to your service setup.
-
+{{< tabs tabTotal="2" tabID="1" tabName1="AWS" tabName2="GCP" >}}
+{{< tab tabNum="1" >}}
 ```yaml
 name: hello-world
 environments:
@@ -82,6 +107,40 @@ modules:
   - name: db
     type: aws-postgres
 ```
+{{< /tab >}}
+{{< tab tabNum="2" >}}
+```yaml
+environments:
+  - name: staging
+    path: "../env/opta.yml"
+    variables:
+      max_nodes: 2
+name: jd-test-gcp
+modules:
+  - name: app
+    type: gcp-k8s-service
+    port:
+      http: 80
+    public_uri: "subdomain.{parent.domain}"
+    image: AUTO
+    resource_request:
+      cpu: 100  # in millicores
+      memory: 512  # in megabytes
+    min_containers: "{vars.min_containers}"
+    max_containers: "{vars.max_containers}"  # autoscales to this limit
+    healthcheck_path: "/get"
+    env_vars:
+      - name: APPENV
+        value: "{env}"
+    links:
+      - db
+    secrets: # Checkout the secrets tutorial on how to use these
+      - API_KEY
+  - name: db
+    type: gcp-postgres
+```
+{{< /tab >}}
+{{< /tabs >}}
 
 Now you are ready to deploy your service.
 
@@ -111,3 +170,9 @@ curl --header "Host: subdomain.staging.example.com"  http://${DOMAIN}/get # NOTE
 
 - To fully setup the public dns and ssl, please checkout the [Ingress docs](/docs/tutorials/ingress).
 - Run `opta` to check various other options the cli provides, like streaming logs, or ssh into your container.
+
+## Cleanup
+Once you're finished playing around with these examples, you may clean up by running the following command from the environment directory:
+```bash
+opta destroy
+```

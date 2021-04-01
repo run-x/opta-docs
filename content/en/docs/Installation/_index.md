@@ -9,11 +9,14 @@ description: >
 ## Prerequisites
 Opta currently has the following system prerequisites to operate normally:
 * A supported macos or debian distro release.
-* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) (v2)
 * [terraform](https://www.terraform.io/downloads.html) (v0.14+)
 * [docker](https://docker.com/products/docker-desktop) (v19+)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) (also packaged with 
   docker-for-mac)
+If you're using the GCP provider:  
+* [GCP SDK](https://cloud.google.com/sdk/docs/install)
+If you're using the AWS provider:  
+* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) (v2)
 
 ## MacOS or Linux
 Run this script to install the latest version of opta (see below for changelog
@@ -30,8 +33,26 @@ VERSION=0.x /bin/bash -c "$(curl -fsSL https://docs.runx.dev/install.sh)"
 
 ## Releases
 
+### 0.11.10
+* Added support for GCP!
+
 ### 0.11.9
-- Bug fixes
+* AWS Nodegroup module added
+
+### 0.11.8
+#### Changelog
+* Fix for when tf.state is empty
+
+### 0.11.7
+* Added release automation
+
+### 0.11.6
+* Removed buggy rollback from cli
+
+### 0.11.5
+#### Changelog
+* Fixing the terraform init issue with envs
+* fixing tests
 
 ### 0.11.4
 - Pin linkerd version to avoid automatic updates

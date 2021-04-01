@@ -6,42 +6,11 @@ description: >
   Input and output of different Environment Modules
 ---
 
-# What's an Opta module?
-
-The heart of Opta is a set of "Modules" which basically map to AWS resources that
-need to get created. Opta yamls reference these under the `modules` field.
-```yaml
-name: staging
-org_name: runx
-providers:
-  aws:
-    region: us-east-1
-    account_id: XXXX
-modules:
-  - type: aws-base
-  - type: aws-dns
-    domain: staging.example.com
-    delegated: false
-  - type: aws-eks
-    node_instance_type: t3.medium  # Optional
-    max_nodes: 15  # Optional
-  - type: k8s-base
-```
-
-## Fields
-You'll note that there can be many, varying, fields per module instance such 
-as "type", "env_vars", "image" etc...  These are called _fields_ and this 
-is how specific data is passed into the modules.
-
-
-### Types
-All modules have their own list of supported fields, but the one common to all is _type_. The type field is simply
-the module reference (e.g. the library/package to use in this "import"). Opta currently comes with its list of valid
-modules built in -- future work may allow users to specify their own.
-
 # Environment Module Types
-Here is the list of module types for the user to use, with their inputs and outputs:
+Here is the list of module types for the user to use in an environment opta yaml (a root one with no environments on 
+top specified), with their inputs and outputs:
 
+# AWS
 
 ## aws-base
 This module is the "base" module for creating an environment in aws. It sets up the VPCs, default kms key and the
@@ -97,6 +66,44 @@ as opta services run on Kubernetes (just EKS for now).
   to t3.medium (highly unrecommended to set to smaller)
 * `k8s_version` -- Optional. The Kubernetes version for the cluster. Must be [supported by EKS](https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html)
 
+## k8s-base
+This module is responsible for all the base infrastructure we package into the opta K8s environments. This includes:
+* [Autoscaler](https://github.com/kubernetes/autoscaler) for scaling up and down the ec2s as needed
+* [External DNS](https://github.com/kubernetes-sigs/external-dns) to automatically hook up the ingress to the hosted zone and its domain
+* [Ingress Nginx](https://github.com/kubernetes/ingress-nginx) to expose services to the public
+* [Metrics server](https://github.com/kubernetes-sigs/metrics-server) for scaling different deployments based on cpu/memory usage
+* [Linkerd](https://linkerd.io/) as our service mesh.
+
+*Fields*
+None for the user, we allow no configuration at the time.
+
+*Outputs*
+None
+
+# GCP
+
+## gcp-base
+This module is the "base" module for creating an environment in gcp. It sets up the VPC, private subnet, default kms key 
+and the db/cache subnets. Defaults are set to work 99% of the time, assuming no funny networking constraints (you'll know them
+if you have them), so _no need to set any of the fields or no what the outputs do_.
+
+## gcp-dns
+
+## gcp-gke
+
+# gcp-k8s-base
+This module is responsible for all the base infrastructure we package into the opta K8s environments. This includes:
+* [Ingress Nginx](https://github.com/kubernetes/ingress-nginx) to expose services to the public
+* [Linkerd](https://linkerd.io/) as our service mesh.
+
+*Fields*
+None for the user, we allow no configuration at the time.
+
+*Outputs*
+None
+
+# Cloud agnostic
+
 ## datadog
 This module setups the [Datadog Kubernetes](https://docs.datadoghq.com/agent/kubernetes/?tab=helm) integration onto
 the EKS cluster created for this environment. Please read the [datadog tutorial](/docs/tutorials/datadog) for all the
@@ -104,20 +111,6 @@ details of the features.
 
 *Fields*
 None. It'll prompt the use for a valid api key the first time it's run, but nothing else, and nothing in the yaml.
-
-*Outputs*
-None
-
-## k8s-base
-This module is responsible for all the base infrastructure we package into the opta K8s environments. This includes:
-* [Autoscaler](https://github.com/kubernetes/autoscaler) for scaling up and down the ec2s as needed
-* [External](https://github.com/kubernetes-sigs/external-dns) DNS to automatically hook up the ingress to the hosted zone and its domain
-* [Ingress Nginx](https://github.com/kubernetes/ingress-nginx) to expose services to the public
-* [Metrics server](https://github.com/kubernetes-sigs/metrics-server) for scaling different deployments based on cpu/memory usage
-* [Linkerd](https://linkerd.io/) as our service mesh.
-
-*Fields*
-None for the user, we allow no configuration at the time.
 
 *Outputs*
 None

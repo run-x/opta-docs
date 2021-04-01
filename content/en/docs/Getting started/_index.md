@@ -19,6 +19,8 @@ Opta currently has the following system prerequisites to operate normally:
 ## Installation
 Check out the [Installation instructions](/docs/installation).
 
+Make sure, your AWS credentials are configured in the terminal for the AWS account you will use in this exercise.
+
 ## Environment creation
 In this step we will create an environment (example staging, qa, prod) for your organization.
 For this we need to create an `opta.yml` file which defines the environment.

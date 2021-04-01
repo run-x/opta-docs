@@ -21,6 +21,9 @@ VERSION=0.x /bin/bash -c "$(curl -fsSL https://docs.runx.dev/install.sh)"
 
 ## Releases
 
+### 0.11.9
+- Bug fixes
+
 ### 0.11.4
 - Pin linkerd version to avoid automatic updates
 - Schema validation bug fixes

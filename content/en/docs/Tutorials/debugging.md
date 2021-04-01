@@ -8,6 +8,23 @@ description: >
 
 > Ideally, you should set up [observability](/docs/tutorials/observability) so that manual debugging is not needed.
 
+Opta provides 2 helpful commands to help with debugging:
+
+
+### View logs
+```
+opta logs
+```
+This will show you logs from all your app instances.
+
+### SSH into an instance
+```
+opta shell
+```
+This will open up a shell into one of your app instances.
+
+
+### Kubectl
 Opta uses kubernetes under the hood, so we recommend using the standard
 kubernetes tool `kubectl` for most debugging use cases. This page will give you
 a brief tutorial on how to use this tool.
@@ -44,24 +61,3 @@ Note that `<service-name>` is specified in your opta yml:
     app: # module-name
       type: k8s-service
 ```
-
-
-### View logs for a pod
-Note down the name of one of your pods and then run the following command to see it's logs:
-```
-kubectl logs -f <pod-name> k8s-service -n <service-name>
-```
-
-To view logs from *all* your pods, you can run:
-```
-kubectl logs -f deployments/<service-name>-<module-name>-k8s-service k8s-service -n <service-name>
-```
-
-### SSH into a pod
-Note down the name of one of your pods and then run the following command to ssh into it:
-```
-kubectl exec -it <pod-name> -n <service-name> -- bash
-```
-
-
-[^1]: [Detailed pods docs](https://kubernetes.io/docs/concepts/workloads/pods/)

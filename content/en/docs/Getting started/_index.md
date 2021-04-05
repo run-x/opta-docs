@@ -44,7 +44,7 @@ org_name: runx # Add your own name/org_name -- the name + org_name must be unive
 providers:
   google:
     region: us-central1
-    project: jds-throwaway-1
+    project: XXX
 modules:
   - type: gcp-base
   - type: gcp-dns
@@ -114,8 +114,8 @@ environments:
   - name: staging
     path: "../env/opta.yml"
     variables:
-      max_nodes: 2
-name: jd-test-gcp
+      max_containers: 2
+name: hello-world
 modules:
   - name: app
     type: gcp-k8s-service

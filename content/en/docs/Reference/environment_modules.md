@@ -6,42 +6,11 @@ description: >
   Input and output of different Environment Modules
 ---
 
-# What's an Opta module?
-
-The heart of Opta is a set of "Modules" which basically map to AWS resources that
-need to get created. Opta yamls reference these under the `modules` field.
-```yaml
-name: staging
-org_name: runx
-providers:
-  aws:
-    region: us-east-1
-    account_id: XXXX
-modules:
-  - type: aws-base
-  - type: aws-dns
-    domain: staging.example.com
-    delegated: false
-  - type: aws-eks
-    node_instance_type: t3.medium  # Optional
-    max_nodes: 15  # Optional
-  - type: k8s-base
-```
-
-## Fields
-You'll note that there can be many, varying, fields per module instance such 
-as "type", "env_vars", "image" etc...  These are called _fields_ and this 
-is how specific data is passed into the modules.
-
-
-### Types
-All modules have their own list of supported fields, but the one common to all is _type_. The type field is simply
-the module reference (e.g. the library/package to use in this "import"). Opta currently comes with its list of valid
-modules built in -- future work may allow users to specify their own.
-
 # Environment Module Types
-Here is the list of module types for the user to use, with their inputs and outputs:
+Here is the list of module types for the user to use in an environment opta yaml (a root one with no environments on 
+top specified), with their inputs and outputs:
 
+# AWS
 
 ## aws-base
 This module is the "base" module for creating an environment in aws. It sets up the VPCs, default kms key and the
@@ -87,7 +56,7 @@ the [dns setup](/docs/tutorials/ingress).
 ## aws-eks
 This module creates an [EKS cluster](https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html), and a default
 nodegroup to host your applications in. This needs to be added in the environment opta yml if you wish to deploy services
-as opta services run on Kubernetes (just EKS for now).
+as opta services run on Kubernetes.
 
 *Fields*
 * `min_nodes` -- Optional. The minimum number of nodes to be set by the autoscaler in for the default nodegroup. Defaults to 3.
@@ -97,6 +66,87 @@ as opta services run on Kubernetes (just EKS for now).
   to t3.medium (highly unrecommended to set to smaller)
 * `k8s_version` -- Optional. The Kubernetes version for the cluster. Must be [supported by EKS](https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html)
 
+## k8s-base
+This module is responsible for all the base infrastructure we package into the opta K8s environments. This includes:
+* [Autoscaler](https://github.com/kubernetes/autoscaler) for scaling up and down the ec2s as needed
+* [External DNS](https://github.com/kubernetes-sigs/external-dns) to automatically hook up the ingress to the hosted zone and its domain
+* [Ingress Nginx](https://github.com/kubernetes/ingress-nginx) to expose services to the public
+* [Metrics server](https://github.com/kubernetes-sigs/metrics-server) for scaling different deployments based on cpu/memory usage
+* [Linkerd](https://linkerd.io/) as our service mesh.
+
+*Fields*
+None for the user, we allow no configuration at the time.
+
+*Outputs*
+None
+
+# GCP
+
+## gcp-base
+This module is the "base" module for creating an environment in gcp. It sets up the VPC, private subnet, firewall, 
+default kms key, private service access, and activate the container registry. Defaults are set to work 99% of the time, assuming no funny 
+networking constraints (you'll know them if you have them), so _no need to set any of the fields or no what the outputs do_.
+
+*Fields*
+* `private_ipv4_cidr_block` -- Optional. This is the cidr block for VM instances in the VPC. Defaults to "10.0.0.0/19"
+* `cluster_ipv4_cidr_block` -- Optional. This is the cidr block reserved for pod ips in the GKE cluster. Defaults to "10.0.32.0/19"
+* `services_ipv4_cidr_block` -- Optional This is the cidr block reserved for service cluster ips in the GKE cluster. Defaults to "10.0.64.0/20"
+
+*Outputs*
+* kms_account_key_id -- The id of the [KMS](https://cloud.google.com/security-key-management) key (this is what handles 
+  encryption for redis, gke, etc...)
+* kms_account_key_self_link -- The self link of the default
+  KMS key (sometimes things need the ID, sometimes the ARN, so we're giving both)
+* vpc_id -- The ID of the [VPC](https://cloud.google.com/vpc/docs/vpc) we created for this environment
+* private_subnet_id -- The ID of the private [subnets](https://cloud.google.com/vpc/docs/vpc#subnet-ranges)
+  we setup for your environment
+
+## gcp-dns
+This module creates a GCP [managed zone](https://cloud.google.com/dns/docs/zones) for
+your given domain. The [k8s-base]({{< relref "#k8s-base" >}}) module automatically hooks up the load balancer to it
+for the domain and subdomain specified, but in order for this to actually receive traffic you will need to complete
+the [dns setup](/docs/tutorials/ingress).
+
+*Fields*
+* domain -- Required. The domain you want (you will also get the subdomains for your use)
+* delegated -- Optional. Set to true once the extra dns setup is complete and it will add the ssl certs.
+* subdomains -- Optional. A list of subdomains to also get ssl certs for.
+
+*Outputs*
+* zone_id -- The ID of the hosted zone created
+* name_servers -- The name servers of your hosted zone (very important for the dns setup)
+* domain -- The domain again
+* cert_arn -- The arn of the [ACM certificate ](https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html) which
+  is used for ssl.
+
+## gcp-gke
+This module creates an [GKE cluster](https://cloud.google.com/kubernetes-engine/docs/concepts/kubernetes-engine-overview), and a default
+node pool to host your applications in. This needs to be added in the environment opta yml if you wish to deploy services
+as opta services run on Kubernetes.
+
+*Fields*
+* `min_nodes` -- Optional. The minimum number of nodes to be set by the autoscaler in for the default nodegroup. Defaults to 3.
+* `max_nodes` -- Optional. The minimum number of nodes to be set by the autoscaler in for the default nodegroup. Defaults to 5.
+* `node_disk_size` -- Optional. The size of disk to give the nodes' ec2s. Defaults to 20(GB)
+* `node_instance_type` -- Optional. The [gcloud machine type](https://cloud.google.com/compute/docs/machine-types) for the nodes. Defaults
+  to n2-highcpu-4 (highly unrecommended to set to smaller)
+* `gke_channel` -- Optional. The GKE K8s [release channel](https://cloud.google.com/kubernetes-engine/docs/concepts/release-channels)
+  to bind the cluster too. Gives you automatic K8s version management for the lcuster and node pools. Defaults to "REGULAR"
+
+
+## gcp-k8s-base
+This module is responsible for all the base infrastructure we package into the opta K8s environments. This includes:
+* [Ingress Nginx](https://github.com/kubernetes/ingress-nginx) to expose services to the public
+* [Linkerd](https://linkerd.io/) as our service mesh.
+* A custom load balancer and dns routing built to handle the Ingress Nginx which we set up. 
+*Fields*
+None for the user, we allow no configuration at the time.
+
+*Outputs*
+None
+
+# Cloud agnostic
+
 ## datadog
 This module setups the [Datadog Kubernetes](https://docs.datadoghq.com/agent/kubernetes/?tab=helm) integration onto
 the EKS cluster created for this environment. Please read the [datadog tutorial](/docs/tutorials/datadog) for all the
@@ -104,20 +154,6 @@ details of the features.
 
 *Fields*
 None. It'll prompt the use for a valid api key the first time it's run, but nothing else, and nothing in the yaml.
-
-*Outputs*
-None
-
-## k8s-base
-This module is responsible for all the base infrastructure we package into the opta K8s environments. This includes:
-* [Autoscaler](https://github.com/kubernetes/autoscaler) for scaling up and down the ec2s as needed
-* [External](https://github.com/kubernetes-sigs/external-dns) DNS to automatically hook up the ingress to the hosted zone and its domain
-* [Ingress Nginx](https://github.com/kubernetes/ingress-nginx) to expose services to the public
-* [Metrics server](https://github.com/kubernetes-sigs/metrics-server) for scaling different deployments based on cpu/memory usage
-* [Linkerd](https://linkerd.io/) as our service mesh.
-
-*Fields*
-None for the user, we allow no configuration at the time.
 
 *Outputs*
 None

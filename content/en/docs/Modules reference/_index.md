@@ -1,7 +1,7 @@
 ---
-title: "Reference"
-linkTitle: "Reference"
-weight: 6
+title: "Modues reference"
+linkTitle: "Modules reference"
+weight: 5
 description: >
   Opta config reference
 ---

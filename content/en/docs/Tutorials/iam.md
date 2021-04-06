@@ -1,6 +1,6 @@
 ---
-title: "IAM Guidance for Opta"
-linkTitle: "IAM Guidance for Opta"
+title: "IAM Guidance"
+linkTitle: "IAM"
 date: 2020-02-01
 description: >
    How to configure your iam to work with Opta

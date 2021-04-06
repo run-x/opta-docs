@@ -1,7 +1,7 @@
 ---
 title: "Getting Started"
 linkTitle: "Getting Started"
-weight: 3
+weight: 2
 description: >
   The first steps in working with Opta.
 ---
@@ -29,7 +29,7 @@ providers:
 modules:
   - type: aws-base
   - type: aws-dns
-    domain: staging.example.com
+    domain: staging.mydomain.com
     delegated: false
   - type: aws-eks
     node_instance_type: t3.medium  # Optional
@@ -48,7 +48,7 @@ providers:
 modules:
   - type: gcp-base
   - type: gcp-dns
-    domain: staging.example.com
+    domain: staging.mydomain.com
     subdomains: # Need to specify supported subdomains individually for GCP
       - subdomain 
     delegated: false
@@ -112,7 +112,7 @@ modules:
 ```yaml
 environments:
   - name: staging
-    path: "../env/opta.yml"
+    path: "staging/opta.yml"
     variables:
       max_containers: 2
 name: hello-world

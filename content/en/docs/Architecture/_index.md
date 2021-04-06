@@ -1,7 +1,7 @@
 ---
 title: "Architecture"
 linkTitle: "Architecture"
-weight: 5
+weight: 6
 description: >
   An overview of the Architecture Opta sets up. 
 ---

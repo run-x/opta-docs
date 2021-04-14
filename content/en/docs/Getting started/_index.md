@@ -50,7 +50,7 @@ modules:
   - type: gcp-dns
     domain: staging.mydomain.com
     subdomains: # Need to specify supported subdomains individually for GCP
-      - subdomain 
+      - app 
     delegated: false
   - type: gcp-gke
     node_instance_type: "n2-highcpu-4" # Optional
@@ -89,7 +89,7 @@ modules:
     type: k8s-service
     port:
       http: 80
-    public_uri: "subdomain.{parent.domain}"
+    public_uri: "app.{parent.domain}"
     image: AUTO
     resource_request:
       cpu: 100  # in millicores
@@ -121,7 +121,7 @@ modules:
     type: gcp-k8s-service
     port:
       http: 80
-    public_uri: "subdomain.{parent.domain}"
+    public_uri: "app.{parent.domain}"
     image: AUTO
     resource_request:
       cpu: 100  # in millicores
@@ -165,7 +165,7 @@ you can totally hit the load balancer directly) and setting the host header to m
 ```bash
 opta configure-kubectl
 export DOMAIN=`kubectl get services -n ingress-nginx ingress-nginx-controller --output jsonpath='{.status.loadBalancer.ingress[0].hostname}'`
-curl --header "Host: subdomain.staging.example.com"  http://${DOMAIN}/get # NOTE: not https because ssl is part of the extra setup
+curl --header "Host: app.staging.mydomain.com"  http://${DOMAIN}/get
 ```
 
 - To fully setup the public dns and ssl, please checkout the [Ingress docs](/docs/tutorials/ingress).

@@ -10,7 +10,7 @@ description:
 ## gcp-base
 This module is the "base" module for creating an environment in gcp. It sets up the VPC, private subnet, firewall, 
 default kms key, private service access, and activate the container registry. Defaults are set to work 99% of the time, assuming no funny 
-networking constraints (you'll know them if you have them), so _no need to set any of the fields or no what the outputs do_.
+networking constraints (you'll know them if you have them), so _no need to set any of the fields or know what the outputs do_.
 
 *Fields*
 * `private_ipv4_cidr_block` -- Optional. This is the cidr block for VM instances in the VPC. Defaults to "10.0.0.0/19"

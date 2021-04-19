@@ -74,7 +74,7 @@ In this step we will create a service with your application's logic.
 We will create another `opta.yml` file, which defines high level configuration of this service.
 
 Create an `opta.yml` and update the fields specific to your service setup.
-{{< tabs tabTotal="2" tabID="1" tabName1="AWS" tabName2="GCP" >}}
+{{< tabs tabTotal="2" tabID="2" tabName1="AWS" tabName2="GCP" >}}
 {{< tab tabNum="1" >}}
 ```yaml
 name: hello-world

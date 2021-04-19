@@ -10,7 +10,7 @@ description:
 ## aws-base
 This module is the "base" module for creating an environment in aws. It sets up the VPCs, default kms key and the
 db/cache subnets. Defaults are set to work 99% of the time, assuming no funny networking constraints (you'll know them
-if you have them), so _no need to set any of the fields or no what the outputs do_.
+if you have them), so _no need to set any of the fields or know what the outputs do_.
 
 *Fields*
 * `total_ipv4_cidr_block` -- Optional. This is the total cidr block for the VPC. Defaults to "10.0.0.0/16"

@@ -86,7 +86,7 @@ environments:
       max_containers: 3
 modules:
   - name: app
-    type: aws-k8s-service
+    type: k8s-service
     port:
       http: 80
     public_uri: "app.{parent.domain}"

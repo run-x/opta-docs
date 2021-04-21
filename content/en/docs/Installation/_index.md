@@ -13,10 +13,8 @@ Opta currently has the following system prerequisites to operate normally:
 * [docker](https://docker.com/products/docker-desktop) (v19+)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) (also packaged with 
   docker-for-mac)
-If you're using the GCP provider:  
-* [GCP SDK](https://cloud.google.com/sdk/docs/install)
-If you're using the AWS provider:  
-* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) (v2)
+* [GCP SDK](https://cloud.google.com/sdk/docs/install) (For GCP only)
+* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) (v2) (For AWS only)
 
 ## MacOS or Linux
 Run this script to install the latest version of opta (see below for changelog
@@ -32,6 +30,9 @@ VERSION=0.x /bin/bash -c "$(curl -fsSL https://docs.runx.dev/install.sh)"
 ```
 
 ## Releases
+
+### 0.11.16
+* Added support for multiple public_uri
 
 ### 0.11.10
 * Added support for GCP!

@@ -132,7 +132,7 @@ can even expose it to the world, complete with load balancing both internally an
   ```
   CPU is given in millicores, and Memory is in megabytes.
 * `public_uri` -- Optional. The full domain to expose your app under as well as path prefix. Must be the full parent domain or a subdomain referencing the parent as such: "dummy.{parent[domain]}/my/path/prefix"
-* `additional_iam_roles` -- Optional. A list of extra IAM role arns not captured by Opta which you wish to give to your service.
+* `additional_iam_policies` -- Optional. A list of extra IAM role policies not captured by Opta which you wish to give to your service.
 
 
 *Outputs*

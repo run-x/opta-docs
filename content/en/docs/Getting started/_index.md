@@ -76,9 +76,6 @@ modules:
       http: 80
     image: docker.io/kennethreitz/httpbin:latest # Or you can specify your own
     healthcheck_path: "/get"
-    env_vars:
-      - name: APPENV
-        value: "{env}"
     links:
       - db
   - name: db
@@ -98,9 +95,6 @@ modules:
       http: 80
     image: docker.io/kennethreitz/httpbin:latest # Or you can specify your own
     healthcheck_path: "/get"
-    env_vars:
-      - name: APPENV
-        value: "{env}"
     links:
       - db
   - name: db
@@ -118,11 +112,13 @@ opta apply
 ```
 
 Now, once this step is complete, you should be to curl your service by specifying the load balancer url/ip.
+
 Run `output` and note down `load_balancer_raw_dns` (AWS) or `load_balancer_raw_ip` (GCP).
 
-Boom! You should be able to access your service at http://\<ip-or-dns\>/
-  
-You can also ssh into the container by running `opta shell` or see logs by running `opta logs`.
+Now you can:
+- Access your service at http://\<ip-or-dns\>/
+- SSH into the container by running `opta shell`
+- See logs by running `opta logs`
 
 ## Cleanup
 Once you're finished playing around with these examples, you may clean up by running the following command from the environment directory:
@@ -131,9 +127,9 @@ opta destroy
 ```
 
 ## Next steps
+- Use your own docker image: [Custom Image](/docs/tutorials/custom_image)
 - Set up a domain name for your service: [Ingress](/docs/tutorials/ingress)
 - Use secrets: [Secrets](/docs/tutorials/secrets/)
 - Set up full datadog integration in one line(!): [Datadog](/docs/tutorials/datadog_integration/)
 - Explore all the infrastructure that opta sets up for you: [Architecture](/docs/architecture/)
-- Use your own docker image: [Custom Image](/docs/tutorials/custom_image)
 - Explore the api for all modules: [Reference](/docs/modules-reference/)

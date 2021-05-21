@@ -61,3 +61,12 @@ Note that `<service-name>` is specified in your opta yml:
     app: # module-name
       type: k8s-service
 ```
+
+### Debug logging
+Opta supports a verbose debug state wherein the log level is set to debug, and the auto-generated terraform files and
+directories are preserved after execution. This configuration serves for troubleshooting errors in deployment and
+preserving the full terraform infrastructure as code for the archives or other reasons. To enable this state, simply
+set the `OPTA_DEBUG` environment variables to some value like so:
+```shell
+export OPTA_DEBUG=1
+```

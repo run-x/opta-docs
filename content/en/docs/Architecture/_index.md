@@ -119,26 +119,3 @@ currently holds the latest public key needed for documentdb usage.
 * All opta service deployments are bound to service accounts, with no extra K8s roles.
 * Opta currently does not modify the aws-auth configmap for EKS.
 * We use Helm V3
-
-## General Security Concerns
-
-### Debug logging
-Opta supports a verbose debug state wherein the log level is set to debug, and the auto-generated terraform files and
-directories are preserved after execution. This configuration serves for troubleshooting errors in deployment and 
-preserving the full terraform infrastructure as code for the archives or other reasons. To enable this state, simply
-set the `OPTA_DEBUG` environment variables to some value like so:
-```shell
-export OPTA_DEBUG=1
-```
-
-### Disable Reporting
-By default, opta executions send metrics and logs back to runx to gain intelligence of the product's usage, errors, and
-to give superior support for the users. Like with the stdout users see, these reports do not hold ANY secrets or 
-passwords. We, however, understand and respect that some users may have strict privacy 
-requirements and to support them we have added the `OPTA_DISABLE_REPORTING` environment variable. If someone wishes to
-opt-out opta reporting, all they have to do is set the aforementioned environment variable in the shell running opta
-to some value like so:
-```shell
-export OPTA_DISABLE_REPORTING=1
-```
-Opta will then not send any metrics or logs back to runx in any subsequent calls.

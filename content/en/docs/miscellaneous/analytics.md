@@ -4,7 +4,7 @@ linkTitle: "Analytics"
 date: 2020-02-01
 draft: false
 description: >
-Runx analytics on opta usage.
+  Runx analytics on opta usage.
 ---
 
 By default, opta executions send metrics and logs back to runx to gain intelligence of the product's usage, errors, and

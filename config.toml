@@ -53,7 +53,7 @@ id = "UA-188763285-1"
 [languages]
 [languages.en]
 title = "Opta"
-description = "Documentation for the Runx products."
+description = "Documentation for Opta."
 languageName ="English"
 # Weight used for sorting.
 weight = 1
@@ -97,7 +97,7 @@ version = "0.0"
 
 # A link to latest version of the docs. Used in the "version-banner" partial to
 # point people to the main doc site.
-url_latest_version = "https://docs.runx.dev"
+url_latest_version = "https://docs.opta.dev"
 
 # Repository configuration (URLs for in-page links to opening issues and suggesting changes)
 # github_repo = "https://github.com/google/docsy-example"
@@ -158,8 +158,8 @@ enable = false
 	icon = "fa fa-envelope"
         desc = "Help from your fellow users"
 [[params.links.developer]]
-	name = "Slack"
-	url = "https://join.slack.com/share/zt-m55nvh0w-8V7HAqdHKHEUAU40K2h~BQ"
-	icon = "fab fa-slack"
-        desc = "RunX community slack"
+	name = "Discord"
+	url = "https://discord.gg/BXjmBhkwvB"
+	icon = "fab fa-discord"
+        desc = "RunX community discord"
 

@@ -1,5 +1,5 @@
 ---
-title: "Modues reference"
+title: "Modules reference"
 linkTitle: "Modules reference"
 weight: 5
 description: >

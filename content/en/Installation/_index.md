@@ -21,12 +21,12 @@ Run this script to install the latest version of opta (see below for changelog
 and release history).
 
 ```bash
-/bin/bash -c "$(curl -fsSL https://docs.runx.dev/install.sh)"
+/bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
 ```
 
 You can specify a particular version as well.
 ```bash
-VERSION=0.x /bin/bash -c "$(curl -fsSL https://docs.runx.dev/install.sh)"
+VERSION=0.x /bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
 ```
 
 ## Releases

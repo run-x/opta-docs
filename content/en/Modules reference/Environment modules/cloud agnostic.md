@@ -1,6 +1,6 @@
 ---
 title: "Cloud agnostic environment modules"
-linkTitle: "Agnostic"
+linkTitle: "Cloud agnostic"
 date: 2020-02-01
 draft: false
 weight: 3

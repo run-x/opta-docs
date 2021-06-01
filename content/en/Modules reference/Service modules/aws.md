@@ -173,3 +173,67 @@ _NOTE_ We expose the resource requests and set the limits to twice the request v
 #### Ingress
 You can control if and how you want to expose your app to the world! Check out
 the [Ingress](/docs/tutorials/ingress) docs for more details.
+
+## aws-iam-role
+
+Creates an IAM role.
+
+*Fields*
+* `kubernetes_trusts` -- Optional
+* `allowed_iams` -- Optional. IAM users/roles allowed to assume this role
+* `iam_policy` -- Required. IAM policy to be attached to this role
+* `extra_iam_policies` -- Optional. Additional IAM policies to be attached to this role.
+
+*Outputs*
+* `role_arn` -- The ARN for this role
+
+## aws-iam-user
+
+Creates an IAM user.
+
+*Fields*
+* `iam_policy` -- Required. IAM policy to be attached to this role
+* `extra_iam_policies` -- Optional. Additional IAM policies to be attached to this role.
+
+*Outputs*
+* `user_arn` -- The ARN for this user
+
+## aws-ses
+
+Sets up AWS SES. TODO(JD): This also files an AWS support ticket?
+
+*Fields*
+* `domain` -- Reqiured. Root domain to use for sending emails
+* `zone_id` -- Required. Route53 zone id where the MX records should be created
+* `mail_from_prefix` -- Optional. Subdomain to use with domain. `mail` by default.
+
+*Outputs*
+None
+
+## aws-sqs
+
+Sets up a AWS SQS queue.
+
+*Fields*
+* `fifo` -- Optional. FIFO queue or not. Default = false
+* `content_based_deduplication` -- Optional. Default = false
+* `delay_seconds` -- Optional. Default = 0
+* `message_retention_seconds` -- Optional. Default = 345600 (4 days)
+* `receive_wait_time_seconds` -- Optional. Default = 0
+
+*Outputs*
+* `queue_arn` -- ARN for the Queue
+* `queue_id` -- ID of the Queue
+* `queue_name` -- Name of the Queue
+
+## aws-sns
+
+Sets up a AWS SNS topic.
+
+*Fields*
+* `fifo` -- Optional. FIFO queue or not. Default = false
+* `content_based_deduplication` -- Optional. Default = false
+* `sqs_subscribers` -- Optional. List of SQS ARNs.
+
+*Outputs*
+* `topic_arn` -- ARN for the topic

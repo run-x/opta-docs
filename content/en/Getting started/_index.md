@@ -76,6 +76,7 @@ modules:
       http: 80
     image: docker.io/kennethreitz/httpbin:latest # Or you can specify your own
     healthcheck_path: "/get"
+    public_uri: all
     links:
       - db
   - name: db
@@ -95,6 +96,7 @@ modules:
       http: 80
     image: docker.io/kennethreitz/httpbin:latest # Or you can specify your own
     healthcheck_path: "/get"
+    public_uri: all
     links:
       - db
   - name: db

@@ -179,33 +179,60 @@ the [Ingress](/docs/tutorials/ingress) docs for more details.
 Creates an IAM role.
 
 *Fields*
-* `kubernetes_trusts` -- Optional
+* `allowed_k8s_services` -- Optional. K8s services that this role should have
+    access to.
 * `allowed_iams` -- Optional. IAM users/roles allowed to assume this role
-* `iam_policy` -- Required. IAM policy to be attached to this role
 * `extra_iam_policies` -- Optional. Additional IAM policies to be attached to this role.
 
 *Outputs*
 * `role_arn` -- The ARN for this role
+
+*Example*
+```
+  - name: deployer
+    type: aws-iam-role
+    extra_iam_policies:
+      - "arn:aws:iam::aws:policy/CloudWatchEventsFullAccess"
+    allowed_k8s_services:
+      - namespace: "*"
+        service_name: "*"
+```
 
 ## aws-iam-user
 
 Creates an IAM user.
 
 *Fields*
-* `iam_policy` -- Required. IAM policy to be attached to this role
 * `extra_iam_policies` -- Optional. Additional IAM policies to be attached to this role.
 
 *Outputs*
 * `user_arn` -- The ARN for this user
 
+*Linking*
+This module can also be linked to other resource - which will provide it
+permission to access them.
+
+*Example*
+```
+  - name: user
+    type: aws-iam-user
+    extra_iam_policies:
+      - "arn:aws:iam::aws:policy/CloudWatchEventsFullAccess"
+    links:
+      - s3: ["write"]
+      - notifcationsQueue
+      - schedulesQueue
+      - topic
+```
+
 ## aws-ses
 
-Sets up AWS SES. TODO(JD): This also files an AWS support ticket?
+Sets up AWS SES for sending domains via your root domain. Note:
+- It's required to set up the aws-dns module with this.
+- Opta also files a ticket with AWS support to get out of SES sandbox mode.
 
 *Fields*
-* `domain` -- Reqiured. Root domain to use for sending emails
-* `zone_id` -- Required. Route53 zone id where the MX records should be created
-* `mail_from_prefix` -- Optional. Subdomain to use with domain. `mail` by default.
+* `mail_from_prefix` -- Optional. Subdomain to use with root domain. `mail` by default.
 
 *Outputs*
 None

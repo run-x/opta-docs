@@ -179,7 +179,7 @@ the [Ingress](/docs/tutorials/ingress) docs for more details.
 Creates an IAM role.
 
 *Fields*
-* `allowed_k8s_services` -- Optional. K8s services that this role should have
+* `allowed_k8s_services` -- Optional. K8s service accounts that this role should have
     access to.
 * `allowed_iams` -- Optional. IAM users/roles allowed to assume this role
 * `extra_iam_policies` -- Optional. Additional IAM policies to be attached to this role.

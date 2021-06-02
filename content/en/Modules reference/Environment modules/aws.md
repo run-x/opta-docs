@@ -61,6 +61,21 @@ as opta services run on Kubernetes.
   to t3.medium (highly unrecommended to set to smaller)
 * `k8s_version` -- Optional. The Kubernetes version for the cluster. Must be [supported by EKS](https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html)
 
+## aws-nodegroup
+Create an additional nodegroup for the primary EKS cluster. Note that the
+`aws-eks` module creates a default nodegroup so this should only be used when
+you want one more.
+
+*Fields*
+* `max_nodes` -- Optional. Default = 15
+* `min_nodes` -- Optional. Default = 3
+* `node_disk_size` -- Optional. Default = 20
+* `node_instance_type` -- Optional. Default = t3.medium
+* `uge_gpu` -- Optional. Default = false
+
+*Outputs*
+None
+
 ## k8s-base
 This module is responsible for all the base infrastructure we package into the opta K8s environments. This includes:
 * [Autoscaler](https://github.com/kubernetes/autoscaler) for scaling up and down the ec2s as needed

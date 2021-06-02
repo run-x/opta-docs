@@ -173,3 +173,94 @@ _NOTE_ We expose the resource requests and set the limits to twice the request v
 #### Ingress
 You can control if and how you want to expose your app to the world! Check out
 the [Ingress](/docs/tutorials/ingress) docs for more details.
+
+## aws-iam-role
+
+Creates an IAM role.
+
+*Fields*
+* `allowed_k8s_services` -- Optional. K8s service accounts that this role should have
+    access to.
+* `allowed_iams` -- Optional. IAM users/roles allowed to assume this role
+* `extra_iam_policies` -- Optional. Additional IAM policies to be attached to this role.
+
+*Outputs*
+* `role_arn` -- The ARN for this role
+
+*Example*
+```
+  - name: deployer
+    type: aws-iam-role
+    extra_iam_policies:
+      - "arn:aws:iam::aws:policy/CloudWatchEventsFullAccess"
+    allowed_k8s_services:
+      - namespace: "*"
+        service_name: "*"
+```
+
+## aws-iam-user
+
+Creates an IAM user.
+
+*Fields*
+* `extra_iam_policies` -- Optional. Additional IAM policies to be attached to this role.
+
+*Outputs*
+* `user_arn` -- The ARN for this user
+
+*Linking*
+This module can also be linked to other resource - which will provide it
+permission to access them.
+
+*Example*
+```
+  - name: user
+    type: aws-iam-user
+    extra_iam_policies:
+      - "arn:aws:iam::aws:policy/CloudWatchEventsFullAccess"
+    links:
+      - s3: ["write"]
+      - notifcationsQueue
+      - schedulesQueue
+      - topic
+```
+
+## aws-ses
+
+Sets up AWS SES for sending domains via your root domain. Note:
+- It's required to set up the aws-dns module with this.
+- Opta also files a ticket with AWS support to get out of SES sandbox mode.
+
+*Fields*
+* `mail_from_prefix` -- Optional. Subdomain to use with root domain. `mail` by default.
+
+*Outputs*
+None
+
+## aws-sqs
+
+Sets up a AWS SQS queue.
+
+*Fields*
+* `fifo` -- Optional. FIFO queue or not. Default = false
+* `content_based_deduplication` -- Optional. Default = false
+* `delay_seconds` -- Optional. Default = 0
+* `message_retention_seconds` -- Optional. Default = 345600 (4 days)
+* `receive_wait_time_seconds` -- Optional. Default = 0
+
+*Outputs*
+* `queue_arn` -- ARN for the Queue
+* `queue_id` -- ID of the Queue
+* `queue_name` -- Name of the Queue
+
+## aws-sns
+
+Sets up a AWS SNS topic.
+
+*Fields*
+* `fifo` -- Optional. FIFO queue or not. Default = false
+* `content_based_deduplication` -- Optional. Default = false
+* `sqs_subscribers` -- Optional. List of SQS ARNs.
+
+*Outputs*
+* `topic_arn` -- ARN for the topic

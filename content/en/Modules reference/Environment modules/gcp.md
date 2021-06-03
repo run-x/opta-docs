@@ -7,7 +7,7 @@ weight: 2
 description:
 ---
 
-## gcp-base
+## base
 This module is the "base" module for creating an environment in gcp. It sets up the VPC, private subnet, firewall, 
 default kms key, private service access, and activate the container registry. Defaults are set to work 99% of the time, assuming no funny 
 networking constraints (you'll know them if you have them), so _no need to set any of the fields or know what the outputs do_.
@@ -26,11 +26,11 @@ networking constraints (you'll know them if you have them), so _no need to set a
 * private_subnet_id -- The ID of the private [subnets](https://cloud.google.com/vpc/docs/vpc#subnet-ranges)
   we setup for your environment
 
-## gcp-dns
+## dns
 This module creates a GCP [managed zone](https://cloud.google.com/dns/docs/zones) for
 your given domain. The [k8s-base]({{< relref "#k8s-base" >}}) module automatically hooks up the load balancer to it
 for the domain and subdomain specified, but in order for this to actually receive traffic you will need to complete
-the [dns setup](/docs/tutorials/ingress).
+the [dns setup](/miscellaneous/ingress).
 
 *Fields*
 * domain -- Required. The domain you want (you will also get the subdomains for your use)
@@ -44,7 +44,7 @@ the [dns setup](/docs/tutorials/ingress).
 * cert_arn -- The arn of the [ACM certificate ](https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html) which
   is used for ssl.
 
-## gcp-gke
+## k8s-cluster
 This module creates an [GKE cluster](https://cloud.google.com/kubernetes-engine/docs/concepts/kubernetes-engine-overview), and a default
 node pool to host your applications in. This needs to be added in the environment opta yml if you wish to deploy services
 as opta services run on Kubernetes.
@@ -59,7 +59,7 @@ as opta services run on Kubernetes.
   to bind the cluster too. Gives you automatic K8s version management for the lcuster and node pools. Defaults to "REGULAR"
 
 
-## gcp-k8s-base
+## k8s-base
 This module is responsible for all the base infrastructure we package into the opta K8s environments. This includes:
 * [Ingress Nginx](https://github.com/kubernetes/ingress-nginx) to expose services to the public
 * [Linkerd](https://linkerd.io/) as our service mesh.

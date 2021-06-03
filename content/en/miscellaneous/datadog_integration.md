@@ -28,10 +28,10 @@ providers:
     region: us-east-1
     account_id: XXXX
 modules:
-  - type: aws-base
-  - type: aws-dns
+  - type: base
+  - type: dns
     domain: staging.example.com
-  - type: aws-eks
+  - type: k8s-cluster
   - type: k8s-base
   - type: datadog # Yes, just one line! Same for GCP!
 ```

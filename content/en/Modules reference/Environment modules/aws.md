@@ -7,7 +7,7 @@ weight: 1
 description:
 ---
 
-## aws-base
+## base
 This module is the "base" module for creating an environment in aws. It sets up the VPCs, default kms key and the
 db/cache subnets. Defaults are set to work 99% of the time, assuming no funny networking constraints (you'll know them
 if you have them), so _no need to set any of the fields or know what the outputs do_.
@@ -31,11 +31,11 @@ if you have them), so _no need to set any of the fields or know what the outputs
 * `public_subnets_ids` -- The IDs of the public [subnets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html) 
   we setup for your environment
 
-## aws-dns
+## dns
 This module creates a [Route53 hosted zone](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-working-with.html) for 
 your given domain. The [k8s-base]({{< relref "#k8s-base" >}}) module automatically hooks up the load balancer to it
 for the domain and subdomain specified, but in order for this to actually receive traffic you will need to complete
-the [dns setup](/docs/tutorials/ingress).
+the [dns setup](/miscellaneous/ingress).
 
 *Fields*
 * domain -- Required. The domain you want (you will also get the subdomains for your use)
@@ -48,7 +48,7 @@ the [dns setup](/docs/tutorials/ingress).
 * cert_arn -- The arn of the [ACM certificate ](https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html) which
   is used for ssl.
 
-## aws-eks
+## k8s-cluster
 This module creates an [EKS cluster](https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html), and a default
 nodegroup to host your applications in. This needs to be added in the environment opta yml if you wish to deploy services
 as opta services run on Kubernetes.

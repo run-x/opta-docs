@@ -8,7 +8,7 @@ description: >
 
 # What's an Opta module?
 
-The heart of Opta is a set of "Modules" which basically map to AWS resources that
+The heart of Opta is a set of "Modules" which basically map to cloud resources that
 need to get created. Opta yamls reference these under the `modules` field.
 
 
@@ -16,7 +16,7 @@ need to get created. Opta yamls reference these under the `modules` field.
 name: myapp
 environments:
   - name: staging
-    parent: "../env/opta.yml"
+    path: "../env/opta.yml"
 modules:
   - name: app # This is an instance of the k8-service module type called app
     type: k8s-service
@@ -33,11 +33,11 @@ modules:
         value: "{env}"
     links:
       - rds
-      - redis
+      - cache
   - name: rds # This is an instance of the aws-rds module type called mydatabase
-    type: aws-postgres
-  - name: redis # This is an instance of the aws-redis module type called myredis
-    type: aws-redis
+    type: postgres
+  - name: cache # This is an instance of the aws-redis module type called myredis
+    type: redis
 ```
 You'll note that the module instance can have user-specified names which will come into play later with references.
 Opta modules are composed of the following entities/behaviors:
@@ -67,9 +67,10 @@ strings representing resource permissions.
 name: myapp
 environments:
   - name: staging
-    parent: "../env/opta.yml"
+    path: "../env/opta.yml"
 modules:
-  - app: # This is an instance of the k8-service module type called app
+  - name: app
+    type: k8s-service # This is an instance of the k8-service module type called app
 .
 .
 .
@@ -79,10 +80,10 @@ modules:
     - docdb
     - bucket:
       - write
-  - name: rds # This is an instance of the aws-rds module type called database
-    type: aws-postgres
-  - name: redis # This is an instance of the aws-redis module type called redis
-    type: aws-redis
+  - name: rds # This is an instance of the postgres module type called rds
+    type: postgres
+  - name: redis # This is an instance of the redis module type called redis
+    type: redis
   - name: docdb
     type: aws-documentdb
   - name: bucket

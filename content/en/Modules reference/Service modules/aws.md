@@ -37,7 +37,7 @@ await mongoose.connect("mongodb://<USER>:<PASSWORD>@<HOST>, {
 });
 ```
 
-## aws-postgres
+## postgres
 This module creates a postgres Aurora RDS database instance. It is made in the 
 private subnets automatically created during environment setup and so can only be accessed in the 
 VPC or through some proxy (e.g. VPN).
@@ -61,7 +61,7 @@ In the above example file, the _{module\_name}_ would be replaced with `rds`
 The permission list is to be empty because we currently do not support giving 
 apps IAM permissions to manipulate a database.
 
-## aws-redis
+## redis
 This module creates a redis cache via elasticache. It is made with one failover instance across azs, and is encrypted
 at rest with a kms key created in the env setup via the _init_ macro and in transit via tls. It is made in the private
 subnets created by the _init macro and so can only be accessed in the VPC or through some proxy (e.g. VPN).
@@ -172,7 +172,7 @@ _NOTE_ We expose the resource requests and set the limits to twice the request v
 
 #### Ingress
 You can control if and how you want to expose your app to the world! Check out
-the [Ingress](/docs/tutorials/ingress) docs for more details.
+the [Ingress](/miscellaneous/ingress) docs for more details.
 
 ## aws-iam-role
 

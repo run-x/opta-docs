@@ -6,44 +6,45 @@ description: >
   Creating secrets for your application
 ---
 
-Opta provides in-built secret management for your applications. Any secrets like database passwords, api keys, should not be written in the code (including opta.yml) because if the code is leaked accidentally, your infrastructure is exposed to hackers. Hence we store these secrets in a specific secret store. To use the secrets functionality:
+Opta provides built-in secret management for your applications. Any secrets like database passwords, api keys, should not be written in the code (including opta.yml) because if the code is leaked accidentally, your infrastructure is exposed to hackers.
 
-* Define the secrets in the service's opta.yml file.
-* Use the `opta secret` cli to update the value and list secrets.
+Opta enables you to store these in an encrypted fashion inside the kubernetes
+cluster. To use the secrets functionality:
 
-1. You can define/provision all the secrets you would need for an application in the service's opta.yml file like this:
+* Define the secrets in the service's opta.yml file
+* Use the `opta secret` cli to update the values
+* With the next `opta deploy`, these secrets will be visible to your container
+    as environment variables.
+
+1. Define secrets in opta.yml:
 
 ```yaml
 name: my_app
 environments:
-  - parent: "staging/opta.yml"
+  - path: "staging/opta.yml"
     name: staging
 modules:
-  - my_app:
-      type: k8s-service
-      target_port: 5000
-      tag: "{tag}"
-      env_vars:
-        - ENV: "{parent[name]}"
-      secrets:
-        - MY_SECRET_1
-        - MY_SECRET_2
+  - name: my_app:
+    type: k8s-service
+    port:
+      http: 5000
+    image: AUTO
+    secrets:
+      - MY_SECRET_1
+      - MY_SECRET_2
 ```
 
-So when you run `opta apply` on this file, it will provision the secrets for you.
-
-2. Now you can use the following command (from the dir where above file is located) to list all your secrets
+2. Update secret
 ```bash
-opta secret list my_app --env staging
+opta secret update MY_SECRET_1 <value>
 ```
 
-3. To set the values of the secrets, you can use the cli
+3. List all secrets
 ```bash
-opta secret update my_app MY_SECRET_1 SECRET_VALUE --env staging
+opta secret list
 ```
-Note: The secret needs to be set individually for each service and environment
 
-4. You can print the value of an existing secret with the cli
+4. View secret value
 ```bash
-opta secret view my_app MY_SECRET_1 --env staging
+opta secret view MY_SECRET_1
 ```

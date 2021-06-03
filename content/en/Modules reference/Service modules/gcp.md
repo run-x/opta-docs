@@ -26,7 +26,7 @@ create, destroy, and update objects) to the given gcs bucket.
 The current permissions are, "read" and "write". These need to be
 specified when you add the link.
 
-## gcp-postgres
+## postgres
 This module creates a postgres [GCP Cloud SQL](https://cloud.google.com/sql/docs/introduction) database. It is made with
 the [private service access](https://cloud.google.com/vpc/docs/private-services-access), ensuring private communication.
 
@@ -49,7 +49,7 @@ In the above example file, the _{module\_name}_ would be replaced with `rds`
 The permission list is to be empty because we currently do not support giving
 apps IAM permissions to manipulate a database.
 
-## gcp-redis
+## redis
 This module creates a redis cache via [Memorystore](https://cloud.google.com/memorystore/docs/redis/redis-overview). 
 It is made with their standard high availability offering, but (unlike in AWS) there is no
 [encryption at rest](https://stackoverflow.com/questions/58032778/gcp-cloud-memorystore-data-encryption-at-rest)
@@ -70,7 +70,7 @@ When linked to a k8s-service, it adds connection credentials to your container's
 
 In the above example file, the _{module\_name}_ would be replaced with `redis`
 
-## gcp-k8s-service
+## k8s-service
 The most important module for deploying apps, gcp-k8s-service deploys a kubernetes app on gcp.
 It deploys your service as a rolling update securely and with simple autoscaling right off the bat-- you
 can even expose it to the world, complete with load balancing both internally and externally.

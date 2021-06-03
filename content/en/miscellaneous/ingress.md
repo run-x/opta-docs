@@ -19,10 +19,10 @@ providers:
     region: us-east-1
     account_id: XXXX
 modules:
-  - type: aws-base
-  - type: aws-dns # <-- this entry
+  - type: base
+  - type: dns # <-- this entry
     domain: staging.startup.com
-  - type: aws-eks
+  - type: k8s-cluster
   - type: k8s-base
 ```
 {{< /tab >}}
@@ -35,19 +35,19 @@ providers:
     region: us-central1
     project: jds-throwaway-1
 modules:
-  - type: gcp-base
-  - type: gcp-dns # <-- this entry
+  - type: base
+  - type: dns # <-- this entry
     domain: staging.example.com
     subdomains:
       - myapp 
     delegated: false
-  - type: gcp-gke
-  - type: gcp-k8s-base
+  - type: k8s-cluster
+  - type: k8s-base
 ```
 {{< /tab >}}
 {{< /tabs >}}
 
-As is, the aws-dns/gcp-dns will create the "hosted zone" resource which manages your dns rules 
+As is, the dns module will create the "hosted zone" resource which manages your dns rules 
 for the domain you listed. In order for it to receive public traffic and get ssl 
 (to have https instead of http connections), you have to do some extra setup which
 _proves_ that you own it.
@@ -83,11 +83,11 @@ providers:
     region: us-east-1
     account_id: XXXX
 modules:
-  - type: aws-base
-  - type: aws-dns
+  - type: base
+  - type: dns
     domain: staging.startup.com
     delegated: true # <-- THIS
-  - type: aws-eks
+  - type: k8s-cluster
   - type: k8s-base
 ```
 {{< /tab >}}
@@ -100,14 +100,14 @@ providers:
     region: us-central1
     project: jds-throwaway-1
 modules:
-  - type: gcp-base
-  - type: gcp-dns
+  - type: base
+  - type: dns
     domain: staging.example.com
     subdomains:
       - myapp 
     delegated: true # <-- THIS
-  - type: gcp-gke
-  - type: gcp-k8s-base
+  - type: k8s-cluster
+  - type: k8s-base
 ```
 {{< /tab >}}
 {{< /tabs >}}

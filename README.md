@@ -7,4 +7,4 @@
 You can now see the site at http://localhost:1313 Any changes you make will get instantly updated in the browser!
 
 # Deployment
-We have continuous deployment set up. Once your PR gets merged, it will automatically get deployed to https://docs.runx.dev
+We have continuous deployment set up. Once your PR gets merged, it will automatically get deployed to https://docs.opta.dev

@@ -60,4 +60,4 @@ For both files, you just run a single command `opta apply` and the magic happens
 
 ## Where should I go next?
 
-Read the [Getting Started Guide](/docs/getting-started/) or check out some [Examples](/docs/examples/).
+Read the [Getting Started Guide](/getting-started/).

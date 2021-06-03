@@ -8,9 +8,9 @@ description: >
 
 
 ## Installation
-One line installation ([detailed instructions](/docs/installation)):
+One line installation ([detailed instructions](/installation)):
 ```
-/bin/bash -c "$(curl -fsSL https://docs.runx.dev/install.sh)"
+/bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
 ```
 
 Opta works on AWS and GCP - so make sure the appropriate cloud credentails are configured in your terminal.
@@ -85,10 +85,10 @@ modules:
 {{< /tab >}}
 {{< tab tabNum="2" >}}
 ```yaml
+name: hello-world
 environments:
   - name: staging
     path: "staging/opta.yml"
-name: hello-world
 modules:
   - name: app
     type: k8s-service
@@ -129,9 +129,9 @@ opta destroy
 ```
 
 ## Next steps
-- Use your own docker image: [Custom Image](/docs/tutorials/custom_image)
-- Set up a domain name for your service: [Ingress](/docs/tutorials/ingress)
-- Use secrets: [Secrets](/docs/tutorials/secrets/)
-- Set up full datadog integration in one line(!): [Datadog](/docs/tutorials/datadog_integration/)
-- Explore all the infrastructure that opta sets up for you: [Architecture](/docs/architecture/)
-- Explore the api for all modules: [Reference](/docs/modules-reference/)
+- Use your own docker image: [Custom Image](/miscellaneous/custom_image)
+- Set up a domain name for your service: [Ingress](/miscellaneous/ingress)
+- Use secrets: [Secrets](/miscellaneous/secrets/)
+- Set up full datadog integration in one line(!): [Datadog](/miscellaneous/datadog_integration/)
+- Explore all the infrastructure that opta sets up for you: [Architecture](/architecture/)
+- Explore the api for all modules: [Reference](/modules-reference/)

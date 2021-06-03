@@ -158,8 +158,8 @@ enable = false
 	icon = "fa fa-envelope"
         desc = "Help from your fellow users"
 [[params.links.developer]]
-	name = "Discord"
-	url = "https://discord.gg/BXjmBhkwvB"
-	icon = "fab fa-discord"
-        desc = "RunX community discord"
+	name = "Slack"
+	url = "https://join.slack.com/t/opta-group/shared_invite/zt-r1p9k1iv-4MP1IMZCT9mwwwdJH0HRyA"
+	icon = "fab fa-slack"
+        desc = "Opta slack community"
 

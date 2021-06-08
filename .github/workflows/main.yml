@@ -41,7 +41,7 @@ jobs:
       - name: Build
         env:
           HUGO_ENV: production
-        run: hugo
+        run: hugo --cleanDestinationDir
 
       - name: Deploy
         run: |

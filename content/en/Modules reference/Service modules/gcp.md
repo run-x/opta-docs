@@ -34,6 +34,31 @@ the [private service access](https://cloud.google.com/vpc/docs/private-services-
 * `instance_tier` -- Optional. This is the RDS instance type used for the cloud sql instance [instances](https://cloud.google.com/sql/pricing).
   Default "db-f1-micro"
 * `engine_version` -- Optional. The major version of the database to use. Default 11
+* `safety` -- Optional. Set to "true", if you want to disable the database deletion in opta. You would have to manually set this "false" to enable DB deletion.
+
+*Linking*
+
+When linked to a k8s-service, it adds connection credentials to your container's environment variables as:
+
+* `{module_name}_db_user`
+* `{module_name}_db_password`
+* `{module_name}_db_name`
+* `{module_name}_db_host`
+
+In the above example file, the _{module\_name}_ would be replaced with `rds`
+
+The permission list is to be empty because we currently do not support giving
+apps IAM permissions to manipulate a database.
+
+## mysql
+This module creates a MySQL [GCP Cloud SQL](https://cloud.google.com/sql/docs/introduction) database. It is made with
+the [private service access](https://cloud.google.com/vpc/docs/private-services-access), ensuring private communication.
+
+*Fields*
+* `instance_tier` -- Optional. This is the RDS instance type used for the cloud sql instance [instances](https://cloud.google.com/sql/pricing).
+  Default "db-f1-micro"
+* `engine_version` -- Optional. The major version of the database to use. Default 11
+* `safety` -- Optional. Set to "true", if you want to disable the database deletion in opta. You would have to manually set this "false" to enable DB deletion.
 
 *Linking*
 

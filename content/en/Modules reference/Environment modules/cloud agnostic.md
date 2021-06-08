@@ -8,7 +8,7 @@ description:
 ---
 ## datadog
 This module setups the [Datadog Kubernetes](https://docs.datadoghq.com/agent/kubernetes/?tab=helm) integration onto
-the EKS cluster created for this environment. Please read the [datadog tutorial](/miscellaneous/datadog_integration) for all the
+the EKS cluster created for this environment. Please read the [datadog tutorial](/observability/datadog) for all the
 details of the features.
 
 *Fields*

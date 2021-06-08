@@ -132,6 +132,6 @@ opta destroy
 - Use your own docker image: [Custom Image](/miscellaneous/custom_image)
 - Set up a domain name for your service: [Ingress](/miscellaneous/ingress)
 - Use secrets: [Secrets](/miscellaneous/secrets/)
-- Set up full datadog integration in one line(!): [Datadog](/miscellaneous/datadog_integration/)
+- Set up observability integrations in one line(!): [Observability](/observability/)
 - Explore all the infrastructure that opta sets up for you: [Architecture](/architecture/)
 - Explore the api for all modules: [Reference](/modules-reference/)

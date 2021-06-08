@@ -6,7 +6,7 @@ description: >
   How to debug your app
 ---
 
-> Ideally, you should set up [observability](/miscellaneous/datadog_integration) so that manual debugging is not needed.
+> Ideally, you should set up [observability](/observability) so that manual debugging is not needed.
 
 Opta provides 2 helpful commands to help with debugging:
 

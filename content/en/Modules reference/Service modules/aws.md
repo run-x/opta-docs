@@ -90,6 +90,20 @@ This module creates an S3 bucket for storage purposes. It is created with server
 * `bucket_name`-- Required. The name of the bucket to create.
 * `block_public` -- Optional. Block all public access. Default true
 * `bucket_policy` -- Optional. A custom s3 policy json/yaml to add.
+* `cors_rule` -- Optional. A custom cors policy. 
+
+*Example*
+```
+  - name: bucky
+    type: aws-s3
+    bucket_name: dev-runx-bucky
+    cors_rule:
+      allowed_methods:
+        - "PUT"
+      max_age_seconds: 3600
+      allowed_origins:
+        - "runx.dev"
+```
 
 *Outputs*
 * `bucket_id` -- The id/name of the bucket.

@@ -9,14 +9,17 @@ description: >
 
 With the LogDNA(https://logdna.com) integration, all the stdout from your services will be sent to LogDNA.
 
-To enable this, create a new opta yaml file - let's say `logdna.yml`:
+To enable this, add the following module to your environment opta.yml:
 ```yaml
-name: logdna
-environments:
-  - name: staging
-    path: "../opta.yml" # path to your environment opta yml
+name: <name>
+org_name: <org>
+providers:
+  ...
 modules:
-  - type: helm-chart
+  - type: base
+  - type: k8s-cluster
+  - type: k8s-base
+  - type: helm-chart # <-- Add this for LogDNA support
     chart: agent
     repository: https://assets.logdna.com/charts
     version: 203.1.0
@@ -25,4 +28,4 @@ modules:
         key: <your ingestion key>
         tags: staging # any custom tags that you need
 ```
-Run `opta apply -c logdna.yml` and that's it! You should see your logs in logDNA shortly.
+Run `opta apply` and that's it! You should see your logs in logDNA shortly.

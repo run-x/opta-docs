@@ -11,13 +11,18 @@ description:
 Plug in a custom helm chart in your opta k8s cluster.
 
 *Fields*
-* `chart` -- name/path to the helm chart.
+* `chart` -- Name of the helm chart. 
+
+  Note that you don't need to use `<repo_name>/<chart_name>` - as repo is specified separately. Just do `<chart_name>`.
+
+  If you're using a local chart, then this will be the path to the chart.
 * `repository` -- Optional. Default = null - which means a local chart.
 * `namespace` -- Optional. Default = default
 * `create_namespace` -- Optional. Default = false
 * `atomic` -- Optional. Default = true
 * `cleanup_on_fail` -- Optional. Default = true
-* `chart_version` -- Optional. Default = null
+* `version` -- Optional for local charts and Required for remote
+    charts. Default = null.
 * `values_file` -- Optional. Path to a values file. Default = null
 * `values` -- Optional. Values override.
 * `timeout` -- Optional. Default = 300

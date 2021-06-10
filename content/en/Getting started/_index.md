@@ -129,6 +129,7 @@ opta destroy
 ```
 
 ## Next steps
+- Check out more examples: [github](https://github.com/run-x/opta/tree/main/examples)
 - Use your own docker image: [Custom Image](/miscellaneous/custom_image)
 - Set up a domain name for your service: [Ingress](/miscellaneous/ingress)
 - Use secrets: [Secrets](/miscellaneous/secrets/)

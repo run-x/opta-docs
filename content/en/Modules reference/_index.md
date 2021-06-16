@@ -29,7 +29,8 @@ modules:
       memory: 512  # in megabytes
     healthcheck_path: "/get"
     env_vars:
-      ENV: "{env}"
+      - name: ENV
+        value: "{env}"
     links:
       - rds
       - cache

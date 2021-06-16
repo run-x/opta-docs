@@ -60,6 +60,14 @@ as opta services run on Kubernetes.
 * `node_instance_type` -- Optional. The [ec2 instance type](https://aws.amazon.com/ec2/instance-types/) for the nodes. Defaults
   to t3.medium (highly unrecommended to set to smaller)
 * `k8s_version` -- Optional. The Kubernetes version for the cluster. Must be [supported by EKS](https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html)
+* `spot_instances` -- Optional. A boolean specifying whether to use [spot instances](https://aws.amazon.com/ec2/spot/) 
+  for the default nodegroup or not. The spot instances will be configured to have the max price equal to the on-demand
+  price (so no danger of overcharging). *WARNING*: By using spot instances you must accept the real risk of frequent abrupt
+  node terminations and possibly (although extremely rarely) even full blackouts (all nodes die). The former is a small
+  risk as containers of opta services will be automatically restarted on surviving nodes. So just make sure to specify
+  a minimum of more than 1 containers -- opta by default attempts to spread them out amongst many nodes. The former
+  is a graver concern which can be addressed by having multiple node groups of different instance types (see aws 
+  nodegroup module) and ideally at least one non-spot. Default false
 
 ## aws-nodegroup
 Create an additional nodegroup for the primary EKS cluster. Note that the
@@ -72,6 +80,7 @@ you want one more.
 * `node_disk_size` -- Optional. Default = 20
 * `node_instance_type` -- Optional. Default = t3.medium
 * `uge_gpu` -- Optional. Default = false
+* `spot_instances` -- Optional. Default = false
 
 *Outputs*
 None

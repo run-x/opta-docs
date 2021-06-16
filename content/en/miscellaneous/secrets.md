@@ -24,7 +24,7 @@ environments:
   - path: "staging/opta.yml"
     name: staging
 modules:
-  - name: my_app:
+  - name: my_app
     type: k8s-service
     port:
       http: 5000

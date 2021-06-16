@@ -22,7 +22,19 @@ When linked to a k8s-service, this adds connection credentials to your container
 * `{module_name}_db_password`
 * `{module_name}_db_host`
 
-In the above example file, the _{module\_name}_ would be replaced with `docdb`
+The permission list can optionally have one entry which should be a map for renaming the default environment variable
+names to a user-defined value:
+
+```yaml
+    links:
+      - db:
+        - db_user: DBUSER
+          db_host: DBHOST
+          db_password: BLAH
+```
+If present, this map must have renames for all 3 fields.
+
+The permission set is otherwise empty because we currently do not support giving apps IAM permissions to manipulate a database.
 
 In addition to these credentials, you also need to enable SSL encryption when
 connecting ([AWS docs](https://docs.aws.amazon.com/documentdb/latest/developerguide/connect_programmatically.html)).

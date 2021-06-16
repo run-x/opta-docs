@@ -56,10 +56,22 @@ When linked to a k8s-service, it adds connection credentials to your container's
 * `{module_name}_db_name`
 * `{module_name}_db_host`
 
-In the above example file, the _{module\_name}_ would be replaced with `rds`
+In the [modules reference](/modules-reference) example, the _{module\_name}_ would be replaced with `rds`
 
-The permission list is to be empty because we currently do not support giving 
-apps IAM permissions to manipulate a database.
+The permission list can optionally have one entry which should be a map for renaming the default environment variable
+names to a user-defined value:
+
+```yaml
+    links:
+      - db:
+        - db_user: DBUSER
+          db_host: DBHOST
+          db_name: DBNAME
+          db_password: BLAH
+```
+If present, this map must have renames for all 4 fields.
+
+The permission set is otherwise empty because we currently do not support giving apps IAM permissions to manipulate a database.
 
 ## redis
 This module creates a redis cache via elasticache. It is made with one failover instance across azs, and is encrypted
@@ -77,7 +89,20 @@ When linked to a k8s-service, it adds connection credentials to your container's
 * `{module_name}_cache_auth_token` -- The auth token/password of the cluster.
 * `{module_name}_cache_host` -- The host to contact to access the cluster.
 
-In the above example file, the _{module\_name}_ would be replaced with `redis`
+In the [modules reference](/modules-reference), the _{module\_name}_ would be replaced with `cache`
+
+The permission list can optionally have one entry which should be a map for renaming the default environment variable
+names to a user-defined value:
+
+```yaml
+    links:
+      - db:
+        - cache_host: BLAH_HOST
+          cache_auth_token: BLAH_AUTH
+```
+If present, this map must have renames for all 2 fields.
+
+The permission set is otherwise empty because we currently do not support giving apps IAM permissions to manipulate a redis cache.
 
 _NOTE_ Redis CLI will not work against this cluster because redis cli does not 
 support the TLS transit encryption. There should be no trouble with any of the 
@@ -117,7 +142,7 @@ create, destroy, and update objects) to the given s3 bucket.
 The current permissions are, "read" and "write". These need to be
 specified when you add the link.
 
-## k8s-service
+## aws-k8s-service
 The most important module for deploying apps, k8s-service deploys a kubernetes app.
 It deploys your service as a rolling update securely and with simple autoscaling right off the bat-- you
 can even expose it to the world, complete with load balancing both internally and externally.
@@ -129,13 +154,23 @@ can even expose it to the world, complete with load balancing both internally an
 * `min_containers` -- Optional. The minimum number of replicas your app can autoscale to. Default 1
 * `max_containers` -- Optional. The maximum number of replicas your app can autoscale to. Default 3
 * `image` -- Required. Set to AUTO to create a private repo for your own images. Otherwises attempts to pull image from public dockerhub
-* `env_vars` -- Optional. A list of maps holding name+value fields for envars to add to your container
+* `env_vars` -- Optional. Either a map of key values to add to the container as environment variables (key is name, 
+  value is value), or a list of maps holding name+value fields for the same purpose.
+  Examples:
+  Option 1
   ```yaml
+  env_vars:
+    FLAG: "true"
+  ```
+  Option 2
+  ```yaml
+  env_vars:
     - name: FLAG
       value: "true"
   ```
-* `secrets` -- Optional. Same format as env_vars, but these values will be stored in the secrets resource, not directly
-  in the pod spec.
+* `secrets` -- Optional. A list of secrets to add as environment variables for your container. These values will be 
+  stored in the secrets resource, not directly in the pod spec. All secrets must be set following the [secrets instructions](/miscellaneous/secrets)
+  prior to being able to deploy the app.
 * `autoscaling_target_cpu_percentage` --  Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
 * `autoscaling_target_mem_percentage` -- Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
 * `healthcheck_path` -- Optional. See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default "/healthcheck"

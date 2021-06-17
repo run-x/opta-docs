@@ -60,8 +60,6 @@ names to a user-defined value:
 ```
 If present, this map must have renames for all 4 fields.
 
-The permission set is otherwise empty because we currently do not support giving apps IAM permissions to manipulate a database.
-
 ## mysql
 This module creates a MySQL [GCP Cloud SQL](https://cloud.google.com/sql/docs/introduction) database. It is made with
 the [private service access](https://cloud.google.com/vpc/docs/private-services-access), ensuring private communication.

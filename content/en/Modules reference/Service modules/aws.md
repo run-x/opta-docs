@@ -160,22 +160,14 @@ can even expose it to the world, complete with load balancing both internally an
 * `min_containers` -- Optional. The minimum number of replicas your app can autoscale to. Default 1
 * `max_containers` -- Optional. The maximum number of replicas your app can autoscale to. Default 3
 * `image` -- Required. Set to AUTO to create a private repo for your own images. Otherwises attempts to pull image from public dockerhub
-* `env_vars` -- Optional. Either a map of key values to add to the container as environment variables (key is name, 
-  value is value), or a list of maps holding name+value fields for the same purpose.
-  Examples:
-  Option 1
+* `env_vars` -- Optional. A map of key values to add to the container as environment variables (key is name,
+  value is value).
   ```yaml
   env_vars:
     FLAG: "true"
   ```
-  Option 2
-  ```yaml
-  env_vars:
-    - name: FLAG
-      value: "true"
-  ```
 * `secrets` -- Optional. A list of secrets to add as environment variables for your container. All secrets must be set 
-  following the [secrets instructions](/miscellaneous/secrets) prior to being able to deploy the app.
+  following the [secrets instructions](/miscellaneous/secrets) prior to deploying the app.
 * `autoscaling_target_cpu_percentage` --  Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
 * `autoscaling_target_mem_percentage` -- Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
 * `healthcheck_path` -- Optional. See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default "/healthcheck"

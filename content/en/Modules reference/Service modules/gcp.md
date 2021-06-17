@@ -94,8 +94,6 @@ names to a user-defined value:
 ```
 If present, this map must have renames for all 4 fields.
 
-The permission set is otherwise empty because we currently do not support giving apps IAM permissions to manipulate a database.
-
 ## redis
 This module creates a redis cache via [Memorystore](https://cloud.google.com/memorystore/docs/redis/redis-overview). 
 It is made with their standard high availability offering, but (unlike in AWS) there is no
@@ -128,8 +126,6 @@ names to a user-defined value:
 ```
 If present, this map must have renames for all 2 fields.
 
-The permission set is otherwise empty because we currently do not support giving apps IAM permissions to manipulate a redis cache.
-
 ## k8s-service
 The most important module for deploying apps, gcp-k8s-service deploys a kubernetes app on gcp.
 It deploys your service as a rolling update securely and with simple autoscaling right off the bat-- you
@@ -145,23 +141,14 @@ IAM permissions at the moment. This will be addressed in accordance to need from
 * `min_containers` -- Optional. The minimum number of replicas your app can autoscale to. Default 1
 * `max_containers` -- Optional. The maximum number of replicas your app can autoscale to. Default 3
 * `image` -- Required. Set to AUTO to create a private repo for your own images. Otherwises attempts to pull image from public dockerhub
-* `env_vars` -- Optional. Either a map of key values to add to the container as environment variables (key is name,
-  value is value), or a list of maps holding name+value fields for the same purpose.
-  Examples:
-  Option 1
+* `env_vars` -- Optional. A map of key values to add to the container as environment variables (key is name,
+  value is value).
   ```yaml
   env_vars:
     FLAG: "true"
   ```
-  Option 2
-  ```yaml
-  env_vars:
-    - name: FLAG
-      value: "true"
-  ```
-* `secrets` -- Optional. A list of secrets to add as environment variables for your container. These values will be
-  stored in the secrets resource, not directly in the pod spec. All secrets must be set following the [secrets instructions](/miscellaneous/secrets)
-  prior to being able to deploy the app.
+* `secrets` -- Optional. A list of secrets to add as environment variables for your container. All secrets must be set 
+  following the [secrets instructions](/miscellaneous/secrets) prior to deploying the app.
 * `autoscaling_target_cpu_percentage` --  Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
 * `autoscaling_target_mem_percentage` -- Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
 * `healthcheck_path` -- Optional. See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default "/healthcheck"

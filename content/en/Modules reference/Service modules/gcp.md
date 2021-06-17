@@ -45,10 +45,20 @@ When linked to a k8s-service, it adds connection credentials to your container's
 * `{module_name}_db_name`
 * `{module_name}_db_host`
 
-In the above example file, the _{module\_name}_ would be replaced with `rds`
+In the [modules reference](/modules-reference) example, the _{module\_name}_ would be replaced with `rds`
 
-The permission list is to be empty because we currently do not support giving
-apps IAM permissions to manipulate a database.
+The permission list can optionally have one entry which should be a map for renaming the default environment variable
+names to a user-defined value:
+
+```yaml
+    links:
+      - db:
+        - db_user: DBUSER
+          db_host: DBHOST
+          db_name: DBNAME
+          db_password: DBPASS
+```
+If present, this map must have renames for all 4 fields.
 
 ## mysql
 This module creates a MySQL [GCP Cloud SQL](https://cloud.google.com/sql/docs/introduction) database. It is made with
@@ -69,10 +79,18 @@ When linked to a k8s-service, it adds connection credentials to your container's
 * `{module_name}_db_name`
 * `{module_name}_db_host`
 
-In the above example file, the _{module\_name}_ would be replaced with `rds`
+The permission list can optionally have one entry which should be a map for renaming the default environment variable
+names to a user-defined value:
 
-The permission list is to be empty because we currently do not support giving
-apps IAM permissions to manipulate a database.
+```yaml
+    links:
+      - db:
+        - db_user: DBUSER
+          db_host: DBHOST
+          db_name: DBNAME
+          db_password: DBPASS
+```
+If present, this map must have renames for all 4 fields.
 
 ## redis
 This module creates a redis cache via [Memorystore](https://cloud.google.com/memorystore/docs/redis/redis-overview). 
@@ -93,7 +111,18 @@ When linked to a k8s-service, it adds connection credentials to your container's
 * `{module_name}_cache_auth_token` -- The auth token/password of the cluster.
 * `{module_name}_cache_host` -- The host to contact to access the cluster.
 
-In the above example file, the _{module\_name}_ would be replaced with `redis`
+In the [modules reference](/modules-reference), the _{module\_name}_ would be replaced with `cache`
+
+The permission list can optionally have one entry which should be a map for renaming the default environment variable
+names to a user-defined value:
+
+```yaml
+    links:
+      - db:
+        - cache_host: CACHEHOST
+          cache_auth_token: CACHEPASS
+```
+If present, this map must have renames for all 2 fields.
 
 ## k8s-service
 The most important module for deploying apps, gcp-k8s-service deploys a kubernetes app on gcp.
@@ -110,13 +139,14 @@ IAM permissions at the moment. This will be addressed in accordance to need from
 * `min_containers` -- Optional. The minimum number of replicas your app can autoscale to. Default 1
 * `max_containers` -- Optional. The maximum number of replicas your app can autoscale to. Default 3
 * `image` -- Required. Set to AUTO to create a private repo for your own images. Otherwises attempts to pull image from public dockerhub
-* `env_vars` -- Optional. A list of maps holding name+value fields for envars to add to your container
+* `env_vars` -- Optional. A map of key values to add to the container as environment variables (key is name,
+  value is value).
   ```yaml
-    - name: FLAG
-      value: "true"
+  env_vars:
+    FLAG: "true"
   ```
-* `secrets` -- Optional. Same format as env_vars, but these values will be stored in the secrets resource, not directly
-  in the pod spec.
+* `secrets` -- Optional. A list of secrets to add as environment variables for your container. All secrets must be set 
+  following the [secrets instructions](/miscellaneous/secrets) prior to deploying the app.
 * `autoscaling_target_cpu_percentage` --  Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
 * `autoscaling_target_mem_percentage` -- Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
 * `healthcheck_path` -- Optional. See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default "/healthcheck"

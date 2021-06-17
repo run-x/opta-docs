@@ -30,11 +30,9 @@ names to a user-defined value:
       - db:
         - db_user: DBUSER
           db_host: DBHOST
-          db_password: BLAH
+          db_password: DBPASS
 ```
 If present, this map must have renames for all 3 fields.
-
-The permission set is otherwise empty because we currently do not support giving apps IAM permissions to manipulate a database.
 
 In addition to these credentials, you also need to enable SSL encryption when
 connecting ([AWS docs](https://docs.aws.amazon.com/documentdb/latest/developerguide/connect_programmatically.html)).
@@ -79,11 +77,9 @@ names to a user-defined value:
         - db_user: DBUSER
           db_host: DBHOST
           db_name: DBNAME
-          db_password: BLAH
+          db_password: DBPASS
 ```
 If present, this map must have renames for all 4 fields.
-
-The permission set is otherwise empty because we currently do not support giving apps IAM permissions to manipulate a database.
 
 ## redis
 This module creates a redis cache via elasticache. It is made with one failover instance across azs, and is encrypted
@@ -109,12 +105,10 @@ names to a user-defined value:
 ```yaml
     links:
       - db:
-        - cache_host: BLAH_HOST
-          cache_auth_token: BLAH_AUTH
+        - cache_host: CACHEHOST
+          cache_auth_token: CACHEAUTH
 ```
 If present, this map must have renames for all 2 fields.
-
-The permission set is otherwise empty because we currently do not support giving apps IAM permissions to manipulate a redis cache.
 
 _NOTE_ Redis CLI will not work against this cluster because redis cli does not 
 support the TLS transit encryption. There should be no trouble with any of the 
@@ -154,7 +148,7 @@ create, destroy, and update objects) to the given s3 bucket.
 The current permissions are, "read" and "write". These need to be
 specified when you add the link.
 
-## aws-k8s-service
+## k8s-service
 The most important module for deploying apps, k8s-service deploys a kubernetes app.
 It deploys your service as a rolling update securely and with simple autoscaling right off the bat-- you
 can even expose it to the world, complete with load balancing both internally and externally.
@@ -180,9 +174,8 @@ can even expose it to the world, complete with load balancing both internally an
     - name: FLAG
       value: "true"
   ```
-* `secrets` -- Optional. A list of secrets to add as environment variables for your container. These values will be 
-  stored in the secrets resource, not directly in the pod spec. All secrets must be set following the [secrets instructions](/miscellaneous/secrets)
-  prior to being able to deploy the app.
+* `secrets` -- Optional. A list of secrets to add as environment variables for your container. All secrets must be set 
+  following the [secrets instructions](/miscellaneous/secrets) prior to being able to deploy the app.
 * `autoscaling_target_cpu_percentage` --  Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
 * `autoscaling_target_mem_percentage` -- Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
 * `healthcheck_path` -- Optional. See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default "/healthcheck"

@@ -56,7 +56,7 @@ names to a user-defined value:
         - db_user: DBUSER
           db_host: DBHOST
           db_name: DBNAME
-          db_password: BLAH
+          db_password: DBPASS
 ```
 If present, this map must have renames for all 4 fields.
 
@@ -90,7 +90,7 @@ names to a user-defined value:
         - db_user: DBUSER
           db_host: DBHOST
           db_name: DBNAME
-          db_password: BLAH
+          db_password: DBPASS
 ```
 If present, this map must have renames for all 4 fields.
 
@@ -123,8 +123,8 @@ names to a user-defined value:
 ```yaml
     links:
       - db:
-        - cache_host: BLAH_HOST
-          cache_auth_token: BLAH_AUTH
+        - cache_host: CACHEHOST
+          cache_auth_token: CACHEPASS
 ```
 If present, this map must have renames for all 2 fields.
 

@@ -98,3 +98,15 @@ None for the user, we allow no configuration at the time.
 
 *Outputs*
 None
+
+## aws-ses
+
+Sets up AWS SES for sending domains via your root domain. Note:
+- It's required to set up the aws-dns module with this.
+- Opta also files a ticket with AWS support to get out of SES sandbox mode.
+
+*Fields*
+* `mail_from_prefix` -- Optional. Subdomain to use with root domain. `mail` by default.
+
+*Outputs*
+None

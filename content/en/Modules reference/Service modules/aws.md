@@ -142,11 +142,10 @@ This module creates an S3 bucket for storage purposes. It is created with server
 
 *Linking*
 
-When linked to a k8s-service, this adds the necessary IAM permissions to read 
+When linked to a k8s-service or IAM role/user, this adds the necessary IAM permissions to read 
 (e.g. list objects and get objects) and/or write (e.g. list, get,
 create, destroy, and update objects) to the given s3 bucket. 
-The current permissions are, "read" and "write". These need to be
-specified when you add the link.
+The current permissions are, "read" and "write", defaulting to "write" if none specified
 
 ## k8s-service
 The most important module for deploying apps, k8s-service deploys a kubernetes app.
@@ -271,18 +270,6 @@ permission to access them.
       - topic
 ```
 
-## aws-ses
-
-Sets up AWS SES for sending domains via your root domain. Note:
-- It's required to set up the aws-dns module with this.
-- Opta also files a ticket with AWS support to get out of SES sandbox mode.
-
-*Fields*
-* `mail_from_prefix` -- Optional. Subdomain to use with root domain. `mail` by default.
-
-*Outputs*
-None
-
 ## aws-sqs
 
 Sets up a AWS SQS queue.
@@ -299,6 +286,13 @@ Sets up a AWS SQS queue.
 * `queue_id` -- ID of the Queue
 * `queue_name` -- Name of the Queue
 
+*Linking*
+
+When linked to a k8s-service or IAM role/user, this adds the necessary IAM permissions to publish
+(e.g. put new messages) and/or subscribe (e.g. read/remove messages) to the given queue.
+The current permissions are, "publish" and "subscribe", defaulting to \["publish", "subscribe",] if none specified.
+Link also grants encrypt/decrypt permission for the queue's KMS key.
+
 ## aws-sns
 
 Sets up a AWS SNS topic.
@@ -310,3 +304,9 @@ Sets up a AWS SNS topic.
 
 *Outputs*
 * `topic_arn` -- ARN for the topic
+
+*Linking*
+
+When linked to a k8s-service or IAM role/user, this adds the necessary IAM permissions to publish
+notifications to the topic.  The current permission allowed is just, "publish".
+Link also grants encrypt/decrypt permission for the topic's KMS key.

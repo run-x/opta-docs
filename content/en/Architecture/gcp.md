@@ -1,3 +1,12 @@
+---
+title: "GCP Architecture"
+linkTitle: "GCP"
+date: 2020-06-17
+draft: false
+weight: 1
+description: >
+  Architecture overview for GCP deployments of Opta
+---
 ## GCP
 ![image alt text](/images/opta_gcp_architecture.png)
 For GCP our environments are currently setup within a single region/subnet which google can automatically distribute

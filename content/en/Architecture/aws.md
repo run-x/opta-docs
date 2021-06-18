@@ -1,3 +1,12 @@
+---
+title: "AWS Architecture"
+linkTitle: "AWS"
+date: 2020-06-17
+draft: false
+weight: 1
+description: >
+  Architecture overview for AWS deployments of Opta
+---
 ## AWS
 ![image alt text](/images/opta_aws_architecture.png)
 For AWS our environments are currently setup within a single region, but our networking is set up across 3 availability

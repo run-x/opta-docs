@@ -1,3 +1,12 @@
+---
+title: "Kubernetes Architecture"
+linkTitle: "Kubernetes"
+date: 2020-06-17
+draft: false
+weight: 1
+description: >
+  Architecture overview for Kubernetes clusters of Opta
+---
 ## K8s
 ![image alt text](/images/opta_internal_kubernetes_architecture.png)
 

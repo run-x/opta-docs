@@ -94,7 +94,9 @@ This module is responsible for all the base infrastructure we package into the o
 * [Linkerd](https://linkerd.io/) as our service mesh.
 
 *Fields*
-None for the user, we allow no configuration at the time.
+* `nginx_high_availability` -- Optional. Deploy the nginx ingress in a high-availability configuration. Default = false
+* `linkerd_high_availability` -- Optional. Deploy the linkerd service mesh in a high-availability configuration for its control plane. Default = false
+* `linkerd_enabled` -- Optional. Enable the linkerd service mesh installation. Default =  true
 
 *Outputs*
 None

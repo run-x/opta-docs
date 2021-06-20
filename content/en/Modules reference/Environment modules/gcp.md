@@ -64,8 +64,11 @@ This module is responsible for all the base infrastructure we package into the o
 * [Ingress Nginx](https://github.com/kubernetes/ingress-nginx) to expose services to the public
 * [Linkerd](https://linkerd.io/) as our service mesh.
 * A custom load balancer and dns routing built to handle the Ingress Nginx which we set up. 
+
 *Fields*
-None for the user, we allow no configuration at the time.
+* `nginx_high_availability` -- Optional. Deploy the nginx ingress in a high-availability configuration. Default = false
+* `linkerd_high_availability` -- Optional. Deploy the linkerd service mesh in a high-availability configuration for its control plane. Default = false
+* `linkerd_enabled` -- Optional. Enable the linkerd service mesh installation. Default =  true
 
 *Outputs*
 None

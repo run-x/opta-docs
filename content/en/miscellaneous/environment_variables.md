@@ -35,3 +35,5 @@ You can also use Opta's interpolation features to refer to other values:
 - "{layer_name}" refers to the current yml file's name
 - "{parent_name}" refers to the parent file's name
 - "{variables}" refers to [templatization variables](/miscellaneous/templatization)
+- "{parent.output}" where `output` is the name of one of parent module's outputs
+    (consult the module reference for output names)

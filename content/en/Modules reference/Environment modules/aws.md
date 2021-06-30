@@ -97,6 +97,8 @@ This module is responsible for all the base infrastructure we package into the o
 * `nginx_high_availability` -- Optional. Deploy the nginx ingress in a high-availability configuration. Default = false
 * `linkerd_high_availability` -- Optional. Deploy the linkerd service mesh in a high-availability configuration for its control plane. Default = false
 * `linkerd_enabled` -- Optional. Enable the linkerd service mesh installation. Default =  true
+* `admin_arns` -- Optional. ARNs for users/roles who should be K8s admins. The user running opta is by default an admin.
+* `nginx_config` -- Optional. Additional configuration for nginx ingress. [Available options](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#configuration-options)
 
 *Outputs*
 None

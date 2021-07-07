@@ -13,14 +13,14 @@ One line installation ([detailed instructions](/installation)):
 /bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
 ```
 
-Opta works on AWS and GCP - so make sure the appropriate cloud credentails are configured in your terminal.
+Opta works on AWS, GCP, and Azure - so make sure the appropriate cloud credentails are configured in your terminal.
 
 ## Environment creation
 In this step we will create an environment (example staging, qa, prod) for your organization.
 For this we need to create an `opta.yml` file which defines the environment.
 
-Create the following file at `staging/opta.yml` and update the fields specific to your AWS/GCP account setup.
-{{< tabs tabTotal="2" tabID="1" tabName1="AWS" tabName2="GCP" >}}
+Create the following file at `staging/opta.yml` and update the fields specific to your AWS/GCP/Azure account setup.
+{{< tabs tabTotal="2" tabID="1" tabName1="AWS" tabName2="GCP" tabName3="Azure" >}}
 {{< tab tabNum="1" >}}
 ```yaml
 name: aws-staging
@@ -49,6 +49,21 @@ modules:
   - type: k8s-base
 ```
 {{< /tab >}}
+{{< tab tabNum="3" >}}
+```yaml
+name: azure-staging
+org_name: runx # Add your own name/org_name -- the name + org_name must be universally unique
+providers:
+  azurerm:
+    location: centralus
+    tenant_id: XXX
+    subscription_id: YYY
+modules:
+  - type: base
+  - type: k8s-cluster
+  - type: k8s-base
+```
+{{< /tab >}}
 {{< /tabs >}}
 Now, cd to the `staging` dir and run:
 ```bash
@@ -62,7 +77,7 @@ In this step we will create a service - which is basically a docker container an
 We will create another `opta.yml` file, which defines high level configuration of this service.
 
 Create an `opta.yml` and update the fields specific to your service setup.
-{{< tabs tabTotal="2" tabID="2" tabName1="AWS" tabName2="GCP" >}}
+{{< tabs tabTotal="2" tabID="2" tabName1="AWS" tabName2="GCP" tabName2="Azure" >}}
 {{< tab tabNum="1" >}}
 ```yaml
 name: hello-world
@@ -103,6 +118,26 @@ modules:
     type: postgres # Will spawn a Cloud SQL database and credentials will be passed via env vars
 ```
 {{< /tab >}}
+{{< tab tabNum="3" >}}
+```yaml
+name: hello-world
+environments:
+  - name: staging
+    path: "staging/opta.yml"
+modules:
+  - name: app
+    type: k8s-service
+    port:
+      http: 80
+    image: docker.io/kennethreitz/httpbin:latest # Or you can specify your own
+    healthcheck_path: "/get"
+    public_uri: all
+    links:
+      - db
+  - name: db
+    type: postgres # Will spawn a Cloud SQL database and credentials will be passed via env vars
+```
+{{< /tab >}}
 {{< /tabs >}}
 
 Now you are ready to deploy your service.
@@ -115,7 +150,7 @@ opta apply
 
 Now, once this step is complete, you should be to curl your service by specifying the load balancer url/ip.
 
-Run `output` and note down `load_balancer_raw_dns` (AWS) or `load_balancer_raw_ip` (GCP).
+Run `output` and note down `load_balancer_raw_dns` (AWS) or `load_balancer_raw_ip` (GCP and Azure).
 
 Now you can:
 - Access your service at http://\<ip-or-dns\>/

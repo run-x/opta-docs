@@ -14,6 +14,7 @@ Opta currently has the following system prerequisites to operate normally:
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) (also packaged with 
   docker-for-mac)
 * [GCP SDK](https://cloud.google.com/sdk/docs/install) (For GCP only)
+* [Azure Cli](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) (For Azure only)
 * [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) (v2) (For AWS only)
 
 ## MacOS or Linux

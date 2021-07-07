@@ -63,8 +63,8 @@ modules:
 {{< tab tabNum="3" >}}
 
 ```yaml
-name: azure-staging
-org_name: runx # Add your own name/org_name -- the name + org_name must be universally unique
+name: azure-staging # A unique identifier for your environment
+org_name: runx # A unique identifier for your organization
 providers:
   azurerm:
     location: centralus
@@ -147,7 +147,7 @@ modules:
 {{< tab tabNum="3" >}}
 
 ```yaml
-name: hello-world
+name: hello-world # service names are unique per-environment
 environments:
   - name: staging
     path: "staging/opta.yml"

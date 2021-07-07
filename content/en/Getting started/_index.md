@@ -6,9 +6,10 @@ description: >
   The first steps in working with Opta.
 ---
 
-
 ## Installation
+
 One line installation ([detailed instructions](/installation)):
+
 ```
 /bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
 ```
@@ -16,41 +17,52 @@ One line installation ([detailed instructions](/installation)):
 Opta works on AWS and GCP - so make sure the appropriate cloud credentails are configured in your terminal.
 
 ## Environment creation
-In this step we will create an environment (example staging, qa, prod) for your organization.
-For this we need to create an `opta.yml` file which defines the environment.
 
-Create the following file at `staging/opta.yml` and update the fields specific to your AWS/GCP account setup.
+In this step we will create an environment (example staging, qa, prod) for your organization.
+Start by running:
+
+```bash
+opta init env [aws/gcp]
+```
+
+This will create an `opta.yml` file with initial configurations for your environment. Below are examples of the resulting yaml files for each environment.
+
 {{< tabs tabTotal="2" tabID="1" tabName1="AWS" tabName2="GCP" >}}
 {{< tab tabNum="1" >}}
+
 ```yaml
-name: aws-staging
-org_name: runx # Add your own name/org_name -- the name + org_name must be universally unique
+name: aws-staging # A unique identifier for your environment
+org_name: runx # A unique identifier for your organization
 providers:
   aws:
-    region: us-east-1
-    account_id: XXXX
+    region: us-east-1 # Your aws region. You can find a list of them here: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html
+    account_id: XXXX # Your 12 digit account id
 modules:
   - type: base
   - type: k8s-cluster
   - type: k8s-base
 ```
+
 {{< /tab >}}
 {{< tab tabNum="2" >}}
+
 ```yaml
-name: gcp-staging
-org_name: runx # Add your own name/org_name -- the name + org_name must be universally unique
+name: gcp-staging # A unique identifier for your environment
+org_name: runx # A unique identifier for your organization
 providers:
   google:
-    region: us-central1
-    project: XXX
+    region: us-central1 # Your gcp region. You can find a list of them here: https://cloud.google.com/compute/docs/regions-zones
+    project: my-project-name-1234 # the name of your GCP project
 modules:
   - type: base
   - type: k8s-cluster
   - type: k8s-base
 ```
+
 {{< /tab >}}
 {{< /tabs >}}
-Now, cd to the `staging` dir and run:
+Now, run:
+
 ```bash
 opta apply
 ```
@@ -58,14 +70,23 @@ opta apply
 This step will create an EKS cluster for you and set up VPC, networking and various other infrastructure pieces.
 
 ## Service creation
+
 In this step we will create a service - which is basically a docker container and associated database.
 We will create another `opta.yml` file, which defines high level configuration of this service.
 
-Create an `opta.yml` and update the fields specific to your service setup.
+To get started, run
+
+```bash
+opta init service <YOUR_ENV_FILE_PATH> k8s
+```
+
+This will prompt you for some information and create a starting
+point for your `opta.yml` file. Then, update the fields specific to your service setup. You can see examples of resulting files below.
 {{< tabs tabTotal="2" tabID="2" tabName1="AWS" tabName2="GCP" >}}
 {{< tab tabNum="1" >}}
+
 ```yaml
-name: hello-world
+name: hello-world # service names are unique per-environment
 environments:
   - name: staging
     path: "staging/opta.yml"
@@ -82,10 +103,12 @@ modules:
   - name: db
     type: postgres # Will spawn a RDS database and credentials will be passed via env vars
 ```
+
 {{< /tab >}}
 {{< tab tabNum="2" >}}
+
 ```yaml
-name: hello-world
+name: hello-world # service names are unique per-environment
 environments:
   - name: staging
     path: "staging/opta.yml"
@@ -102,13 +125,16 @@ modules:
   - name: db
     type: postgres # Will spawn a Cloud SQL database and credentials will be passed via env vars
 ```
+
 {{< /tab >}}
 {{< /tabs >}}
 
 Now you are ready to deploy your service.
 
 ## Service Deployment
+
 One line deployment:
+
 ```bash
 opta apply
 ```
@@ -118,17 +144,21 @@ Now, once this step is complete, you should be to curl your service by specifyin
 Run `output` and note down `load_balancer_raw_dns` (AWS) or `load_balancer_raw_ip` (GCP).
 
 Now you can:
+
 - Access your service at http://\<ip-or-dns\>/
 - SSH into the container by running `opta shell`
 - See logs by running `opta logs`
 
 ## Cleanup
+
 Once you're finished playing around with these examples, you may clean up by running the following command from the environment directory:
+
 ```bash
 opta destroy
 ```
 
 ## Next steps
+
 - Check out more examples: [github](https://github.com/run-x/opta/tree/main/examples)
 - Use your own docker image: [Custom Image](/miscellaneous/custom_image)
 - Set up a domain name for your service: [Ingress](/miscellaneous/ingress)

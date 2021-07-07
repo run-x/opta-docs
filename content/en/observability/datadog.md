@@ -33,7 +33,7 @@ modules:
     domain: staging.example.com
   - type: k8s-cluster
   - type: k8s-base
-  - type: datadog # Yes, just one line! Same for GCP or Azure!
+  - type: datadog # Yes, just one line! Works for AWS, GCP and Azure!
 ```
 Run `opta apply` once more, where opta will prompt you to add your datadog key (only the first time, it's securely stored
 for successive runs). Logs, APM and custom metric envars will be setup and ready to use on all your application containers. Every piece of data coming from the environment will be

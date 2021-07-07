@@ -92,6 +92,7 @@ This module is responsible for all the base infrastructure we package into the o
 * [Ingress Nginx](https://github.com/kubernetes/ingress-nginx) to expose services to the public
 * [Metrics server](https://github.com/kubernetes-sigs/metrics-server) for scaling different deployments based on cpu/memory usage
 * [Linkerd](https://linkerd.io/) as our service mesh.
+* [Cert Manager](https://cert-manager.io/docs/) for internal ssl.
 
 *Fields*
 * `nginx_high_availability` -- Optional. Deploy the nginx ingress in a high-availability configuration. Default = false

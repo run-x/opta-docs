@@ -25,18 +25,18 @@ security audits. The typical opta user should not even see it.
 
 [Metrics Server](https://github.com/kubernetes-sigs/metrics-server): The official metric server, distributed separately
 for EKS (comes with GKE) and used to power the standard horizontal pod autoscaler metrics (e.g. automatically scale up
-or scale down your server as needed for current load). _Builtin on GKE_
+or scale down your server as needed for current load). _Builtin on GKE and Azure_
 
 [Cluster Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler): The official node
 autoscaler, distributed separately for EKS (comes with GKE) and used to add/remove underlying machines (e.g. ec2s of
-compute instances) serving as the nodes. _Builtin on GKE_
+compute instances) serving as the nodes. _Builtin on GKE and Azure_
 
 [Ingress Nginx](https://kubernetes.github.io/ingress-nginx/): An official ingress (i.e. how to expose the cluster to
 the outside world) which uses a fleet of nginx containers to route incoming traffic from a load balancer to inside the
 cluster and a desired service.
 
 [External DNS](https://github.com/kubernetes-sigs/external-dns): An official project used to automatically add DNS
-records for load balancers created by the cluster. _Not used on GKE_
+records for load balancers created by the cluster. _Not used on GKE or Azure_
 
 [Datadog](https://github.com/DataDog/helm-charts/tree/master/charts/datadog): The official K8s integration for Datadog
 which sends cluster metrics + events and container logs over to your datadog account. We also configure it to accept

@@ -203,5 +203,5 @@ opta destroy
 - Set up a domain name for your service: [Ingress](/miscellaneous/ingress)
 - Use secrets: [Secrets](/miscellaneous/secrets/)
 - Set up observability integrations in one line(!): [Observability](/observability/)
-- Explore all the infrastructure that opta sets up for you: [Architecture](/architecture/)
+- Explore all the infrastructure that Opta sets up for you: [Architecture](/architecture/)
 - Explore the api for all modules: [Reference](/modules-reference/)

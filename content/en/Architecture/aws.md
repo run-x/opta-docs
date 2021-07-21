@@ -1,13 +1,15 @@
 ---
 title: "AWS Architecture"
 linkTitle: "AWS"
-date: 2020-06-17
+date: 2021-07-21
 draft: false
 weight: 1
 description: >
   Architecture overview for AWS deployments of Opta
 ---
+
 ## AWS
+
 ![image alt text](/images/opta_aws_architecture.png)
 For AWS our environments are currently setup within a single region, but our networking is set up across 3 availability
 zones by default, split between a private and public subnet (which we provision as we do not use the default vpc).
@@ -31,7 +33,7 @@ and all the buckets are encrypted at rest with AES 256 regardless.
 There is a module for SQS queues which creates the queue as well as a new kms key with which to encrypt
 the queue at rest.
 
-There is a module for SNS topics which creates the topic as well as a new kms key with which to encrypt it, and 
+There is a module for SNS topics which creates the topic as well as a new kms key with which to encrypt it, and
 optionally.
 
 To grant access to AWS resources programmatically, a user can use our IAM user/role modules and use the links field
@@ -42,23 +44,24 @@ verification is done with Route53 record manipulation in the given hosted zone. 
 zone directing to the load balancer via an open source integration (see K8s section).
 
 ### Security Concerns
-* With linkerd and domain delegation complete, opta environments will have end-to-end encryption on all opta services.
-* All databases and ec2s are run within the private subnets (i.e. can access the internet via a nat gateway, but
+
+- With linkerd and domain delegation complete, Opta environments will have end-to-end encryption on all Opta services.
+- All databases and ec2s are run within the private subnets (i.e. can access the internet via a nat gateway, but
   nothing external can reach them).
-* All databases (redis, documentdb, sql) are encrypted at rest with a KMS key provisioned by the environment.
-* All database connections use SSL encryption.
-* All S3 buckets are encrypted with AES 256.
-* All SQS queues are encrypted at rest, each with a personal KMS key.
-* All SNS topics are encrypted at rest, each with a personal KMS key.  
-* All networking access is managed via security groups either auto-provisioned by EKS, or manually crafted to just
+- All databases (redis, documentdb, sql) are encrypted at rest with a KMS key provisioned by the environment.
+- All database connections use SSL encryption.
+- All S3 buckets are encrypted with AES 256.
+- All SQS queues are encrypted at rest, each with a personal KMS key.
+- All SNS topics are encrypted at rest, each with a personal KMS key.
+- All networking access is managed via security groups either auto-provisioned by EKS, or manually crafted to just
   expose to the VPC and just the ports required for standard usage (i.e. 5432 for postgres).
-* The EKS node ec2s are created with just the AmazonEKSClusterPolicy
-* The EKS storage (e.g. K8s secrets) is encrypted at rest via KMS
-* K8s service accounts are mapped to IAM roles via the officially sanctioned [OIDC](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html)
+- The EKS node ec2s are created with just the AmazonEKSClusterPolicy
+- The EKS storage (e.g. K8s secrets) is encrypted at rest via KMS
+- K8s service accounts are mapped to IAM roles via the officially sanctioned [OIDC](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html)
   manner, with no long-lived credentials.
-* No long-lived IAM credentials are ever created.
-* All ECR images/repos are private to the account.
-* S3 buckets created privately by default.
-* 5 day backup retentions for the postgres/documentdb databases.
-* Currently, the EKS cluster is built with a public endpoint for the simple usage (can add private option later on once
+- No long-lived IAM credentials are ever created.
+- All ECR images/repos are private to the account.
+- S3 buckets created privately by default.
+- 5 day backup retentions for the postgres/documentdb databases.
+- Currently, the EKS cluster is built with a public endpoint for the simple usage (can add private option later on once
   VPN feature is added).

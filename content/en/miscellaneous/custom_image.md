@@ -1,7 +1,7 @@
 ---
 title: "Custom image"
 linkTitle: "Custom Image"
-date: 2021-05-20
+date: 2021-07-21
 draft: false
 description: >
   Instructions to use a custom docker image
@@ -10,6 +10,7 @@ description: >
 To use your own custom docker image, you can set `image: AUTO` in your service module.
 
 Now you should first build your docker container via `docker build` and then run:
+
 ```
 opta deploy --image <image>:<tag>
 ```

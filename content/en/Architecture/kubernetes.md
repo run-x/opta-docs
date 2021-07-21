@@ -1,13 +1,15 @@
 ---
 title: "Kubernetes Architecture"
 linkTitle: "Kubernetes"
-date: 2020-06-17
+date: 2021-07-21
 draft: false
 weight: 1
 description: >
   Architecture overview for Kubernetes clusters of Opta
 ---
+
 ## K8s
+
 ![image alt text](/images/opta_internal_kubernetes_architecture.png)
 
 The K8s topology is divided into namespaces of 2 types: 3rd party integrations and opta services. The third party
@@ -60,11 +62,12 @@ used for sensitive custom data, as well as database access credentials. Lastly, 
 currently holds the latest public key needed for documentdb usage.
 
 ### Security Concerns
-* [Here is Linkerd's security audit](https://github.com/linkerd/linkerd2/blob/main/SECURITY_AUDIT.pdf)
-* All cross-service communication is encrypted via mTLS
-* All 3rd party charts used are the official ones when applicable or provided by bitnami and version-locked.
-* All IAM roles for 3rd party charts are endowed with just the required permissions for their roles following the
+
+- [Here is Linkerd's security audit](https://github.com/linkerd/linkerd2/blob/main/SECURITY_AUDIT.pdf)
+- All cross-service communication is encrypted via mTLS
+- All 3rd party charts used are the official ones when applicable or provided by bitnami and version-locked.
+- All IAM roles for 3rd party charts are endowed with just the required permissions for their roles following the
   principle of least privilege.
-* All opta service deployments are bound to service accounts, with no extra K8s roles.
-* Opta currently does not modify the aws-auth configmap for EKS.
-* We use Helm V3
+- All opta service deployments are bound to service accounts, with no extra K8s roles.
+- Opta currently does not modify the aws-auth configmap for EKS.
+- We use Helm V3

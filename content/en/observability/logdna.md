@@ -1,7 +1,7 @@
 ---
 title: "LogDNA Integration"
 linkTitle: "LogDNA Integration"
-date: 2020-06-08
+date: 2021-07-21
 draft: false
 description: >
   Instructions on how to integrate your environment with LogDNA
@@ -10,11 +10,11 @@ description: >
 With the LogDNA(https://logdna.com) integration, all the stdout from your services will be sent to LogDNA.
 
 To enable this, add the following module to your environment opta.yml:
+
 ```yaml
 name: <name>
 org_name: <org>
-providers:
-  ...
+providers: ...
 modules:
   - type: base
   - type: k8s-cluster
@@ -28,4 +28,5 @@ modules:
         key: <your ingestion key>
         tags: staging # any custom tags that you need
 ```
+
 Run `opta apply` and that's it! You should see your logs in logDNA shortly.

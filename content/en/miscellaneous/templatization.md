@@ -1,7 +1,7 @@
 ---
 title: "Templatization"
 linkTitle: "Templatization"
-date: 2021-06-24
+date: 2021-07-21
 draft: false
 description: >
   How to templative parameters for multiple environments

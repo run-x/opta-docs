@@ -15,7 +15,7 @@ the [private service access](https://cloud.google.com/vpc/docs/private-services-
 - `instance_tier` -- Optional. This is the RDS instance type used for the cloud sql instance [instances](https://cloud.google.com/sql/pricing).
   Default "db-f1-micro"
 - `engine_version` -- Optional. The major version of the database to use. Default 11
-- `safety` -- Optional. Set to "true", if you want to disable the database deletion in opta. You would have to manually set this "false" to enable DB deletion.
+- `safety` -- Optional. Set to "true", if you want to disable the database deletion in Opta. You would have to manually set this "false" to enable DB deletion.
 
 ### Linking
 

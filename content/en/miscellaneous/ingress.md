@@ -8,7 +8,7 @@ description: >
 
 ### Setting the domain for an Environment
 
-With opta, you can specify a domain for each environment which can be used by all the services running in that
+With Opta, you can specify a domain for each environment which can be used by all the services running in that
 environment. This is done with the aws-dns/gcp-dns module like so:
 {{< tabs tabTotal="2" tabID="1" tabName1="AWS" tabName2="GCP" >}}
 {{< tab tabNum="1" >}}

@@ -4,7 +4,7 @@ linkTitle: "k8s-base"
 date: 2021-07-21
 draft: false
 weight: 1
-description: Create base infrastructure that is packaged into Opta environments
+description: Creates base infrastructure that is packaged into Opta environments
 ---
 
 This module is responsible for all the base infrastructure we package into the Opta K8s environments. This includes:

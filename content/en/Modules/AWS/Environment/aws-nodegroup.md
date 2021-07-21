@@ -4,7 +4,7 @@ linkTitle: "aws-nodegroup"
 date: 2021-07-21
 draft: false
 weight: 1
-description: Create an additional nodegroup for the primary EKS cluster.
+description: Creates an additional nodegroup for the primary EKS cluster.
 ---
 
 This module creates an additional nodegroup for the primary EKS cluster. Note that the

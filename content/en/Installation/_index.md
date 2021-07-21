@@ -7,18 +7,21 @@ description: >
 ---
 
 ## Prerequisites
+
 Opta currently has the following system prerequisites to operate normally:
-* A supported macos or debian distro release.
-* [terraform](https://www.terraform.io/downloads.html) (v0.14+)
-* [docker](https://docker.com/products/docker-desktop) (v19+)
-* [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) (also packaged with 
+
+- A supported macos or debian distro release.
+- [terraform](https://www.terraform.io/downloads.html) (v0.14+)
+- [docker](https://docker.com/products/docker-desktop) (v19+)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) (also packaged with
   docker-for-mac)
-* [GCP SDK](https://cloud.google.com/sdk/docs/install) (For GCP only)
-* [Azure Cli](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) (For Azure only)
-* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) (v2) (For AWS only)
+- [GCP SDK](https://cloud.google.com/sdk/docs/install) (For GCP only)
+- [Azure Cli](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) (For Azure only)
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) (v2) (For AWS only)
 
 ## MacOS or Linux
-Run this script to install the latest version of opta (see below for changelog
+
+Run this script to install the latest version of Opta (see below for changelog
 and release history).
 
 ```bash
@@ -26,9 +29,11 @@ and release history).
 ```
 
 You can specify a particular version as well.
+
 ```bash
 VERSION=0.x /bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
 ```
 
 ## Releases
+
 [Github](https://github.com/run-x/opta/releases)

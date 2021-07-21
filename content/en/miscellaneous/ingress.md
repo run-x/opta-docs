@@ -57,7 +57,7 @@ for the domain you listed. In order for it to receive public traffic and get ssl
 (to have https instead of http connections), you have to do some extra setup which
 _proves_ that you own it.
 
-This extra setup is updating the domain's nameservers to point to your opta environment's AWS/GCP "hosted zone". This is how you do it:
+This extra setup is updating the domain's nameservers to point to your Opta environment's AWS/GCP "hosted zone". This is how you do it:
 
 - Run `opta apply` on the yaml file at least once to create the underlying resources
 - Run `opta output` and note down the nameservers that get printed. It's usually a set of 4 servers.
@@ -79,7 +79,7 @@ dig staging.startup.com NS
 
 You should see your name servers under the `ANSWER SECTION` part.
 
-Once this is done and verified, please update your opta yaml aws-dns/gcp-dns section to have a new field `delegated: true` like
+Once this is done and verified, please update your Opta yaml aws-dns/gcp-dns section to have a new field `delegated: true` like
 so:
 {{< tabs tabTotal="2" tabID="2" tabName1="AWS" tabName2="GCP" >}}
 {{< tab tabNum="1" >}}
@@ -124,7 +124,7 @@ modules:
 {{< /tab >}}
 {{< /tabs >}}
 
-Now run `opta apply` one more time and opta will now generate your ssl certificates and attach them. Congratulations,
+Now run `opta apply` one more time and Opta will now generate your ssl certificates and attach them. Congratulations,
 your environment will now be picking up public traffic on your domain and have https!
 
 ### Exposing a service

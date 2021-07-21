@@ -8,8 +8,8 @@ description: Creates an AKS cluster and a default node pool to host your applica
 ---
 
 This module creates an [AKS cluster](https://azure.microsoft.com/en-us/services/kubernetes-service/) and a default
-node pool to host your applications in. This needs to be added in the environment opta yml if you wish to deploy services
-as opta services run on Kubernetes.
+node pool to host your applications in. This needs to be added in the environment Opta yml if you wish to deploy services
+as Opta services run on Kubernetes.
 
 ### Fields
 

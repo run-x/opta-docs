@@ -4,7 +4,7 @@ linkTitle: "helm-chart"
 date: 2021-07-21
 draft: false
 weight: 1
-description: Plugs a custom helm chart into your opta k8s cluster
+description: Plugs a custom helm chart into your Opta k8s cluster
 ---
 
 ### Fields

@@ -45,7 +45,7 @@ zone directing to the load balancer via an open source integration (see K8s sect
 
 ### Security Concerns
 
-- With linkerd and domain delegation complete, opta environments will have end-to-end encryption on all opta services.
+- With linkerd and domain delegation complete, Opta environments will have end-to-end encryption on all Opta services.
 - All databases and ec2s are run within the private subnets (i.e. can access the internet via a nat gateway, but
   nothing external can reach them).
 - All databases (redis, documentdb, sql) are encrypted at rest with a KMS key provisioned by the environment.

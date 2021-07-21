@@ -12,7 +12,7 @@ description: >
 
 ![image alt text](/images/opta_internal_kubernetes_architecture.png)
 
-The K8s topology is divided into namespaces of 2 types: 3rd party integrations and opta services. The third party
+The K8s topology is divided into namespaces of 2 types: 3rd party integrations and Opta services. The third party
 integrations consist of respected open source projects which handle background tasks or features expansions. These
 currently consist of:
 
@@ -23,7 +23,7 @@ default. Watch for the notes at the end of each description.
 Istio) and is the one we provide for our users. We chose it over Istio due to its absurdly simple maintenance and
 upgrade stories while still offering the vast majority of the important service mesh features (e.g. traffic control,
 grpc+http load balancing, mTLS, golden metrics). Linkerd also takes pride in its security and has undergone intense
-security audits. The typical opta user should not even see it.
+security audits. The typical Opta user should not even see it.
 
 [Metrics Server](https://github.com/kubernetes-sigs/metrics-server): The official metric server, distributed separately
 for EKS (comes with GKE) and used to power the standard horizontal pod autoscaler metrics (e.g. automatically scale up
@@ -48,10 +48,10 @@ opta K8s base, but most be added separately w/ the Datadog K8s module.
 All of these additions (as well as the Opta services), are managed via [Helm Charts](https://helm.sh/) (using V3), and
 are deployed separately to their own namespace.
 
-Opta services are also deployed to unique namespaces formed out of their layer name (base name on the opta yaml-- there
-should never be more than one k8s service per opta yaml). Each opta service consists of one K8s service, deployment (and
+Opta services are also deployed to unique namespaces formed out of their layer name (base name on the Opta yaml-- there
+should never be more than one k8s service per Opta yaml). Each Opta service consists of one K8s service, deployment (and
 its affiliated pods), horizontal pod autoscaler, configmap, service account, and optionally an ingress if they so wish
-to expose their opta service's api to the public. The deployment manages the different pods (e.g. containers/servers)
+to expose their Opta service's api to the public. The deployment manages the different pods (e.g. containers/servers)
 of your application while the K8s service is used with Linkerd to route cluster-internal traffic-- as is, any service
 can be contacted via a domain of the form MODULE_NAME.LAYERNAME, such as app.hello-world for the Getting Started example. The horizontal pod
 autoscaler is responsible for increasing/decreasing the number of pods of the deployment as needed based on cpu ad memory
@@ -68,6 +68,6 @@ currently holds the latest public key needed for documentdb usage.
 - All 3rd party charts used are the official ones when applicable or provided by bitnami and version-locked.
 - All IAM roles for 3rd party charts are endowed with just the required permissions for their roles following the
   principle of least privilege.
-- All opta service deployments are bound to service accounts, with no extra K8s roles.
+- All Opta service deployments are bound to service accounts, with no extra K8s roles.
 - Opta currently does not modify the aws-auth configmap for EKS.
 - We use Helm V3

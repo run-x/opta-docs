@@ -45,15 +45,15 @@ More detailed instructions are available on the [offical site](https://kubernete
 ### Configure kubectl
 
 Before you can use `kubectl`, you need to connect it to your kubernetes cluster
-(created by opta). This is pretty simple in the opta world! Just run:
+(created by opta). This is pretty simple in the Opta world! Just run:
 
 ```
-  opta configure-kubectl
+  Opta configure-kubectl
 ```
 
 ### View pods
 
-> Kubernetes uses the word "pod" for containers[^1]. So every service will have one or more pods (as specified in your opta yml).
+> Kubernetes uses the word "pod" for containers[^1]. So every service will have one or more pods (as specified in your Opta yml).
 
 You can see the pods for a given service by running:
 
@@ -63,7 +63,7 @@ kubectl get pods -n <service-name>
 
 > If this doesn't show any pods, that means your service hasn't been deployed. Check out the [deployment docs](/getting-started/#service-deployment) to fix that.
 
-Note that `<service-name>` is specified in your opta yml:
+Note that `<service-name>` is specified in your Opta yml:
 
 ```
   meta:

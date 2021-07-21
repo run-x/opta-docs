@@ -38,7 +38,7 @@ added to the hosted zone directing to the load balancer via an open source integ
 
 ### Security Concerns
 
-- With linkerd and domain delegation complete, opta environments will have end-to-end encryption on all opta services.
+- With linkerd and domain delegation complete, Opta environments will have end-to-end encryption on all Opta services.
 - All vms are run within the private subnet (i.e. can access the internet via a nat gateway, but
   nothing external can reach them).
 - All databases/caches are run with the service connect option (peering with GCP's internal networks) and are not publicly exposed.

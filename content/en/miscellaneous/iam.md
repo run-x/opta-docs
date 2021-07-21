@@ -9,7 +9,7 @@ description: >
 # Overview
 
 Identity access management, IAM, is how a user can control permissions to read and/or modify resources in their
-cloud accounts. When opta runs, it uses your currently configured credentials for your role/user of your cloud provider
+cloud accounts. When Opta runs, it uses your currently configured credentials for your role/user of your cloud provider
 to read your state, and update/create resources as needed. Due to the large amount and variety of resources opta
 is responsible for, we recommend folks to use a role/user with account admin privileges for opta, but we hope to
 begin providing more specific policies in the future. Furthermore, the k8s cluster needs authentication and
@@ -40,14 +40,14 @@ Once that's setup, we can create SSO for your Organization by going to the root 
 [steps](https://docs.aws.amazon.com/singlesignon/latest/userguide/step1.html). You'll want to focus on steps 1, 2, and
 3 for now, and for step 2 if you're using gsuite, go ahead and use that as your source by following [this](https://aws.amazon.com/blogs/security/how-to-use-g-suite-as-external-identity-provider-aws-sso/).
 Once that's settled, you can [assign user access](https://docs.aws.amazon.com/singlesignon/latest/userguide/useraccess.html#assignusers)
-to the different accounts in your organization. For opta usage, we recommend to use the SSO Admin access/permission set.
+to the different accounts in your organization. For Opta usage, we recommend to use the SSO Admin access/permission set.
 
-_NOTE_ If you want to deploy opta in the root account (which we advise against), feel free to use the New Account section
+_NOTE_ If you want to deploy Opta in the root account (which we advise against), feel free to use the New Account section
 instructions from down below
 
 ## New Account
 
-Outside of SSO, if one were to use opta then you have to create a new IAM for opta which your human teammates
+Outside of SSO, if one were to use Opta then you have to create a new IAM for Opta which your human teammates
 could then "[assume](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use.html)". This assumption allows IAM
 users (and other roles too) to get credentials for the assumed role (time limited) and interact with the AWS API on their
 behalf. _This way many people can get the same permissions and act as the same entity without compromising their own
@@ -55,7 +55,7 @@ personal credentials_. For role assumption, two things are required:
 
 1. The role to be assumed must have its trust policy include the role that would assume it (explicitly or through a group).
    ![image alt text](/images/iam_tutorial_image_1.png)
-2. The assumer role/user must have the IAM permission to assume the opta role.
+2. The assumer role/user must have the IAM permission to assume the Opta role.
    ![image alt text](/images/iam_tutorial_image_2.png)
 
 To create such a role and permission, you can start by following the official IAM role creation instructions
@@ -73,7 +73,7 @@ for all the IAM users/roles you have in question. You can then test it out by ru
 aws sts assume-role --role-arn "THE_OPTA_ROLE_ARN" --role-session-name DUMMY_SESSION
 ```
 
-The output should be the temporary credentials to assume the opta role. Just set the envars as so:
+The output should be the temporary credentials to assume the Opta role. Just set the envars as so:
 
 ```shell
 export AWS_ACCESS_KEY_ID=RoleAccessKeyID
@@ -81,18 +81,18 @@ export AWS_SECRET_ACCESS_KEY=RoleSecretKey
 export AWS_SESSION_TOKEN=RoleSessionToken
 ```
 
-You can now run opta and any other AWS cli/sdk with the opta role.
+You can now run Opta and any other AWS cli/sdk with the Opta role.
 
 ### Cross Account Access
 
-If you want to give a user access to run opta in account a while their IAM role/user is in account b, simply refine
-the opta role you created in account a to allow role assumption from account b (again, you can further specify which
+If you want to give a user access to run Opta in account a while their IAM role/user is in account b, simply refine
+the Opta role you created in account a to allow role assumption from account b (again, you can further specify which
 iam users/roles are) and make sure that you allowed role assumption in the assumer to the new account.
 
 ### Long Term Credentials
 
 For long term credentials (e.g. to hardcode into a CI system), we recommend you create an IAM user who can then assume
-the role used by opta and using its credentials, assuming the opta role as part of the process.
+the role used by Opta and using its credentials, assuming the Opta role as part of the process.
 
 # GCP
 
@@ -127,8 +127,8 @@ and one just needs to ensure they have the desired permissions on the different 
 
 ### Opta usage
 
-Once a project is setup with a correct billing account, opta only needs to run as a project owner for the given
-project (in time opta will create a refined role so the full owner scope is not needed). You can do this by running:
+Once a project is setup with a correct billing account, Opta only needs to run as a project owner for the given
+project (in time Opta will create a refined role so the full owner scope is not needed). You can do this by running:
 
 ```shell
 gcloud auth application-default login

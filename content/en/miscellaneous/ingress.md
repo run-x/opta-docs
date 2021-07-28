@@ -143,7 +143,47 @@ your environment will now be picking up public traffic on your domain and have h
 
 ### External SSL and CNAME Setup
 For the users which can not/do not wish to undergo the dns delegation steps, we do offer the simpler method of passing in
-an external ssl certificate and manually adding appropriate CNAME records.
+an external ssl certificate and manually adding appropriate CNAME records. 
+
+To add your ssl cert, simply include the external-ssl-cert module in the environment yaml prior to the k8s-base module like so:
+
+```yaml
+name: gcp-live-example
+org_name: runx
+providers:
+  google:
+    region: us-central1
+    project: gcp-opta-live-example
+modules:
+  - type: base
+  - type: external-ssl-cert
+    domain: "baloney.runx.dev"
+    private_key_file: "./privkey.pem"
+    certificate_body_file: "./cert_body.pem"
+    certificate_chain_file: "./cert_chain.pem"
+  - type: k8s-cluster
+    max_nodes: 6
+  - type: gcp-k8s-base
+```
+
+Note the relative paths to the different certificate files:
+- `private_key_file` -- This is the relative path to the pem private key file for your cert. Is of the form `-----BEGIN PRIVATE KEY-----...-----END PRIVATE KEY-----`
+- `certificate_body_file` -- This is the relative path to the certicate body file. This is sometimes called "cert.pem" and is a file
+  consisting of a single `-----BEGIN CERTIFICATE-----...-----END CERTIFICATE-----` block. If you only have one big pem file with
+  many such blocks, then create a new file and add **just** the first block.
+- `certificate_chain_file` -- This is the relative path to the certicate chain file. This is sometimes called "chain.pem" and is a file
+  consisting of one or (usually) more `-----BEGIN CERTIFICATE-----...-----END CERTIFICATE-----` blocks. If you only have one big pem file with
+  many such blocks, then create a new file and add all the blocks **except** the first one.
+  
+Run `opta apply` once more and your ssl certificate will be utilized(you can check by going to the `load_balancer_raw_ip` 
+or `load_balancer_raw_dns` in your browser).
+
+To then make traffic go to your environment for your given domain, simply go to your domain's hosted zone (e.g. 
+Route53 if you bought it with AWS, Google domains if bought with google, etc...) find the list of DNS records and
+ask to add 2 new A records if you have a `load_balancer_raw_ip`, or 2 new CNAME records if you have a `load_balancer_raw_dns`.
+These records should be named YOUR_DOMAIN, and *.YOUR_DOMAIN and should point to the respective ip/dns.
+
+Once that final step is done, your environment should be live in your domain and utilizing your imported ssl!
 
 ### Exposing a service
 

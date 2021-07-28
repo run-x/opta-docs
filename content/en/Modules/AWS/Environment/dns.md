@@ -15,7 +15,7 @@ the [dns setup](/miscellaneous/ingress).
 ### Fields
 
 - `domain` -- Required. The domain you want (you will also get the subdomains for your use)
-- `delegated` -- Optional. Set to true once the extra dns setup is complete.
+- `delegated` -- Optional. Set to true once the [extra dns setup](/miscellaneous/ingress) is complete.
 
 ### Outputs
 

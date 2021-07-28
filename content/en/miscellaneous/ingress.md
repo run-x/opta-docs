@@ -16,7 +16,7 @@ You can get the values simply by running `opta output` after the apply.
 
 These domains/ip are always valid and can be used to serve traffic immediately, but without ssl (and as extension grpc)
 or "real" names. To get those features, you will need to execute either the dns delegation steps or the external ssl 
-and CNAME steps outlined belo
+and CNAME steps outlined below.
 
 ### Setting the domain for an Environment via Domain Delegation
 
@@ -175,7 +175,7 @@ Note the relative paths to the different certificate files:
   consisting of one or (usually) more `-----BEGIN CERTIFICATE-----...-----END CERTIFICATE-----` blocks. If you only have one big pem file with
   many such blocks, then create a new file and add all the blocks **except** the first one.
   
-Run `opta apply` once more and your ssl certificate will be utilized(you can check by going to the `load_balancer_raw_ip` 
+Run `opta apply` once more and your ssl certificate will be utilized (you can check by going to the `load_balancer_raw_ip` 
 or `load_balancer_raw_dns` in your browser).
 
 To then make traffic go to your environment for your given domain, simply go to your domain's hosted zone (e.g. 

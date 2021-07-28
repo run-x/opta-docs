@@ -15,7 +15,7 @@ the [dns setup](/miscellaneous/ingress).
 ## Fields
 
 - domain -- Required. The domain you want (you will also get the subdomains for your use)
-- delegated -- Optional. Set to true once the extra dns setup is complete and it will add the ssl certs.
+- delegated -- Optional. Set to true once the extra [dns setup is complete](/miscellaneous/ingress) and it will add the ssl certs.
 - subdomains -- Optional. A list of subdomains to also get ssl certs for.
 
 ## Outputs

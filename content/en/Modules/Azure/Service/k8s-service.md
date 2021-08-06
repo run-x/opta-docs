@@ -28,8 +28,8 @@ can even expose it to the world, complete with load balancing both internally an
   following the [secrets instructions](/miscellaneous/secrets) prior to deploying the app.
 - `autoscaling_target_cpu_percentage` -- Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
 - `autoscaling_target_mem_percentage` -- Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
-- `healthcheck_path` -- Optional. See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default "/healthcheck"
-- `resource_request` -- Optional. See the [container resources]({{< relref "#container-resources" >}}) section. Default
+- `healthcheck_path` -- Optional. See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. 
+- `resource_request` -- Optional. See the [container resources]({{< relref "#container-resources" >}}) section. Default `null` (i.e., no user-specified healthchecks)
   ```yaml
   cpu: 100 # in millicores
   memory: 128 # in megabytes

@@ -15,6 +15,9 @@ This module creates an S3 bucket for storage purposes. It is created with server
 - `block_public` -- Optional. Block all public access. Default true
 - `bucket_policy` -- Optional. A custom s3 policy json/yaml to add.
 - `cors_rule` -- Optional. A custom cors policy.
+- `s3_log_bucket_name` -- Optional. The bucket to which send access logs to for accesses on this bucket.
+- `same_region_replication` -- Optional. Create a same-region bucket for replica storage (needed for compliance).
+  Can be added later without destroying the resource.
 
 ### Example
 

@@ -29,7 +29,7 @@ can even expose it to the world, complete with load balancing both internally an
   following the [secrets instructions](/miscellaneous/secrets) prior to deploying the app.
 - `autoscaling_target_cpu_percentage` -- Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
 - `autoscaling_target_mem_percentage` -- Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
-- `healthcheck_path` -- Optional. See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default "/healthcheck"
+- `healthcheck_path` -- Optional. See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default `null` (i.e., no user-specified healthchecks)
 - `resource_request` -- Optional. See the [container resources]({{< relref "#container-resources" >}}) section. Default
   ```yaml
   cpu: 100 # in millicores
@@ -58,9 +58,8 @@ command to push to it!
 One of the benefits of K8s is that it comes with built-in checks for the responsiveness of your server. These are called
 [_liveness_ and _readiness_ probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
 
-tl;dr A liveness probe determines whether your server should be restarted, and readiness probe determines if traffic should
-be sent to a replica or be temporarily rerouted to other replicas. Essentially smart healthchecks. Opta requires the
-user to have such health check endpoints for all http apps (a hello world get endpoint would do) but for websockets it
+tl;dr An (optional) liveness probe determines whether your server should be restarted, and an (optional) readiness probe determines if traffic should
+be sent to a replica or be temporarily rerouted to other replicas. Essentially smart healthchecks. For websockets Opta
 just checks the tcp connection on the given port.
 
 ### Autoscaling

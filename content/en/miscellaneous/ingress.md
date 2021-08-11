@@ -15,8 +15,10 @@ handling the http/grpc requests for the environment. These are called:
 You can get the values simply by running `opta output` after the apply.
 
 These domains/ip are always valid and can be used to serve traffic immediately, but without ssl (and as extension grpc)
-or "real" names. To get those features, you will need to execute either the dns delegation steps or the external ssl 
-and CNAME steps outlined below.
+or "real" names. To get those features, Opta offers 2 options:
+
+1. You will need to execute either the dns delegation steps or the external ssl and CNAME steps outlined below (invalid option for Azure).
+2. You "import" your SSL certificate into the Opta system and point your DNS zone straight to the load balancer's ip/dns name
 
 ### Setting the domain for an Environment via Domain Delegation
 
@@ -236,3 +238,56 @@ modules:
 ```
 
 Following the domain examples above, this will expose the service at https://myapp.staging.startup.com/v1
+
+## External SSL Certificate and DNS Zone
+
+If for some reason you prefer/need to handle DNS and SSL certificate creation yourself, then Opta supports you as well.
+Opta now has an `external-ssl-cert` module which is capable of reading ssl cert files from the local filesystem and
+automatically integrating it. Let us show by example:
+
+Suppose you own a certain domain called "blah.dev" which you purchased from a particular cloud provider or dns seller.
+You know wish to create an opta environment using the "staging.blah.dev" subdomain, but do not wish to undergo the dns
+delegation. At this point you can purchase an ssl certificate from your domain provider or another 3rd party (NOTE: some 
+providers like AWS do not allow you to download your provisioned ssl certificate), or use [certbot](https://certbot.eff.org/)
+(a.k.a let's encrypt) to get a short-term (3 month lifespan) credential for free. You can do so by 
+[downloading](https://certbot.eff.org/docs/install.html) the `certbot` cli and executing the following command:
+
+```shell
+certbot certonly -d blah.dev -d "*.blah.dev" --manual --preferred-challenges dns --config-dir . --work-dir . --logs-dir .
+```
+
+Certbot will then prompt you for certain input, including steps where you will manually add the domain validation TXT
+records into your public DNS Zone. Sometimes the propagation of your TXT records may take sometime, and you can also 
+validate that you have done the step correctly by executing `dig blah.dev TXT` and checking for your addenda there.
+
+Once completed you should now have valid ssl certificate files under the relative path `./live/blah.dev`:
+
+```
+# ls ./live/blah.dev
+README        cert.pem      chain.pem     fullchain.pem privkey.pem
+```
+
+Of these files, the 3 which are important are cert.pem, chain.pem, and privkey.pem (note that fullchain.pem is just 
+the cert and chain files fused together). We can then add them to the opta environment by including an instance of the
+external-ssl-cert file like so:
+
+```yaml
+.
+.
+.
+modules:
+  - type: base
+  - type: external-ssl-cert
+    domain: "baloney.runx.dev"
+    private_key_file: "./live/privkey.pem" # NOTICE THE RELATIVE PATH
+    certificate_body_file: "./live/cert.pem"
+    certificate_chain_file: "./live/chain.pem"
+.
+.
+.
+```
+
+After applying with this, you will note that your load balancer ip/dns now handles ssl and redirects http over to https.
+The final step is to add a CNAME/A record (former if you have a load balancer dns, latter if it's an IP) from your DNS
+Zone (the same one modified for the ssl cert verification, this will be a sibling record) pointing to your load balancer.
+With that complete your environment will be live to the public and secured with ssl.

@@ -22,9 +22,9 @@ Currently, there is a public cluster endpoint, but this may be revisited once a 
 [Encryption for the secrets is also provided via KMS](https://aws.amazon.com/blogs/containers/using-eks-encryption-provider-support-for-defense-in-depth/).
 
 For databases, we currently have modules for postgres (AWS Aurora), redis (AWS Elasticache), and the mongodb compatible
-documentdb (AWS Documentdb). We only offer 1 instance per db (no read or write replicas), but we hope to add this
-feature as customers demand. The postgres and documentdb databases are built with 5 day retention of backups in case of
-emergency. The username and passwords are created with the database and are passed securely to the K8s services as
+documentdb (AWS Documentdb). We now offer a `multi_az` option so that read replicas can be created in other az. 
+The postgres and documentdb databases are built with 5 day retention of backups in case of emergency. 
+The username and passwords are created with the database and are passed securely to the K8s services as
 secrets (pls see K8s section for security around secrets).
 
 There is a module for S3 storage, which creates a private bucket by default (but can be set to public via fields)
@@ -65,3 +65,5 @@ zone directing to the load balancer via an open source integration (see K8s sect
 - 5 day backup retentions for the postgres/documentdb databases.
 - Currently, the EKS cluster is built with a public endpoint for the simple usage (can add private option later on once
   VPN feature is added).
+
+For specific compliance concerns

@@ -53,12 +53,9 @@ added to the hosted zone directing to the load balancer via an open source integ
 - All networking access is managed via firewall rules either auto-provisioned by GKE, or manually crafted (currently
   opening up full connection within the private network).
 - The GKE node vms are created with a service account using the [recommended least privilege list](https://cloud.google.com/kubernetes-engine/docs/how-to/hardening-your-cluster#use_least_privilege_sa)
-- The GKE storage (e.g. K8s secrets) is encrypted at rest via KMS
-- K8s service accounts are mapped to IAM roles via the officially sanctioned [OIDC](https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html)
-  manner, with no long-lived credentials.
 - No long-lived IAM credentials are ever created.
 - All GCR images/repos are private to the account.
-- S3 buckets created privately by default.
+- GCS buckets created privately by default.
 - 7 day backup retentions for the postgres/mysql databases.
 - Currently, the GKE cluster is built with a public endpoint for the simple usage (can add private option later on once
   VPN feature is added).

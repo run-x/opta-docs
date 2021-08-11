@@ -5,7 +5,7 @@ date: 2021-07-21
 draft: false
 weight: 1
 description: >
-`Architecture overview for Azure deployments of Opta
+  Architecture overview for Azure deployments of Opta
 ---
 
 ## Azure

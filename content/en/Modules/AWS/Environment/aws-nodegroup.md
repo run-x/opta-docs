@@ -17,7 +17,7 @@ you want one more.
 - `min_nodes` -- Optional. Default = 3
 - `node_disk_size` -- Optional. Default = 20
 - `node_instance_type` -- Optional. Default = t3.medium
-- `uge_gpu` -- Optional. Default = false
+- `use_gpu` -- Optional. Default = false
 - `spot_instances` -- Optional. Default = false
 
 ### Outputs

@@ -1,12 +1,12 @@
 ---
-title: "postgres"
-linkTitle: "postgres"
+title: "k8s-service"
+linkTitle: "k8s-service"
 date: 2021-07-21
 draft: false
 description: Deploys a kubernetes app
 ---
 
-The most important module for deploying apps, `azure-k8s-service` deploys a kubernetes app on Azure.
+The most important module for deploying apps, `k8s-service` deploys a kubernetes app on Azure.
 It deploys your service as a rolling update securely and with simple autoscaling right off the bat-- you
 can even expose it to the world, complete with load balancing both internally and externally.
 

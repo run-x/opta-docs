@@ -28,6 +28,24 @@ modules:
 .
 ```
 
+And then on the parent directory of the opta yaml there would be a `blah_module` directory/terraform yaml that has a main.tf
+file like:
+```hcl
+variable "a" {
+  type = string
+}
+
+resource "random_id" "blah" {
+  byte_length = 8
+  keepers = {
+    a = var.a
+  }
+}
+
+output "b" {
+  value = "${var.a}-${random_id.blah.hex}"
+}
+```
 ### Fields
 
 - `path_to_module` -- Required. A path to your terraform module relative to the opta yaml file.

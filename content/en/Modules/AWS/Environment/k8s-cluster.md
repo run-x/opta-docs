@@ -14,7 +14,7 @@ as Opta services run on Kubernetes.
 ### Fields
 
 - `min_nodes` -- Optional. The minimum number of nodes to be set by the autoscaler in for the default nodegroup. Defaults to 3.
-- `max_nodes` -- Optional. The minimum number of nodes to be set by the autoscaler in for the default nodegroup. Defaults to 5.
+- `max_nodes` -- Optional. The maximum number of nodes to be set by the autoscaler in for the default nodegroup. Defaults to 5.
 - `node_disk_size` -- Optional. The size of disk to give the nodes' ec2s. Defaults to 20(GB)
 - `node_instance_type` -- Optional. The [ec2 instance type](https://aws.amazon.com/ec2/instance-types/) for the nodes. Defaults
   to t3.medium (highly unrecommended to set to smaller)

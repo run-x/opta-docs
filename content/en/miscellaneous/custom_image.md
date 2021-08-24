@@ -18,3 +18,6 @@ opta deploy --image <image>:<tag>
 This will upload your image to the appropriate cloud repository (ECR or GCR) and then initiate a deploy with this image.
 
 No need to manually manage the repositories!
+
+> Note:
+> Now you can deploy a new Image with an with an already running tag image and Opta will detect those changes and deploy the Image with an Immutable Digest.

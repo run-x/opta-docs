@@ -20,4 +20,4 @@ This will upload your image to the appropriate cloud repository (ECR or GCR) and
 No need to manually manage the repositories!
 
 > Note:
-> Now you can deploy a new Image with an with an already running tag image and Opta will detect those changes and deploy the Image with an Immutable Digest.
+> If you deploy an Image with an already running tag image, Opta would still detect those changes and make sure the image is deployed again.

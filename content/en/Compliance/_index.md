@@ -1,7 +1,7 @@
 ---
 title: "Compliance"
 linkTitle: "Compliance"
-weight: 6
+weight: 7
 description: >
     SOC 2 and PCI compliance of Opta infrastructure.
 ---

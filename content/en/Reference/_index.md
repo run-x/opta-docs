@@ -1,7 +1,7 @@
 ---
 title: "References"
 linkTitle: "References"
-weight: 5
+weight: 4
 description: >
   Opta config reference
 ---

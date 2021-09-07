@@ -1,7 +1,7 @@
 ---
 title: "Architecture & Security"
 linkTitle: "Architecture & Security"
-weight: 6
+weight: 8
 description: >
   An overview of the Architecture Opta sets up. 
 ---

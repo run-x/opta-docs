@@ -19,6 +19,10 @@ Opta works on AWS, GCP, and Azure - so make sure the appropriate cloud credentai
 ## Environment creation
 
 In this step we will create an environment (example staging, qa, prod) for your organization.
+
+You can use the CLI option described below or checkout our [interactive app](https://app.runx.dev/yaml-generator) to build your first environment and service.
+
+
 Start by running:
 
 ```bash

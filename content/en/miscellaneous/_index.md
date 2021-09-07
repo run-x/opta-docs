@@ -1,7 +1,7 @@
 ---
 title: "Miscellaneous"
 linkTitle: "Miscellaneous"
-weight: 4
+weight: 8
 description: >
   Miscellaneous concepts for Opta
 ---

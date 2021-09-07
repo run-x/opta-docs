@@ -1,7 +1,7 @@
 ---
 title: "Observability"
 linkTitle: "Observability"
-weight: 4
+weight: 5
 description: >
   Observability integrations
 ---

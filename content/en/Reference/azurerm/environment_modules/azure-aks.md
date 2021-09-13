@@ -16,7 +16,7 @@ as Opta services run on Kubernetes.
 
 - `max_nodes` - Optional. The maximum number of nodes to be set by the autoscaler in for the default nodegroup. Default 5
 - `min_nodes` - Optional. The minimum number of nodes to be set by the autoscaler in for the default nodegroup. Default 3
-- `node_disk_size` - Optional. The size of disk in GB to give the virtual machines of the nodes. Default 20
+- `node_disk_size` - Optional. The size of disk in GB to give the virtual machines of the nodes. Default 30
 - `node_instance_type` - Optional. The [Azure virtual machine size](https://docs.microsoft.com/en-us/azure/cloud-services/cloud-services-sizes-specs) for the nodes. Default Standard_D2_v2
 - `kubernetes_version` - Optional. The Kubernetes version for the cluster. Must be [supported by AKS](https://docs.microsoft.com/en-us/azure/aks/supported-kubernetes-versions) to bind the cluster too. Gives you automatic K8s version management for the cluster and node pools. Default 1.19.11
 - `admin_group_object_ids` - Optional. ids of the Active Directory [groups](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-groups-create-azure-portal) to make admins in the K8s cluster. Default []

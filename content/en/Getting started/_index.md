@@ -204,7 +204,7 @@ opta destroy
 
 - Check out more examples: [github](https://github.com/run-x/opta/tree/main/examples)
 - Use your own docker image: [Custom Image](/miscellaneous/custom_image)
-- Set up a domain name for your service: [Ingress](/miscellaneous/ingress)
+- Set up a domain name for your service: [Ingress](/tutorials/ingress)
 - Use secrets: [Secrets](/miscellaneous/secrets/)
 - Set up observability integrations in one line(!): [Observability](/observability/)
 - Explore all the infrastructure that Opta sets up for you: [Architecture](/architecture/)

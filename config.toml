@@ -27,6 +27,16 @@ pygmentsUseClassic = false
 # See https://help.farbox.com/pygments.html
 pygmentsStyle = "tango"
 
+[[menu.main]]
+    name = "GitHub"
+    weight = -99
+    url = "https://github.com/run-x/opta"
+[[menu.main]]
+    name = "Slack"
+    weight = -99
+    url = "https://slack.opta.dev"
+    
+
 # Configure how URLs look like per section.
 [permalinks]
 blog = "/:section/:year/:month/:day/:slug/"
@@ -100,7 +110,7 @@ version = "0.0"
 url_latest_version = "https://docs.opta.dev"
 
 # Repository configuration (URLs for in-page links to opening issues and suggesting changes)
-# github_repo = "https://github.com/google/docsy-example"
+github_repo = "https://github.com/run-x/opta"
 # An optional link to a related project repo. For example, the sibling repository where your product code lives.
 # github_project_repo = "https://github.com/google/docsy"
 
@@ -157,6 +167,10 @@ enable = false
 	url = "support@runx.dev"
 	icon = "fa fa-envelope"
         desc = "Help from your fellow users"
+[[params.links.developer]]
+	name = "GitHub"
+	url = "https://github.com/run-x/opta"
+	icon = "fab fa-github"
 [[params.links.developer]]
 	name = "Slack"
 	url = "https://join.slack.com/t/opta-group/shared_invite/zt-r1p9k1iv-4MP1IMZCT9mwwwdJH0HRyA"

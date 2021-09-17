@@ -18,7 +18,7 @@ When linked to a k8s-service, it adds connection credentials to your container's
 - `{module_name}_cache_auth_token` -- The auth token/password of the cluster.
 - `{module_name}_cache_host` -- The host to contact to access the cluster.
 
-In the [modules reference](/modules-reference), the _{module_name}_ would be replaced with `cache`
+In the [modules reference](/reference), the _{module_name}_ would be replaced with `cache`
 
 The permission list can optionally have one entry which should be a map for renaming the default environment variable
 names to a user-defined value:
@@ -41,7 +41,7 @@ language sdks however, as they all support TLS.
 
 ## Fields
 
-- `node_type` - Optional. This is the redis instance type used for the [instances](https://aws.amazon.com/elasticache/pricing/). Default cache.m4.large
+- `node_type` - Optional. This is the redis instance type used for the [instances](https://aws.amazon.com/elasticache/pricing/). Default cache.t3.medium
 - `redis_version` - Optional. the redis version to use for this instance Default 6.x
 
 ## Outputs

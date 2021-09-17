@@ -10,13 +10,13 @@ description: Adds dns to your environment
 This module creates a [Route53 hosted zone](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/hosted-zones-working-with.html) for
 your given domain. The [k8s-base]({{< relref "#k8s-base" >}}) module automatically hooks up the load balancer to it
 for the domain and subdomain specified, but in order for this to actually receive traffic you will need to complete
-the [dns setup](/miscellaneous/ingress).
+the [dns setup](/tutorials/ingress).
 
 
 ## Fields
 
 - `domain` - Required. The domain you want (you will also get the subdomains for your use)
-- `delegated` - Optional. Set to true once the extra [dns setup is complete](/miscellaneous/ingress) and it will add the ssl certs. Default False
+- `delegated` - Optional. Set to true once the extra [dns setup is complete](/tutorials/ingress) and it will add the ssl certs. Default False
 - `upload_cert` - Optional. Deprecated Default False
 
 ## Outputs

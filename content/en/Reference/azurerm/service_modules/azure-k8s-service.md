@@ -49,7 +49,8 @@ _NOTE_ We expose the resource requests and set the limits to twice the request v
 ### Ingress
 
 You can control if and how you want to expose your app to the world! Check out
-the [Ingress](/miscellaneous/ingress) docs for more details.
+the [Ingress](/tutorials/ingress) docs for more details.
+
 
 ## Fields
 
@@ -62,7 +63,7 @@ websockets.
 - `max_containers` - Optional. The maximum number of replicas your app can autoscale to. Default 3
 - `autoscaling_target_cpu_percentage` - Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
 - `autoscaling_target_mem_percentage` - Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
-- `secrets` - Optional. Optional. A list of secrets to add as environment variables for your container. All secrets must be set following the [secrets instructions](/miscellaneous/secrets) prior to deploying the app. Default []
+- `secrets` - Optional. Optional. A list of secrets to add as environment variables for your container. All secrets must be set following the [secrets instructions](/tutorials/secrets) prior to deploying the app. Default []
 - `env_vars` - Optional. A map of key values to add to the container as environment variables (key is name, value is value).
 ```yaml
 env_vars:
@@ -72,6 +73,8 @@ env_vars:
 - `healthcheck_path` - Optional. See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default `null` (i.e., no user-specified healthchecks) Default None
 - `liveness_probe_path` - Optional. Use if liveness probe != readiness probe Default None
 - `readiness_probe_path` - Optional. Use if liveness probe != readiness probe Default None
+- `sticky_session` - Optional. Use [sticky sessions](https://stackoverflow.com/questions/10494431/sticky-and-non-sticky-sessions) via cookies for your service (first request will send you a cookie called opta_cookie which you should add on future requests). Default False
+- `sticky_session_max_age` - Optional. If the sticky session is enabled, how long should the cookie last? Default 86400
 - `resource_request` - Optional. See the [container resources]({{< relref "#container-resources" >}}) section. Default
 ```yaml
 cpu: 100 # in millicores

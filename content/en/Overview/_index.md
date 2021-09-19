@@ -2,12 +2,12 @@
 title: "Overview"
 linkTitle: "Overview"
 weight: 1
-description: Opta overview and benefits
+description: Opta overview and features
 ---
 
 # What is Opta?
 
-Opta, built on [Terraform](https://www.terraform.io), is an Infrastructre as Code tool that efficiently and repeatably provisions containterized cloud infrastructure and applications.  
+Opta, built on [Terraform](https://www.terraform.io), is an Infrastructre as Code tool that efficiently and consistently provisions containterized cloud infrastructure and applications.  
 
 - create highly available, scalable, and secure environments with Infrastructure as Code
 
@@ -15,15 +15,9 @@ Opta, built on [Terraform](https://www.terraform.io), is an Infrastructre as Cod
 
 - manage the entire cloud infrastructure lifecycle
 
-<!---
-*Image*: 
-CONFIGURE > CODE > PROVISION > RETIRE
---->
 
 # What are the Opta Benefits?
-Opta removes the complexity of managing cloud infrastructure.  
-
-Managing modern cloud infrastructure has become a specialized discipline and Opta can overcome these challenges:  
+Opta removes the complexity of managing cloud infrastructure. Managing modern cloud technologies has become a specialized discipline and Opta can overcome these challenges:  
 - high learning curve
 - limited hiring pool
 - ongoing cost
@@ -37,10 +31,10 @@ Automate the lifecycle of your cloud infrastructure to provision, deploy, monito
 - industry standard setup  
  
 ## Opta is open source
-Opta is open source, enabling you to customize as needed. Fork our standard stack and create your own solution. Check out the [Opta GitHub repository](https://github.com/run-x/opta-docs).  
+Opta is open source, which enables you to customize as needed. Fork our standard stack and create your own solution. Check out the [Opta GitHub repository](https://github.com/run-x/opta-docs).  
 
 ## Terraform integration
-Using proven technology, manage standard Terraform resources in the Opta configuration file.
+Using proven real-world technology, manage standard Terraform resources in the Opta configuration file.
 - network
 - security groups
 - virtual servers
@@ -59,7 +53,7 @@ Opta has a simplified CLI interface to do most common operations:
 - scaling up or down
 
 ## Opta advantage over Platform as a Service (PaaS)
-PaaS incurs a high cost for managing cloud resources. Opta achieves the same services with reduced cost. However, you:
+PaaS incurs a high cost for managing cloud resources. Opta achieves the same services with reduced cost. However, you are able to:
 - maintain control over your environment 
 - build and deploy infrastructure where and when you want
 - reduce cost of cloud resource management
@@ -75,7 +69,7 @@ Execute the Opta configuration files using the CLI from either your local machin
 There are two primary configuration file types: environment and service. For both files, run the single command `opta apply` and the magic happens! 
 
 ## Environment configuration file
-The environment file specifies which cloud provider, account, and region should Opta be set up in. Running the Opta environment file creates base resources, such as:
+The environment file specifies which cloud provider, account, and region that Opta should be set up in. Running the Opta environment file creates base resources, such as:
 - kubernetes cluster
 - networks
 - IAM roles
@@ -94,4 +88,5 @@ Read the [Getting Started Guide](/getting-started/)
 Watch a [demo of Opta](https://www.youtube.com/watch?v=nja_EfpGexE)  
 
 Read about using [Opta templates](/miscellaneous/templatization/)
+
 

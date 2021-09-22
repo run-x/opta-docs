@@ -19,7 +19,7 @@ If you're using a local chart, then this will be the path to the chart.
 - `create_namespace` - Optional. Create namespace as well. Default False
 - `atomic` - Optional. If set, installation process purges chart on fail. The wait flag will be set automatically if atomic is used. Default True
 - `cleanup_on_fail` - Optional. Allow deletion of new resources created in this upgrade when upgrade fails Default True
-- `version` - Optional. The version of the helm chart to install Default None
+- `chart_version` - Optional. User side of the version of the helm chart to install Default None
 - `values_file` - Optional. Path to a values file. Default None
 - `values` - Optional. Values override. Default {}
 - `timeout` - Optional. Time in seconds to wait for any individual kubernetes operation (like Jobs for hooks). Default 600

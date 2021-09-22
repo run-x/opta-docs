@@ -74,6 +74,7 @@ env_vars:
 - `healthcheck_path` - Optional. See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default `null` (i.e., no user-specified healthchecks) Default None
 - `liveness_probe_path` - Optional. Use if liveness probe != readiness probe Default None
 - `readiness_probe_path` - Optional. Use if liveness probe != readiness probe Default None
+- `consistent_hash` - Optional. Use [consistent hashing](https://www.nginx.com/resources/wiki/modules/consistent_hash/) Default None
 - `sticky_session` - Optional. Use [sticky sessions](https://stackoverflow.com/questions/10494431/sticky-and-non-sticky-sessions) via cookies for your service (first request will send you a cookie called opta_cookie which you should add on future requests). Default False
 - `sticky_session_max_age` - Optional. If the sticky session is enabled, how long should the cookie last? Default 86400
 - `resource_request` - Optional. See the [container resources]({{< relref "#container-resources" >}}) section. Default

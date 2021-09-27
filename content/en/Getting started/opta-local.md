@@ -202,19 +202,28 @@ If these containers are not running, then debug the docker containers so Opta Lo
 
 2. Check that the Kind Kubernetes Cluster is functioning
    ```bash  
-   # Command
-  kubectl cluster-info
-   # Output
-   Kubernetes master is running at https://127.0.0.1:42937
-   CoreDNS is running at https://127.0.0.1:42937/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+      # Command
+      kubectl cluster-info
+      # Output
+      Kubernetes master is running at https://127.0.0.1:42937
+      CoreDNS is running at https://127.0.0.1:42937/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
 
-   To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'
-   # Command
-   kubectl get no
-   # Output
-    NAME                               STATUS   ROLES                  AGE   VERSION
-    opta-local-cluster-control-plane   Ready    control-plane,master   14m   v1.21.1
-```
+      # Command
+      kubectl cluster-info
+       # Output
+      Kubernetes master is running at https://127.0.0.1:42937
+      CoreDNS is running at https://127.0.0.1:42937/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+    ```
+
+   To further debug and diagnose cluster problems, use `kubectl cluster-info dump` and `kubectl get node`
+   
+   ```bash
+    # Command
+    kubectl get node
+    # Output
+      NAME                               STATUS   ROLES                  AGE   VERSION
+      opta-local-cluster-control-plane   Ready    control-plane,master   14m   v1.21.1
+  ```
 
 ### Container Registry
 

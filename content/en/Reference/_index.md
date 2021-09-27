@@ -2,8 +2,6 @@
 title: "References"
 linkTitle: "Modules"
 weight: 5
-description: >
-  Opta config reference
 ---
 
 ## What's an Opta module?

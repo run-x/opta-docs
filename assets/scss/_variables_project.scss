@@ -61,6 +61,11 @@ code {
   font-size: 0.85em !important;
 }
 
+.highlight {
+  border: none !important;
+  border-radius: none;
+}
+
 .lead {
   border-left: 4px solid $primary;
   padding-left: 20px;

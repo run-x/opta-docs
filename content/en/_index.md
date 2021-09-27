@@ -5,6 +5,7 @@ weight: 20
 menu:
   main:
     weight: 20
+no_list: true
 description: Create secure, scalable, compliant Infrastructure stack for your startup in less than an hour.
 ---
 

@@ -2,8 +2,6 @@
 title: "Installation"
 linkTitle: "Installation"
 weight: 3
-description: >
-  Installation Instructions
 ---
 
 ## Prerequisites

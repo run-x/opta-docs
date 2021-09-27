@@ -1,12 +1,10 @@
 ---
 title: "References"
-linkTitle: "References"
+linkTitle: "Modules"
 weight: 5
-description: >
-  Opta config reference
 ---
 
-# What's an Opta module?
+## What's an Opta module?
 
 The heart of Opta is a set of "Modules" which basically map to cloud resources that
 need to get created. Opta yamls reference these under the `modules` field.
@@ -93,3 +91,4 @@ modules:
   - name: bucket
     type: aws-s3
     bucket_name: "test-bucket"
+```

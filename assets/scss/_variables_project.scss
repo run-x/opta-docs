@@ -4,9 +4,85 @@ Add styles or override variables from the theme here.
 
 */
 // Colors
-$primary: #2B3A67;
-$secondary: #F23838;
+$primary: #2b3a67;
+$secondary: #f23838;
 
 // Fonts
-$google_font_name: "Montserrat";
-$google_font_family: "Montserrat:300,300i,400,400i,700,700i";
+$google_font_name: "Source Sans Pro";
+$google_font_family: "Source+Sans+Pro:300,300i,400,400i,500,600,700,700i";
+
+$font-family-monospace: "Roboto Mono", Monaco, courier, monospace;
+
+$h1-font-size: 2em;
+$h2-font-size: 1.5em;
+$h3-font-size: 1.17em;
+$h4-font-size: 1em;
+$h5-font-size: 1em;
+
+h2,
+.h2 {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.7em;
+}
+
+h1,
+h2,
+.h1,
+.h2 {
+  font-weight: 600 !important;
+}
+
+h3,
+h4,
+h5,
+.h3,
+.h4,
+.h5 {
+  font-weight: 600 !important;
+  a {
+    font-weight: 600 !important;
+  }
+}
+
+p,
+li {
+  font-size: 14px;
+  line-height: 1.6em;
+}
+
+.breadcrumb-item {
+  a {
+    color: #8089a4;
+  }
+}
+
+pre,
+code {
+  font-size: 0.85em !important;
+}
+
+.highlight {
+  border: none !important;
+  border-radius: none;
+}
+
+.lead {
+  border-left: 4px solid $primary;
+  padding-left: 20px;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
+.section-index {
+  .entry {
+    padding: 0.3em 0.75em !important;
+  }
+}
+
+.td-sidebar {
+  background-color: white !important;
+}
+
+.td-toc.d-print-none {
+  display: none !important;
+}

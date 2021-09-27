@@ -254,6 +254,7 @@ Opta Local creates a local Docker container registry at `http://localhost:5000`.
       * Connection #0 to host localhost left intact
       {}
     ```
+    
     Note the `200 OK` Http response and the {} braces in the output.
   
   2. Confirm that images can be tagged and pushed into the docker registry. Example:

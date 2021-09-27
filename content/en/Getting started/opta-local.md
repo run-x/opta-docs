@@ -1,29 +1,31 @@
 # Opta Local
 
-Opta Local enables you to setup a local Kubernetes environment on your PC using the [Opta CLI](https://docs.opta.dev/overview/) so that you can locally test services without having to pay for cloud resources or waiting for real infrastructure to spin up and down in your cloud provider. 
+Opta Local enables you to setup a local Kubernetes environment on your PC using the [Opta CLI](https://docs.opta.dev/overview/) so that you can test services locally without having to pay for cloud resources or waiting for real infrastructure to spin up and down in your cloud provider. It is designed to get you quickly started with Opta and Kubernetes for development and testing without  the complexity and learning curve of using a public cloud provider. When you are ready to go to production, the same Opta infrastructure-as-code you create for Opta Local can be used to deploy to AWS, Azure or Google Cloud.
 
 
 ## Architecture
-![Opta Local Architecture](/images/mages/optalocal-arch.png)
-Fig. 1 shows what an Opta local installation will look like inside your local machine. Opta Local installs a [Kubernetes Kind cluster](https://kind.sigs.k8s.io/)Kind is a tool for running local Kubernetes clusters using Docker container “nodes”.
-kind was primarily designed for testing Kubernetes itself, but may be used for local development or CI.
+![Opta Local Architecture](/images/optalocal-arch.png)
+Fig. 1 shows what an Opta local installation will look like inside your local machine. Opta Local installs a [Kubernetes Kind cluster](https://kind.sigs.k8s.io/). Kind is a tool for running local Kubernetes clusters using Docker container “nodes”. Kind was primarily designed for testing Kubernetes itself, but may be used for local development or CI.
 
 Opta Local also installs a local container image registry to store your application images when you use [`opta deploy`](https://docs.opta.dev/tutorials/custom_image/). This docker registry is available at `http://localhost:5000`. 
-As a user you can deploy a single Kubernetes kind cluster on a local machine and then deploy multiple application services (for example, service A and service B in Fig. 1) Internally, Kind uses nested containers to run Kubernetes pods inside the Kind container. As such, this is suitable for functional testing but not for high-performance use cases such as load testing your application.
 
-Opta Local also provides platform-as-a-service by creating Postgres or Redis (more PaaS platforms are being integrated, send us an email if you would like to see a specific PaaS). Multiple service platforms of the same type are possible. So for example, Service A and B use isolated PaaS databases in Fig. 1. Services can be accessed on `http://localhost:8080/`. Service A in Fig.1 has been configured to be available at `http://localhost:8080/service_A`.
+As a user you can deploy a single Kubernetes Kind cluster on a local machine and then deploy multiple application services (for example, service A and service B in Fig. 1) Internally, Kind uses nested containers to run Kubernetes pods inside the Kind container. As such, this is suitable for functional testing but not for high-performance use cases such as load testing your application.
+
+Opta Local also provides platform-as-a-service by creating Postgres or Redis (more PaaS platforms are being integrated, contact us if you would like to see a specific PaaS for your use case). Multiple service platforms of the same type are possible. So for example, Service A and B use isolated PaaS databases in Fig. 1. Services can be accessed on `http://localhost:8080/` and subpaths. Service A in Fig.1 has been configured to be available at `http://localhost:8080/service_A`.
 
 ## System Requirements
+
+Running Opta Local needs a reasonably powerful PC. These requirements are not for running Opta itself, but for spinning up Kubernetes and running your services on it.
 
   1. A Mac OS or Linux PC with a minimum 8GB RAM and a recent i5 processor.
   2. Fast internet connection
   3. Ample diskspace (at least 10GB free) to store container images locally
-  4. Please install the prerequistes for opta [listed here](https://docs.opta.dev/installation/#prerequisites). You can exclude the public cloud specific pre-requisites if you only want to run Opta Local for now.
+  4. Please install the prerequistes for opta [listed here](https://docs.opta.dev/installation/#prerequisites). You can exclude the public cloud specific pre-requisites if you only want to run Opta Local.
   5. Opta Local assumes that the logged-in user can operate docker without sudo; to enable this follow the steps here: [MacOS](https://docs.docker.com/desktop/mac/install/) or [Linux](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user) ).
-  6. Opta local requires local ports `5000` and `8080` to function.
+  6. Opta Local requires local ports `5000` and `8080` to be free in order to function.
 ## Getting Started
 
-There are two steps in getting Opta Local running. First, we create a Kubernetes Kind and local docker registry installation going on your local machine. Second, we create services inside the Kubernetes installation. 
+There are two steps in getting Opta Local running. First, we create a Kubernetes Kind cluster and local docker registry installation going on your local machine. Second, we create services inside the Kubernetes installation. We will show examples of both these steps below.
 
 ### Kubernetes Environment on Local Machine
 
@@ -87,13 +89,19 @@ CoreDNS is running at https://127.0.0.1:40049/api/v1/namespaces/kube-system/serv
 
 This Kubernetes cluster will survive reboots of the local machine.
 
+Opta Local only supports one Kubernetes Kind environment currently.
+
 ```
 
 ### Services 
 
 Running services in Opta Local environment is almost identical to how you would run them on public cloud using the Opta CLI. We show a couple of opta yaml examples to get you started.
 
-**Example 1:** A simple [Httpbin](https://github.com/postmanlabs/httpbin) deployment. Save this yaml snippet in `httpbin.yaml`:
+#### Example 1: Stateless Service
+
+__A simple [Httpbin](https://github.com/postmanlabs/httpbin) deployment.__
+
+Save this yaml snippet in `httpbin.yaml`:
 
 ```yaml
 name: httpbinapp
@@ -111,7 +119,7 @@ modules:
 
 ```
 
-Adjust the path of the environment file `local-opta-env.yaml` as needed. The run 
+Adjust the path of the environment file `local-opta-env.yaml` created above, as needed. Then run 
 
 ```bash
 # Terminal command
@@ -130,10 +138,14 @@ INFO: Opta updates complete!
 
 You can test your service by visiting `http://localhost:8080/` on your local machine browser. You should see an output like so:
 
-h
+![Opta Local httpbin](/images/httpbin.png)
 
+#### Example 2: Stateful Example with Postgres and Redis:
+
+Coming soon!
 
 ## Limitations: What Opta Local is not
+
 
 1. Only one Kubernetes cluster (a.k.a. Opta environment) is currently allowed on Opta Local.
 2. TLS certificates and DNS are not supported.
@@ -156,6 +168,16 @@ docker rm $DOCKER_REGISTRY
 ~/.opta/local/kind delete clusters opta-local-cluster
 rm -rf ~/.opta/local
 
+
+```
+Running these commands should remove the Kind Kubernetes docker container (along with everything installed in Kubernetes) as well as the local docker registry container. You can confirm this via the `docker ps` command. 
+
+In case you want to manually remove the Kubernetes Kind container run
+
+```bash
+KCLUSTER=`docker ps -aqf "name=opta-local-cluster-control-plane"`
+docker stop $KCLUSTER
+docker rm $KCLUSTER
 ```
 
 
@@ -253,8 +275,8 @@ Opta Local creates a local Docker container registry at `http://localhost:5000`.
       < 
       * Connection #0 to host localhost left intact
       {}
-    ```
-    
+      ```
+
     Note the `200 OK` Http response and the {} braces in the output.
   
   2. Confirm that images can be tagged and pushed into the docker registry. Example:

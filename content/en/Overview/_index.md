@@ -2,9 +2,9 @@
 title: "Overview"
 linkTitle: "Overview"
 weight: 1
-description: >
-  What is Opta?
 ---
+
+## What is Opta?
 
 Opta is a platform for running containerized workloads in the cloud. It abstracts away the complexity of networking,
 IAM, kubernetes, and various other components - giving you a clean cloud agnostic interface to deploy and run your

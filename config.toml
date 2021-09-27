@@ -1,5 +1,5 @@
 baseURL = "/"
-title = "Opta"
+# title = "Opta"
 
 enableRobotsTXT = true
 
@@ -28,14 +28,14 @@ pygmentsUseClassic = false
 pygmentsStyle = "tango"
 
 [[menu.main]]
-    name = "GitHub"
-    weight = -99
-    url = "https://github.com/run-x/opta"
+name = "GitHub"
+weight = -99
+url = "https://github.com/run-x/opta"
 [[menu.main]]
-    name = "Slack"
-    weight = -99
-    url = "https://slack.opta.dev"
-    
+name = "Slack"
+weight = -99
+url = "https://slack.opta.dev"
+
 
 # Configure how URLs look like per section.
 [permalinks]
@@ -62,21 +62,21 @@ id = "UA-188763285-1"
 
 [languages]
 [languages.en]
-title = "Opta"
+# title = "Opta"
 description = "Documentation for Opta."
-languageName ="English"
+languageName = "English"
 # Weight used for sorting.
 weight = 1
 
 [markup]
-  [markup.goldmark]
-    [markup.goldmark.renderer]
-      unsafe = true
-  [markup.highlight]
-      # See a complete list of available styles at https://xyproto.github.io/splash/docs/all.html
-      style = "tango"
-      # Uncomment if you want your chosen highlight style used for code blocks without a specified language
-      # guessSyntax = "true"
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true
+[markup.highlight]
+# See a complete list of available styles at https://xyproto.github.io/splash/docs/all.html
+style = "tango"
+# Uncomment if you want your chosen highlight style used for code blocks without a specified language
+# guessSyntax = "true"
 
 # Everything below this are Site Params
 
@@ -122,7 +122,7 @@ github_repo = "https://github.com/run-x/opta"
 
 # Enable Algolia DocSearch
 algolia_docsearch = true
-sidebar_search_disable = true  # Algolia not supported in sidebar search
+sidebar_search_disable = true # Algolia not supported in sidebar search
 
 
 # Enable Lunr.js offline search
@@ -135,8 +135,11 @@ prism_syntax_highlighting = false
 [params.ui]
 # Enable to show the side bar menu in its compact state.
 sidebar_menu_compact = true
+ul_show = 2
+sidebar_menu_foldable = true
+
 #  Set to true to disable breadcrumb navigation.
-breadcrumb_disable = false
+breadcrumb_disable = true
 #  Set to true to hide the sidebar search box (the top nav search box will still be displayed if search is enabled)
 sidebar_search_disable = false
 #  Set to false if you don't want to display a logo (/assets/icons/logo.svg) in the top nav bar
@@ -163,17 +166,16 @@ enable = false
 [params.links]
 # End user relevant links. These will show up on left side of footer and in the community page if you have one.
 [[params.links.user]]
-	name = "User support list"
-	url = "support@runx.dev"
-	icon = "fa fa-envelope"
-        desc = "Help from your fellow users"
+name = "User support list"
+url = "support@runx.dev"
+icon = "fa fa-envelope"
+desc = "Help from your fellow users"
 [[params.links.developer]]
-	name = "GitHub"
-	url = "https://github.com/run-x/opta"
-	icon = "fab fa-github"
+name = "GitHub"
+url = "https://github.com/run-x/opta"
+icon = "fab fa-github"
 [[params.links.developer]]
-	name = "Slack"
-	url = "https://join.slack.com/t/opta-group/shared_invite/zt-r1p9k1iv-4MP1IMZCT9mwwwdJH0HRyA"
-	icon = "fab fa-slack"
-        desc = "Opta slack community"
-
+name = "Slack"
+url = "https://join.slack.com/t/opta-group/shared_invite/zt-r1p9k1iv-4MP1IMZCT9mwwwdJH0HRyA"
+icon = "fab fa-slack"
+desc = "Opta slack community"

@@ -223,7 +223,7 @@ If these containers are not running, then debug the docker containers so Opta Lo
     # Output
       NAME                               STATUS   ROLES                  AGE   VERSION
       opta-local-cluster-control-plane   Ready    control-plane,master   14m   v1.21.1
-  ```
+    ```
 
 ### Container Registry
 

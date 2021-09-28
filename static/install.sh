@@ -55,6 +55,12 @@ fi
 
 echo "Downloading installation package..."
 curl -s $PACKAGE -o /tmp/opta.zip
+ls /tmp/opta.zip
+if [[ $? != 0 ]]
+  echo "Version $VERSION not found."
+  echo "Please check the Opta Version if you have defined any. It should be of the format: x.y.z"
+  exit 1
+fi
 echo "Downloaded"
 
 echo "Installing..."

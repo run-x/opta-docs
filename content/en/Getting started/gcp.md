@@ -29,7 +29,7 @@ Start by running:
 opta init env gcp
 ```
 
-This will create an `env.yml` file with initial configurations for your environment. Below are examples of the resulting yaml files for each environment.
+This will create an `staging.yml` file with initial configurations for your environment. Below are examples of the resulting yaml files for each environment.
 
 ```yaml
 name: staging # A unique identifier for your environment
@@ -47,7 +47,7 @@ modules:
 Now, run:
 
 ```bash
-opta apply
+opta apply -c staging.yml
 ```
 
 This step will create an GKE cluster for you and set up networking and various other infrastructure pieces.
@@ -55,7 +55,7 @@ This step will create an GKE cluster for you and set up networking and various o
 ## Service creation
 
 In this step we will create a service - which is basically a docker container and associated database.
-We will create another `service.yml` file, which defines high level configuration of this service.
+We will create another `hello-world.yml` file, which defines high level configuration of this service.
 
 To get started, run
 
@@ -64,14 +64,14 @@ opta init service <YOUR_ENV_FILE_PATH> k8s
 ```
 
 This will prompt you for some information and create a starting
-point for your `service.yml` file. Then, update the fields specific to your service setup. You can see examples of resulting files below.
+point for your `hello-world.yml` file. Then, update the fields specific to your service setup. You can see examples of resulting files below.
 
 
 ```yaml
 name: hello-world # service names are unique per-environment
 environments:
   - name: staging
-    path: "env.yml"
+    path: "staging.yml"
 modules:
   - name: app
     type: k8s-service
@@ -93,7 +93,7 @@ Now you are ready to deploy your service.
 One line deployment:
 
 ```bash
-opta apply
+opta apply -c hello-world.yml
 ```
 
 Now, once this step is complete, you should be to curl your service by specifying the load balancer url/ip.
@@ -111,7 +111,8 @@ Now you can:
 Once you're finished playing around with these examples, you may clean up by running the following command from the environment directory:
 
 ```bash
-opta destroy
+opta destroy -c hello-world.yml
+opta destroy -c staging.yml
 ```
 
 ## Next steps

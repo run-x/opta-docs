@@ -1,6 +1,6 @@
 ---
-title: "References"
-linkTitle: "Modules"
+title: "Reference"
+linkTitle: "Reference"
 weight: 5
 ---
 

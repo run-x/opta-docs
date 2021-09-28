@@ -86,6 +86,7 @@ CPU is given in millicores, and Memory is in megabytes.
  Default {'cpu': 100, 'memory': 128}
 - `public_uri` - Optional. The full domain to expose your app under as well as path prefix. Must be the full parent domain or a subdomain referencing the parent as such: "dummy.{parent[domain]}/my/path/prefix"
  Default []
+- `keep_path_prefix` - Optional. Should we keep the prefix path which you set in the public uri when forwarding requests to your service? Default False
 - `additional_iam_policies` - Optional. A list of extra IAM role policies not captured by Opta which you wish to give to your service. Default []
 - `links` - Optional. A list of extra IAM role policies not captured by Opta which you wish to give to your service. Default []
 

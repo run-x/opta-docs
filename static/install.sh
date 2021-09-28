@@ -58,7 +58,7 @@ curl -s $PACKAGE -o /tmp/opta.zip
 ls /tmp/opta.zip
 if [[ $? != 0 ]]
   echo "Version $VERSION not found."
-  echo "Please check the Opta Version if you have defined any. It should be of the format: x.y.z"
+  echo "Please check the available versions at https://github.com/run-x/opta/releases."
   exit 1
 fi
 echo "Downloaded"

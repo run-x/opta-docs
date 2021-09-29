@@ -1,4 +1,5 @@
-#!/bin/bash
+#! /usr/bin/env bash
+
 set -u
 
 # Check if script is run non-interactively (e.g. CI)
@@ -72,3 +73,4 @@ else
 fi
 
 echo "Successfully installed! Now you can run it via invoking $RUNPATH"
+echo "To add opta to your path, please add" 'export PATH=$PATH:'"$RUNPATH" 'to you cli profile'

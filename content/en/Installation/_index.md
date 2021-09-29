@@ -18,6 +18,7 @@ Opta currently has the following system prerequisites to operate normally:
 - [GCP SDK](https://cloud.google.com/sdk/docs/install) (For GCP only)
 - [Azure Cli](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) (For Azure only)
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) (v2) (For AWS only)
+- Opta assumes that git, curl and unzip tools are already installed on the command line; in addition if you are using Ubuntu/Debian Linux then the `language-pack-en` package should be installed; you may also need to add `export LC_CTYPE=en_US.UTF-8` to your profile. 
 
 ## MacOS or Linux
 

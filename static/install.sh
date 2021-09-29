@@ -12,6 +12,15 @@ abort() {
   exit 1
 }
 
+trim_version() {
+  version="$1"
+  firstChar=${version:0:1}
+  if [[ $firstChar = "v" || $firstChar = "V" ]]; then
+    version=${version:1}
+  fi
+  echo $version
+}
+
 # Check OS
 OS="$(uname)"
 
@@ -25,6 +34,8 @@ then
   # Determine latest version
   echo "Determining latest version"
   VERSION="$(curl -s https://dev-runx-opta-binaries.s3.amazonaws.com/latest)"
+else
+  VERSION=$(trim_version $VERSION)
 fi
 
 echo "Going to install opta v$VERSION"
@@ -37,6 +48,15 @@ else
   abort "Opta is only supported on macOS and Linux."
 fi
 
+echo "Downloading installation package..."
+curl -s $PACKAGE -o /tmp/opta.zip --fail
+if [[ $? != 0 ]]; then
+  echo "Version $VERSION not found."
+  echo "Please check the available versions at https://github.com/run-x/opta/releases."
+  exit 1
+fi
+echo "Downloaded"
+
 if [[ -d ~/.opta ]]; then
   if [[ -n "${NONINTERACTIVE-}" ]]; then
     echo "Opta already installed. Overwriting..."
@@ -47,15 +67,12 @@ if [[ -d ~/.opta ]]; then
     if [[ $REPLY =~ ^[Yy]$ ]]; then
       rm -rf ~/.opta
     else
+      rm -rf /tmp/opta.zip
       exit 0
     fi
   fi
 fi
 
-
-echo "Downloading installation package..."
-curl -s $PACKAGE -o /tmp/opta.zip
-echo "Downloaded"
 
 echo "Installing..."
 unzip -q /tmp/opta.zip -d ~/.opta

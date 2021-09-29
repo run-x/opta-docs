@@ -54,8 +54,7 @@ fi
 
 
 echo "Downloading installation package..."
-curl -s $PACKAGE -o /tmp/opta.zip
-ls /tmp/opta.zip
+curl -s $PACKAGE -o /tmp/opta.zip --fail
 if [[ $? != 0 ]]
   echo "Version $VERSION not found."
   echo "Please check the available versions at https://github.com/run-x/opta/releases."

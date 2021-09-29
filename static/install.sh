@@ -70,7 +70,8 @@ else
   # TODO: Automatically set up path for github action and other runners
   # TODO: Automatically add to PATH (by adding to profile) for linux users
   RUNPATH=~/.opta/opta
+  echo "To add opta to your path, please add" 'export PATH=$PATH:'"$RUNPATH" 'to your terminal profile.'
 fi
 
 echo "Successfully installed! Now you can run it via invoking $RUNPATH"
-echo "To add opta to your path, please add" 'export PATH=$PATH:'"$RUNPATH" 'to you cli profile'
+

@@ -14,13 +14,19 @@ _no need to set any of the fields or know what the outputs do_.
 
 ## Fields
 
-- `private_ipv4_cidr_block` - Optional. Cidr block for the whole vpc. Default 10.0.0.0/16
-- `subnet_ipv4_cidr_block` - Optional. Cidr block for private subnet. Don't need to worry about AZs in Azure Default 10.0.0.0/17
+
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `private_ipv4_cidr_block` | Cidr block for the whole vpc. | `10.0.0.0/16` | False |
+| `subnet_ipv4_cidr_block` | Cidr block for private subnet. Don't need to worry about AZs in Azure | `10.0.0.0/17` | False |
 
 ## Outputs
 
-- vpc_id - The ID of the [Azure virtual network](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview) we created for this environment
-- private_subnet_id - The ID of the private [subnet](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-subnet) we setup for your environment
-- acr_id - The ID of the [Azure container registry](https://azure.microsoft.com/en-us/services/container-registry/) created for this environment
-- acr_name - The name of the Azure container registry
-- acr_login_url - The login url of the Azure container registry.
+
+| Name      | Description |
+| ----------- | ----------- |
+| `vpc_id` | The ID of the [Azure virtual network](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview) we created for this environment |
+| `private_subnet_id` | The ID of the private [subnet](https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-manage-subnet) we setup for your environment |
+| `acr_id` | The ID of the [Azure container registry](https://azure.microsoft.com/en-us/services/container-registry/) created for this environment |
+| `acr_name` | The name of the Azure container registry |
+| `acr_login_url` | The login url of the Azure container registry. |

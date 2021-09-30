@@ -48,10 +48,16 @@ await mongoose.connect("mongodb://<USER>:<PASSWORD>@<HOST>, {
 
 ## Fields
 
-- `engine_version` - Optional. The version of mongodb to use Default 4.0.0
-- `instance_class` - Optional. This is the RDS instance type used for the documentdb cluster [instances](https://aws.amazon.com/documentdb/pricing/). Default db.r5.large
+
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `engine_version` | The version of mongodb to use | `4.0.0` | False |
+| `instance_class` | This is the RDS instance type used for the documentdb cluster [instances](https://aws.amazon.com/documentdb/pricing/). | `db.r5.large` | False |
 
 ## Outputs
 
-- db_host - The host of the database.
-- db_user - The user of the database.
+
+| Name      | Description |
+| ----------- | ----------- |
+| `db_host` | The host of the database. |
+| `db_user` | The user of the database. |

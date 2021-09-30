@@ -35,13 +35,19 @@ The current permissions are, "read" and "write", defaulting to "write" if none s
 
 ## Fields
 
-- `bucket_name` - Required. The name of the bucket to create.
-- `same_region_replication` - Optional. Create a same-region bucket for replica storage (needed for compliance). Can be added later without destroying the resource. Default False
-- `block_public` - Optional. Block all public access. Default True
-- `bucket_policy` - Optional. A custom s3 policy json/yaml to add. Default None
-- `cors_rule` - Optional. A custom cors policy. Default None
+
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `bucket_name` | The name of the bucket to create. | `None` | True |
+| `same_region_replication` | Create a same-region bucket for replica storage (needed for compliance). Can be added later without destroying the resource. | `False` | False |
+| `block_public` | Block all public access. | `True` | False |
+| `bucket_policy` | A custom s3 policy json/yaml to add. | `None` | False |
+| `cors_rule` | A custom cors policy. | `None` | False |
 
 ## Outputs
 
-- bucket_id - The id of the S3 bucket
-- bucket_arn - The arn of the S3 bucket
+
+| Name      | Description |
+| ----------- | ----------- |
+| `bucket_id` | The id of the S3 bucket |
+| `bucket_arn` | The arn of the S3 bucket |

@@ -40,8 +40,8 @@ If present, this map must have renames for all 4 fields.
 
 ## Fields
 
-- `sku_name` - Optional. The name of the SKU, follows the tier + family + cores pattern for Azure postgres [instances](https://docs.microsoft.com/en-us/azure/postgresql/concepts-pricing-tiers). Default GP_Gen5_4
-- `engine_version` - Optional. The version of the database to use. Default 11
 
-## Outputs
-
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `sku_name` | The name of the SKU, follows the tier + family + cores pattern for Azure postgres [instances](https://docs.microsoft.com/en-us/azure/postgresql/concepts-pricing-tiers). | `GP_Gen5_4` | False |
+| `engine_version` | The version of the database to use. | `11` | False |

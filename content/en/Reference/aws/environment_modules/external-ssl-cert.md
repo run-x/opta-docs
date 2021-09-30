@@ -14,11 +14,17 @@ for more details.
 
 ## Fields
 
-- `domain` - Required. The domain which the ssl cert is for (used for validation of the certificate files).
-- `private_key_file` - Required. The private key pem file for the ssl certificate.
-- `certificate_body_file` - Required. The body of the ssl certificate in the form of a pem file. This file should just have the final certificate and not other certificates on the chain
-- `certificate_chain_file` - Required. The file containing the chain certificate for the current ssl certificate.
+
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `domain` | The domain which the ssl cert is for (used for validation of the certificate files). | `default_value` | True |
+| `private_key_file` | The private key pem file for the ssl certificate. | `None` | True |
+| `certificate_body_file` | The body of the ssl certificate in the form of a pem file. This file should just have the final certificate and not other certificates on the chain | `None` | True |
+| `certificate_chain_file` | The file containing the chain certificate for the current ssl certificate. | `None` | True |
 
 ## Outputs
 
-- domain - The domain passed in.
+
+| Name      | Description |
+| ----------- | ----------- |
+| `domain` | The domain passed in. |

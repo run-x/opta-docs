@@ -17,14 +17,20 @@ Link also grants encrypt/decrypt permission for the queue's KMS key.
 
 ## Fields
 
-- `fifo` - Optional. FIFO queue or not Default False
-- `content_based_deduplication` - Optional. FIFO queue or not Default False
-- `delay_seconds` - Optional. Seconds to delay passing the message forward Default 0
-- `message_retention_seconds` - Optional. The number of seconds SQS retains a message. Default 345600
-- `receive_wait_time_seconds` - Optional. The seconds for which a ReceiveMessage call will wait for a message to arrive (long polling) before returning. Must be an int from 0-20. Default 0
+
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `fifo` | FIFO queue or not | `False` | False |
+| `content_based_deduplication` | FIFO queue or not | `False` | False |
+| `delay_seconds` | Seconds to delay passing the message forward | `0` | False |
+| `message_retention_seconds` | The number of seconds SQS retains a message. | `345600` | False |
+| `receive_wait_time_seconds` | The seconds for which a ReceiveMessage call will wait for a message to arrive (long polling) before returning. Must be an int from 0-20. | `0` | False |
 
 ## Outputs
 
-- queue_arn - Arn of the queue jsut created
-- queue_name - Name of the queue jsut created
-- queue_id - ID of the queue jsut created
+
+| Name      | Description |
+| ----------- | ----------- |
+| `queue_arn` | Arn of the queue jsut created |
+| `queue_name` | Name of the queue jsut created |
+| `queue_id` | ID of the queue jsut created |

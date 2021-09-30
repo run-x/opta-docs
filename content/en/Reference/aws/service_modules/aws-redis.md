@@ -41,11 +41,17 @@ language sdks however, as they all support TLS.
 
 ## Fields
 
-- `node_type` - Optional. This is the redis instance type used for the [instances](https://aws.amazon.com/elasticache/pricing/). Default cache.m4.large
-- `redis_version` - Optional. the redis version to use for this instance Default 6.x
-- `snapshot_retention_limit` - Optional. Retentions days for which the snapshot will be retained. Default 0
-- `snapshot_window` - Optional. Window during which the snapshot would be taken. Default 04:00-05:00
+
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `node_type` | This is the redis instance type used for the [instances](https://aws.amazon.com/elasticache/pricing/). | `cache.m4.large` | False |
+| `redis_version` | the redis version to use for this instance | `6.x` | False |
+| `snapshot_retention_limit` | Retentions days for which the snapshot will be retained. | `0` | False |
+| `snapshot_window` | Window during which the snapshot would be taken. | `04:00-05:00` | False |
 
 ## Outputs
 
-- cache_host - The host through which to access the redis cache
+
+| Name      | Description |
+| ----------- | ----------- |
+| `cache_host` | The host through which to access the redis cache |

@@ -31,6 +31,6 @@ Link also grants encrypt/decrypt permission for the queue's KMS key.
 
 | Name      | Description |
 | ----------- | ----------- |
-| `queue_arn` | Arn of the queue jsut created |
-| `queue_name` | Name of the queue jsut created |
-| `queue_id` | ID of the queue jsut created |
+| `queue_arn` | Arn of the queue just created |
+| `queue_name` | Name of the queue just created |
+| `queue_id` | ID of the queue just created |

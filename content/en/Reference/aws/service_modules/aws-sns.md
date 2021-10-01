@@ -30,4 +30,4 @@ Link also grants encrypt/decrypt permission for the topic's KMS key.
 
 | Name      | Description |
 | ----------- | ----------- |
-| `topic_arn` | Arn of the topic jsut created |
+| `topic_arn` | Arn of the topic just created |

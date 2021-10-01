@@ -22,10 +22,29 @@ trim_version() {
   echo $version
 }
 
+check_prerequisites() {
+  echo "Checking Prerequisites..."
+  declare -a prereq
+  if ! unzip_loc="$(type -p unzip)" || [[ -z $unzip_loc ]]; then
+    prereq+=(unzip)
+  fi
+
+  if ! curl_loc="$(type -p curl)" || [[ -z $curl_loc ]]; then
+    prereq+=(curl)
+  fi
+
+  if [[ ${#prereq[@]} -ge 0 ]]; then
+    abort "Please install the following prerequisites: ${prereq[*]}"
+  fi
+  
+}
+
 # Check OS
 OS="$(uname)"
 
 echo "Welcome to the opta installer."
+
+check_prerequisites
 
 # Set version
 VERSION="${VERSION:-}"

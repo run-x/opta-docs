@@ -24,7 +24,8 @@ trim_version() {
 
 check_prerequisites() {
   echo "Checking Prerequisites..."
-  declare -a prereq
+  # declare -a prereq   # Throws "unbound variable" error on Ubuntu 20.04 LTS Focal Fossa on Line #38
+  prereq=()
   if ! unzip_loc="$(type -p unzip)" || [[ -z $unzip_loc ]]; then
     prereq+=(unzip)
   fi
@@ -33,7 +34,7 @@ check_prerequisites() {
     prereq+=(curl)
   fi
 
-  if [[ ${#prereq[@]} -ge 0 ]]; then
+  if [[ ${#prereq[@]} -gt 0 ]]; then
     abort "Please install the following prerequisites: ${prereq[*]}"
   fi
   

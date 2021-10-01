@@ -21,10 +21,16 @@ specified when you add the link.
 
 ## Fields
 
-- `bucket_name` - Required. The name of the bucket to create.
-- `block_public` - Optional. Block all public access. Default True
+
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `bucket_name` | The name of the bucket to create. | `None` | True |
+| `block_public` | Block all public access. | `True` | False |
 
 ## Outputs
 
-- bucket_id - The id of the bucket.
-- bucket_name - The name of the bucket.
+
+| Name      | Description |
+| ----------- | ----------- |
+| `bucket_id` | The id of the bucket. |
+| `bucket_name` | The name of the bucket. |

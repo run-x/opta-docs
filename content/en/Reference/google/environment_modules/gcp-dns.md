@@ -15,15 +15,21 @@ the [dns setup](/tutorials/ingress).
 
 ## Fields
 
-- `domain` - Required. The domain you want (you will also get the subdomains for your use)
-- `delegated` - Optional. The  Set to true once the extra [dns setup is complete](/tutorials/ingress) and it will add the ssl certs. Default False
-- `subdomains` - Optional. A list of subdomains to also get ssl certs for. Default []
+
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `domain` | The domain you want (you will also get the subdomains for your use) | `None` | True |
+| `delegated` | The  Set to true once the extra [dns setup is complete](/tutorials/ingress) and it will add the ssl certs. | `False` | False |
+| `subdomains` | A list of subdomains to also get ssl certs for. | `[]` | False |
 
 ## Outputs
 
-- zone_id - The ID of the hosted zone created
-- zone_name - The name of the hosted zone created
-- name_servers - The name servers of your hosted zone (very important for the dns setup)
-- domain - The domain again
-- delegated - Passing the delegated field forward
-- cert_self_link - Self link to the certificate if delegated
+
+| Name      | Description |
+| ----------- | ----------- |
+| `zone_id` | The ID of the hosted zone created |
+| `zone_name` | The name of the hosted zone created |
+| `name_servers` | The name servers of your hosted zone (very important for the dns setup) |
+| `domain` | The domain again |
+| `delegated` | Passing the delegated field forward |
+| `cert_self_link` | Self link to the certificate if delegated |

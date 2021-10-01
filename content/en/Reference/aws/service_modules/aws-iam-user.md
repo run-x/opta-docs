@@ -30,9 +30,15 @@ permission to access them.
 
 ## Fields
 
-- `extra_iam_policies` - Optional. The arns of additional IAM policies to be attached to this role. Default []
-- `links` - Optional. The list of links to add permissions for to this role. Default []
+
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `extra_iam_policies` | The arns of additional IAM policies to be attached to this role. | `[]` | False |
+| `links` | The list of links to add permissions for to this role. | `[]` | False |
 
 ## Outputs
 
-- user_arn - The arn of the user just created
+
+| Name      | Description |
+| ----------- | ----------- |
+| `user_arn` | The arn of the user just created |

@@ -55,41 +55,32 @@ the [Ingress](/tutorials/ingress) docs for more details.
 
 ## Fields
 
-- `image` - Required. Set to AUTO to create a private repo for your own images. Otherwises attempts to pull image from public dockerhub
-- `port` - Required. Specifies what port your app was made to be listened to. Currently it must be a map of the form
-`http: [PORT_NUMBER_HERE]` or `tcp: [PORT_NUMBER_HERE]`. Use http if you just have a vanilla http server and tcp for
-websockets.
 
-- `min_containers` - Optional. The minimum number of replicas your app can autoscale to. Default 1
-- `max_containers` - Optional. The maximum number of replicas your app can autoscale to. Default 3
-- `autoscaling_target_cpu_percentage` - Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
-- `autoscaling_target_mem_percentage` - Optional. See the [autoscaling]({{< relref "#autoscaling" >}}) section. Default 80
-- `secrets` - Optional. A list of secrets to add as environment variables for your container. All secrets must be set following the [secrets instructions](/tutorials/secrets) prior to deploying the app. Default []
-- `env_vars` - Optional. A map of key values to add to the container as environment variables (key is name, value is value).
-```yaml
-env_vars:
- FLAG: "true"
-```
- Default []
-- `healthcheck_path` - Optional. See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default `null` (i.e., no user-specified healthchecks) Default None
-- `liveness_probe_path` - Optional. Use if liveness probe != readiness probe Default None
-- `readiness_probe_path` - Optional. Use if liveness probe != readiness probe Default None
-- `consistent_hash` - Optional. Use [consistent hashing](https://www.nginx.com/resources/wiki/modules/consistent_hash/) Default None
-- `sticky_session` - Optional. Use [sticky sessions](https://stackoverflow.com/questions/10494431/sticky-and-non-sticky-sessions) via cookies for your service (first request will send you a cookie called opta_cookie which you should add on future requests). Default False
-- `sticky_session_max_age` - Optional. If the sticky session is enabled, how long should the cookie last? Default 86400
-- `resource_request` - Optional. See the [container resources]({{< relref "#container-resources" >}}) section. Default
-```yaml
-cpu: 100 # in millicores
-memory: 128 # in megabytes
-```
-CPU is given in millicores, and Memory is in megabytes.
- Default {'cpu': 100, 'memory': 128}
-- `public_uri` - Optional. The full domain to expose your app under as well as path prefix. Must be the full parent domain or a subdomain referencing the parent as such: "dummy.{parent[domain]}/my/path/prefix"
- Default []
-- `keep_path_prefix` - Optional. Should we keep the prefix path which you set in the public uri when forwarding requests to your service? Default False
-- `additional_iam_policies` - Optional. A list of extra IAM role policies not captured by Opta which you wish to give to your service. Default []
-- `links` - Optional. A list of extra IAM role policies not captured by Opta which you wish to give to your service. Default []
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `image` | Set to AUTO to create a private repo for your own images. Otherwises attempts to pull image from public dockerhub | `None` | True |
+| `port` | Specifies what port your app was made to be listened to. Currently it must be a map of the form `http: [PORT_NUMBER_HERE]` or `tcp: [PORT_NUMBER_HERE]`. Use http if you just have a vanilla http server and tcp for websockets.  | `None` | True |
+| `min_containers` | The minimum number of replicas your app can autoscale to. | `1` | False |
+| `max_containers` | The maximum number of replicas your app can autoscale to. | `3` | False |
+| `autoscaling_target_cpu_percentage` | See the [autoscaling]({{< relref "#autoscaling" >}}) section. | `80` | False |
+| `autoscaling_target_mem_percentage` | See the [autoscaling]({{< relref "#autoscaling" >}}) section. | `80` | False |
+| `secrets` | A list of secrets to add as environment variables for your container. All secrets must be set following the [secrets instructions](/tutorials/secrets) prior to deploying the app. | `[]` | False |
+| `env_vars` | A map of key values to add to the container as environment variables (key is name, value is value). ```yaml env_vars:  FLAG: "true" ```  | `[]` | False |
+| `healthcheck_path` | See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default `null` (i.e., no user-specified healthchecks) | `None` | False |
+| `liveness_probe_path` | Use if liveness probe != readiness probe | `None` | False |
+| `readiness_probe_path` | Use if liveness probe != readiness probe | `None` | False |
+| `consistent_hash` | Use [consistent hashing](https://www.nginx.com/resources/wiki/modules/consistent_hash/) | `None` | False |
+| `sticky_session` | Use [sticky sessions](https://stackoverflow.com/questions/10494431/sticky-and-non-sticky-sessions) via cookies for your service (first request will send you a cookie called opta_cookie which you should add on future requests). | `False` | False |
+| `sticky_session_max_age` | If the sticky session is enabled, how long should the cookie last? | `86400` | False |
+| `resource_request` | See the [container resources]({{< relref "#container-resources" >}}) section. Default ```yaml cpu: 100 # in millicores memory: 128 # in megabytes ``` CPU is given in millicores, and Memory is in megabytes.  | `{'cpu': 100, 'memory': 128}` | False |
+| `public_uri` | The full domain to expose your app under as well as path prefix. Must be the full parent domain or a subdomain referencing the parent as such: "dummy.{parent[domain]}/my/path/prefix"  | `[]` | False |
+| `keep_path_prefix` | Should we keep the prefix path which you set in the public uri when forwarding requests to your service? | `False` | False |
+| `additional_iam_policies` | A list of extra IAM role policies not captured by Opta which you wish to give to your service. | `[]` | False |
+| `links` | A list of extra IAM role policies not captured by Opta which you wish to give to your service. | `[]` | False |
 
 ## Outputs
 
-- docker_repo_url - The url of the docker repo created to host this app's images in this environment. Does not exist when using external images.
+
+| Name      | Description |
+| ----------- | ----------- |
+| `docker_repo_url` | The url of the docker repo created to host this app's images in this environment. Does not exist when using external images. |

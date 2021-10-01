@@ -15,7 +15,7 @@ description: Sets up AWS SES for sending domains via your root domain
 
 ## Fields
 
-- `mail_from_prefix` - Optional. Subdomain to use with root domain. Default mail
 
-## Outputs
-
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `mail_from_prefix` | Subdomain to use with root domain. | `mail` | False |

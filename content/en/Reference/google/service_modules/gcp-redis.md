@@ -37,10 +37,16 @@ If present, this map must have renames for all 2 fields.
 
 ## Fields
 
-- `memory_size_gb` - Optional. The size in GB for the redis cache's memory Default 2
-- `redis_version` - Optional. the redis version to use for this instance Default REDIS_5_0
-- `high_availability` - Optional. the redis version to use for this instance Default True
+
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `memory_size_gb` | The size in GB for the redis cache's memory | `2` | False |
+| `redis_version` | the redis version to use for this instance | `REDIS_5_0` | False |
+| `high_availability` | the redis version to use for this instance | `True` | False |
 
 ## Outputs
 
-- cache_host - The host through which to access the redis cache
+
+| Name      | Description |
+| ----------- | ----------- |
+| `cache_host` | The host through which to access the redis cache |

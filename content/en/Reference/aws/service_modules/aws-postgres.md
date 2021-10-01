@@ -45,10 +45,10 @@ If present, this map must have renames for all 4 fields.
 
 ## Fields
 
-- `instance_class` - Optional. This is the RDS instance type used for the Aurora cluster [instances](https://aws.amazon.com/rds/instance-types/). Default db.t3.medium
-- `engine_version` - Optional. The version of the database to use. Default 11.9
-- `multi_az` - Optional. Enable read-write replication across different availability zones on the same reason (doubles the cost, but needed for compliance). Can be added and updated at a later date without need to recreate. Default False
-- `safety` - Optional. Add deletion protection to stop accidental db deletions Default False
 
-## Outputs
-
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `instance_class` | This is the RDS instance type used for the Aurora cluster [instances](https://aws.amazon.com/rds/instance-types/). | `db.t3.medium` | False |
+| `engine_version` | The version of the database to use. | `11.9` | False |
+| `multi_az` | Enable read-write replication across different availability zones on the same reason (doubles the cost, but needed for compliance). Can be added and updated at a later date without need to recreate. | `False` | False |
+| `safety` | Add deletion protection to stop accidental db deletions | `False` | False |

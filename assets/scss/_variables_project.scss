@@ -86,3 +86,24 @@ code {
 .td-toc.d-print-none {
   display: none !important;
 }
+
+table {
+  font-family: $google_font_name;
+  font-size: 14px !important;
+  code {
+    background-color: transparent !important;
+  }
+  tbody {
+    border: none;
+    tr:nth-of-type(odd) {
+      background-color: rgba(0, 0, 0, 0.02) !important;
+    }
+  }
+  tr {
+    border: none;
+  }
+  td,
+  th {
+    border: none !important;
+  }
+}

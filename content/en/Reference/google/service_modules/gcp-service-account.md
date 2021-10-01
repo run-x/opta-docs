@@ -37,10 +37,16 @@ for said resources. Currently supported resources:
 
 ## Fields
 
-- `allowed_k8s_services` - Optional. K8s service accounts that this role should have access to. Default []
-- `links` - Optional. A list of extra IAM role policies not captured by Opta which you wish to give to your service. Default []
+
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `allowed_k8s_services` | K8s service accounts that this role should have access to. | `[]` | False |
+| `links` | A list of extra IAM role policies not captured by Opta which you wish to give to your service. | `[]` | False |
 
 ## Outputs
 
-- service_account_id - The id of the GCP service account created
-- service_account_email - The email of the GCP service account created
+
+| Name      | Description |
+| ----------- | ----------- |
+| `service_account_id` | The id of the GCP service account created |
+| `service_account_email` | The email of the GCP service account created |

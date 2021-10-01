@@ -18,10 +18,16 @@ Link also grants encrypt/decrypt permission for the topic's KMS key.
 
 ## Fields
 
-- `fifo` - Optional. FIFO queue or not. Default False
-- `content_based_deduplication` - Optional. Duplicate content Default False
-- `sqs_subscribers` - Optional. List of SQS ARNs to push from this topic. Default []
+
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `fifo` | FIFO queue or not. | `False` | False |
+| `content_based_deduplication` | Duplicate content | `False` | False |
+| `sqs_subscribers` | List of SQS ARNs to push from this topic. | `[]` | False |
 
 ## Outputs
 
-- topic_arn - Arn of the topic jsut created
+
+| Name      | Description |
+| ----------- | ----------- |
+| `topic_arn` | Arn of the topic just created |

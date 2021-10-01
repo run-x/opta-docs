@@ -15,13 +15,19 @@ the [dns setup](/tutorials/ingress).
 
 ## Fields
 
-- `domain` - Required. The domain you want (you will also get the subdomains for your use)
-- `delegated` - Optional. Set to true once the extra [dns setup is complete](/tutorials/ingress) and it will add the ssl certs. Default False
-- `upload_cert` - Optional. Deprecated Default False
+
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `domain` | The domain you want (you will also get the subdomains for your use) | `None` | True |
+| `delegated` | Set to true once the extra [dns setup is complete](/tutorials/ingress) and it will add the ssl certs. | `False` | False |
+| `upload_cert` | Deprecated | `False` | False |
 
 ## Outputs
 
-- zone_id - The ID of the hosted zone created
-- name_servers - The name servers of your hosted zone (very important for the dns setup)
-- domain - The domain again
-- cert_arn - The arn of the ACM certificate which is used for ssl.
+
+| Name      | Description |
+| ----------- | ----------- |
+| `zone_id` | The ID of the hosted zone created |
+| `name_servers` | The name servers of your hosted zone (very important for the dns setup) |
+| `domain` | The domain again |
+| `cert_arn` | The arn of the ACM certificate which is used for ssl. |

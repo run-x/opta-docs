@@ -12,9 +12,3 @@ environments and services. Talk to the RunX team to get set up: info@runx.dev!
 
 ![image alt text](/images/runx-dashboard.png)
 
-## Fields
-
-
-
-## Outputs
-

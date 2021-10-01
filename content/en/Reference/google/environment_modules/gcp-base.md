@@ -14,17 +14,23 @@ networking constraints (you'll know them if you have them), so _no need to set a
 
 ## Fields
 
-- `private_ipv4_cidr_block` - Optional. Cidr block for private subnet. Don't need to worry about AZs in GCP Default 10.0.0.0/19
-- `cluster_ipv4_cidr_block` - Optional. This is the cidr block reserved for pod ips in the GKE cluster. Default 10.0.32.0/19
-- `services_ipv4_cidr_block` - Optional. This is the cidr block reserved for service cluster ips in the GKE cluster. Default 10.0.64.0/20
-- `k8s_master_ipv4_cidr_block` - Optional. This is the cidr block reserved for the master/control plane in the GKE cluster. Default 10.0.80.0/28
+
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `private_ipv4_cidr_block` | Cidr block for private subnet. Don't need to worry about AZs in GCP | `10.0.0.0/19` | False |
+| `cluster_ipv4_cidr_block` | This is the cidr block reserved for pod ips in the GKE cluster. | `10.0.32.0/19` | False |
+| `services_ipv4_cidr_block` | This is the cidr block reserved for service cluster ips in the GKE cluster. | `10.0.64.0/20` | False |
+| `k8s_master_ipv4_cidr_block` | This is the cidr block reserved for the master/control plane in the GKE cluster. | `10.0.80.0/28` | False |
 
 ## Outputs
 
-- kms_account_key_id - The id of the [KMS](https://cloud.google.com/security-key-management) key (this is what handles encryption for redis, gke, etc...)
-- kms_account_key_self_link - The self link of the default KMS key (sometimes things need the ID, sometimes the ARN, so we're giving both)
-- vpc_id - The ID of the [VPC](https://cloud.google.com/vpc/docs/vpc) we created for this environment
-- vpc_self_link - str
-- private_subnet_id - The ID of the private [subnet](https://cloud.google.com/vpc/docs/vpc#subnet-ranges) we setup for your environment
-- private_subnet_self_link - Self lin to the private subnet
-- k8s_master_ipv4_cidr_block - This is the cidr block reserved for the master/control plane in the GKE cluster.
+
+| Name      | Description |
+| ----------- | ----------- |
+| `kms_account_key_id` | The id of the [KMS](https://cloud.google.com/security-key-management) key (this is what handles encryption for redis, gke, etc...) |
+| `kms_account_key_self_link` | The self link of the default KMS key (sometimes things need the ID, sometimes the ARN, so we're giving both) |
+| `vpc_id` | The ID of the [VPC](https://cloud.google.com/vpc/docs/vpc) we created for this environment |
+| `vpc_self_link` | str |
+| `private_subnet_id` | The ID of the private [subnet](https://cloud.google.com/vpc/docs/vpc#subnet-ranges) we setup for your environment |
+| `private_subnet_self_link` | Self lin to the private subnet |
+| `k8s_master_ipv4_cidr_block` | This is the cidr block reserved for the master/control plane in the GKE cluster. |

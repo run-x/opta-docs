@@ -41,9 +41,9 @@ If present, this map must have renames for all 4 fields.
 
 ## Fields
 
-- `instance_tier` - Optional. This is the RDS instance type used for the cloud sql instance [instances](https://cloud.google.com/sql/pricing). Default db-f1-micro
-- `safety` - Optional. Set to "true", if you want to disable the database deletion in Opta. You would have to manually set this "false" to enable DB deletion. Default False
-- `engine_version` - Optional. The version of the database to use. Default 5_7
 
-## Outputs
-
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `instance_tier` | This is the RDS instance type used for the cloud sql instance [instances](https://cloud.google.com/sql/pricing). | `db-f1-micro` | False |
+| `safety` | Set to "true", if you want to disable the database deletion in Opta. You would have to manually set this "false" to enable DB deletion. | `False` | False |
+| `engine_version` | The version of the database to use. | `5_7` | False |

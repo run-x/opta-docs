@@ -2,6 +2,10 @@
 {{/* We cache this partial for bigger sites and set the active class client side. */}}
 {{ $shouldDelayActive := ge (len .Site.Pages) 2000 }}
 <div id="td-sidebar-menu" class="td-sidebar__inner{{ if $shouldDelayActive }} d-none{{ end }}">
+  <div id="content-mobile" style="display: flex" class="justify-content-center align-items-center">
+    <button style="display: block" class="btn btn-link td-sidebar__toggle d-md-none fas fa-bars" type="button" data-toggle="collapse" data-target="#td-section-nav" aria-controls="td-docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    </button>
+  </div>
   <nav class="collapse td-sidebar-nav pt-4 pl-2" id="td-section-nav">
     {{ if  (gt (len .Site.Home.Translations) 0) }}
     <div class="nav-item dropdown d-block d-lg-none">

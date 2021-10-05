@@ -1,0 +1,87 @@
+name: Installer CI Ubuntu
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  ubuntu_latest_install_opta:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Opta with Version
+        run: |
+          cd static
+          ./install.sh
+          [[ $? == 0 ]] || exit 1
+      - name: Run Version
+        run : /home/runner/.opta/opta version
+      - name: Run Help
+        run : /home/runner/.opta/opta --help
+  ubuntu_18_04_install_opta:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Opta with Version
+        run: |
+          cd static
+          ./install.sh
+          [[ $? == 0 ]] || exit 1
+      - name: Run Version
+        run: /home/runner/.opta/opta version
+      - name: Run Help
+        run: /home/runner/.opta/opta --help
+  ubuntu_latest_install_opta_w_v_version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Opta with Version
+        run: |
+          cd static
+          VERSION=v0.14.7 ./install.sh
+          [[ $? == 0 ]] || exit 1
+      - name: Run Version
+        run: /home/runner/.opta/opta version
+      - name: Run Help
+        run: /home/runner/.opta/opta --help
+  ubuntu_18_04_install_opta_w_v_version:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Opta with Version
+        run: |
+          cd static
+          VERSION=v0.14.7 ./install.sh
+          [[ $? == 0 ]] || exit 1
+      - name: Run Version
+        run: /home/runner/.opta/opta version
+      - name: Run Help
+        run: /home/runner/.opta/opta --help
+  ubuntu_latest_install_opta_w_version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Opta with Version
+        run: |
+          cd static
+          VERSION=0.14.7 ./install.sh
+          [[ $? == 0 ]] || exit 1
+      - name: Run Version
+        run: /home/runner/.opta/opta version
+      - name: Run Help
+        run: /home/runner/.opta/opta --help
+  ubuntu_18_04_install_opta_w_version:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Opta with Version
+        run: |
+          cd static
+          VERSION=0.14.7 ./install.sh
+          [[ $? == 0 ]] || exit 1
+      - name: Run Version
+        run: /home/runner/.opta/opta version
+      - name: Run Help
+        run: /home/runner/.opta/opta --help

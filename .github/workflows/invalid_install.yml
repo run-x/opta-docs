@@ -15,4 +15,4 @@ jobs:
         run: |
           cd static
           VERSION=1 ./install.sh
-          [[ $? == 1 ]] || exit 1
+          if [[ $? != 0 ]]; then exit 0; else; exit 1; fi

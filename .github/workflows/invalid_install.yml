@@ -12,6 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install Opta with Version
+        continue-on-error: true
         run: |
           cd static
           VERSION=1 ./install.sh

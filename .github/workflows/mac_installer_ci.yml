@@ -17,9 +17,9 @@ jobs:
           cd static
           ./install.sh
       - name: Run Version
-        run: /home/runner/.opta/opta version
+        run: /Users/runner/.opta/opta version
       - name: Run Help
-        run: /home/runner/.opta/opta --help
+        run: /Users/runner/.opta/opta --help
   mac_latest_install_opta_w_version:
     runs-on: macos-latest
     steps:
@@ -30,6 +30,6 @@ jobs:
           cd static
           VERSION=v0.14.7 ./install.sh
       - name: Run Version
-        run: /home/runner/.opta/opta version
+        run: /Users/runner/.opta/opta version
       - name: Run Help
-        run: /home/runner/.opta/opta --help
+        run: /Users/runner/.opta/opta --help

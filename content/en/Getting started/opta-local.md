@@ -156,11 +156,21 @@ Coming soon!
 All these features are supported in the public cloud. Opta makes it super-convenient to graduate from Opta Local to any of the big-3 public cloud providers (AWS, Azure or GCP). Learn more about Opta here.
 
 
-## Uninstallation/Cleanup
+## Uninstallation and Cleanup
 
 If you want to clean out Opta Local from the local machien, run these commands in the terminal
 
+### Uninstall via Opta
+
+First, `opta destroy` all services running inside the local cluster . Then once the local Opta Kubernetes Kind cluster is empty you can run
+
 ```bash
+opta destroy ~/.opta/local/localopta.yaml --auto-approve
+
+```
+
+
+### Manual Cleanup
 
 DOCKER_REGISTRY=`docker ps -aqf "name=opta-local-registry"`
 docker stop $DOCKER_REGISTRY
@@ -180,7 +190,7 @@ docker stop $KCLUSTER
 docker rm $KCLUSTER
 ```
 
-
+You can confirm that the docker containers named `opta-local-cluster-control-plane` and `opta-local-registry` have been removed by issuing the `docker ps` command.
 ## Troubleshooting
 
 If things don't seem to be working as expected, here are some places to start debugging Opta Local

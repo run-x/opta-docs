@@ -42,7 +42,7 @@ jobs:
       - name: Install Opta with Version
         run: |
           cd static
-          VERSION=v0.14.7 ./install.sh
+          VERSION="v$(curl -s https://dev-runx-opta-binaries.s3.amazonaws.com/latest)" ./install.sh
           [[ $? == 0 ]] || exit 1
       - name: Run Version
         run: /home/runner/.opta/opta version
@@ -55,7 +55,7 @@ jobs:
       - name: Install Opta with Version
         run: |
           cd static
-          VERSION=v0.14.7 ./install.sh
+          VERSION="v$(curl -s https://dev-runx-opta-binaries.s3.amazonaws.com/latest)" ./install.sh
           [[ $? == 0 ]] || exit 1
       - name: Run Version
         run: /home/runner/.opta/opta version
@@ -68,7 +68,7 @@ jobs:
       - name: Install Opta with Version
         run: |
           cd static
-          VERSION=0.14.7 ./install.sh
+          VERSION="$(curl -s https://dev-runx-opta-binaries.s3.amazonaws.com/latest)" ./install.sh
           [[ $? == 0 ]] || exit 1
       - name: Run Version
         run: /home/runner/.opta/opta version
@@ -81,7 +81,7 @@ jobs:
       - name: Install Opta with Version
         run: |
           cd static
-          VERSION=0.14.7 ./install.sh
+          VERSION="$(curl -s https://dev-runx-opta-binaries.s3.amazonaws.com/latest)" ./install.sh
           [[ $? == 0 ]] || exit 1
       - name: Run Version
         run: /home/runner/.opta/opta version

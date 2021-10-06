@@ -1,0 +1,21 @@
+name: Installer CI Invalid Cases
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+  schedule:
+    - cron: '0 1 * * *' # run at 1 AM UTC
+
+jobs:
+  install_opta_invalid_version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Opta with Version
+        continue-on-error: true
+        run: |
+          cd static
+          VERSION=1 ./install.sh
+          if [[ $? != 0 ]]; then exit 0; else exit 1; fi

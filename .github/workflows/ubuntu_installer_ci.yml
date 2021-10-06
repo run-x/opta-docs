@@ -5,6 +5,8 @@ on:
     branches: [main, dev]
   pull_request:
     branches: [main, dev]
+  schedule:
+    - cron: '0 1 * * *' # run at 1 AM UTC
 
 jobs:
   ubuntu_latest_install_opta:

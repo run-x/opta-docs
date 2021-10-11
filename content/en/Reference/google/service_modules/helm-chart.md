@@ -20,6 +20,7 @@ description: Plugs a custom helm chart into your Opta k8s cluster
 | `atomic` | If set, installation process purges chart on fail. The wait flag will be set automatically if atomic is used. | `True` | False |
 | `cleanup_on_fail` | Allow deletion of new resources created in this upgrade when upgrade fails | `True` | False |
 | `chart_version` | User side of the version of the helm chart to install | `None` | False |
+| `values_files` | A list of paths to a values files. Values will be merged, in order, as Helm does with multiple -f options. | `[]` | False |
 | `values_file` | Path to a values file. | `None` | False |
 | `values` | Values override. | `{}` | False |
 | `timeout` | Time in seconds to wait for any individual kubernetes operation (like Jobs for hooks). | `600` | False |

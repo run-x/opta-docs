@@ -1,6 +1,6 @@
 ---
-title: "Opta Local Troubleshooting"
-linkTitle: "opta_local_troubleshooting"
+title: "Local Troubleshooting"
+linkTitle: "Local Troubleshooting"
 date: 2021-10-11
 draft: false
 description: >

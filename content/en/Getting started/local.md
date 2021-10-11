@@ -1,7 +1,7 @@
 ---
-title: "Opta Local"
-linkTitle: "Opta Local"
-weight: 2
+title: "Local"
+linkTitle: "Local"
+weight: 4
 description: >
   Getting started with Opta Local on your local machine.
 ---

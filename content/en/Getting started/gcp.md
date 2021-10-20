@@ -14,7 +14,14 @@ One line installation ([detailed instructions](/installation)):
 /bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
 ```
 
-Make sure the gcp cloud credentails are configured in your terminal.
+### Authentication Prerequisite
+Make sure the gcp cloud credentails are configured in your terminal. 
+1. Create a [Service Account](https://cloud.google.com/iam/docs/creating-managing-service-accounts#creating) for your project
+2. Once the Service Account is created, [create and download a Service Account Key JSON file](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
+3. Since opta can run outside of the GCP environment, be sure to set the GCP credentials environment variable:
+```shell
+$ export GOOGLE_APPLICATION_CREDENTIALS="/path/to/keyfile.json"
+```
 
 ## Environment creation
 

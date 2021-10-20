@@ -66,4 +66,4 @@ await mongoose.connect("mongodb://<USER>:<PASSWORD>@<HOST>, {
 ### Notes
 
 - Instance Count Restriction: `1 <= instance_count <= 16`. (1 Replica and remaining replicas.)
-- Instances are created across multiple AZs. Please refer to the following [Pull Request](https://github.com/run-x/opta/pull/427)
+- Instances are created across multiple AZs. Please refer to the following.

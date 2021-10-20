@@ -53,6 +53,7 @@ await mongoose.connect("mongodb://<USER>:<PASSWORD>@<HOST>, {
 | ----------- | ----------- | ------- | -------- |
 | `engine_version` | The version of mongodb to use | `4.0.0` | False |
 | `instance_class` | This is the RDS instance type used for the documentdb cluster [instances](https://aws.amazon.com/documentdb/pricing/). | `db.r5.large` | False |
+| `instance_count` | This is the count of Instance for the documentdb in the cluster. | `1` | False |
 
 ## Outputs
 
@@ -61,3 +62,8 @@ await mongoose.connect("mongodb://<USER>:<PASSWORD>@<HOST>, {
 | ----------- | ----------- |
 | `db_host` | The host of the database. |
 | `db_user` | The user of the database. |
+
+### Notes
+
+- Instance Count Restriction: `1 <= instance_count <= 16`. (1 Replica and remaining replicas.)
+- Instances are created across multiple AZs. Please refer to the following [Pull Request](https://github.com/run-x/opta/pull/427)

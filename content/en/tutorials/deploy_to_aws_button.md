@@ -10,11 +10,13 @@ description: >
 
 Opta's Deploy to AWS button allows users to deploy complex applications using Opta by simply filling out a form, downloading a file, and running `opta deploy`. This button is great to put into README files or on your website.
 
-Below is an example button that deploys an open source tool called Retool
+Below is an example button that deploys an open source tool called Retool.
 
 [![Deploy to AWS Button](https://raw.githubusercontent.com/run-x/opta/main/assets/deploy-to-aws-button.svg)](http://app.runx.dev/deploy-with-aws?url=https%3A%2F%2Fgithub.com%2Frun-x%2Ftest-opta-template%2Fblob%2Fmain%2Fopta%2Ftemplate.yaml&name=Retool)
 
-## Creating your opta yaml template
+## Creating a button
+
+### Step 1: Creating an Opta Template File
 
 The first step in creating your button is creating an Opta template. The format of a template is simple: it's a normal opta.yaml, except some parts of replaced with variables. The format of a variable is: `<<variable_name::variable_type::description>>`.
 
@@ -68,11 +70,7 @@ You might notice that some of the variable "types" like `org_name`, `aws_region`
 
 Once you're done creating your yaml file, upload it to your public Github repository.
 
-## Creating and testing your button
-
-To create your button, simply go to [our button creation UI] and enter what you would like to name your template as well as the URL of your opta template. After you've done that, you can click on the test button in the UI to make sure that it works. Once you're sure that everything's working as you expected, copy and paste the HTML from on the button creation page, and put it whereever you'd like!
-
-## Types
+#### Types
 
 Below is a list of all of the types currently available to use in your Opta template.
 
@@ -82,3 +80,11 @@ Below is a list of all of the types currently available to use in your Opta temp
 | `aws_region`     | The aws region where an application will be deployed    |
 | `aws_account_id` | The ID of an AWS account                                |
 | `string`         | A vanilla string with no other special validation rules |
+
+### Step 2: Generating Button HTML and Testing
+
+To create your button, simply go to [our button creation UI](http://app.runx.dev/make-aws-button) and enter what you would like to name your template as well as the URL of your opta template. The UI will render your button. Click on the button and make sure that the resulting form looks like you expect it to.
+
+### Step 3: Putting the button everywhere!
+
+Once you're sure that everything's working as you expected, copy and paste the HTML from the button creation page, and put it whereever you'd like!

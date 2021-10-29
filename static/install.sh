@@ -34,6 +34,14 @@ check_prerequisites() {
     prereq+=(curl)
   fi
 
+  if ! terraform_loc="$(type -p terraform)" || [[ -z $terraform_loc ]]; then
+    prereq+=(terraform)
+  fi
+
+  if ! docker_loc="$(type -p docker)" || [[ -z $docker_loc ]]; then
+    prereq+=(docker)
+  fi
+
   if [[ ${#prereq[@]} -gt 0 ]]; then
     abort "Please install the following prerequisites: ${prereq[*]}"
   fi

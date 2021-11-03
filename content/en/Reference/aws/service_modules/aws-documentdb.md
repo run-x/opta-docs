@@ -53,6 +53,7 @@ await mongoose.connect("mongodb://<USER>:<PASSWORD>@<HOST>, {
 | ----------- | ----------- | ------- | -------- |
 | `engine_version` | The version of mongodb to use | `4.0.0` | False |
 | `instance_class` | This is the RDS instance type used for the documentdb cluster [instances](https://aws.amazon.com/documentdb/pricing/). | `db.r5.large` | False |
+| `instance_count` | This is to specify the count of instances for Document DB Cluster. Note -> These would be Multi-AZ. | `1` | False |
 
 ## Outputs
 

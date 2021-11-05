@@ -56,6 +56,8 @@ There are two primary kinds of configuration files:
 - **Service**: This file specifies the container workload you want to run (usually a microservice). You can also specify any non-k8s
   resources that this container needs - and Opta will connect them seamlessly.
 
+![Service and environment files link](/images/service_environment_files_linking.png)
+
 
 ## Next steps
 

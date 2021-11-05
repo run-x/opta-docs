@@ -304,10 +304,9 @@ meta:
 modules:
   myapp:
     type: k8s-service
-    annotations:
-      ingress:
-        nginx.ingress.kubernetes.io/client-body-buffer-size: 10k
-        nginx.ingress.kubernetes.io/limit-rps: 10
-        foo: bar
+    ingress_extra_annotations:
+      nginx.ingress.kubernetes.io/client-body-buffer-size: 10k
+      nginx.ingress.kubernetes.io/limit-rps: 10
+      foo: bar
     ...
 ```

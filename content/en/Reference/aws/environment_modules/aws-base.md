@@ -31,3 +31,4 @@ if you have them), so in most cases, there is _no need to set any of the fields 
 | `private_subnet_ids` | The IDs of the private [subnets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html) we setup for your environment |
 | `public_subnets_ids` | The IDs of the public [subnets](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Subnets.html) we setup for your environment |
 | `s3_log_bucket_name` | The name of the default logging bucket provisioned by opta |
+| `public_nat_ips` | Public static IP of nat gateway(s) |

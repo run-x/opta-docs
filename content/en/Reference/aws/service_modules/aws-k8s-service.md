@@ -96,7 +96,9 @@ the kubernetes persistent volume claims.
 | Name      | Description | Default | Required |
 | ----------- | ----------- | ------- | -------- |
 | `image` | Set to AUTO to create a private repo for your own images. Otherwises attempts to pull image from public dockerhub | `None` | True |
-| `port` | Specifies what port your app was made to be listened to. Currently it must be a map of the form `http: [PORT_NUMBER_HERE]` or `tcp: [PORT_NUMBER_HERE]`. Use http if you just have a vanilla http server and tcp for websockets.  | `None` | True |
+| `port` | Specifies what port your app was made to be listened to. Currently it must be a map of the form `http: [PORT_NUMBER_HERE]` or `tcp: [PORT_NUMBER_HERE]`. Use http if you just have a vanilla http server and tcp for websockets.  | *none* | False |
+| `ports` | Specifies which port(s) your app exposes. | *none* | False |
+| `probe_port` | The name of the port to use for readiness and liveness probes. Defaults to the first port listed. | *none* | False |
 | `min_containers` | The minimum number of replicas your app can autoscale to. | `1` | False |
 | `max_containers` | The maximum number of replicas your app can autoscale to. | `3` | False |
 | `autoscaling_target_cpu_percentage` | See the [autoscaling]({{< relref "#autoscaling" >}}) section. | `80` | False |
@@ -115,6 +117,7 @@ the kubernetes persistent volume claims.
 | `additional_iam_policies` | A list of extra IAM role policies not captured by Opta which you wish to give to your service. | `[]` | False |
 | `links` | A list of extra IAM role policies not captured by Opta which you wish to give to your service. | `[]` | False |
 | `persistent_storage` | A list persistent storages to add to each instance of your service (need to give a `size` which is the size in GB for the storage volume to be, and `path` which is the path in the filesystem of each instance to place it under)  | `[]` | False |
+| `ingress_extra_annotations` | These are extra annotations to add to ingress objects  | `{}` | False |
 
 ## Outputs
 

@@ -291,3 +291,22 @@ After applying with this, you will note that your load balancer ip/dns now handl
 The final step is to add a CNAME/A record (former if you have a load balancer dns, latter if it's an IP) from your DNS
 Zone (the same one modified for the ssl cert verification, this will be a sibling record) pointing to your load balancer.
 With that complete your environment will be live to the public and secured with ssl.
+
+## Advanced Topic: Adding Extra Annotations to Ingress Objects
+
+While Opta will automatically add the ingress object and required annotations, you an add extra [Nginx ingress annotations]((https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/)) to control traffic via Nginx ingress for your service. For example:
+
+```yaml
+meta:
+  name: myapp
+  envs:
+    - parent: "staging/opta.yml"
+modules:
+  myapp:
+    type: k8s-service
+    ingress_extra_annotations:
+      nginx.ingress.kubernetes.io/client-body-buffer-size: 10k
+      nginx.ingress.kubernetes.io/limit-rps: 10
+      foo: bar
+    ...
+```

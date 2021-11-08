@@ -30,3 +30,4 @@ _no need to set any of the fields or know what the outputs do_.
 | `acr_id` | The ID of the [Azure container registry](https://azure.microsoft.com/en-us/services/container-registry/) created for this environment |
 | `acr_name` | The name of the Azure container registry |
 | `acr_login_url` | The login url of the Azure container registry. |
+| `public_nat_ips` | Public static IP of nat gateway(s) |

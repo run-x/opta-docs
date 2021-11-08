@@ -42,6 +42,8 @@ for said resources. Currently supported resources:
 | ----------- | ----------- | ------- | -------- |
 | `allowed_k8s_services` | K8s service accounts that this role should have access to. | `[]` | False |
 | `links` | A list of extra IAM role policies not captured by Opta which you wish to give to your service. | `[]` | False |
+| `additional_iam_roles` | A list of extra project-level iam roles to grant to the service account | `[]` | False |
+| `explicit_name` | An explicit name to give to your service account (warning-- must be unique per account) | `None` | False |
 
 ## Outputs
 

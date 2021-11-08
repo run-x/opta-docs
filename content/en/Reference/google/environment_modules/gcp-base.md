@@ -34,3 +34,4 @@ networking constraints (you'll know them if you have them), so _no need to set a
 | `private_subnet_id` | The ID of the private [subnet](https://cloud.google.com/vpc/docs/vpc#subnet-ranges) we setup for your environment |
 | `private_subnet_self_link` | Self lin to the private subnet |
 | `k8s_master_ipv4_cidr_block` | This is the cidr block reserved for the master/control plane in the GKE cluster. |
+| `public_nat_ips` | Public static IP of nat gateway(s) |

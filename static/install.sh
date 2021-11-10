@@ -43,16 +43,12 @@ check_prerequisites() {
     soft_prereq+=(docker)
   fi
 
-  if ! helm_loc="$(type -p helm)" || [[ -z $helm_loc ]]; then
-    soft_prereq+=(helm)
-  fi
-
   if [[ ${#hard_prereq[@]} -gt 0 ]]; then
     abort "Please install the following prerequisites: (${hard_prereq[*]})"
   fi
 
   if [[ ${#soft_prereq[@]} -gt 0 ]]; then
-    echo "Following are also required for Opta to function properly: (${soft_prereq[*]}). Please install them as well if prompted."
+    echo "Opta would require (${soft_prereq[*]}) to run properly. Please install these."
   fi
 }
 

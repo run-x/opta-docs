@@ -25,19 +25,31 @@ trim_version() {
 check_prerequisites() {
   echo "Checking Prerequisites..."
   # declare -a prereq   # Throws "unbound variable" error on Ubuntu 20.04 LTS Focal Fossa on Line #38
-  prereq=()
+  hard_prereq=()
+  soft_prereq=()
   if ! unzip_loc="$(type -p unzip)" || [[ -z $unzip_loc ]]; then
-    prereq+=(unzip)
+    hard_prereq+=(unzip)
   fi
 
   if ! curl_loc="$(type -p curl)" || [[ -z $curl_loc ]]; then
-    prereq+=(curl)
+    hard_prereq+=(curl)
   fi
 
-  if [[ ${#prereq[@]} -gt 0 ]]; then
-    abort "Please install the following prerequisites: ${prereq[*]}"
+  if ! terraform_loc="$(type -p terraform)" || [[ -z $terraform_loc ]]; then
+    soft_prereq+=(terraform)
   fi
-  
+
+  if ! docker_loc="$(type -p docker)" || [[ -z $docker_loc ]]; then
+    soft_prereq+=(docker)
+  fi
+
+  if [[ ${#hard_prereq[@]} -gt 0 ]]; then
+    abort "Please install the following prerequisites: (${hard_prereq[*]})"
+  fi
+
+  if [[ ${#soft_prereq[@]} -gt 0 ]]; then
+    echo "Opta would require (${soft_prereq[*]}) to run properly. Please install these."
+  fi
 }
 
 # Check OS

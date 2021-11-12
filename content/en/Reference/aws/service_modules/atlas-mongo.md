@@ -1,13 +1,13 @@
 ---
-title: "Atlas Mongo"
-linkTitle: "Atlas Mongo"
+title: "atlas-mongo"
+linkTitle: "atlas-mongo"
 date: 2021-10-12
 draft: false
 weight: 1
-description: Creates an Atlas Mongo database instance
+description: Creates a MongoDB Atlas database instance
 ---
 
-This module creates an Atlas MongoDB cluster. Currently only supports AWS and Local providers in Opta.
+This module creates an MongoDB Atlas cluster. Currently only supports AWS and Local providers in Opta.
 
 ### Backups
 TBD
@@ -40,7 +40,7 @@ If present, this map must have renames for all 3 fields.
 | Name      | Description | Default | Required |
 | ----------- | ----------- | ------- | -------- |
 | `region` | MongoDB Atlas Cluster Region, must be a mongo region for the provider. | `None` | True |
-| `mongo_instance_size` | Atlas Mongo Cluster size, see this: https://docs.atlas.mongodb.com/cluster-tier/ | `M0` | True |
+| `mongo_instance_size` |  MongoDB Atlas Cluster size, see this: https://docs.atlas.mongodb.com/cluster-tier/ | `M0` | True |
 | `mongodbversion` | The version of the database to use. | `4.4` | False |
 | `database_name` | The name of the mongo database | `mongo_database` | False |
 | `mongo_atlas_project_id` | The Atlas project ID | `Notknown` | True |

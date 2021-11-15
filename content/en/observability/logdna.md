@@ -22,7 +22,7 @@ modules:
   - type: helm-chart # <-- Add this for LogDNA support
     chart: agent
     repository: https://assets.logdna.com/charts
-    version: 203.1.0
+    chart_version: 203.1.0
     values:
       logdna:
         key: <your ingestion key>

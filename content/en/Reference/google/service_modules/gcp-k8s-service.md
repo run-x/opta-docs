@@ -106,6 +106,8 @@ the kubernetes persistent volume claims.
 | `healthcheck_path` | See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default `null` (i.e., no user-specified healthchecks) | `None` | False |
 | `liveness_probe_path` | Use if liveness probe != readiness probe | `None` | False |
 | `readiness_probe_path` | Use if liveness probe != readiness probe | `None` | False |
+| `initial_liveness_delay` | Use if the initial delay needs to be changed. | `30` | False |
+| `initial_readiness_delay` | Use if the initial delay needs to be changed. | `30` | False |
 | `consistent_hash` | Use [consistent hashing](https://www.nginx.com/resources/wiki/modules/consistent_hash/) | `None` | False |
 | `sticky_session` | Use [sticky sessions](https://stackoverflow.com/questions/10494431/sticky-and-non-sticky-sessions) via cookies for your service (first request will send you a cookie called opta_cookie which you should add on future requests). | `False` | False |
 | `sticky_session_max_age` | If the sticky session is enabled, how long should the cookie last? | `86400` | False |

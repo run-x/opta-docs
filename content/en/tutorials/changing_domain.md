@@ -43,8 +43,9 @@ modules:
   - type: k8s-base
 ```
 
-Next we would `opta apply` the new yaml and see that the dns resources have been destroyed. Afterwards we would add the
-new dns module entry with the new domain like so:
+Next we would `opta apply` the new yaml and see that the dns resources have been destroyed. 
+**Note that your site will be temporarily offline after this step and before the next steps are completed.** 
+Afterwards we would add the new dns module entry with the new domain like so:
 
 ```yaml
 name: blah

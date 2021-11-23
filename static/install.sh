@@ -121,5 +121,5 @@ else
   echo "export PATH=$PATH:"$RUNPATH""
   echo "to your terminal profile."
 fi
-echo "Successfully installed opta at location ~/.opta"
+
 

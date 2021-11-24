@@ -111,16 +111,15 @@ echo "Installing..."
 unzip -q /tmp/opta.zip -d ~/.opta
 chmod u+x ~/.opta/opta
 
-if [[ "$OS" == "Darwin" ]];then
-  # Add symlink
-  ln -fs ~/.opta/opta /usr/local/bin/opta
-  RUNPATH=opta
+RUNPATH=~/.opta
+# Add symlink if possible, or tell the user to use sudo for symlinking
+if ln -fs ~/.opta/opta /usr/local/bin/opta ; then
+  echo "Opta symlinked to /usr/local/bin/opta; You can now type 'opta' in the terminal to run it."
 else
-  # TODO: Automatically set up path for github action and other runners
-  # TODO: Automatically add to PATH (by adding to profile) for linux users
-  RUNPATH=~/.opta/opta
-  echo "To add opta to your path, please add" 'export PATH=$PATH:'"$RUNPATH" 'to your terminal profile.'
+  echo "Please symlink the opta binary to one of your path directories; for example using 'sudo ln -fs ~/.opta/opta /usr/local/bin/opta'"
+  echo "Alternatively, you could add the .opta installation directory to your path like so"
+  echo "export PATH=$PATH:"$RUNPATH""
+  echo "to your terminal profile."
 fi
 
-echo "Successfully installed! Now you can run it via invoking $RUNPATH"
 

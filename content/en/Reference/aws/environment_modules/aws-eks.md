@@ -11,6 +11,9 @@ This module creates an [EKS cluster](https://docs.aws.amazon.com/eks/latest/user
 nodegroup to host your applications in. This needs to be added in the environment Opta yml if you wish to deploy services
 as Opta services run on Kubernetes.
 
+For information about the default IAM permissions given to the node group please see
+[here](/reference/aws/environment_modules/aws-nodegroup).
+
 ## Fields
 
 

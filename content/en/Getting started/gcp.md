@@ -6,7 +6,7 @@ description: >
   Getting started with Opta on GCP.
 ---
 
-To use Opta, you first need to create some simple yaml configuration files that describe your needs. You can use our [magical UI](https://app.runx.dev/yaml-generator) to help generate these files or do it manually (described below).
+To use Opta, you first need to create some simple yaml configuration files that describe your needs. You can use our [**Magical UI**](https://app.runx.dev/yaml-generator) to help generate these files or do it manually (described below).
 
 ## Installation
 
@@ -21,10 +21,10 @@ One line installation ([detailed instructions](/installation)):
 Before you can deploy your app, you need to first create an environment (like staging, prod etc.)
 This will set up the base infrastructure (like network and cluster) that will be the foundation for your app.
 
-> Note that it costs around 5$ per day to run this on GCP So make sure to destroy it after you're done 
+> Note that it costs around $5 per day to run this on GCP So make sure to destroy it after you're done 
 > (opta has a destroy command so it should be easy :))!
 
-Create this file and name it staging.yaml
+Create this file and name it `staging.yaml`
 
 ```yaml
 name: staging
@@ -53,7 +53,7 @@ In this step we will create a service - which is basically a docker container an
 In this example we are using the popular [httbin](https://httpbin.org/) container as our application.
 
 
-Create this file and name it hello_world.yaml:
+Create this file and name it `hello_world.yaml`
 
 ```yaml
 name: hello-world

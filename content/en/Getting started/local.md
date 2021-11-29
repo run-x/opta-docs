@@ -30,6 +30,7 @@ Running Opta Local needs a reasonably powerful PC. These requirements are not fo
   4. Please install the prerequistes for opta [listed here](https://docs.opta.dev/installation/#prerequisites). You can exclude the public cloud specific pre-requisites if you only want to run Opta Local.
   5. Opta Local assumes that the logged-in user can operate docker without sudo; to enable this follow the steps here: [MacOS](https://docs.docker.com/desktop/mac/install/) or [Linux](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user) ).
   6. Opta Local requires local ports `5000` and `8080` to be free for use in order to function.
+
 ## Getting Started
 
 There are two steps in getting Opta Local running. First, Opta will create a Kubernetes Kind cluster and local docker registry installation on your local machine for you. Second, we create services inside the Kubernetes installation.

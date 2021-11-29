@@ -6,6 +6,8 @@ description: >
   Getting started with Opta on GCP.
 ---
 
+To use Opta, you first need to create some simple yaml configuration files that describe your needs. You can use our [**Magical UI**](https://app.runx.dev/yaml-generator) to help generate these files or do it manually (described below).
+
 ## Installation
 
 One line installation ([detailed instructions](/installation)):
@@ -14,43 +16,23 @@ One line installation ([detailed instructions](/installation)):
 /bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
 ```
 
-### Authentication Prerequisite
-Make sure the gcp cloud credentials are configured in your terminal. 
-1. Create a [Service Account](https://cloud.google.com/iam/docs/creating-managing-service-accounts#creating) for your project. Make sure the Service Account has the following roles assigned
-    - CA Service Certificate Manager
-    - Cloud KMS Admin
-    - Compute Network Admin
-    - Kubernetes Engine Admin
-    - Project IAM Admin
-    - Secret Manager Secret Accessor
-3. Once the Service Account is created, [create and download a Service Account Key JSON file](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
-4. Since opta can run outside of the GCP environment, be sure to set the GCP credentials environment variable:
-```shell
-$ export GOOGLE_APPLICATION_CREDENTIALS="/path/to/keyfile.json"
-```
-
 ## Environment creation
 
-In this step we will create an environment (example staging, qa, prod) for your organization.
+Before you can deploy your app, you need to first create an environment (like staging, prod etc.)
+This will set up the base infrastructure (like network and cluster) that will be the foundation for your app.
 
-You can use the CLI option described below or checkout our [interactive app](https://app.runx.dev/yaml-generator) to build your first environment and service.
+> Note that it costs around $5 per day to run this on GCP So make sure to destroy it after you're done 
+> (opta has a destroy command so it should be easy :))!
 
-
-Start by running:
-
-```bash
-opta init env gcp
-```
-
-This will create an `staging.yml` file with initial configurations for your environment. Below are examples of the resulting yaml files for each environment.
+Create this file and name it `staging.yaml`
 
 ```yaml
-name: staging # A unique identifier for your environment
-org_name: runx # A unique identifier for your organization
+name: staging
+org_name: <something_unique> # A unique identifier for your organization
 providers:
   google:
-    region: us-central1 # Your gcp region. You can find a list of them here: https://cloud.google.com/compute/docs/regions-zones
-    project: my-project-name-1234 # the name of your GCP project
+    region: us-central1
+    project: XXXXX # the name of your GCP project
 modules:
   - type: base
   - type: k8s-cluster
@@ -68,36 +50,26 @@ This step will create an GKE cluster for you and set up networking and various o
 ## Service creation
 
 In this step we will create a service - which is basically a docker container and associated database.
-We will create another `hello-world.yml` file, which defines high level configuration of this service.
+In this example we are using the popular [httbin](https://httpbin.org/) container as our application.
 
-To get started, run
 
-```bash
-opta init service <YOUR_ENV_FILE_PATH> k8s
-```
-
-This will prompt you for some information and create a starting
-point for your `hello-world.yml` file. Then, update the fields specific to your service setup. You can see examples of resulting files below.
-
+Create this file and name it `hello_world.yaml`
 
 ```yaml
-name: hello-world # service names are unique per-environment
+name: hello-world
 environments:
   - name: staging
-    path: "staging.yml"
+    path: "staging.yaml" # Note that this is the file we created in step 2
 modules:
   - name: app
     type: k8s-service
     port:
       http: 80
-    image: docker.io/kennethreitz/httpbin:latest # Or you can specify your own
+    image: docker.io/kennethreitz/httpbin:latest
     healthcheck_path: "/get"
-    public_uri: all
-    links:
-      - db
-  - name: db
-    type: postgres # Will spawn a Cloud SQL database and credentials will be passed via env vars
+    public_uri: "all"
 ```
+
 
 Now you are ready to deploy your service.
 
@@ -106,7 +78,7 @@ Now you are ready to deploy your service.
 One line deployment:
 
 ```bash
-opta apply -c hello-world.yml
+opta apply -c hello_world.yaml
 ```
 
 Now, once this step is complete, you should be to curl your service by specifying the load balancer url/ip.
@@ -124,8 +96,8 @@ Now you can:
 Once you're finished playing around with these examples, you may clean up by running the following command from the environment directory:
 
 ```bash
-opta destroy -c hello-world.yml
-opta destroy -c staging.yml
+opta destroy -c hello_world.yaml
+opta destroy -c staging.yaml
 ```
 
 ## Next steps

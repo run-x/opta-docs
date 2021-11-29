@@ -6,6 +6,8 @@ description: >
   Getting started with Opta on AWS.
 ---
 
+To use Opta, you first need to create some simple yaml configuration files that describe your needs. You can use our [**Magical UI**](https://app.runx.dev/yaml-generator) to help generate these files or do it manually (described below).
+
 ## Installation
 
 One line installation ([detailed instructions](/installation)):
@@ -18,25 +20,20 @@ Make sure the AWS cloud credentails are configured in your terminal for the acco
 
 ## Environment creation
 
-In this step we will create an environment (example staging, qa, prod) for your organization.
+Before you can deploy your app, you need to first create an environment (like staging, prod etc.)
+This will set up the base infrastructure (like network and cluster) that will be the foundation for your app.
 
-You can use the CLI option described below or checkout our [interactive app](https://app.runx.dev/yaml-generator) to build your first environment and service.
+> Note that it costs around $5 per day to run this on AWS. So make sure to destroy it after you're done 
+> (opta has a destroy command so it should be easy :))!
 
-
-Start by running:
-
-```bash
-opta init env aws
-```
-
-This will create a `staging.yml` file with initial configurations for your environment. Below are examples of the resulting yaml files for each environment.
+Create this file and name it `staging.yaml`
 
 ```yaml
-name: staging # A unique identifier for your environment
-org_name: runx # A unique identifier for your organization
+name: staging
+org_name: <something unique> # A unique identifier for your organization
 providers:
   aws:
-    region: us-east-1 # Your aws region. You can find a list of them here: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html
+    region: us-east-1
     account_id: XXXX # Your 12 digit account id
 modules:
   - type: base
@@ -55,35 +52,26 @@ This step will create an EKS cluster for you and set up VPC, networking and vari
 ## Service creation
 
 In this step we will create a service - which is basically a docker container and associated database.
-We will create another `hello-world.yml` file, which defines high level configuration of this service.
+In this example we are using the popular [httbin](https://httpbin.org/) container as our application.
 
-To get started, run
 
-```bash
-opta init service <YOUR_ENV_FILE_PATH> k8s
-```
-
-This will prompt you for some information and create a starting
-point for your `hello-world.yml` file. Then, update the fields specific to your service setup. You can see examples of resulting files below.
+Create this file and name it `hello_world.yaml`
 
 ```yaml
-name: hello-world # service names are unique per-environment
+name: hello-world
 environments:
   - name: staging
-    path: "staging.yml"
+    path: "staging.yaml" # Note that this is the file we created in step 2
 modules:
   - name: app
     type: k8s-service
     port:
       http: 80
-    image: docker.io/kennethreitz/httpbin:latest # Or you can specify your own
+    image: docker.io/kennethreitz/httpbin:latest
     healthcheck_path: "/get"
-    public_uri: all
-    links:
-      - db
-  - name: db
-    type: postgres # Will spawn a RDS database and credentials will be passed via env vars
+    public_uri: "all"
 ```
+
 
 Now you are ready to deploy your service.
 
@@ -92,12 +80,12 @@ Now you are ready to deploy your service.
 One line deployment:
 
 ```bash
-opta apply -c hello-world.yml
+opta apply -c hello_world.yaml
 ```
 
 Now, once this step is complete, you should be to curl your service by specifying the load balancer url/ip.
 
-Run `output` and note down `load_balancer_raw_dns`
+Run `opta output -c staging.yaml` and note down `load_balancer_raw_dns`
 
 Now you can:
 
@@ -110,8 +98,8 @@ Now you can:
 Once you're finished playing around with these examples, you may clean up by running the following command from the environment directory:
 
 ```bash
-opta destroy -c hello-world.yml
-opta destroy -c staging.yml
+opta destroy -c hello_world.yaml
+opta destroy -c staging.yaml
 ```
 
 ## Next steps

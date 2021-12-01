@@ -33,7 +33,9 @@ You can specify a particular version as well.
 VERSION=0.x /bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
 ```
 
-## Run Opta in a Docker Container via opta.sh script
+## Run Opta in a Docker Container via opta.sh script (Pre-release)
+
+We are now offering a pre-release version for running opta via a docker container with alpha support. __Please do not use this for production workloads currently.__
 
 If you prefer to install Opta and its dependencies (terraform, kubectl, gcp sdk, aws cli) in a docker container then you can 
 download the `opta.sh` script that runs Opta inside a docker container. With this approach you can be assured that the correct

@@ -33,6 +33,38 @@ You can specify a particular version as well.
 VERSION=0.x /bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
 ```
 
+## Run Opta in a Docker Container via opta.sh script (Pre-release)
+
+We are now offering a pre-release version for running opta via a docker container with alpha support. __Please do not use this for production workloads currently.__
+
+If you prefer to install Opta and its dependencies (terraform, kubectl, gcp sdk, aws cli) in a docker container then you can 
+download the `opta.sh` script that runs Opta inside a docker container. With this approach you can be assured that the correct
+versions of all of Opta's dependencies are invoked when run.
+
+```bash
+# Download the script and add it as an executable on your machine
+sudo curl https://raw.githubusercontent.com/run-x/opta-docs/opta-via-docker/static/opta.sh -o /usr/local/bin/opta.sh
+chmod +x /usr/local/bin/opta.sh
+./opta.sh # This first invocation builds a docker image
+```
+
+Invoke opta using opta.sh instead; for example
+
+```bash
+opta.sh apply -c mycode/foo.yaml
+
+```
+
+Any environment variables needed by opta can be set in the terminal invoking `opta.sh`; they will be automatically transferred into the docker container running opta.
+
+Your home directory ($HOME) will be mounted into the `opta.sh` docker container as well.
+
+### Caveats of opta.sh
+  1. This script assumes you are logged in as a user that has docker permissions; this is the default when [docker desktop](https://docs.docker.com/desktop/mac/install/) is installed on Mac; for [Linux](https://docs.docker.com/engine/install/linux-postinstall/) see this documentation. 
+  2. This script will not work for the newest Mac OS devices with the M1 processor; it should work on Intel-based Mac computers.
+  3. This script assumes that your opta yaml files are contained within your `home` directory (Run `echo $HOME` to ascertain this is the case)
+   
+
 ## Releases
 
 [Github](https://github.com/run-x/opta/releases)

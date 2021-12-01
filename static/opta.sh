@@ -178,7 +178,8 @@ docker build --quiet /tmp/opta \
 --tag=opta-${USER}:${OPTAVERSION} 
 echo "Done building Opta image"
 ## Inject Opta-specific env vars from host env shell into the docker container
-declare -a opta_envvars=("AWS_ACCESS_KEY_ID" "AWS_SECRET_ACCESS_KEY" "MONGODB_ATLAS_PUBLIC_KEY" "MONGODB_ATLAS_PRIVATE_KEY")
+# declare -a opta_envvars=("AWS_ACCESS_KEY_ID" "AWS_SECRET_ACCESS_KEY" "MONGODB_ATLAS_PUBLIC_KEY" "MONGODB_ATLAS_PRIVATE_KEY")
+declare -a opta_envvars=(`env`)
 >/tmp/opta/opta_env_vars #Empty out any pre-existing file
 for i in "${opta_envvars[@]}"
 do
@@ -186,7 +187,6 @@ if [[  "${i}" ]]; then
     env | grep ${i} >> /tmp/opta/opta_env_vars
 fi
 done
-
 
 # Docker proxy to connect to docker daemon on host from the container
 cat << EOF > /tmp/opta/proxy_env_vars

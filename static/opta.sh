@@ -228,6 +228,7 @@ docker container run \
 # Docker run opta container
 docker run -it \
 -v $HOME:$HOME \
+-v /tmp:/tmp \
 --env-file /tmp/opta/opta_env_vars \
 --net="host" \
 --user ${MYUID}:${CONTAINERGID} \

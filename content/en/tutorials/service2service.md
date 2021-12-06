@@ -15,3 +15,19 @@ description: >
   services to connect to it. The name is `<module-name>.<service-name>`. Requests
   sent to this domain will automatically get load balanced b/w all healthy
   containers.
+
+For example, the following service, will be available at `app.hello-world` from any other service in the same environment.
+
+
+```yaml
+name: hello-world
+environments:
+  - name: staging
+    path: "staging.yml"
+modules:
+  - name: app
+    type: k8s-service
+    port:
+      http: 80
+    image: AUTO
+```

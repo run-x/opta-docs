@@ -31,3 +31,10 @@ This module is responsible for all the base infrastructure we package into the O
 | `nginx_config` | Additional configuration for nginx ingress. [Available options](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#configuration-options) | `{}` | False |
 | `nginx_extra_tcp_ports` | Additional TCP ports to expose from nginx | `[]` | False |
 | `nginx_extra_tcp_ports_tls` | Which additional TCP ports should have TLS enabled | `[]` | False |
+
+## Outputs
+
+
+| Name      | Description |
+| ----------- | ----------- |
+| `load_balancer_raw_dns` | The dns of the network load balancer provisioned to handle ingress to your environment |

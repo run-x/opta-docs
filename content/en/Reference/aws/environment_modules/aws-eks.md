@@ -19,6 +19,7 @@ For information about the default IAM permissions given to the node group please
 
 | Name      | Description | Default | Required |
 | ----------- | ----------- | ------- | -------- |
+| `eks_log_retention` | The retention period (days) for the eks control plane logs. | `7` | False |
 | `max_nodes` | The maximum number of nodes to be set by the autoscaler in for the default nodegroup. | `5` | False |
 | `min_nodes` | The minimum number of nodes to be set by the autoscaler in for the default nodegroup. | `3` | False |
 | `node_disk_size` | The size of disk to give the nodes' ec2s in GB. | `20` | False |

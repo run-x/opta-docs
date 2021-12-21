@@ -100,7 +100,7 @@ GCP infrastructure is near-SOC2 and PCI compliant. This lack of coverage is due 
 2. The Vms of the GKE nodegroups do not have their disks encrypted by a KMS key. The reason for this is that this 
    feature is still in beta, at least in the terraform specs. We will update this as soon as it becomes GA.
 
-These are important security concerns which the opta team will keep an eye out until a feasible solution is found.
+These are important Security Overview which the opta team will keep an eye out until a feasible solution is found.
 Furthermore, the following default settings will have to be modified:
 
 

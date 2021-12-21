@@ -16,6 +16,16 @@ instead of getting lost in low level cloud configuration. Imagine just being abl
 an autoscaling docker container that talks to a RDS database - instead of figuring out the details of VPC,
 IAM, Kubernetes, Elastic Load Balancing etc -- that's what Opta does!
 
+<p align="center">
+  <iframe src="https://www.youtube.com/embed/nja_EfpGexE" 
+      width="560" 
+      height="315"
+      frameborder="0" 
+      margin: 0 auto;
+      allowfullscreen>
+  </iframe>
+</p>
+
 ## Who is it for?
 
 Opta is designed for folks who are not Infrastructure or Devops experts but still want to build amazing,
@@ -23,13 +33,6 @@ scalable, secure Infra in the cloud. Majority of Opta's users are early stage st
 dev/staging/production environments.
 
 If you'd like to try it out or have any questions - feel free to join our [Slack](https://slack.opta.dev/)!
-
-<p align="center">
-  <a href="https://www.youtube.com/watch?v=nja_EfpGexE"><img src="https://img.youtube.com/vi/nja_EfpGexE/0.jpg"></a>
-  </br>
-  <span><i>Demo Video</i></span>
-  
-</p>
 
 ## What you get with Opta
 

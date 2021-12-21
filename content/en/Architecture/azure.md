@@ -10,7 +10,10 @@ description: >
 
 ## Azure
 
-![image alt text](/images/opta_azure_architecture.png)
+<a href="/images/opta_azure_architecture.png" target="_blank">
+  <img src="/images/opta_azure_architecture.png" align="center"/>
+</a>
+
 For Azure, our environments are currently setup within a single region/subnet which azure can automatically distribute
 between all the region's availability zones. The subnet is a private one and only the load balancer and Azure storage
 are allowed to be reachable from the public internet (although the Azure storage would typically require credentials).
@@ -34,7 +37,7 @@ Lastly, Opta does not handle DNS or SSL in Azure due to complexities of Azure. O
 [own ssl certificate into our system](/miscellaneous/ingress) to get SSL. Once your DNS zone points to the IP address of the load balancer
 provisioned by Opta your application will be live and protected by SSL.
 
-### Security Concerns
+### Security Overview
 
 - With linkerd and domain delegation complete, Opta environments will have end-to-end encryption on all Opta services.
 - All vms are run within the private subnet (i.e. can access the internet via a nat gateway, but

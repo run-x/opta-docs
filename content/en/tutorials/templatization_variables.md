@@ -1,6 +1,6 @@
 ---
-title: "Templatization"
-linkTitle: "Templatization"
+title: "Templatization Variables"
+linkTitle: "Templatization Variables"
 date: 2021-07-21
 draft: false
 description: >

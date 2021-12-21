@@ -26,7 +26,8 @@ modules:
     healthcheck_path: ...
     public_uri: ...
     env_vars:
-      API_KEY: "value"
+      - name: "API_KEY"
+        value: "value"
 ```
 
 With this configuration, your container will get an env var named `API_KEY` with
@@ -34,8 +35,6 @@ the value `value`!
 
 You can also use Opta's interpolation features to refer to other values:
 
-- "{layer_name}" refers to the current yml file's name
-- "{parent_name}" refers to the parent file's name
-- "{variables}" refers to [templatization variables](/tutorials/templatization)
+- "{variables}" refers to [templatization variables](/tutorials/templatization_variables)
 - "{parent.output}" where `output` is the name of one of parent module's outputs
   (consult the module reference for output names)

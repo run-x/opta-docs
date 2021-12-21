@@ -63,7 +63,7 @@ one Opta service will not be able to manipulate the K8s resources for another. T
 used for sensitive custom data, as well as database access credentials. Lastly, we have a configmap (for EKS) which
 currently holds the latest public key needed for documentdb usage.
 
-### Security Concerns
+### Security Overview
 
 - [Here is Linkerd's security audit](https://github.com/linkerd/linkerd2/blob/main/SECURITY_AUDIT.pdf)
 - All cross-service communication is encrypted via mTLS

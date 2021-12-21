@@ -39,7 +39,7 @@ Lastly, DNS and SSL are currently handled via one Cloud DNS hosted zone and one 
 respectively. SSL cert verification is done automatically by GCP by manipulating existing resources. Records will be
 added to the hosted zone directing to the load balancer via an open source integration (see K8s section).
 
-### Security Concerns
+### Security Overview
 
 - With linkerd and domain delegation complete, Opta environments will have end-to-end encryption on all Opta services.
 - All vms are run within the private subnet (i.e. can access the internet via a nat gateway, but

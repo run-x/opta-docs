@@ -46,7 +46,7 @@ Lastly, DNS and SSL are currently handled via one Route53 hosted zone and one AC
 verification is done with Route53 record manipulation in the given hosted zone. Records will be added to the hosted
 zone directing to the load balancer via an open source integration (see K8s section).
 
-### Security Concerns
+### Security Overview
 
 - With linkerd and domain delegation complete, Opta environments will have end-to-end encryption on all Opta services.
 - All databases and ec2s are run within the private subnets (i.e. can access the internet via a nat gateway, but
@@ -68,5 +68,3 @@ zone directing to the load balancer via an open source integration (see K8s sect
 - 5 day backup retentions for the postgres/documentdb databases.
 - Currently, the EKS cluster is built with a public endpoint for the simple usage (can add private option later on once
   VPN feature is added).
-
-For specific compliance concerns

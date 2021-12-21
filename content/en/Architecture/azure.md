@@ -37,7 +37,7 @@ Lastly, Opta does not handle DNS or SSL in Azure due to complexities of Azure. O
 [own ssl certificate into our system](/miscellaneous/ingress) to get SSL. Once your DNS zone points to the IP address of the load balancer
 provisioned by Opta your application will be live and protected by SSL.
 
-### Security Concerns
+### Security Overview
 
 - With linkerd and domain delegation complete, Opta environments will have end-to-end encryption on all Opta services.
 - All vms are run within the private subnet (i.e. can access the internet via a nat gateway, but

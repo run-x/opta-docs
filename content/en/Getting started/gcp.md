@@ -45,11 +45,14 @@ Now, run:
 opta apply -c staging.yml
 ```
 
-This step will create an GKE cluster for you and set up networking and various other infrastructure pieces.
+For the first run, this step takes approximately 15 min.  
+It will create an GKE cluster and set up the networking and various other infrastructure pieces.  
+For more information about what is created, see [GCP Architecture](/architecture/gcp/).
+
 
 ## Service creation
 
-In this step we will create a service - which is basically a docker container and associated database.
+In this step we will create a service - which is basically a docker container.
 In this example we are using the popular [httbin](https://httpbin.org/) container as our application.
 
 

@@ -10,7 +10,10 @@ description: >
 
 ## Azure
 
-![image alt text](/images/opta_azure_architecture.png)
+<a href="/images/opta_azure_architecture.png" target="_blank">
+  <img src="/images/opta_azure_architecture.png" align="center"/>
+</a>
+
 For Azure, our environments are currently setup within a single region/subnet which azure can automatically distribute
 between all the region's availability zones. The subnet is a private one and only the load balancer and Azure storage
 are allowed to be reachable from the public internet (although the Azure storage would typically require credentials).

@@ -10,7 +10,10 @@ description: >
 
 ## GCP
 
-![image alt text](/images/opta_gcp_architecture.png)
+<a href="/images/opta_gcp_architecture.png" target="_blank">
+  <img src="/images/opta_gcp_architecture.png" align="center"/>
+</a>
+
 For GCP our environments are currently setup within a single region/subnet which google can automatically distribute
 between all the region's availability zones. The subnet is a private one and only the load balancer and GCS buckets
 are allowed to be reachable from the public internet (although the GCS buckets would typically require credentials).

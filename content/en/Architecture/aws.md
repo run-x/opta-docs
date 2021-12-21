@@ -10,7 +10,10 @@ description: >
 
 ## AWS
 
-![image alt text](/images/opta_aws_architecture.png)
+<a href="/images/opta_aws_architecture.png" target="_blank">
+  <img src="/images/opta_aws_architecture.png" align="center"/>
+</a>
+
 For AWS our environments are currently setup within a single region, but our networking is set up across 3 availability
 zones by default, split between a private and public subnet (which we provision as we do not use the default vpc).
 The public subnet is solely used for the public load balancer, while the ec2s (VMs) and databases all exist within

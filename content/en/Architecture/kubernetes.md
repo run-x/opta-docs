@@ -10,7 +10,9 @@ description: >
 
 ## K8s
 
-![image alt text](/images/opta_internal_kubernetes_architecture.png)
+<a href="/images/opta_internal_kubernetes_architecture.png" target="_blank">
+  <img src="/images/opta_internal_kubernetes_architecture.png" align="center"/>
+</a>
 
 The K8s topology is divided into namespaces of 2 types: 3rd party integrations and Opta services. The third party
 integrations consist of respected open source projects which handle background tasks or features expansions. These

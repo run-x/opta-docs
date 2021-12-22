@@ -9,6 +9,13 @@ description: >
 
 Opta Local enables you to setup a local Kubernetes environment on your PC using the [Opta CLI](https://docs.opta.dev/overview/) so that you can test services locally without having to pay for cloud resources or waiting for real infrastructure to spin up and down in your cloud provider. It is designed to get you quickly started with Opta and Kubernetes for development and testing without  the complexity, cost and learning curve of using a public cloud provider. When you are ready to go to production, the same Opta infrastructure-as-code files you create for Opta Local can be used to deploy to AWS, Azure or Google Cloud.
 
+## Installation
+
+One line installation ([detailed instructions](/installation)):
+
+```
+/bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
+```
 
 ## Architecture
 ![Opta Local Architecture](/images/optalocal-arch.png)

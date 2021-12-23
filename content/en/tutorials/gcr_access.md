@@ -10,7 +10,7 @@ With Opta, on is not forced to use the Opta-provisioned GCR repository, nor is t
 forbidden from being used elsewhere. The following guide explains how.
 
 ## Understanding GCR Access
-It's GCS access, that's basically it. GCR is simply a (powerful) convenience layer around object storage in a GCS
+It's same as GCS basically. GCR is simply a (powerful) convenience layer around object storage in a GCS
 bucket, with the interfaces needed to do docker `push`, `pull`, etc... but at the end of the day it is just a wrapper
 around GCS, as is its IAM system. When starting off with GCR, with or without Opta, the first step is to create a host
 GCS bucket, usually following the format of `artifacts.PROJECT-ID.appspot.com`. This bucket contains all the images

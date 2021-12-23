@@ -43,9 +43,9 @@ versions of all of Opta's dependencies are invoked when run.
 
 ```bash
 # Download the script and add it as an executable on your machine
-sudo curl https://raw.githubusercontent.com/run-x/opta-docs/opta-via-docker/static/opta.sh -o /usr/local/bin/opta.sh
-chmod +x /usr/local/bin/opta.sh
-./opta.sh # This first invocation builds a docker image
+sudo curl  https://docs.opta.dev/opta.sh -o /usr/local/bin/opta.sh
+sudo chmod +x /usr/local/bin/opta.sh
+opta.sh # This first invocation builds a docker image
 ```
 
 Invoke opta using opta.sh instead; for example

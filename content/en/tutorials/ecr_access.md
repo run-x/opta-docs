@@ -6,7 +6,7 @@ draft: false
 description: Guide on how to authorize image pulling from ECR
 ---
 
-With Opta, on is not forced to use the Opta-provisioned ECR repository, nor is the Opta-provisioned ECR repository 
+With Opta, one is not forced to use the Opta-provisioned ECR repository, nor is the Opta-provisioned ECR repository 
 forbidden from being used elsewhere. The following guide explains how.
 
 ## Understanding ECR Access

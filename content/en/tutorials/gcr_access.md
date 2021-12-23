@@ -6,7 +6,7 @@ draft: false
 description: Guide on how to authorize image pulling from GCR
 ---
 
-With Opta, on is not forced to use the Opta-provisioned GCR repository, nor is the Opta-provisioned GCR repository
+With Opta, one is not forced to use the Opta-provisioned GCR repository, nor is the Opta-provisioned GCR repository
 forbidden from being used elsewhere. The following guide explains how.
 
 ## Understanding GCR Access

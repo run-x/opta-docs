@@ -1,6 +1,7 @@
 ---
 title: "Installation and Upgrade"
 linkTitle: "Installation"
+date: 2022-01-03
 weight: 3
 ---
 
@@ -51,7 +52,7 @@ chmod +x /usr/local/bin/opta.sh
 Invoke opta using opta.sh instead; for example
 
 ```bash
-opta.sh apply -c mycode/foo.yaml
+opta.sh apply -c hello.yaml
 
 ```
 

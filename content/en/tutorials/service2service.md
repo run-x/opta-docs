@@ -1,7 +1,7 @@
 ---
 title: "Inter Service Communication"
 linkTitle: "Inter Service Communication"
-date: 2021-07-21
+date: 2022-01-03
 draft: false
 description: >
   Communication between services
@@ -18,16 +18,15 @@ description: >
 
 For example, the following service, will be available at `app.hello-world` from any other service in the same environment.
 
-
-```yaml
-name: hello-world
+{{< highlight yaml "hl_lines=1 7" >}}
+name: hello # service name
 environments:
   - name: staging
-    path: "staging.yml"
+    path: "opta.yaml"
 modules:
-  - name: app
-    type: k8s-service
+  - type: k8s-service
+    name: app # module name
     port:
       http: 80
-    image: AUTO
-```
+    image: ghcr.io/run-x/opta-examples/hello-app:main
+{{< / highlight >}}

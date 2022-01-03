@@ -1,7 +1,7 @@
 ---
 title: "Environment Variables"
 linkTitle: "Environment Variables"
-date: 2021-07-21
+date: 2022-01-03
 draft: false
 description: >
   How to pass in custom environment variables to your containers
@@ -12,23 +12,23 @@ Opta allows you to pass in custom environment variables to your k8s-service
 
 Just use the `env_vars` field:
 
-```yaml
-name: hello-world
+{{< highlight yaml "hl_lines=13-15" >}}
+name: hello
 environments:
   - name: staging
-    path: "staging/opta.yml"
+    path: "opta.yaml"
 modules:
-  - name: app
+  - name: hello
     type: k8s-service
     port:
       http: 80
-    image: ...
-    healthcheck_path: ...
-    public_uri: ...
+    image: ghcr.io/run-x/opta-examples/hello-app:main
+    healthcheck_path: "/"
+    public_uri: "/hello"
     env_vars:
       - name: "API_KEY"
         value: "value"
-```
+{{< / highlight >}}
 
 With this configuration, your container will get an env var named `API_KEY` with
 the value `value`!

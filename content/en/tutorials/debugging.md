@@ -1,7 +1,7 @@
 ---
 title: "Debugging"
 linkTitle: "Debugging"
-date: 2021-07-21
+date: 2022-01-03
 description: >
   How to debug your app
 ---
@@ -13,18 +13,18 @@ Opta provides 2 helpful commands to help with debugging:
 ### View logs
 
 ```
-opta logs
+opta logs -c hello.yaml
 ```
 
-This will show you logs from all your app instances.
+This will show you logs from all the running container for this service.
 
 ### SSH into an instance
 
 ```
-opta shell
+opta shell -c hello.yaml
 ```
 
-This will open up a shell into one of your app instances.
+This will open up a shell into one of the running container.
 
 ### Kubectl
 
@@ -51,9 +51,11 @@ Before you can use `kubectl`, you need to connect it to your kubernetes cluster
 opta configure-kubectl
 ```
 
+> By defaut opta use the default kube config file `~/.kube/config`, if you want to use a different file set the `KUBECONFIG` environment variable.
+
 ### View pods
 
-> Kubernetes uses the word "pod" for containers[^1]. So every service will have one or more pods (as specified in your Opta yml).
+> Kubernetes uses the word "pod" for containers[^1]. So every service will have one or more pods (as specified in your Opta yml as `min_containers` and `max_containers`).
 
 You can see the pods for a given service by running:
 
@@ -63,14 +65,13 @@ kubectl get pods -n <service-name>
 
 > If this doesn't show any pods, that means your service hasn't been deployed. Check out the [deployment docs](/getting-started/#service-deployment) to fix that.
 
-Note that `<service-name>` is specified in your Opta yml:
+Note that `<service-name>` is specified in your yaml file:
 
-```
-  meta:
-    name: blah # service-name
-  modules:
-    app: # module-name
-      type: k8s-service
+```yaml
+modules:
+  - name: hello # service-name
+    type: k8s-service
+    image: docker.io/kennethreitz/httpbin:latest
 ```
 
 ### Debug logging

@@ -1,6 +1,7 @@
 ---
 title: "Compliance"
 linkTitle: "Compliance"
+date: 2022-01-03
 weight: 7
 description: >
     SOC 2 and PCI compliance of Opta infrastructure.
@@ -50,8 +51,8 @@ AWS Infrastructure is SOC2 and PCI compliant, with the right settings. Those set
 Please see the following yaml for example
 ```yaml
 environments:
-  - name: blah
-    path: "../environments/aws-env.yml"
+  - name: production
+    path: "../environments/aws-prod.yaml"
 name: baloney
 modules:
   - name: db

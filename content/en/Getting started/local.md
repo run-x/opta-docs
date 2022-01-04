@@ -13,7 +13,7 @@ Opta Local enables you to setup a local Kubernetes environment on your PC using 
 
 One line installation ([detailed instructions](/installation)):
 
-```
+```bash
 /bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
 ```
 
@@ -92,6 +92,7 @@ modules:
 
 Create the local kubernetes cluster:
 ```bash
+# estimated time for first run: 10 min
 opta apply --local --auto-approve -c local.yaml
 ...
 ╒═══════════╤═══════════════════════════════════════╤══════════╤════════╤══════════╕
@@ -125,7 +126,7 @@ opta-local-cluster
 ```
 
 Now, let's deploy our service.
-```
+```bash
 opta apply --local --auto-approve -c hello.yaml
 
 ╒══════════╤══════════════════════════╤══════════╤════════╤══════════╕
@@ -266,7 +267,7 @@ Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 ```
 
 Build the image locally, let's tag it with `v2`:
-```
+```bash
 docker build . -t hello-app:v2
 ```
 
@@ -349,7 +350,7 @@ opta destroy --auto-approve --local --config local.yaml
 
 ### Manual Cleanup
 
-```
+```bash
 DOCKER_REGISTRY=`docker ps -aqf "name=opta-local-registry"`
 docker stop $DOCKER_REGISTRY
 docker rm $DOCKER_REGISTRY

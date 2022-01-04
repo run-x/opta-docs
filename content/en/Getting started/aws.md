@@ -13,7 +13,7 @@ To use Opta, you first need to create some simple yaml configuration files that 
 
 One line installation ([detailed instructions](/installation)):
 
-```
+```bash
 /bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
 ```
 

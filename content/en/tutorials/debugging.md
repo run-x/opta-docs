@@ -12,7 +12,7 @@ Opta provides 2 helpful commands to help with debugging:
 
 ### View logs
 
-```
+```bash
 opta logs -c hello.yaml
 ```
 
@@ -20,7 +20,7 @@ This will show you logs from all the running container for this service.
 
 ### SSH into an instance
 
-```
+```bash
 opta shell -c hello.yaml
 ```
 
@@ -36,7 +36,7 @@ a brief tutorial on how to use this tool.
 
 On mac, you can install it via:
 
-```
+```bash
 brew install kubectl
 ```
 
@@ -47,7 +47,7 @@ More detailed instructions are available on the [offical site](https://kubernete
 Before you can use `kubectl`, you need to connect it to your kubernetes cluster
 (created by opta). This is pretty simple in the Opta world! Just run:
 
-```
+```bash
 opta configure-kubectl
 ```
 
@@ -59,7 +59,7 @@ opta configure-kubectl
 
 You can see the pods for a given service by running:
 
-```
+```bash
 kubectl get pods -n <service-name>
 ```
 

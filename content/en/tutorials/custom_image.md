@@ -57,12 +57,12 @@ CMD python3 -m flask run \-\-host=0.0.0.0 \-\-port=${PORT}
 {{< /tabs >}}
 
 Build the image locally:
-```
+```bash
 docker build . -t hello-app:v2
 ```
 
 Deploy the new image to the kubernetes cluster:
-```
+```bash
 opta deploy --image hello-app:v2
 ```
 

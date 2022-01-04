@@ -13,6 +13,30 @@ abort() {
   exit 1
 }
 
+errorevent() {
+  curl -X POST https://api2.amplitude.com/2/httpapi \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: */*' \
+    -s \
+    -o /dev/null \
+    --data-binary @- << EOF
+    {
+        "api_key": "751db5fc75ff34f08a83381f4d54ead6",
+        "events": [
+            {
+              "device_id": "${MAC_ADDRESS}",
+              "user_id": "${GIT_EMAIL}",
+              "app_version": "${VERSION}",
+              "os_name": "${OS}",
+              "event_type": "OPTA_INSTALL_FAILURE"
+            }
+        ]
+    }
+EOF
+}
+
+trap "errorevent" ERR
+
 trim_version() {
   version="$1"
   firstChar=${version:0:1}
@@ -75,10 +99,21 @@ echo "Going to install opta v$VERSION"
 
 if [[ "$OS" == "Linux" ]]; then
   PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$VERSION/opta.zip
+  MAC_ADDRESS=`cat /sys/class/net/eth0/address` || true
 elif [[ "$OS" == "Darwin" ]]; then
   PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/mac/$VERSION/opta.zip
+  MAC_ADDRESS=`ifconfig en1 | awk '/ether/{print $2}'` || true
 else
   abort "Opta is only supported on macOS and Linux."
+fi
+
+if [[ "$MAC_ADDRESS" == "" ]]; then
+  MAC_ADDRESS="unknown"
+fi
+
+GIT_EMAIL=`git config user.email` || true
+if [[ "$GIT_EMAIL" == "" ]]; then
+  GIT_EMAIL="unknown"
 fi
 
 echo "Downloading installation package..."
@@ -123,3 +158,22 @@ else
 fi
 
 
+curl -X POST https://api2.amplitude.com/2/httpapi \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: */*' \
+  -s \
+  -o /dev/null \
+  --data-binary @- << EOF
+  {
+      "api_key": "751db5fc75ff34f08a83381f4d54ead6",
+      "events": [
+          {
+            "device_id": "${MAC_ADDRESS}",
+            "user_id": "${GIT_EMAIL}",
+            "app_version": "${VERSION}",
+            "os_name": "${OS}",
+            "event_type": "OPTA_INSTALL_SUCCESS"
+          }
+      ]
+  }
+EOF

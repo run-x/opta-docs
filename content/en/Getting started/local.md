@@ -1,6 +1,7 @@
 ---
 title: "Local"
 linkTitle: "Local"
+date: 2022-01-04
 weight: 4
 description: >
   Getting started with Opta Local on your local machine.
@@ -49,17 +50,14 @@ Running services in Opta Local environment is almost identical to how you would 
 
 #### Example 1: Deploy a service using an existing docker image
 
-We will deploy a simple [hello app](https://github.com/run-x/opta-examples/tree/main/hello-app) by defining these two files.
+We will deploy a simple [hello app](https://github.com/run-x/opta-examples/tree/main/hello-app) by defining this file.
 
-{{< tabs tabTotal="2" tabID="1" tabName1="hello.yaml" tabName2="local.yaml" >}}
-{{< tab tabNum="1" >}}
-
-{{< highlight yaml >}}
-# hello.yaml
+```yaml
+# opta.yaml
 name: hello
 environments:
   - name: local
-    path: "local.yaml"
+    path: "opta.yaml"
 modules:
   - type: k8s-service
     name: hello
@@ -69,31 +67,12 @@ modules:
     image: ghcr.io/run-x/opta-examples/hello-app:main
     healthcheck_path: "/"
     public_uri: "/hello"
+```
 
-{{< / highlight >}}
-
-{{< /tab >}}
-
-{{< tab tabNum="2" >}}
-
-{{< highlight yaml >}}
-# local.yaml
-name: local
-org_name: my-org
-providers: 
-  local: {}
-modules:
-  - type: local-base
-{{< / highlight >}}
-
-{{< /tab >}}
-{{< /tabs >}}
-
-
-Create the local kubernetes cluster:
+Create the local kubernetes cluster and deploy the service by running:
 ```bash
 # estimated time for first run: 10 min
-opta apply --local --auto-approve -c local.yaml
+opta apply --local --auto-approve
 ...
 ╒═══════════╤═══════════════════════════════════════╤══════════╤════════╤══════════╕
 │ module    │ resource                              │ action   │ risk   │ reason   │
@@ -116,30 +95,14 @@ opta apply --local --auto-approve -c local.yaml
 ╘═══════════╧═══════════════════════════════════════╧══════════╧════════╧══════════╛
 ...
 Apply complete! Resources: 8 added, 0 changed, 0 destroyed.
-```
-
-You can verify that the cluster has been created with kind:
-```bash
-~/.opta/local/kind get clusters
-
-opta-local-cluster
-```
-
-Now, let's deploy our service.
-```bash
-opta apply --local --auto-approve -c hello.yaml
-
+...
 ╒══════════╤══════════════════════════╤══════════╤════════╤══════════╕
 │ module   │ resource                 │ action   │ risk   │ reason   │
 ╞══════════╪══════════════════════════╪══════════╪════════╪══════════╡
 │ hello    │ helm_release.k8s-service │ create   │ LOW    │ creation │
 ╘══════════╧══════════════════════════╧══════════╧════════╧══════════╛
-...
-
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
-
 ```
-
 
 You can test your service by visiting [http://localhost:8080/hello](http://localhost:8080/hello) on your local machine browser.
 ![Opta Local hello world](/images/hello-world-browser.png)
@@ -147,7 +110,7 @@ You can test your service by visiting [http://localhost:8080/hello](http://local
 
 - SSH into the container
 ```bash
-opta shell -c hello.yaml
+opta shell
 
 root@staging-hello-k8s-service-57d8b6f478-vwzkc:/#
 ```
@@ -170,6 +133,11 @@ replicaset.apps/hello-hello-k8s-service-7b66c95997   1         1         1      
 
 NAME                                                          REFERENCE                            TARGETS                        MINPODS   MAXPODS   REPLICAS   AGE
 horizontalpodautoscaler.autoscaling/hello-hello-k8s-service   Deployment/hello-hello-k8s-service   <unknown>/80%, <unknown>/80%   1         3         1          84m
+```
+
+When you are done, you can delete the local kubernetes cluster by running:
+```bash
+opta destroy --local
 ```
 
 #### Example 2: Deploy a service using a local docker image
@@ -250,10 +218,13 @@ CMD python3 -m flask run \-\-host=0.0.0.0 \-\-port=${PORT}
 
 Apply the local changes:
 ```
-# only needed if not done with previous example, otherwise it will have no effect
+# if you have previously run example 1, this will make sure you start from a clean state
+$HOME/.opta/local/kind delete cluster --name opta-local-cluster
+
+# Create the local kubernetes cluster
 opta apply --local --auto-approve -c local.yaml
 
-# to use the AUTO deployment
+# Configure the service
 opta apply --auto-approve -c hello.yaml
 
 ...
@@ -309,11 +280,11 @@ kubectl -n hello get deploy -o yaml | grep image:
 
 ```
 
-
-You can remove this service by running
+When you are done, you can delete the local kubernetes cluster by running:
 
 ```bash
 opta destroy --auto-approve --local --config hello.yaml
+opta destroy --auto-approve --local --config local.yaml
 ```
 
 #### Example 3: Stateful Example: A Todo list with Prometheus/Grafana

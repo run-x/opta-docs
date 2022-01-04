@@ -17,6 +17,7 @@ if you have them), so in most cases, there is _no need to set any of the fields 
 | Name      | Description | Default | Required |
 | ----------- | ----------- | ------- | -------- |
 | `total_ipv4_cidr_block` | This is the total cidr block for the VPC. | `10.0.0.0/16` | False |
+| `vpc_log_retention` | The retention period (days) for the flow logs of your vpc. | `90` | False |
 | `private_ipv4_cidr_blocks` | These are the cidr blocks to use for the private subnets, one for each AZ. | `['10.0.128.0/21', '10.0.136.0/21', '10.0.144.0/21']` | False |
 | `public_ipv4_cidr_blocks` | These are the cidr blocks to use for the public subnets, one for each AZ. | `['10.0.0.0/21', '10.0.8.0/21', '10.0.16.0/21']` | False |
 

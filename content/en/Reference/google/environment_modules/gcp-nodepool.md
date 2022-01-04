@@ -36,8 +36,8 @@ service accounts for each K8s service, but for any non-opta managed workloads in
 
 | Name      | Description | Default | Required |
 | ----------- | ----------- | ------- | -------- |
-| `max_nodes` | The maximum number of nodes to be set by the autoscaler in for the default nodegroup. | `5` | False |
-| `min_nodes` | The minimum number of nodes to be set by the autoscaler in for the default nodegroup. | `1` | False |
+| `max_nodes` | The maximum number of nodes to be set by the autoscaler in for the current nodegroup PER AVAILABILITY ZONE (there's almost always 3). | `5` | False |
+| `min_nodes` | The minimum number of nodes to be set by the autoscaler in for the current nodegroup PER AVAILABILITY ZONE (there's almost always 3). | `1` | False |
 | `node_disk_size` | The size of disk to give the nodes' vms in GB. | `20` | False |
 | `node_instance_type` | The [gcloud machine type](https://cloud.google.com/compute/docs/machine-types) for the nodes. | `n2-highcpu-4` | False |
 | `gke_channel` | The GKE K8s [release channel](https://cloud.google.com/kubernetes-engine/docs/concepts/release-channels) to bind the cluster too. Gives you automatic K8s version management for the cluster and node pools. | `REGULAR` | False |

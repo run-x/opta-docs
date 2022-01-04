@@ -32,7 +32,7 @@ errorevent() {
             }
         ]
     }
-EOF
+EOF || true
 }
 
 trap "errorevent" ERR
@@ -176,4 +176,4 @@ curl -X POST https://api2.amplitude.com/2/httpapi \
           }
       ]
   }
-EOF
+EOF || true

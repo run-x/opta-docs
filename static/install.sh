@@ -14,7 +14,7 @@ abort() {
 }
 
 errorevent() {
-  curl -X POST https://api2.amplitude.com/2/httpapi \
+  (curl -X POST https://api2.amplitude.com/2/httpapi \
     -H 'Content-Type: application/json' \
     -H 'Accept: */*' \
     -s \
@@ -33,6 +33,7 @@ errorevent() {
         ]
     }
 EOF
+  ) || true
 }
 
 trap "errorevent" ERR
@@ -158,7 +159,7 @@ else
 fi
 
 
-curl -X POST https://api2.amplitude.com/2/httpapi \
+(curl -X POST https://api2.amplitude.com/2/httpapi \
   -H 'Content-Type: application/json' \
   -H 'Accept: */*' \
   -s \
@@ -177,3 +178,4 @@ curl -X POST https://api2.amplitude.com/2/httpapi \
       ]
   }
 EOF
+) || true

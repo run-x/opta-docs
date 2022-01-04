@@ -27,6 +27,7 @@ errorevent() {
               "device_id": "${MAC_ADDRESS}",
               "user_id": "${GIT_EMAIL}",
               "app_version": "${VERSION}",
+              "os_name": "${OS}",
               "event_type": "OPTA_INSTALL_FAILURE"
             }
         ]
@@ -170,6 +171,7 @@ curl -X POST https://api2.amplitude.com/2/httpapi \
             "device_id": "${MAC_ADDRESS}",
             "user_id": "${GIT_EMAIL}",
             "app_version": "${VERSION}",
+            "os_name": "${OS}",
             "event_type": "OPTA_INSTALL_SUCCESS"
           }
       ]

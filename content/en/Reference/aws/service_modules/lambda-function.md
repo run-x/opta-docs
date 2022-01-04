@@ -40,7 +40,7 @@ modules:
 Opta supports the [zip file form](https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-zip.html) of 
 lambda deployments. For this deployment, simply zip up your code into a zip file and pass its location in via the
 `filename` input. You should also specify the [runtime](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html) 
-for your lambda (what language+version you are using). Supposing you created a zip file called baloney.zip, your opta.yaml
+for your lambda (what language+version you are using). Supposing you created a zip file called my_function.zip, your opta.yaml
 should look like the following:
 
 ```yaml

@@ -10,13 +10,14 @@ description: >
 With Opta, you can easily create cron jobs - jobs that run on a schedule.
 To create a job, you need to add the following module to your yaml file:
 
-```
+```yaml
 name: hello
 environments:
   - name: # env name
     path: # path to env file
 modules:
   - type: helm-chart
+    # see https://github.com/ameijer/k8s-as-helm for reference
     repository: https://ameijer.github.io/k8s-as-helm/
     chart: cronjob
     chart_version: 1.0.0

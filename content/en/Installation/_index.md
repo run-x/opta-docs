@@ -1,5 +1,5 @@
 ---
-title: "Installation"
+title: "Installation and Upgrade"
 linkTitle: "Installation"
 weight: 3
 ---
@@ -20,7 +20,7 @@ Opta currently has the following system prerequisites to operate normally:
 
 ## MacOS or Linux
 
-Run this script to install the latest version of Opta (see below for changelog
+Run this script to install or upgrade to the latest version of Opta (see below for changelog
 and release history).
 
 ```bash
@@ -37,15 +37,15 @@ VERSION=0.x /bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
 
 We are now offering a pre-release version for running opta via a docker container with alpha support. __Please do not use this for production workloads currently.__
 
-If you prefer to install Opta and its dependencies (terraform, kubectl, gcp sdk, aws cli) in a docker container then you can 
+If you prefer to install or upgrade Opta and its dependencies (terraform, kubectl, gcp sdk, aws cli) in a docker container then you can 
 download the `opta.sh` script that runs Opta inside a docker container. With this approach you can be assured that the correct
 versions of all of Opta's dependencies are invoked when run.
 
 ```bash
 # Download the script and add it as an executable on your machine
-sudo curl https://raw.githubusercontent.com/run-x/opta-docs/opta-via-docker/static/opta.sh -o /usr/local/bin/opta.sh
-chmod +x /usr/local/bin/opta.sh
-./opta.sh # This first invocation builds a docker image
+sudo curl  https://docs.opta.dev/opta.sh -o /usr/local/bin/opta.sh
+sudo chmod +x /usr/local/bin/opta.sh
+opta.sh # This first invocation builds a docker image
 ```
 
 Invoke opta using opta.sh instead; for example

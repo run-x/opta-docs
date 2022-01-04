@@ -10,7 +10,10 @@ description: >
 
 ## GCP
 
-![image alt text](/images/opta_gcp_architecture.png)
+<a href="/images/opta_gcp_architecture.png" target="_blank">
+  <img src="/images/opta_gcp_architecture.png" align="center"/>
+</a>
+
 For GCP our environments are currently setup within a single region/subnet which google can automatically distribute
 between all the region's availability zones. The subnet is a private one and only the load balancer and GCS buckets
 are allowed to be reachable from the public internet (although the GCS buckets would typically require credentials).
@@ -36,7 +39,7 @@ Lastly, DNS and SSL are currently handled via one Cloud DNS hosted zone and one 
 respectively. SSL cert verification is done automatically by GCP by manipulating existing resources. Records will be
 added to the hosted zone directing to the load balancer via an open source integration (see K8s section).
 
-### Security Concerns
+### Security Overview
 
 - With linkerd and domain delegation complete, Opta environments will have end-to-end encryption on all Opta services.
 - All vms are run within the private subnet (i.e. can access the internet via a nat gateway, but

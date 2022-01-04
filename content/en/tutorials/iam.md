@@ -11,8 +11,8 @@ description: >
 Identity access management, IAM, is how a user can control permissions to read and/or modify resources in their
 cloud accounts. When Opta runs, it uses your currently configured credentials for your role/user of your cloud provider
 to read your state, and update/create resources as needed. Due to the large amount and variety of resources opta
-is responsible for, we recommend folks to use a role/user with account admin privileges for Opta, but we hope to
-begin providing more specific policies in the future. Furthermore, the k8s cluster needs authentication and
+is responsible for, we recommend folks to use a role/user with account admin privileges for Opta, but we have plans to
+provide more specific policies in the future. Furthermore, the k8s cluster needs authentication and
 authorization to read and write resources to itself, which is tied to the cloud provider's IAM. Below, we go over the
 specifics for the setup for each cloud.
 

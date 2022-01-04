@@ -118,7 +118,7 @@ if ln -fs ~/.opta/opta /usr/local/bin/opta ; then
 else
   echo "Please symlink the opta binary to one of your path directories; for example using 'sudo ln -fs ~/.opta/opta /usr/local/bin/opta'"
   echo "Alternatively, you could add the .opta installation directory to your path like so"
-  echo "export PATH=$PATH:"$RUNPATH""
+  echo "export PATH=\$PATH:"$RUNPATH
   echo "to your terminal profile."
 fi
 

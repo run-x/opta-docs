@@ -30,6 +30,7 @@ service-- it can be in the environment too). For our example, let's say that the
 
 The new service is written in `dummy-service/opta.yaml` and looks like this:
 
+
 ```yaml
 environments:
   - name: gcp-example

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OPTAVERSION=0.19.0
+OPTAVERSION=0.22.0
 
 # Architecture check
 ARCH=""
@@ -104,7 +104,7 @@ cat << EOF > /tmp/opta/Dockerfile
 # base image
 FROM python:3.8.12-bullseye
 RUN apt-get update
-
+RUN echo "Going to build opta v$OPTAVERSION"
 # aws cli
 RUN apt install unzip curl groff less -y
 RUN curl "$AWSCLI2URL" -o "awscliv2.zip"

@@ -16,7 +16,7 @@ One line installation ([detailed instructions](/installation)):
 /bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
 ```
 
-Make sure the Azure cloud credentails are configured in your terminal.
+Make sure the Azure cloud credentials are configured in your terminal.
 
 ## Environment creation
 
@@ -48,11 +48,13 @@ Now, run:
 opta apply -c staging.yaml
 ```
 
-This step will create an AKS cluster for you and set up networking and various other infrastructure pieces.
+For the first run, this step takes approximately 15 min.  
+It will create an AKS cluster and set up the networking and various other infrastructure pieces.  
+For more information about what is created, see [Azure Architecture](/architecture/azure/).
 
 ## Service creation
 
-In this step we will create a service - which is basically a docker container and associated database.
+In this step we will create a service - which is basically a docker container.
 In this example we are using the popular [httbin](https://httpbin.org/) container as our application.
 
 

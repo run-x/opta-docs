@@ -37,7 +37,7 @@ modules:
 2. Update secret
 
 ```bash
-opta secret update MY_SECRET_1 <value>
+opta secret update MY_SECRET_1 "value"
 ```
 
 3. List all secrets

@@ -21,7 +21,7 @@ much more setup. Currently, it also handles:
 * Setting up security group and network location if you have the `aws-base` module in your environment.
 
 Simple way to try out this module: Just download [this example zip file](https://gist.github.com/juandiegopalomino/7400f836107459f3099c02e58d2d6897/raw/5c0b4cbbbf1d8a470f16c09d53e6ed68e59e06bd/baloney.zip), 
-put it in the same directory as the opta.yml example below and run `opta apply`
+put it in the same directory as the opta.yaml example below and run `opta apply`
 ```yaml
 name: testing-lambda
 org_name: myorg
@@ -40,7 +40,7 @@ modules:
 Opta supports the [zip file form](https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-zip.html) of 
 lambda deployments. For this deployment, simply zip up your code into a zip file and pass its location in via the
 `filename` input. You should also specify the [runtime](https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html) 
-for your lambda (what language+version you are using). Supposing you created a zip file called baloney.zip, your opta.yml
+for your lambda (what language+version you are using). Supposing you created a zip file called my_function.zip, your opta.yaml
 should look like the following:
 
 ```yaml
@@ -120,9 +120,10 @@ modules:
 | Name      | Description | Default | Required |
 | ----------- | ----------- | ------- | -------- |
 | `extra_iam_policies` | The arns of additional IAM policies to be attached to this role. | `[]` | False |
-| `expose_via_domain` | The arns of additional IAM policies to be attached to this role. | `False` | False |
+| `expose_via_domain` | Set to true to expose the lambda as a public url in a new AWS API Gateway (V2) | `False` | False |
 | `runtime` | The AWS lambda runtime to use for this lambda (see https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html) | `nodejs14.x` | True |
 | `filename` | The filename for your zip file containing your lambda code | `None` | True |
+| `handler` | Lambda function handler is the method in your function code that processes events. | `index.handler` | False |
 | `env_vars` | A map of key values to add to the container as environment variables (key is name, value is value). ```yaml env_vars:  FLAG: "true" ```  | `{}` | False |
 
 ## Outputs

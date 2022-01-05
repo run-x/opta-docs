@@ -13,27 +13,31 @@ abort() {
   exit 1
 }
 
-errorevent() {
+sendamplitudeevent() {
   (curl -X POST https://api2.amplitude.com/2/httpapi \
-    -H 'Content-Type: application/json' \
-    -H 'Accept: */*' \
-    -s \
-    -o /dev/null \
-    --data-binary @- << EOF
-    {
-        "api_key": "751db5fc75ff34f08a83381f4d54ead6",
-        "events": [
-            {
-              "device_id": "${MAC_ADDRESS}",
-              "user_id": "${GIT_EMAIL}",
-              "app_version": "${VERSION}",
-              "os_name": "${OS}",
-              "event_type": "OPTA_INSTALL_FAILURE"
-            }
-        ]
-    }
+      -H 'Content-Type: application/json' \
+      -H 'Accept: */*' \
+      -s \
+      -o /dev/null \
+      --data-binary @- << EOF
+      {
+          "api_key": "751db5fc75ff34f08a83381f4d54ead6",
+          "events": [
+              {
+                "device_id": "${MAC_ADDRESS}",
+                "user_id": "${GIT_EMAIL}",
+                "app_version": "${VERSION}",
+                "os_name": "${OS}",
+                "event_type": "$1"
+              }
+          ]
+      }
 EOF
-  ) || true
+    ) || true
+}
+
+errorevent() {
+  sendamplitudeevent "OPTA_INSTALL_FAILURE"
 }
 
 trap "errorevent" ERR
@@ -158,24 +162,4 @@ else
   echo "to your terminal profile."
 fi
 
-
-(curl -X POST https://api2.amplitude.com/2/httpapi \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: */*' \
-  -s \
-  -o /dev/null \
-  --data-binary @- << EOF
-  {
-      "api_key": "751db5fc75ff34f08a83381f4d54ead6",
-      "events": [
-          {
-            "device_id": "${MAC_ADDRESS}",
-            "user_id": "${GIT_EMAIL}",
-            "app_version": "${VERSION}",
-            "os_name": "${OS}",
-            "event_type": "OPTA_INSTALL_SUCCESS"
-          }
-      ]
-  }
-EOF
-) || true
+sendamplitudeevent "OPTA_INSTALL_SUCCESS"

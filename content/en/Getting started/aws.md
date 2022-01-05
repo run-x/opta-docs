@@ -1,6 +1,7 @@
 ---
 title: "AWS"
 linkTitle: "AWS"
+date: 2022-01-03
 weight: 1
 description: >
   Getting started with Opta on AWS.
@@ -12,7 +13,7 @@ To use Opta, you first need to create some simple yaml configuration files that 
 
 One line installation ([detailed instructions](/installation)):
 
-```
+```bash
 /bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
 ```
 
@@ -21,20 +22,21 @@ Make sure the AWS cloud credentails are configured in your terminal for the acco
 ## Environment creation
 
 Before you can deploy your app, you need to first create an environment (like staging, prod etc.)
-This will set up the base infrastructure (like network and cluster) that will be the foundation for your app.
+This set up the base infrastructure (like network and cluster) that is the foundation for your app.
 
 > Note that it costs around $5 per day to run this on AWS. So make sure to destroy it after you're done 
 > (opta has a destroy command so it should be easy :))!
 
-Create this file and name it `staging.yaml`
+Create this file and name it `opta.yaml`
 
 ```yaml
-name: staging
-org_name: <something unique> # A unique identifier for your organization
+# opta.yaml
+name: staging # name of the environment
+org_name: my-org # A unique identifier for your organization
 providers:
   aws:
     region: us-east-1
-    account_id: XXXX # Your 12 digit account id
+    account_id: XXXX # Your 12 digit AWS account id
 modules:
   - type: base
   - type: k8s-cluster
@@ -42,71 +44,131 @@ modules:
 ```
 
 Now, run:
-
-```bash
-opta apply -c staging.yml
+```shell
+opta apply
 ```
 
 For the first run, this step takes approximately 15 min.  
-It will create an EKS cluster and set up the VPC, networking and various other infrastructure pieces.  
+It configures 3 Opta modules:
+- [base](/reference/aws/environment_modules/aws-base/): setup networking
+- [k8s-cluster](/reference/aws/environment_modules/aws-eks/): create a EKS cluster
+- [k8s-base](/reference/aws/environment_modules/aws-k8s-base/): setup base infrastructure for k8s
+
 For more information about what is created, see [AWS Architecture](/architecture/aws/).
 
+Once done, the `apply` command lists all the resource created, for example:
+```tf
+# partial output of opta apply
+
+k8s_cluster_name = [The Kubernetes cluster name]
+load_balancer_raw_dns = [Load Balancer hostname]
+
+Opta updates complete!
+```
 
 ## Service creation
 
-In this step we will create a service - which is basically a docker container.
-In this example we are using the popular [httbin](https://httpbin.org/) container as our application.
+In this step we will create a service - which is basically a http server packaged in a docker container.  
+Here is a simple hello world app, the source code is [here](https://github.com/run-x/opta-examples/tree/main/hello-app).
 
 
-Create this file and name it `hello_world.yaml`
-
+Create a new opta file for your service.
 ```yaml
-name: hello-world
+# hello.yaml
+name: hello
 environments:
   - name: staging
-    path: "staging.yaml" # Note that this is the file we created in step 2
+    path: "opta.yaml" # the file we created in previous step
 modules:
-  - name: app
-    type: k8s-service
+  - type: k8s-service
+    name: hello
     port:
       http: 80
-    image: docker.io/kennethreitz/httpbin:latest
-    healthcheck_path: "/get"
-    public_uri: "all"
-```
+    # from https://github.com/run-x/opta-examples/tree/main/hello-app
+    image: ghcr.io/run-x/opta-examples/hello-app:main
+    healthcheck_path: "/"
+    # path on the load balancer to access this service
+    public_uri: "/hello"
 
+```
 
 Now you are ready to deploy your service.
-
-## Service Deployment
-
-One line deployment:
-
 ```bash
-opta apply -c hello_world.yaml
+opta apply -c hello.yaml
 ```
 
-Now, once this step is complete, you should be to curl your service by specifying the load balancer url/ip.
+```bash
+# partial output of opta apply -c hello.yaml
+hello-hello-k8s-service-586447679-fgmld  * Running on http://10.0.147.114:80/
+...
+module.hello.helm_release.k8s-service: Creation complete after 53s [id=staging-hello]
 
-Run `opta output -c staging.yaml` and note down `load_balancer_raw_dns`
+Opta updates complete!
+```
 
-Now you can:
+Now, your service is deployed, you can:
 
-- Access your service at http://\<dns\>/
-- SSH into the container by running `opta shell`
-- See logs by running `opta logs`
+- Access your service using the load balancer (public)
+```bash
+# see output above or run `opta output | grep load_balancer_raw_dns`
+export load_balancer_raw_dns=...
+
+# the service is reachable at /hello (set in the `public_uri` property)
+curl http://$load_balancer_raw_dns/hello
+
+<p>Hello, World!</p>
+```
+
+- SSH into the container
+```bash
+opta shell -c hello.yaml
+
+root@staging-hello-k8s-service-57d8b6f478-vwzkc:/#
+```
+- See the application logs 
+```bash
+opta logs -c hello.yaml             
+
+Showing the logs for server hello-hello-k8s-service-586447679-fgmld of your service
+hello-hello-k8s-service-586447679-fgmld  * Running on http://10.0.147.114:80/
+hello-hello-k8s-service-586447679-fgmld 127.0.0.1 - - [23/Dec/2021 19:42:18] "GET / HTTP/1.1" 200 -
+```
+- If you have `kubectl` installed, you can use it to connect to the kubernetes cluster
+```bash
+# Opta created all the kubernetes resources for your service
+kubectl get all --namespace hello
+
+NAME                                            READY   STATUS    RESTARTS   AGE
+pod/hello-hello-k8s-service-586447679-fgmld   2/2     Running   0          17m
+
+NAME             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+service/hello   ClusterIP   172.20.221.139   <none>        80/TCP    17m
+
+NAME                                        READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/hello-hello-k8s-service   1/1     1            1           17m
+
+NAME                                                  DESIRED   CURRENT   READY   AGE
+replicaset.apps/hello-hello-k8s-service-586447679   1         1         1       17m
+
+NAME                                                            REFERENCE                              TARGETS           MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/hello-hello-k8s-service   Deployment/hello-hello-k8s-service   18%/80%, 1%/80%   1         3         1          17m
+```
 
 ## Cleanup
 
 Once you're finished playing around with these examples, you may clean up by running the following command from the environment directory:
 
 ```bash
-opta destroy -c hello_world.yaml
-opta destroy -c staging.yaml
+# destroy the service resources
+opta destroy -c hello.yaml
+
+# destroy the environment resources
+opta destroy -c opta.yaml
 ```
 
 ## Next steps
 
+- View the [AWS Architecture](/architecture/aws/)
 - Check out more examples: [github](https://github.com/run-x/opta/tree/main/examples)
 - Use your own docker image: [Custom Image](/tutorials/custom_image)
 - Set up a domain name for your service: [Ingress](/tutorials/ingress)

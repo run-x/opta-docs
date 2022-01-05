@@ -1,7 +1,7 @@
 ---
 title: "Changing Domains"
 linkTitle: "Changing Domains"
-date: 2021-11-15
+date: 2022-01-03
 draft: false
 description: >
   How to change domains for your Opta environment.
@@ -13,54 +13,55 @@ remove their current dns module, and then add a new one after applying.
 
 Take for example, if we had the current running environment:
 
-```yaml
-name: blah
-org_name: baloney
+{{< highlight yaml "hl_lines=9-10" >}}
+name: staging
+org_name: my-org
 providers:
   aws:
     region: us-east-1
-    account_id: XXXXXXXXXXXX
+    account_id: XXXX # Your 12 digit AWS account id
 modules:
   - type: base
   - type: dns
-    domain: baloney.dev
+    domain: staging.startup.com
   - type: k8s-cluster
   - type: k8s-base
-```
+{{< / highlight >}}
 
-Supposed we wished to change the domain to "otherdomain.dev". First we would remove the dns module:
+Supposed we wished to change the domain from `staging.startup.com` to `otherdomain.dev`. First we would remove the dns module:
 
-```yaml
-name: blah
-org_name: baloney
+{{< highlight yaml "hl_lines=9" >}}
+name: staging
+org_name: my-org
 providers:
   aws:
     region: us-east-1
-    account_id: XXXXXXXXXXXX
+    account_id: XXXX
 modules:
   - type: base
+  # dns module was removed
   - type: k8s-cluster
   - type: k8s-base
-```
+{{< / highlight >}}
 
-Next we would `opta apply` the new yaml and see that the dns resources have been destroyed. 
+Next, run `opta apply` the new yaml and see that the dns resources have been destroyed. 
 **Note that your site will be temporarily offline after this step and before the next steps are completed.** 
 Afterwards we would add the new dns module entry with the new domain like so:
 
-```yaml
-name: blah
-org_name: baloney
+{{< highlight yaml "hl_lines=9-10" >}}
+name: staging
+org_name: my-org
 providers:
   aws:
     region: us-east-1
-    account_id: XXXXXXXXXXXX
+    account_id: XXXX # Your 12 digit AWS account id
 modules:
   - type: base
   - type: dns
     domain: otherdomain.dev
   - type: k8s-cluster
   - type: k8s-base
-```
+{{< / highlight >}}
 
 We would opta apply like before and we would now have the new domain. Depending on your set up there may be some 
 additional steps required:

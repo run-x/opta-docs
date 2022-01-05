@@ -1,7 +1,7 @@
 ---
 title: "Continuous Deployment"
 linkTitle: "Continuous Deployment"
-date: 2021-07-21
+date: 2022-01-03
 draft: false
 description: >
   Instructions to integrate with the CI/CD platform of your choice
@@ -15,7 +15,7 @@ If you are using Github Actions for your CI, you can use the [`run-x/deploy-acti
 
 In order for the deploy action to execute properly, you will need to use other github actions for authentication.
 
-1. [`webfactory/ssh-agent`](https://github.com/webfactory/ssh-agent), to allow access to other repositories' Opta configuration files. Note that you only need to use this if you have opta.yml files in other repos.
+1. [`webfactory/ssh-agent`](https://github.com/webfactory/ssh-agent), to allow access to other repositories' Opta configuration files. Note that you only need to use this if you have `opta.yaml` files in other repos.
 2. [`aws-actions/configure-aws-credentials`](https://github.com/aws-actions/configure-aws-credentials), to allow push and deploy to AWS. Make sure that the API key associated with this account has admin permissions.
 
 ### Example
@@ -57,8 +57,7 @@ jobs:
         run: docker build -t app:latest -f Dockerfile .
 
       - name: Update deployment
-        # Note that this version should be the same as your CLI version
-        uses: run-x/deploy-action@v0.11.9
+        uses: run-x/deploy-action@v1.0
         with:
           env: runx-staging
           image: app:latest

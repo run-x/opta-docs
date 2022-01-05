@@ -1,7 +1,7 @@
 ---
 title: "custom-terraform"
 linkTitle: "custom-terraform"
-date: 2021-12-7
+date: 2022-01-03
 draft: false
 weight: 1
 description: Allows user to bring in their own custom terraform module
@@ -13,7 +13,7 @@ the opta yaml) to your module with the `path_to_module` input, and the desired i
 `terraform_inputs` input.
 
 ## Example/Demo
-Suppose you have an opta gcp environment written in `gcp-env.yml` and you want to deploy your custom terraform module
+Suppose you have an opta gcp environment written in `gcp-env.yaml` and you want to deploy your custom terraform module
 "blah" that creates something you want (in our case a vm instance). What you could do is create a service for your
 environment which uses custom-terraform to call your module (NOTE: custom-terraform doesn't need to be in an opta 
 service-- it can be in the environment too). For our example, let's say that the file structure looks like so:
@@ -21,7 +21,7 @@ service-- it can be in the environment too). For our example, let's say that the
 ```
 .
 ├── README.md
-├── gcp-env.yml
+├── gcp-env.yaml
 └── dummy-service
     ├── blah
     │   └── main.tf
@@ -33,7 +33,7 @@ The new service is written in `dummy-service/opta.yaml` and looks like this:
 ```yaml
 environments:
   - name: gcp-example
-    path: "../gcp-env.yml"
+    path: "../gcp-env.yaml"
 name: baloney
 modules:
   - type: custom-terraform

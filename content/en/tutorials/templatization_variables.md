@@ -12,13 +12,14 @@ Additionally, you can use variables to customize the behavior on a
 per-environment basis.
 
 {{< highlight yaml "hl_lines=5-6 9-10 20" >}}
+# hello.yaml
 name: hello
 environments:
   - name: staging
     path: "staging/opta.yaml"
     variables:
       containers: 1
-  - name: staging
+  - name: production
     path: "production/opta.yaml"
     variables:
       containers: 5
@@ -36,3 +37,8 @@ modules:
 
 With this configuration, your service will have 5 max_containers in production
 but only 1 in staging.
+
+To specify the environment to use use the `--env` flag:
+```bash
+opta apply -c hello.yaml --env staging
+```

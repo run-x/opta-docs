@@ -104,10 +104,10 @@ echo "Going to install opta v$VERSION"
 
 if [[ "$OS" == "Linux" ]]; then
   PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$VERSION/opta.zip
-  MAC_ADDRESS=`cat /sys/class/net/eth0/address` || true
+  MAC_ADDRESS=`cat /sys/class/net/eth0/address 2> /dev/null` || true
 elif [[ "$OS" == "Darwin" ]]; then
   PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/mac/$VERSION/opta.zip
-  MAC_ADDRESS=`ifconfig en1 | awk '/ether/{print $2}'` || true
+  MAC_ADDRESS=`ifconfig en1 2> /dev/null | awk '/ether/{print $2}'` || true
 else
   abort "Opta is only supported on macOS and Linux."
 fi
@@ -116,7 +116,7 @@ if [[ "$MAC_ADDRESS" == "" ]]; then
   MAC_ADDRESS="unknown"
 fi
 
-GIT_EMAIL=`git config user.email` || true
+GIT_EMAIL=`git config user.email 2> /dev/null ` || true
 if [[ "$GIT_EMAIL" == "" ]]; then
   GIT_EMAIL="unknown"
 fi

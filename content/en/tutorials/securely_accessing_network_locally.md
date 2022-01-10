@@ -4,15 +4,15 @@ linkTitle: "Securely Accessing Opta Networks Locally"
 date: 2022-01-03
 draft: false
 description: >
-  Instructions to integrate with the CI/CD platform of your choice
+  Instructions to securely access network endpoints in an Opta environment
 ---
 
 # Overview
 When working with secure private networks, and specifically with the databases in them, one may wish to somehow manually 
-connect to them for debugging purpose, but there is This action, naturally, has security concerns and there's many 
+connect to them for debugging purpose. This action, naturally, has security concerns and there's many 
 solutions out there. For our users, we typically recommend installing VPN servers within your opta-managed VPCs and 
-handling network access to your environments from there. For just getting started, however, there's a rather 
-straight-forward TCP proxy solution. This article will discuss both solutions and the security concerns.
+handling network access to your environments from there. For just getting started and development environments, however, 
+there's a rather straight-forward TCP proxy solution. This article will discuss both solutions and the security concerns.
 
 # TCP-Proxy Service
 A quick way to gain connectivity is to create a TCP-Proxy service with opta and using `kubectl port-forward` to gain
@@ -27,7 +27,7 @@ you could do so by first creating a following service in your opta environment:
 ```yaml
 environments:
   - name: my-env-yaml
-    path: "../my-env-yaml.yaml"
+    path: "opta.yaml"
 name: mytcpproxy
 modules:
   - name: app

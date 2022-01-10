@@ -50,14 +50,16 @@ Running services in Opta Local environment is almost identical to how you would 
 
 #### Example 1: Deploy a service using an existing docker image
 
-We will deploy a simple [hello app](https://github.com/run-x/opta-examples/tree/main/hello-app) by defining this file.
+We will deploy a simple [hello app](https://github.com/run-x/opta-examples/tree/main/hello-app) by defining these files.
 
-```yaml
-# opta.yaml
+{{< tabs tabTotal="2" tabID="1" tabName1="hello.yaml" tabName2="local.yaml" >}}
+{{< tab tabNum="1" >}}
+{{< highlight yaml "hl_lines=11" >}}
+# hello.yaml
 name: hello
 environments:
   - name: local
-    path: "opta.yaml"
+    path: "local.yaml"
 modules:
   - type: k8s-service
     name: hello
@@ -67,12 +69,35 @@ modules:
     image: ghcr.io/run-x/opta-examples/hello-app:main
     healthcheck_path: "/"
     public_uri: "/hello"
-```
+{{< / highlight >}}
+
+{{< /tab >}}
+
+{{< tab tabNum="2" >}}
+{{< highlight yaml >}}
+# local.yaml
+name: local
+org_name: my-org
+providers: 
+  local: {}
+modules:
+  - type: local-base
+{{< / highlight >}}
+
+{{< /tab >}}
+{{< /tabs >}}
+
 
 Create the local kubernetes cluster and deploy the service by running:
 ```bash
-# estimated time for first run: 10 min
-opta apply --local --auto-approve
+# Create the local kubernetes cluster
+# estimated time for first run: 5 min
+opta apply --local --auto-approve -c local.yaml
+
+# Configure the service
+opta apply --auto-approve -c hello.yaml
+
+# example of output
 ...
 ╒═══════════╤═══════════════════════════════════════╤══════════╤════════╤══════════╕
 │ module    │ resource                              │ action   │ risk   │ reason   │
@@ -110,7 +135,7 @@ You can test your service by visiting [http://localhost:8080/hello](http://local
 
 - SSH into the container
 ```bash
-opta shell
+opta shell -c hello.yaml
 
 root@staging-hello-k8s-service-57d8b6f478-vwzkc:/#
 ```
@@ -218,9 +243,6 @@ CMD python3 -m flask run \-\-host=0.0.0.0 \-\-port=${PORT}
 
 Apply the local changes:
 ```
-# if you have previously run example 1, this will make sure you start from a clean state
-$HOME/.opta/local/kind delete cluster --name opta-local-cluster
-
 # Create the local kubernetes cluster
 opta apply --local --auto-approve -c local.yaml
 

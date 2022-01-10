@@ -149,6 +149,7 @@ fi
 
 echo "Installing..."
 unzip -q /tmp/opta.zip -d ~/.opta
+rm -rf /tmp/opta.zip
 chmod u+x ~/.opta/opta
 
 RUNPATH=~/.opta

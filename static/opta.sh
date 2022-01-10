@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OPTAVERSION=0.22.0
+OPTAVERSION=0.23.0
 
 # Architecture check
 ARCH=""

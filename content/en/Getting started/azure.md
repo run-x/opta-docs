@@ -41,6 +41,7 @@ providers:
 modules:
   - type: base
   - type: k8s-cluster
+    admin_group_object_ids: []
   - type: k8s-base
 ```
 

@@ -99,11 +99,11 @@ the kubernetes persistent volume claims.
 | `port` | Specifies what port your app was made to be listened to. Currently it must be a map of the form `http: [PORT_NUMBER_HERE]` or `tcp: [PORT_NUMBER_HERE]`. Use http if you just have a vanilla http server and tcp for websockets.  | *none* | False |
 | `min_containers` | The minimum number of replicas your app can autoscale to. | `1` | False |
 | `max_containers` | The maximum number of replicas your app can autoscale to. | `3` | False |
-| `autoscaling_target_cpu_percentage` | See the [autoscaling]({{< relref "#autoscaling" >}}) section. | `80` | False |
-| `autoscaling_target_mem_percentage` | See the [autoscaling]({{< relref "#autoscaling" >}}) section. | `80` | False |
+| `autoscaling_target_cpu_percentage` | See the [autoscaling](https://docs.opta.dev/reference/google/service_modules/gcp-k8s-service/#autoscaling) section. | `80` | False |
+| `autoscaling_target_mem_percentage` | See the [autoscaling](https://docs.opta.dev/reference/google/service_modules/gcp-k8s-service/#autoscaling) section. | `80` | False |
 | `secrets` | Optional. A list of secrets to add as environment variables for your container. All secrets must be set following the [secrets instructions](/tutorials/secrets) prior to deploying the app. | `[]` | False |
 | `env_vars` | A map of key values to add to the container as environment variables (key is name, value is value). ```yaml env_vars:  FLAG: "true" ```  | `[]` | False |
-| `healthcheck_path` | See the See the [liveness/readiness]({{< relref "#livenessreadiness-probe" >}}) section. Default `null` (i.e., no user-specified healthchecks) | `None` | False |
+| `healthcheck_path` | See the See the [liveness/readiness](https://docs.opta.dev/reference/google/service_modules/gcp-k8s-service/#healthcheck-probe) section. Default `null` (i.e., no user-specified healthchecks) | `None` | False |
 | `liveness_probe_path` | Use if liveness probe != readiness probe | `None` | False |
 | `readiness_probe_path` | Use if liveness probe != readiness probe | `None` | False |
 | `initial_liveness_delay` | Use if the initial delay needs to be changed. | `30` | False |
@@ -111,7 +111,7 @@ the kubernetes persistent volume claims.
 | `consistent_hash` | Use [consistent hashing](https://www.nginx.com/resources/wiki/modules/consistent_hash/) | `None` | False |
 | `sticky_session` | Use [sticky sessions](https://stackoverflow.com/questions/10494431/sticky-and-non-sticky-sessions) via cookies for your service (first request will send you a cookie called opta_cookie which you should add on future requests). | `False` | False |
 | `sticky_session_max_age` | If the sticky session is enabled, how long should the cookie last? | `86400` | False |
-| `resource_request` | See the [container resources]({{< relref "#container-resources" >}}) section. Default ```yaml cpu: 100 # in millicores memory: 128 # in megabytes ``` CPU is given in millicores, and Memory is in megabytes.  | `{'cpu': 100, 'memory': 128}` | False |
+| `resource_request` | See the [container resources](https://docs.opta.dev/reference/google/service_modules/gcp-k8s-service/#container-resources) section. Default ```yaml cpu: 100 # in millicores memory: 128 # in megabytes ``` CPU is given in millicores, and Memory is in megabytes.  | `{'cpu': 100, 'memory': 128}` | False |
 | `public_uri` | The full domain to expose your app under as well as path prefix. Must be the full parent domain or a subdomain referencing the parent as such: "dummy.{parent[domain]}/my/path/prefix"  | `[]` | False |
 | `keep_path_prefix` | Should we keep the prefix path which you set in the public uri when forwarding requests to your service? | `False` | False |
 | `links` | A list of extra IAM role policies not captured by Opta which you wish to give to your service. | `[]` | False |

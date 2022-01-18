@@ -1,7 +1,6 @@
 ---
 title: "References"
 linkTitle: "References"
-date: 2022-01-03
 weight: 5
 description: >
   Opta config reference

@@ -28,7 +28,6 @@ networking constraints (you'll know them if you have them), so _no need to set a
 | Name      | Description |
 | ----------- | ----------- |
 | `kms_account_key_id` | The id of the [KMS](https://cloud.google.com/security-key-management) key (this is what handles encryption for redis, gke, etc...) |
-| `kms_account_key_self_link` | The self link of the default KMS key (sometimes things need the ID, sometimes the ARN, so we're giving both) |
 | `vpc_id` | The ID of the [VPC](https://cloud.google.com/vpc/docs/vpc) we created for this environment |
 | `vpc_self_link` | str |
 | `private_subnet_id` | The ID of the private [subnet](https://cloud.google.com/vpc/docs/vpc#subnet-ranges) we setup for your environment |

@@ -82,7 +82,7 @@ style = "tango"
 
 # Comment out if you don't want the "print entire section" link enabled.
 [outputs]
-section = ["HTML", "print"]
+section = ["HTML"]
 
 [params]
 copyright = "RunX Labs Inc."
@@ -110,9 +110,10 @@ version = "0.0"
 url_latest_version = "https://docs.opta.dev"
 
 # Repository configuration (URLs for in-page links to opening issues and suggesting changes)
-github_repo = "https://github.com/run-x/opta"
+github_repo = "https://github.com/run-x/opta-docs"
 # An optional link to a related project repo. For example, the sibling repository where your product code lives.
-# github_project_repo = "https://github.com/google/docsy"
+github_project_repo = "https://github.com/run-x/opta"
+github_branch = "main"
 
 # Specify a value here if your content directory is not in your repo's root directory
 # github_subdir = ""
@@ -135,7 +136,7 @@ prism_syntax_highlighting = true
 [params.ui]
 # Enable to show the side bar menu in its compact state.
 sidebar_menu_compact = true
-ul_show = 2
+ul_show = 3
 sidebar_menu_foldable = true
 
 #  Set to true to disable breadcrumb navigation.
@@ -152,10 +153,10 @@ footer_about_disable = false
 # If you want this feature, but occasionally need to remove the "Feedback" section from a single page,
 # add "hide_feedback: true" to the page's front matter.
 [params.ui.feedback]
-enable = false
+enable = true
 # The responses that the user sees after clicking "yes" (the page was helpful) or "no" (the page was not helpful).
-yes = 'Glad to hear it! Please <a href="https://github.com/USERNAME/REPOSITORY/issues/new">tell us how we can improve</a>.'
-no = 'Sorry to hear that. Please <a href="https://github.com/USERNAME/REPOSITORY/issues/new">tell us how we can improve</a>.'
+yes = 'Glad to hear it! Please <a href="https://slack.opta.dev/">tell us how we can improve</a>.'
+no = 'Sorry to hear that. Please <a href="https://slack.opta.dev/">tell us how we can improve</a>.'
 
 # Adds a reading time to the top of each doc.
 # If you want this feature, but occasionally need to remove the Reading time from a single page, 

@@ -8,11 +8,11 @@ description: >
   Architecture overview for Kubernetes clusters of Opta
 ---
 
-## K8s
-
 <a href="/images/opta_internal_kubernetes_architecture.png" target="_blank">
   <img src="/images/opta_internal_kubernetes_architecture.png" align="center"/>
 </a>
+
+## Description
 
 The K8s topology is divided into namespaces of 2 types: 3rd party integrations and Opta services. The third party
 integrations consist of respected open source projects which handle background tasks or features expansions. These
@@ -63,7 +63,7 @@ one Opta service will not be able to manipulate the K8s resources for another. T
 used for sensitive custom data, as well as database access credentials. Lastly, we have a configmap (for EKS) which
 currently holds the latest public key needed for documentdb usage.
 
-### Security Overview
+## Security Overview
 
 - [Here is Linkerd's security audit](https://github.com/linkerd/linkerd2/blob/main/SECURITY_AUDIT.pdf)
 - All cross-service communication is encrypted via mTLS

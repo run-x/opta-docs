@@ -9,7 +9,7 @@ weight: 3
 
 Opta currently has the following system prerequisites to operate normally:
 
-- A supported macos or debian distro release.
+- A supported macos or debian or redhat distro release.
 - [terraform](https://www.terraform.io/downloads.html) (v0.14+)
 - [docker](https://docker.com/products/docker-desktop) (v19+)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) (also packaged with

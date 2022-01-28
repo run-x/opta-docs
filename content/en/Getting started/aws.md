@@ -27,6 +27,10 @@ This set up the base infrastructure (like network and cluster) that is the found
 > Note that it costs around $5 per day to run this on AWS. So make sure to destroy it after you're done 
 > (opta has a destroy command so it should be easy :))!
 
+> Note that Opta requires you to use a region with at least 3 availability zones. This is not only
+> to ensure your environment is robust and highly available, but several AWS services require regions 
+> with 3 availability zones.
+
 Create this file and name it `opta.yaml`
 
 ```yaml

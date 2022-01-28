@@ -103,7 +103,12 @@ fi
 echo "Going to install opta v$VERSION"
 
 if [[ "$OS" == "Linux" ]]; then
-  PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$VERSION/opta.zip
+  SPECIFIC_OS_ID=`grep "ID=" /etc/os-release | awk -F"=" '{print $2;exit}' | tr -d '"'`
+  if [[ "$SPECIFIC_OS_ID" == "amzn" ]] || [[ "$SPECIFIC_OS_ID" == "centos" ]]; then
+    PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/centos/$VERSION/opta.zip
+  else
+    PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$VERSION/opta.zip
+  fi
   MAC_ADDRESS=`cat /sys/class/net/eth0/address 2> /dev/null` || true
 elif [[ "$OS" == "Darwin" ]]; then
   PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/mac/$VERSION/opta.zip

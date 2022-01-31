@@ -1,166 +1,199 @@
 ---
 title: "custom-terraform"
 linkTitle: "custom-terraform"
-date: 2021-12-7
+date: 2022-01-18
 draft: false
 weight: 1
 description: Allows user to bring in their own custom terraform module
 ---
 
 This module allows a user to bring in their own custom terraform code into the opta ecosystem, to use in tandem with
-their other opta modules, and even reference them. All a user needs to do is specify the path (absolute or relative to 
-the opta yaml) to your module with the `path_to_module` input, and the desired inputs to your module (if any) via the 
+their other opta modules, and even reference them. All a user needs to do is specify the
+[source](https://www.terraform.io/language/modules/sources#module-sources)
+to your module with the `source` input, and the desired inputs to your module (if any) via the
 `terraform_inputs` input.
 
-## Example/Demo
-Suppose you have an opta gcp environment written in `gcp-env.yaml` and you want to deploy your custom terraform module
-"blah" that creates something you want (in our case a vm instance). What you could do is create a service for your
-environment which uses custom-terraform to call your module (NOTE: custom-terraform doesn't need to be in an opta 
-service-- it can be in the environment too). For our example, let's say that the file structure looks like so:
+## Use local terraform files
+
+Let's create a AWS EC2 instance using terraform.
+
+Here is the directory structure for this example:
 
 ```
 .
-├── README.md
-├── gcp-env.yaml
-└── dummy-service
-    ├── blah
-    │   └── main.tf
-    └── opta.yaml
+├── opta.yaml       # the opta environment file for AWS
+├── custom-tf.yaml  # define the opta custom-terraform module
+└── my-terraform    # place all the terraform files in this directory
+    └── main.tf
 ```
 
-The new service is written in `dummy-service/opta.yaml` and looks like this:
+
+{{< tabs tabTotal="3" tabID="1" tabName1="custom-tf.yaml" tabName2="opta.yaml" tabName3="main.tf" >}}
+{{< tab tabNum="1" >}}
+```yaml
+# custom-tf.yaml
+name: customtf
+environments:
+  - name: staging
+    path: "../opta.yaml"
+modules:
+  - type: custom-terraform
+    name: customtf
+    # where the terraform files are located
+    source: "./my-terraform"
+    terraform_inputs:
+      # some input variables for terraform
+      instance_name: "hello-world"
+      # use opta interpolation to use variable from the parent
+      private_subnet_ids: "{parent.private_subnet_ids}"
+```
+{{< /tab >}}
+
+{{< tab tabNum="2" >}}
+
+```yaml
+# opta.yaml
+name: staging # name of the environment
+org_name: my-org # A unique identifier for your organization
+providers:
+  aws:
+    region: us-east-1
+    account_id: XXXX # Your 12 digit AWS account id
+modules:
+  - type: base
+  - type: k8s-cluster
+  - type: k8s-base
+```
+
+{{< /tab >}}
+
+{{< tab tabNum="3" >}}
+
+```
+# main.tf
+
+# set by opta in terraform_inputs.private_subnet_ids
+variable "private_subnet_ids" {
+  description = "Use existing Private subnet ids"
+  type        = list(string)
+  default     = null
+}
+
+# set by opta in terraform_inputs.instance_name
+variable "instance_name" {
+  description = "Name your instance"
+  type        = string
+  default     = null
+}
+
+data "aws_ami" "ubuntu" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  # Canonical: Publisher of Ubuntu
+  owners = ["099720109477"]
+}
+
+resource "aws_instance" "my_instance" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t3.micro"
+  subnet_id     = var.private_subnet_ids[0]
+
+  tags = {
+    Name = "${var.instance_name}"
+  }
+
+}
+```
+{{< /tab >}}
+
+{{< /tabs >}}
+
+Run opta apply to create the custom terraform resources:
+
+```bash
+opta apply -c custom-tf.yaml
+```
+```console
+╒══════════╤══════════════════════════╤══════════╤════════╤══════════╕
+│ module   │ resource                 │ action   │ risk   │ reason   │
+╞══════════╪══════════════════════════╪══════════╪════════╪══════════╡
+│ customtf │ aws_instance.my_instance │ create   │ LOW    │ creation │
+╘══════════╧══════════════════════════╧══════════╧════════╧══════════╛
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+```
+
+Once you opta apply the service you should see your new EC2 instance up and running in the AWS console and be able to ssh into it.
+
+When done, you can destroy the custom terraform resource:
+```bash
+opta destroy -c custom-tf.yaml
+```
+
+## Use a remote terraform module
+The `source` input uses terraform's [module source](https://www.terraform.io/language/modules/sources#module-sources)
+logic behind the scenes and so follows the same format/limitations. Thus, you can use this for locally available modules,
+or modules available remotely, like so:
 
 ```yaml
 environments:
-  - name: gcp-example
-    path: "../gcp-env.yaml"
-name: baloney
+  - name: staging
+    path: "../opta.yaml"
+name: customtf
 modules:
   - type: custom-terraform
-    name: vm1
-    path_to_module: "./blah"
+    name: bucket
+    source: "terraform-aws-modules/s3-bucket/aws" # See https://registry.terraform.io/modules/terraform-aws-modules/s3-bucket/aws/latest
+    version: "2.13.0" # version needs to be specified for remote registry modules
     terraform_inputs:
-      hello: "world"
-      subnet_self_link: "{parent.private_subnet_self_link}"
-# You can call it multiple times if you like
-#  - type: custom-terraform
-#    name: vm2
-#    path_to_module: "./blah"
-#    terraform_inputs:
-#      hello: "world2"
-#      subnet_self_link: "{parent.private_subnet_self_link}"
+      bucket: "dummy-bucket-{aws.account_id}"
+      acl: "private"
+      versioning: 
+        enabled: true
 ```
 
-You can see that the path to your module is specified by `path_to_module` (you can use relative or absolute paths),
-as are the expected inputs `hello` and `subnet_self_link`. Note that you can use opta interpolation to use variables or
-the outputs of the parent environment or other modules as input.
-
-Lastly, you can use the following as content to the main.tf file of the blah module to complete the example/demo:
-
-```hcl
-variable "hello" {
-  type = string
-}
-
-variable "subnet_self_link" {
-  type = string
-}
-
-data "google_compute_subnetwork" "my-subnetwork" {
-  self_link = var.subnet_self_link
-}
-
-resource "random_string" "suffix" {
-  length = 4
-  upper = false
-  special = false
-}
-
-resource "google_service_account" "default" {
-  account_id   = "custom-terraform-${random_string.suffix.result}"
-  display_name = "Service Account"
-}
-
-resource "google_compute_firewall" "k8s_extra_rules" {
-  name      = "custom-terraform-${random_string.suffix.result}"
-  network   = data.google_compute_subnetwork.my-subnetwork.network
-  direction = "INGRESS"
-  allow {
-    protocol = "tcp"
-    ports    = ["22"]
-  }
-  source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["open-to-public-${random_string.suffix.result}"]
-}
-
-resource "google_compute_instance" "default" {
-  name         = "test-${random_string.suffix.result}"
-  machine_type = "n2-standard-4"
-  zone         = "us-central1-a"
-
-  tags = ["open-to-public-${random_string.suffix.result}"]
-
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-9"
-    }
-  }
-
-  // Local SSD disk
-  scratch_disk {
-    interface = "SCSI"
-  }
-
-  network_interface {
-    subnetwork = var.subnet_self_link
-    access_config {
-      // Ephemeral public IP
-    }
-  }
-
-  metadata = {
-    foo = "bar"
-  }
-
-  metadata_startup_script = "echo ${var.hello} > /test.txt"
-
-  service_account {
-    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-    email  = google_service_account.default.email
-    scopes = ["cloud-platform"]
-  }
-}
-```
-
-Once you opta apply the service you should see your new compute instance up and running in the GCP console and be able
-to ssh into it.
+**WARNING** Be very, very, careful about what remote modules you are using, as they leave you wide open to supply chain
+attacks, depending on the security and character of the owner of said module. It's highly advised to use either
+[official modules](https://registry.terraform.io/browse/modules) or modules under your company's control.
 
 ## Using Outputs from your Custom Terraform Module
 Currently you can use outputs of your custom terraform module in the same yaml, like so:
 ```yaml
 environments:
-  - name: gcp-example
-    path: "../gcp-env.yaml"
-name: baloney
+  - name: staging
+    path: "../opta.yaml"
+name: customtf
 modules:
   - type: custom-terraform
-    name: hi1
-    path_to_module: "./blah1" # <-- This module has an output called output1
+    name: tf1
+    source: "./my-terraform-1" # <-- This module has an output called output1
   - type: custom-terraform
-    name: hi2
-    path_to_module: "./blah2"
+    name: tf2
+    source: "./my-terraform-2"
     terraform_inputs:
-      input1: "${{module.hi1.output1}}" # <-- HERE. Note the ${{}} wrapping
+      input1: "${{module.tf1.output1}}" # <-- HERE. Note the ${{}} wrapping
 ```
 
 These outputs, however, currently can not be used in other yamls (e.g. if you put custom terraform in an environment 
 yaml its outputs can't be used in the services), and will not show up in the `opta output` command. Work on supporting 
 this is ongoing.
 
+
 ## Fields
 
 
 | Name      | Description | Default | Required |
 | ----------- | ----------- | ------- | -------- |
-| `path_to_module` | The path to your terraform module | `None` | True |
+| `source` | The source of your terraform module. For more info, check out https://www.terraform.io/language/modules/sources#module-sources | `None` | False |
+| `path_to_module` | Deprecated, use source | `None` | False |
+| `version` | The version of the remote module to use. For more info, check out https://www.terraform.io/language/modules/syntax#version | `None` | False |
 | `terraform_inputs` | The variables which you wish to pass into your custom module. | `{}` | False |

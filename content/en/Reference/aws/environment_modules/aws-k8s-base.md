@@ -24,6 +24,7 @@ This module is responsible for all the base infrastructure we package into the O
 
 | Name      | Description | Default | Required |
 | ----------- | ----------- | ------- | -------- |
+| `cert_arn` | The arn of the ACM certificate to use for SSL. By default uses the one created by the DNS module if the module is found and delegation enabled. | `` | False |
 | `nginx_high_availability` | Deploy the nginx ingress in a high-availability configuration. | `False` | False |
 | `linkerd_high_availability` | Deploy the linkerd service mesh in a high-availability configuration for its control plane. | `False` | False |
 | `linkerd_enabled` | Enable the linkerd service mesh installation. | `True` | False |

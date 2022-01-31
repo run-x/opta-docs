@@ -103,7 +103,7 @@ the kubernetes persistent volume claims.
 | `max_containers` | The maximum number of replicas your app can autoscale to. | `3` | False |
 | `autoscaling_target_cpu_percentage` | See the [autoscaling](https://docs.opta.dev/reference/aws/service_modules/aws-k8s-service/#autoscaling) section. | `80` | False |
 | `autoscaling_target_mem_percentage` | See the [autoscaling](https://docs.opta.dev/reference/aws/service_modules/aws-k8s-service/#autoscaling) section. | `80` | False |
-| `secrets` | A list of secrets to add as environment variables for your container. All secrets must be set following the [secrets instructions](/tutorials/secrets) prior to deploying the app. | `[]` | False |
+| `secrets` | Deprecated, see [secrets instructions](/tutorials/secrets). | `[]` | False |
 | `env_vars` | A map of key values to add to the container as environment variables (key is name, value is value). ```yaml env_vars:  FLAG: "true" ```  | `[]` | False |
 | `healthcheck_path` | See the See the [liveness/readiness](https://docs.opta.dev/reference/aws/service_modules/aws-k8s-service/#healthcheck-probe) section. Default `null` (i.e., no user-specified healthchecks) | `None` | False |
 | `liveness_probe_path` | Use if liveness probe != readiness probe | `None` | False |

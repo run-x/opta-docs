@@ -138,7 +138,11 @@ modules:
 ```
 
 ## Breaking Changes
-## 1.18 through 1.21
+### Outside of Opta
+Opta will provide warnings and documentation for upgrading all of our managed components, but you should make sure
+that none of the third party helm charts installed on your Kubernetes cluster have any version incompaibility either.
+
+### 1.18 through 1.21
 No breaking changes or extra steps identified. You're good to go.
 
 ### References

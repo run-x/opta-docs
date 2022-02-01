@@ -65,17 +65,71 @@ begin configuring the K8s upgrade. It will lead you to a pop-up like so:
 </a>
 
 **THIS IS IMPORTANT**: Because all the nodes will be replaced, there will be a minute or two of downtime if you did not
-set the nginx ingress to high availability on your `k8s-base` instance, and all your currently running nodes containers
-will be restarted. Please schedule the upgrade time accordingly. Furthermore, note that the `Update stategy` is set to
-`Rolling update`-- this ensures that your nodes are not mass-destroyed meaning that your workloads can slowly migrate over
-to the new hosts instead of all dying and restarting at once. Do not change this unless you know exactly what you are doing.
+set the nginx ingress to high availability on your [k8s-base](/reference/aws/environment_modules/aws-k8s-base) instance, 
+and all the containers will be restarted, including the nginx pods (which is where the downtime originates from). You 
+may incur additional downtime if you containers take some time to start up. Please schedule the upgrade time accordingly. 
+Furthermore, note that the `Update strategy` is set to `Rolling update`-- this ensures that your nodes are not 
+mass-destroyed meaning that your workloads can slowly migrate over to the new hosts instead of all dying and restarting 
+at once.
 
 To begin, simply click the `Update` button, and the upgrade should take ~20 minutes. If you're interested, you will be
-able to trace the progress using `kubectl` as the new nodes are created, the pods are migrated, and the old nodes killed.
+able to trace the progress using `kubectl get nodes` and `kubectl get pods -A` as the new nodes are created, the pods
+are migrated, and the old nodes killed.
 
 Remember to rerun this step for each node group. As infrastructure changes should be done slowly and carefully
 (and the backwards compatibility of kubernetes allows us to take things slowly), **do not do more than one at a time**.
 
+## Step 3: Update the k8s version in Opta
+Once all the manual migration is done, you must update the Opta specs to reflect the kubernetes version upgrade.
+To do so, set the `k8s_version` field in the `k8s-cluster` block of your environment's yaml to your new kubernetes version.
+
+**NOTE**: The `k8s_version` field may not be currently specified in your yaml as it comes with a default. Opta 
+continuously updates this default but in order to not force downtime on the users the changes in the default do not
+affect existing clusters, only new ones. Please refer to [here](https://docs.opta.dev/reference/aws/environment_modules/aws-eks/)
+for more details of the `k8s-cluster` block.
+
+For example, if you just upgraded to kubernetes version 1.21, then your environment yaml may change from looking like 
+this:
+
+```yaml
+name: your-env
+org_name: your-org
+providers:
+  aws:
+    region: us-east-1
+    account_id: XXXXXXXXX
+modules:
+  - type: base
+  - type: dns
+    domain: your.domain.com
+    delegated: false
+  - type: k8s-cluster
+  - type: k8s-base
+```
+
+To looking like this:
+
+```yaml
+name: your-env
+org_name: your-org
+providers:
+  aws:
+    region: us-east-1
+    account_id: XXXXXXXXX
+modules:
+  - type: base
+  - type: dns
+    domain: your.domain.com
+    delegated: false
+  - type: k8s-cluster
+    k8s_version: "1.21"
+  - type: k8s-base
+```
+
 # Breaking Changes
 ## 1.18 through 1.21
 No breaking changes or extra steps identified. You're good to go.
+
+# References
+https://docs.aws.amazon.com/eks/latest/userguide/update-cluster.html
+https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html

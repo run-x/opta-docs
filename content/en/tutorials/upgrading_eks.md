@@ -17,7 +17,7 @@ Fortunately for Opta users, this process does not need to be difficult and we ha
 which should cover Opta-managed EKS setups.
 
 > The guide below does the update via the AWS Console, but you can do the commands via the cli as well if you so wish
-> Please refere to [here](https://docs.aws.amazon.com/eks/latest/userguide/update-cluster.html) for more details.
+> Please refer to [here](https://docs.aws.amazon.com/eks/latest/userguide/update-cluster.html) for more details.
 
 ## Steps
 As Kubernetes always [maintains 1 minor version compatibility backwards or forwards](https://kubernetes.io/releases/version-skew-policy/),
@@ -28,8 +28,8 @@ but please read the [Breaking Changes](#breaking-changes) section carefully as s
 extra steps.
 
 To begin the upgrade, go to your AWS console UI, to the EKS section, and to the details of the cluster in question
-(make sure that you are in the correct region or otherwise you will not see the cluster's details). You should see a
-screeen like the following:
+(make sure that you are in the correct region or otherwise you will not see the cluster's details). The name of your 
+cluster should be of the form "opta-{NAME OF YOUR ENV}". You should see a screeen like the following:
 
 <p>
 <a href="/images/eks_upgrade_1.png" target="_blank">
@@ -48,9 +48,9 @@ To begin, simply click on the `Update Now` button which should be on your screen
 </a>
 </p>
 
-**THIS IS IMPORTANT**: The control plane not only manages the container orchestration, but also the API through which users interact, meaning that
-no new deployments or `kubectl` access should be attempted while this step is being done (~20 minutes) Please schedule
-the upgrade time accordingly.
+**THIS IS IMPORTANT**: The control plane not only manages the container orchestration, but also the API through which 
+users interact, meaning that no new deployments or `kubectl` access should be attempted while this step is being done 
+(~20 minutes). Your _currently_ running applications will NOT be impacted. Please schedule the upgrade time accordingly.
 
 Click `Update`, and wait until the update is complete.
 
@@ -103,8 +103,8 @@ For example, if you just upgraded to kubernetes version 1.21, then your environm
 this:
 
 ```yaml
-name: your-env
-org_name: your-org
+name: staging # name of the environment
+org_name: my-org # A unique identifier for your organization
 providers:
   aws:
     region: us-east-1
@@ -121,8 +121,8 @@ modules:
 To looking like this:
 
 ```yaml
-name: your-env
-org_name: your-org
+name: staging # name of the environment
+org_name: my-org # A unique identifier for your organization
 providers:
   aws:
     region: us-east-1
@@ -139,8 +139,10 @@ modules:
 
 ## Breaking Changes
 ### Outside of Opta
-Opta will provide warnings and documentation for upgrading all of our managed components, but you should make sure
-that none of the third party helm charts installed on your Kubernetes cluster have any version incompaibility either.
+Opta will provide warnings and documentation for upgrading all of our managed components, but you should make sure that 
+none of the third party helm charts/kubernetes manifests you have installed on your Kubernetes cluster have any version 
+incompatibility either. Please refer to this [Kubernetes API deprecation guide](https://kubernetes.io/docs/reference/using-api/deprecation-guide/) 
+to change your code accordingly.
 
 ### 1.18 through 1.21
 No breaking changes or extra steps identified. You're good to go.

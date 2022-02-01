@@ -1,7 +1,7 @@
 ---
 title: "Secrets"
 linkTitle: "Secrets"
-date: 2022-01-19
+date: 2022-01-27
 description: >
   Creating secrets for your application
 ---
@@ -39,8 +39,9 @@ modules:
     ```
     Success
     ```
+    <sup>Note: Opta will restart the service for the secrets to be updated in real time, if that's not desirable use the `--no-restart` flag.</sup>
 
-1. Or if you want to create multiple secrets, use the `secret bulk-update` command
+2. Or if you want to create multiple secrets, use the `secret bulk-update` command
 
     ```
     # example of .env file containing secrets
@@ -54,8 +55,9 @@ modules:
     ```
     Success
     ```
+    <sup>Note: Opta will restart the service for the secrets to be updated in real time, if that's not desirable use the `--no-restart` flag.</sup>
 
-1. List all secrets with the `secret list` command
+3. List all secrets with the `secret list` command
 
     ```bash
     opta secret list -c hello.yaml
@@ -66,7 +68,7 @@ modules:
     MY_SECRET_3=value_3
     ```
 
-1. View a secret value with the `secret view` command
+4. View a secret value with the `secret view` command
 
     ```bash
     opta secret view -c hello.yaml MY_SECRET_1
@@ -75,33 +77,11 @@ modules:
     value_1
     ```
 
-2. If you the service to access the secrets at runtime, add them to the service opta file.
-
-    ```yaml
-    name: hello
-    environments:
-      - name: staging
-        path: "opta.yaml"
-    modules:
-      - type: k8s-service
-        name: hello
-        port:
-          http: 80
-        image: ghcr.io/run-x/opta-examples/hello-app:main
-        # add this section below
-        secrets:
-          - MY_SECRET_1
-          - MY_SECRET_2
-          - MY_SECRET_3
-    ```
+5. View a secret value at runtime
 
     ```bash
-    # apply the changes to have the secrets defined as environment variables
-    opta apply -c hello.yaml
-    ```
-
-    ```bash
-    # test that the secrets are available at runtime
+    # shell into a service and view the environment variables
+    # the application can use these
     opta shell -c hello.yaml
     env | grep MY_SECRET_
     MY_SECRET_1=value_1

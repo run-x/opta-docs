@@ -6,15 +6,15 @@ menu:
   main:
     weight: 20
 no_list: true
-description: Create secure, scalable, compliant Infrastructure stack for your startup in less than an hour.
+description: Higher level Infrastructure-As-Code
 ---
 
 ## What is Opta?
 
-Opta is a new kind of Infrastructure-As-Code framework where you work with high-level constructs
-instead of getting lost in low level cloud configuration. Imagine just being able to say that you want
-an autoscaling docker container that talks to a RDS database - instead of figuring out the details of VPC,
-IAM, Kubernetes, Elastic Load Balancing etc -- that's what Opta does!
+Opta is an Infrastructure-As-Code framework where you work with high-level constructs instead of getting lost
+in low level cloud configuration. Opta gives you a vast library of modules that you can connect together to
+build your ideal Infrastructure stack. Best of all, Opta uses Terraform under the hood - so you're never locked in.
+You can always write custom Terraform or even take the Opta generated Terraform and go your own way!
 
 <p align="center">
   <iframe src="https://www.youtube.com/embed/nja_EfpGexE" 
@@ -26,25 +26,19 @@ IAM, Kubernetes, Elastic Load Balancing etc -- that's what Opta does!
   </iframe>
 </p>
 
-## Who is it for?
+## Why use Opta
+Infrastructure as code (IaC) has rapidly become the standard for provisioning and managing Infrastructure and 
+for the right reasons! But the leading IaC tools are still complicated to use and require deep Cloud/Infrastructure
+expertise. Opta was conceptualized to help address this complexity. Opta is a simpler IaC framework with best practices
+built-in. It enables users to set up automated, scalable and secure infrastructure without being a cloud expert or 
+spending days figuring out cloud minutiae!
 
-Opta is designed for folks who are not Infrastructure or Devops experts but still want to build amazing,
-scalable, secure Infra in the cloud. Majority of Opta's users are early stage startups who use it for their
-dev/staging/production environments.
+We are confident it can drastically reduce the cloud complexity and devops headaches of most fast moving 
+organizations. It is already being used by companies - big and small :)
 
-If you'd like to try it out or have any questions - feel free to join our [Slack](https://slack.opta.dev/)!
+To read more about the vision behind Opta, check out this [blog post](https://blog.runx.dev/infrastructure-as-code-for-everyone-7dad6b813cbc).
 
-## What you get with Opta
-
-- Production ready [Architecture](https://docs.opta.dev/architecture/aws/)
-- SOC2 compliance from day 1
-- Continuous Deployment for containerized workloads
-- Hardened network and security configurations
-- Support for multiple environments (like Dev/QA/Staging/Prod)
-- Integrations with observability tools (like Datadog/LogDNA/Prometheus/SumoLogic)
-- Support for non-kubernetes resources like RDS, Cloud SQL, DocumentDB etc
-- Built-in auto-scaling and high availability (HA)
-- Support for spot instances
+If you'd like to try it out or have any questions - feel free to join our [Slack](https://slack.opta.dev) or explore the [Getting Started Guide](/getting-started)!
 
 ## How it works?
 

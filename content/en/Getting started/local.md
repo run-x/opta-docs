@@ -48,9 +48,7 @@ Running your application in Opta Local environment is almost identical to how yo
 
 We will deploy a simple [hello app](https://github.com/run-x/opta-examples/tree/main/hello-app) by defining these files.
 
-{{< tabs tabTotal="1" tabID="1" tabName1="hello.yaml" tabName2="local.yaml" >}}
-{{< tab tabNum="1" >}}
-{{< highlight yaml "hl_lines=11" >}}
+```yaml
 # hello.yaml
 name: hello
 org_name: localorg  # Optional, this can be set to your organization's name
@@ -63,9 +61,7 @@ modules:
     image: ghcr.io/run-x/opta-examples/hello-app:main
     healthcheck_path: "/"
     public_uri: "/hello"
-{{< / highlight >}}
-{{< /tab >}}
-{{< /tabs >}} 
+```
 
 Opta will install a local Kubernetes cluster on your laptop the first time you deploy your application locally.
 
@@ -284,6 +280,13 @@ Follow [this documentation](https://github.com/run-x/opta-examples/tree/main/ful
 All these features are supported in the public cloud. Opta makes it super-convenient to graduate from Opta Local to any of the big-3 public cloud providers (AWS, Azure or GCP).  
 Learn more about Opta for public cloud [here](https://docs.opta.dev/getting-started/).
 
+## A Note on the Environment and Service Opta Files for Local
+
+You may take any Opta service file you currently use in a public cloud environment (aws/gcp/azure) and deploy it locally using the `--local` flag in Opta.
+
+For public cloud providers, opta usually uses an environment yaml file that deploys the infrastucture, and one or more service opta files to deploy applications. When you run Opta commands with the `--local` flag on any service opta file, the `environment` key within the service yaml file is ignored and the service is instead deployed on your local Kubernetes cluster. 
+
+The environment opta files contains a key for the `org_name`. For local deployment, if you wish to specify the Organization name you can add an `org_name` key to your service opta file. The organization defaults to `localorg` if this key is not specified. Remember to remove this key from the service yaml files for public clouds (aws/gcp/azure). 
 
 ## Uninstallation and Cleanup
 

@@ -117,7 +117,7 @@ root@staging-hello-k8s-service-57d8b6f478-vwzkc:/#
 opta logs --local -c hello.yaml
 ```
 
-- View Kubernetes for your Application's deployment Events
+- View Kubernetes events for your Application's deployment
 ```
 opta events --local -c hello.yaml
 ```
@@ -162,7 +162,7 @@ For this example, we will use our hello application (also available on [github](
 2. Set `image: AUTO` in `hello.yaml` to use the local image.
 3. Make a change to the returned text in `app.py` to validate that the new image is used.
 
-{{< tabs tabTotal="4" tabID="2" tabName1="opta.yaml" tabName2="local.yaml" tabName3="app.py" tabName4="Dockerfile" >}}
+{{< tabs tabTotal="3" tabID="2" tabName1="hello.yaml"  tabName2="app.py" tabName3="Dockerfile" >}}
 {{< tab tabNum="1" >}}
 {{< highlight yaml "hl_lines=11" >}}
 # hello.yaml

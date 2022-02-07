@@ -1,4 +1,4 @@
-name: Installer CI Mac
+name: Installer CI CentOS
 
 on:
   push:
@@ -8,43 +8,8 @@ on:
   schedule:
     - cron: '0 1 * * *' # run at 1 AM UTC
 
+
 jobs:
-  mac_latest_install_opta:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install Opta with Version
-        run: |
-          cd static
-          ./install.sh
-      - name: Run Version
-        run: /Users/runner/.opta/opta version
-      - name: Run Help
-        run: /Users/runner/.opta/opta --help
-  mac_latest_install_opta_w_version:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install Opta with Version
-        run: |
-          cd static
-          VERSION="$(curl -s https://dev-runx-opta-binaries.s3.amazonaws.com/latest)" ./install.sh
-      - name: Run Version
-        run: /Users/runner/.opta/opta version
-      - name: Run Help
-        run: /Users/runner/.opta/opta --help
-  mac_latest_install_opta_w_v_version:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install Opta with Version
-        run: |
-          cd static
-          VERSION="v$(curl -s https://dev-runx-opta-binaries.s3.amazonaws.com/latest)" ./install.sh
-      - name: Run Version
-        run: /Users/runner/.opta/opta version
-      - name: Run Help
-        run: /Users/runner/.opta/opta --help
   centos_latest_install_opta:
     runs-on: ubuntu-latest
     strategy:

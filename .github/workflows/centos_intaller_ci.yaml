@@ -29,9 +29,9 @@ jobs:
           cd static
           ./install.sh
       - name: Run Version
-        run: /Users/runner/.opta/opta version
+        run: $HOME/.opta/opta version
       - name: Run Help
-        run: /Users/runner/.opta/opta --help
+        run: $HOME/.opta/opta --help
   centos_latest_install_opta_w_version:
     runs-on: ubuntu-latest
     strategy:
@@ -51,9 +51,9 @@ jobs:
           cd static
           VERSION="$(curl -s https://dev-runx-opta-binaries.s3.amazonaws.com/latest)" ./install.sh
       - name: Run Version
-        run: /Users/runner/.opta/opta version
+        run: $HOME/.opta/opta version
       - name: Run Help
-        run: /Users/runner/.opta/opta --help
+        run: $HOME/.opta/opta --help
   centos_latest_install_opta_w_v_version:
     runs-on: ubuntu-latest
     strategy:
@@ -73,6 +73,6 @@ jobs:
           cd static
           VERSION="v$(curl -s https://dev-runx-opta-binaries.s3.amazonaws.com/latest)" ./install.sh
       - name: Run Version
-        run: /Users/runner/.opta/opta version
+        run: $HOME/.opta/opta version
       - name: Run Help
-        run: /Users/runner/.opta/opta --help
+        run: $HOME/.opta/opta --help

@@ -23,7 +23,7 @@ jobs:
       - name: Install packages
         run: yum install -y selinux-policy-devel policycoreutils
       - name: Install Unzip
-        run: yum install unzip
+        run: yum install -y unzip
       - name: Install Opta with Version
         run: |
           cd static
@@ -45,7 +45,7 @@ jobs:
       - name: Install packages
         run: yum install -y selinux-policy-devel policycoreutils
       - name: Install Unzip
-        run: yum install unzip
+        run: yum install -y unzip
       - name: Install Opta with Version
         run: |
           cd static
@@ -67,7 +67,7 @@ jobs:
       - name: Install packages
         run: yum install -y selinux-policy-devel policycoreutils
       - name: Install Unzip
-        run: yum install unzip
+        run: yum install -y unzip
       - name: Install Opta with Version
         run: |
           cd static

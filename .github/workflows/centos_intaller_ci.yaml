@@ -20,6 +20,8 @@ jobs:
       image: centos:${{ matrix.centos }}
     steps:
       - uses: actions/checkout@v2
+      - name: Upgrade yum
+        run: yum upgrade -y
       - name: Install Unzip
         run: yum install -y unzip
       - name: Install Git

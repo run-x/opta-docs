@@ -25,7 +25,7 @@ jobs:
       - name: Install Unzip
         run: yum install -y unzip
       - name: Install Git
-        run: yun install -y git
+        run: yum install -y git
       - name: Test Git
         run: git version
       - name: Install Opta with Version
@@ -51,7 +51,7 @@ jobs:
       - name: Install Unzip
         run: yum install -y unzip
       - name: Install Git
-        run: yun install -y git
+        run: yum install -y git
       - name: Test Git
         run: git version
       - name: Install Opta with Version
@@ -77,7 +77,7 @@ jobs:
       - name: Install Unzip
         run: yum install -y unzip
       - name: Install Git
-        run: yun install -y git
+        run: yum install -y git
       - name: Test Git
         run: git version
       - name: Install Opta with Version

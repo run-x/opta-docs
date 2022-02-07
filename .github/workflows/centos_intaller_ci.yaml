@@ -12,54 +12,42 @@ on:
 jobs:
   centos_latest_install_opta:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        centos: [ "8" ]
     container:
-      image: centos:${{ matrix.centos }}
+      image: centos:centos7
+      env:
+        LC_ALL: en_US.UTF-8
+        LANG: en_US.UTF-8
+        LANGUAGE: en_US.UTF-8
     steps:
       - uses: actions/checkout@v2
-      - name: Upgrade yum
+      - name: Additional Installations (yum upgrade | install unzip and git)
         run: |
-          sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-*
-          sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-*
           yum upgrade -y
-      - name: Install Unzip
-        run: yum install -y unzip
-      - name: Install Git
-        run: yum install -y git
-      - name: Test Git
-        run: git version
+          yum install -y unzip
+          yum install -y git
       - name: Install Opta with Version
         run: |
           cd static
           ./install.sh
       - name: Run Version
-        env:
-          LC_ALL: en_US.UTF-8
-          LANG: en_US.UTF-8
-          LANGUAGE: en_US.UTF-8
         run: $HOME/.opta/opta version
       - name: Run Help
         run: $HOME/.opta/opta --help
   centos_latest_install_opta_w_version:
     runs-on: ubuntu-18.04
     container:
-      image: centos:centos8
+      image: centos:centos7
+      env:
+        LC_ALL: en_US.UTF-8
+        LANG: en_US.UTF-8
+        LANGUAGE: en_US.UTF-8
     steps:
       - uses: actions/checkout@v2
-      - name: Upgrade yum
+      - name: Additional Installations (yum upgrade | install unzip and git)
         run: |
-          sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Linux-*
-          sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Linux-*
           yum upgrade -y
-      - name: Install Unzip
-        run: yum install -y unzip
-      - name: Install Git
-        run: yum install -y git
-      - name: Test Git
-        run: git version
+          yum install -y unzip
+          yum install -y git
       - name: Install Opta with Version
         run: |
           cd static
@@ -69,21 +57,16 @@ jobs:
       - name: Run Help
         run: $HOME/.opta/opta --help
   centos_latest_install_opta_w_v_version:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        centos: [ "8" ]
+    runs-on: ubuntu-18.04
     container:
-      image: centos:${{ matrix.centos }}
+      image: centos:centos7
     steps:
       - uses: actions/checkout@v2
-      - name: Install Unzip
-        run: yum install -y unzip
-      - name: Install Git
-        run: yum install -y git
-      - name: Test Git
-        run: git version
+      - name: Additional Installations (yum upgrade | install unzip and git)
+        run: |
+          yum upgrade -y
+          yum install -y unzip
+          yum install -y git
       - name: Install Opta with Version
         run: |
           cd static

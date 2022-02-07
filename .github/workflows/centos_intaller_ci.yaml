@@ -22,11 +22,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install packages
         run: yum install -y selinux-policy-devel policycoreutils
-      - name: Build policies
-        run: |
-          make -f /usr/share/selinux/devel/Makefile pulpcore_port.pp
-          make -f /usr/share/selinux/devel/Makefile pulpcore.pp
-          make -f /usr/share/selinux/devel/Makefile pulpcore_rhsmcertd.pp
       - name: Install Opta with Version
         run: |
           cd static
@@ -47,11 +42,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install packages
         run: yum install -y selinux-policy-devel policycoreutils
-      - name: Build policies
-        run: |
-          make -f /usr/share/selinux/devel/Makefile pulpcore_port.pp
-          make -f /usr/share/selinux/devel/Makefile pulpcore.pp
-          make -f /usr/share/selinux/devel/Makefile pulpcore_rhsmcertd.pp
       - name: Install Opta with Version
         run: |
           cd static
@@ -72,11 +62,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install packages
         run: yum install -y selinux-policy-devel policycoreutils
-      - name: Build policies
-        run: |
-          make -f /usr/share/selinux/devel/Makefile pulpcore_port.pp
-          make -f /usr/share/selinux/devel/Makefile pulpcore.pp
-          make -f /usr/share/selinux/devel/Makefile pulpcore_rhsmcertd.pp
       - name: Install Opta with Version
         run: |
           cd static

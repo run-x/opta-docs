@@ -60,6 +60,10 @@ jobs:
     runs-on: ubuntu-18.04
     container:
       image: centos:centos7
+      env:
+        LC_ALL: en_US.UTF-8
+        LANG: en_US.UTF-8
+        LANGUAGE: en_US.UTF-8
     steps:
       - uses: actions/checkout@v2
       - name: Additional Installations (yum upgrade | install unzip and git)

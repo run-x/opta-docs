@@ -20,8 +20,6 @@ jobs:
       image: centos:${{ matrix.centos }}
     steps:
       - uses: actions/checkout@v2
-      - name: Install packages
-        run: yum install -y selinux-policy-devel policycoreutils
       - name: Install Unzip
         run: yum install -y unzip
       - name: Install Git
@@ -46,8 +44,6 @@ jobs:
       image: centos:${{ matrix.centos }}
     steps:
       - uses: actions/checkout@v2
-      - name: Install packages
-        run: yum install -y selinux-policy-devel policycoreutils
       - name: Install Unzip
         run: yum install -y unzip
       - name: Install Git
@@ -72,8 +68,6 @@ jobs:
       image: centos:${{ matrix.centos }}
     steps:
       - uses: actions/checkout@v2
-      - name: Install packages
-        run: yum install -y selinux-policy-devel policycoreutils
       - name: Install Unzip
         run: yum install -y unzip
       - name: Install Git

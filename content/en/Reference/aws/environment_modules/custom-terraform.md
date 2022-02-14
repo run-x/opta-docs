@@ -28,8 +28,8 @@ Here is the directory structure for this example:
 ```
 
 
-{{< tabs tabTotal="3" tabID="1" tabName1="custom-tf.yaml" tabName2="opta.yaml" tabName3="main.tf" >}}
-{{< tab tabNum="1" >}}
+{{< tabs tabTotal="3" >}}
+{{< tab tabName="custom-tf.yaml" >}}
 ```yaml
 # custom-tf.yaml
 name: customtf
@@ -49,7 +49,7 @@ modules:
 ```
 {{< /tab >}}
 
-{{< tab tabNum="2" >}}
+{{< tab tabName="opta.yaml" >}}
 
 ```yaml
 # opta.yaml
@@ -67,7 +67,7 @@ modules:
 
 {{< /tab >}}
 
-{{< tab tabNum="3" >}}
+{{< tab tabName="main.tf" >}}
 
 ```
 # main.tf

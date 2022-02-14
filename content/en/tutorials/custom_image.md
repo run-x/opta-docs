@@ -25,8 +25,8 @@ modules:
 
 For this example, we will make a simple change to our hello application (also available on [github](https://github.com/run-x/opta-examples/tree/main/hello-app)).
 
-{{< tabs tabTotal="2" tabID="1" tabName1="app.py" tabName2="Dockerfile" >}}
-{{< tab tabNum="1" >}}
+{{< tabs tabTotal="2" >}}
+{{< tab tabName="app.py" >}}
 
 {{< highlight py "hl_lines=5" >}}
 from flask import Flask
@@ -37,7 +37,7 @@ def hello_world():
 {{< / highlight >}}
 
 {{< /tab >}}
-{{< tab tabNum="2" >}}
+{{< tab tabName="Dockerfile" >}}
 
 {{< highlight dockerfile >}}
 FROM python:3.8-slim-buster

@@ -26,8 +26,8 @@ or "real" names. To get those features, Opta offers 2 options:
 
 With Opta, you can specify a domain for each environment which can be used by all the services running in that
 environment. This is done with the aws-dns/gcp-dns module like so:
-{{< tabs tabTotal="2" tabID="1" tabName1="AWS" tabName2="GCP" >}}
-{{< tab tabNum="1" >}}
+{{< tabs tabTotal="2" >}}
+{{< tab tabName="AWS" >}}
 
 {{< highlight yaml "hl_lines=9-12" >}}
 name: staging
@@ -47,7 +47,7 @@ modules:
 {{< / highlight >}}
 
 {{< /tab >}}
-{{< tab tabNum="2" >}}
+{{< tab tabName="GCP" >}}
 
 {{< highlight yaml "hl_lines=9-12" >}}
 name: staging
@@ -99,8 +99,8 @@ You should see your name servers under the `ANSWER SECTION` part.
 Once this is done and verified, please update your Opta yaml aws-dns/gcp-dns section to have a new field `delegated: true` like
 so:
 
-{{< tabs tabTotal="2" tabID="1" tabName1="AWS" tabName2="GCP" >}}
-{{< tab tabNum="1" >}}
+{{< tabs tabTotal="2" >}}
+{{< tab tabName="AWS" >}}
 
 {{< highlight yaml "hl_lines=11" >}}
 name: staging
@@ -121,7 +121,7 @@ modules:
 {{< / highlight >}}
 
 {{< /tab >}}
-{{< tab tabNum="2" >}}
+{{< tab tabName="GCP" >}}
 
 {{< highlight yaml "hl_lines=11" >}}
 name: staging
@@ -154,8 +154,8 @@ an external ssl certificate and manually adding appropriate CNAME records.
 
 To add your ssl cert, simply include the external-ssl-cert module in the environment yaml prior to the `k8s-cluster` module like so:
 
-{{< tabs tabTotal="2" tabID="2" tabName1="AWS" tabName2="GCP" >}}
-{{< tab tabNum="1" >}}
+{{< tabs tabTotal="2" >}}
+{{< tab tabName="AWS" >}}
 
 {{< highlight yaml "hl_lines=9-13" >}}
 name: staging
@@ -176,7 +176,7 @@ modules:
 {{< / highlight >}}
 
 {{< /tab >}}
-{{< tab tabNum="2" >}}
+{{< tab tabName="GCP" >}}
 
 {{< highlight yaml "hl_lines=9-13" >}}
 name: staging

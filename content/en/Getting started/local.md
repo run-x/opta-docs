@@ -162,8 +162,8 @@ For this example, we will use our hello application (also available on [github](
 2. Set `image: AUTO` in `hello.yaml` to use the local image.
 3. Make a change to the returned text in `app.py` to validate that the new image is used.
 
-{{< tabs tabTotal="3" tabID="2" tabName1="hello.yaml"  tabName2="app.py" tabName3="Dockerfile" >}}
-{{< tab tabNum="1" >}}
+{{< tabs tabTotal="3" >}}
+{{< tab tabName="hello.yaml" >}}
 {{< highlight yaml "hl_lines=11" >}}
 # hello.yaml
 name: hello
@@ -179,7 +179,7 @@ modules:
 {{< / highlight >}}
 {{< /tab >}}
 
-{{< tab tabNum="2" >}}
+{{< tab tabName="app.py" >}}
 {{< highlight py "hl_lines=5-6" >}}
 from flask import Flask
 app = Flask(__name__)
@@ -190,7 +190,7 @@ def hello_world():
 {{< / highlight >}}
 {{< /tab >}}
 
-{{< tab tabNum="3" >}}
+{{< tab tabName="Dockerfile" >}}
 {{< highlight dockerfile >}}
 FROM python:3.8-slim-buster
 

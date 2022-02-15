@@ -95,7 +95,7 @@ the kubernetes persistent volume claims.
 
 | Name      | Description | Default | Required |
 | ----------- | ----------- | ------- | -------- |
-| `image` | Set to AUTO to create a private repo for your own images. Otherwises attempts to pull image from public dockerhub | `None` | True |
+| `image` | Set to AUTO to create a private repo for your own images. Otherwises attempts to pull image from public dockerhub | `AUTO` | True |
 | `port` | Specifies what port your app was made to be listened to. Currently it must be a map of the form `http: [PORT_NUMBER_HERE]` or `websocket: [PORT_NUMBER_HERE]`. Use `http` if you just have a vanilla http server and `websocket` for websockets.  | *none* | False |
 | `ports` | Specifies which port(s) your app exposes. | *none* | False |
 | `probe_port` | The name of the port to use for readiness and liveness probes. Defaults to the first port listed. | *none* | False |

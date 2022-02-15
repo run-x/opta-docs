@@ -95,7 +95,7 @@ the kubernetes persistent volume claims.
 
 | Name      | Description | Default | Required |
 | ----------- | ----------- | ------- | -------- |
-| `image` | Set to AUTO to create a private repo for your own images. Otherwises attempts to pull image from public dockerhub | `None` | True |
+| `image` | Set to AUTO to create a private repo for your own images. Otherwises attempts to pull image from public dockerhub | `AUTO` | True |
 | `port` | Specifies what port your app was made to be listened to. Currently it must be a map of the form `http: [PORT_NUMBER_HERE]` or `tcp: [PORT_NUMBER_HERE]`. Use http if you just have a vanilla http server and tcp for websockets.  | *none* | False |
 | `min_containers` | The minimum number of replicas your app can autoscale to. | `1` | False |
 | `max_containers` | The maximum number of replicas your app can autoscale to. | `3` | False |

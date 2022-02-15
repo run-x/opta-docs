@@ -19,3 +19,4 @@ details of the features.
 | `api_key` | Datadog API key. If you don't provide this in the yaml, Opta will prompt you for it and store it in secrets. | `None` | False |
 | `timeout` | Time to wait for this module to stabilize. | `600` | False |
 | `values` | Additional configuration for datadog. [Available options](https://github.com/DataDog/helm-charts/blob/master/charts/datadog/README.md#values) | `{}` | False |
+| `chart_version` | Datadog Helm chart version. [Available versions](https://github.com/DataDog/helm-charts/releases) | `2.30.2` | False |

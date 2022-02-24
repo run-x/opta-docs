@@ -23,7 +23,7 @@ modules:
     public_uri: "/hello"
 {{< / highlight >}}
 
-For this example, we will make a simple change to our hello application (also available on [github](https://github.com/run-x/opta-examples/tree/main/hello-app)).
+For this example, we will make a simple change to our hello application (also available on [github](https://github.com/run-x/hello-opta)).
 
 {{< tabs tabTotal="2" >}}
 {{< tab tabName="app.py" >}}
@@ -33,7 +33,7 @@ from flask import Flask
 app = Flask(__name__)
 @app.route('/')
 def hello_world():
-    return "<p>Hello, World! v2</p>"
+    return "<p>Hello from Opta.! v2</p>"
 {{< / highlight >}}
 
 {{< /tab >}}
@@ -58,12 +58,12 @@ CMD python3 -m flask run \-\-host=0.0.0.0 \-\-port=${PORT}
 
 Build the image locally:
 ```bash
-docker build . -t hello-app:v2
+docker build . -t hello-opta:v2
 ```
 
 Deploy the new image to the kubernetes cluster:
 ```bash
-opta deploy --image hello-app:v2
+opta deploy --image hello-opta:v2
 ```
 
 This will:

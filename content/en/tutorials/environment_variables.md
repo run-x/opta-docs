@@ -22,7 +22,7 @@ modules:
     type: k8s-service
     port:
       http: 80
-    image: ghcr.io/run-x/opta-examples/hello-app:main
+    image: ghcr.io/run-x/hello-opta/hello-opta:main
     healthcheck_path: "/"
     public_uri: "/hello"
     env_vars:

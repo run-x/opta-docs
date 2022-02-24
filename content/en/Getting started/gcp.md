@@ -68,7 +68,7 @@ Opta updates complete!
 ## Service creation
 
 In this step we will create a service - which is basically a http server packaged in a docker container.  
-Here is a simple hello world app, the source code is [here](https://github.com/run-x/opta-examples/tree/main/hello-app).
+Here is a simple hello world app, the source code is [here](https://github.com/run-x/hello-opta).
 
 
 Create a new opta file for your service.
@@ -83,8 +83,8 @@ modules:
     name: hello
     port:
       http: 80
-    # from https://github.com/run-x/opta-examples/tree/main/hello-app
-    image: ghcr.io/run-x/opta-examples/hello-app:main
+    # from https://github.com/run-x/hello-opta
+    image: ghcr.io/run-x/hello-opta/hello-opta:main
     healthcheck_path: "/"
     # path on the load balancer to access this service
     public_uri: "/hello"
@@ -115,7 +115,7 @@ export load_balancer_raw_ip=...
 # the service is reachable at /hello (set in the `public_uri` property)
 curl http://$load_balancer_raw_ip/hello
 
-<p>Hello, World!</p>
+<p>Hello from Opta.!</p>
 ```
 
 - SSH into the container

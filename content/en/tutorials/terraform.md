@@ -10,7 +10,7 @@ description: Guide on how to generate the terraform files
 
 To provision the infrastructure, Opta uses [Terraform](https://www.terraform.io/), the popular open-source infrastructure as code software.
 
-Opta provides a command callled `generate-terraform` to generate the terraform files.
+Opta provides a command called `generate-terraform` to generate the terraform files.
 
 ## Generate the terraform files
 
@@ -45,7 +45,7 @@ modules:
     name: hello
     port:
       http: 80
-    image: ghcr.io/run-x/opta-examples/hello-app:main
+    image: ghcr.io/run-x/hello-opta/hello-opta:main
     healthcheck_path: "/"
     public_uri: "/hello"
 {{< / highlight >}}

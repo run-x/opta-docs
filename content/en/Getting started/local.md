@@ -46,7 +46,7 @@ Running your application in Opta Local environment is almost identical to how yo
 
 #### Example 1: Deploy a service using an existing docker image
 
-We will deploy a simple [hello app](https://github.com/run-x/opta-examples/tree/main/hello-app) by defining these files.
+We will deploy a simple [hello app](https://github.com/run-x/hello-opta) by defining these files.
 
 ```yaml
 # hello.yaml
@@ -57,8 +57,8 @@ modules:
     name: hello
     port:
       http: 80
-    # from https://github.com/run-x/opta-examples/tree/main/hello-app
-    image: ghcr.io/run-x/opta-examples/hello-app:main
+    # from https://github.com/run-x/hello-opta
+    image: ghcr.io/run-x/hello-opta/hello-opta:main
     healthcheck_path: "/"
     public_uri: "/hello"
 ```
@@ -102,7 +102,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
 
 You can test your service by visiting [http://localhost:8080/hello](http://localhost:8080/hello) on your local machine browser.
-![Opta Local hello world](/images/hello-world-browser.png)
+![Opta Local hello world](/images/hello-opta-browser.png)
 
 
 - SSH into the container
@@ -154,7 +154,7 @@ opta destroy --local -c hello.yaml
 
 Now, let's build an application locally and deploy it.
 
-For this example, we will use our hello application (also available on [github](https://github.com/run-x/opta-examples/tree/main/hello-app)).
+For this example, we will use our hello application (also available on [github](https://github.com/run-x/hello-opta)).
 1. Make sure that you have these files locally: 
     - `hello.yaml` The service Opta file. 
     - `app.py` The application code.
@@ -186,7 +186,7 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     #3 Update the returned text
-    return "<p>Hello, World! v2</p>"
+    return "<p>Hello from Opta.! v2</p>"
 {{< / highlight >}}
 {{< /tab >}}
 
@@ -213,7 +213,7 @@ CMD python3 -m flask run \-\-host=0.0.0.0 \-\-port=${PORT}
 
 Build the image locally, let's tag it with `v2` for this example:
 ```bash
-docker build . -t hello-app:v2
+docker build . -t hello-opta:v2
 ```
 
 
@@ -225,7 +225,7 @@ The `opta deploy` command will:
 1. Create new pods to use the new container image - automatically done by kubernetes.
 
 ```bash
-opta deploy --local --auto-approve -c hello.yaml --image hello-app:v2
+opta deploy --local --auto-approve -c hello.yaml --image hello-opta:v2
 ...
 The push refers to repository [localhost:5000/hello/hello]
 ...
@@ -247,7 +247,7 @@ Now let's verify that the deployed application has our local changes:
 ```
 # check the returned text
 curl http://localhost:8080/hello
-<p>Hello, World! V2</p>%
+<p>Hello from Opta.! V2</p>%
 
 # check the deployed image uses the local registry
 kubectl -n hello get deploy -o yaml | grep image:

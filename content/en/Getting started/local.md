@@ -167,7 +167,7 @@ For this example, we will use our hello application (also available on [github](
 {{< highlight yaml "hl_lines=11" >}}
 # hello.yaml
 name: hello
-org: runx
+org_name: runx
 modules:
   - type: k8s-service
     name: hello
@@ -193,16 +193,12 @@ def hello_world():
 {{< tab tabName="Dockerfile" >}}
 {{< highlight dockerfile >}}
 FROM python:3.8-slim-buster
-
 ENV FLASK_APP=app
-
 WORKDIR /app
-
-RUN pip install Flask==0.12 
+RUN pip install Flask==2.0.3
 COPY . /app
 ENV PORT 80
-
-CMD python3 -m flask run \-\-host=0.0.0.0 \-\-port=${PORT}
+CMD python3 -m flask run --host=0.0.0.0 --port=${PORT}
 {{< / highlight >}}
 {{< /tab >}}
 

@@ -2,7 +2,7 @@
 title: "Compliance"
 linkTitle: "Compliance"
 date: 2022-01-03
-weight: 7
+weight: 2
 description: >
     SOC 2 and PCI compliance of Opta infrastructure.
 ---

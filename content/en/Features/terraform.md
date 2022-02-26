@@ -1,6 +1,6 @@
 ---
-title: "Generate Terraform"
-linkTitle: "Generate Terraform"
+title: "Terraform Generator"
+linkTitle: "Terraform Generator"
 date: 2022-01-16
 draft: false
 description: Guide on how to generate the terraform files

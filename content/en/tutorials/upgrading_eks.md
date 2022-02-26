@@ -1,6 +1,6 @@
 ---
-title: "Upgrading Kubernetes Version on AWS"
-linkTitle: "Upgrading Kubernetes Version on AWS"
+title: "Upgrade EKS"
+linkTitle: "Upgrade EKS"
 date: 2022-01-03
 draft: false
 description: >

@@ -2,7 +2,7 @@
 title: "GCP"
 linkTitle: "GCP"
 date: 2022-01-03
-weight: 2
+weight: 3
 description: >
   Getting started with Opta on GCP.
 ---
@@ -53,7 +53,7 @@ It configures 3 Opta modules:
 - [k8s-cluster](/reference/google/environment_modules/gcp-gke/): create a GKE cluster
 - [k8s-base](/reference/google/environment_modules/gcp-k8s-base/): setup base infrastructure for k8s
 
-For more information about what is created, see [GCP Architecture](/architecture/gcp/).
+For more information about what is created, see [GCP Architecture](/security/gcp/).
 
 Once done, the `apply` command lists all the resource created, for example:
 ```tf
@@ -167,11 +167,11 @@ opta destroy -c opta.yaml
 
 ## Next steps
 
-- View the [GCP Architecture](/architecture/gcp/)
+- View the [GCP Architecture](/security/gcp/)
 - Check out more examples: [github](https://github.com/run-x/opta/tree/main/examples)
-- Use your own docker image: [Custom Image](/tutorials/custom_image)
-- Set up a domain name for your service: [Ingress](/tutorials/ingress)
-- Use secrets: [Secrets](/tutorials/secrets/)
-- Set up observability integrations in one line(!): [Observability](/observability/)
-- Explore all the infrastructure that Opta sets up for you: [Architecture](/architecture/gcp/)
+- Use your own docker image: [Custom Image](/features/custom_image/)
+- Set up a domain name for your service: [Configure DNS](/features/ingress/)
+- Use secrets: [Secrets](/features/secrets/)
+- Set up observability integrations in one line(!): [Observability](/features/observability/)
+- Explore all the infrastructure that Opta sets up for you: [Architecture](/security/aws/)
 - Explore the api for all modules: [Reference](/reference/google/)

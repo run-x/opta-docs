@@ -1,6 +1,6 @@
 ---
-title: "Ingress"
-linkTitle: "Ingress"
+title: "Configure DNS"
+linkTitle: "Configure DNS"
 date: 2022-01-03
 description: >
   How to expose your app on the internet

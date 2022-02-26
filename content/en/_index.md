@@ -40,25 +40,9 @@ To read more about the vision behind Opta, check out this [blog post](https://bl
 
 If you'd like to try it out or have any questions - feel free to join our [Slack](https://slack.opta.dev) or explore the [Getting Started Guide](/getting-started)!
 
-## How it works?
-
-Opta is based around the concept of Infrastructure-As-Code. You write configuration files and then run the Opta CLI -
-which connects to your cloud account and sets things up to reflect the configuration. The Opta CLI can be run from your local machine or a CI/CD system (like jenkins or Github actions).
-
-There are two primary kinds of configuration files:
-
-- **Environment**: This file specifies which cloud/account/region should Opta be set up in. Running Opta on this creates all the
-  base resources like a kubernetes cluster, networks, IAM roles, ingress, service mesh, etc. Usually, you'd have 1 env for staging, 1 for
-  prod, 1 for qa, etc. You can also do one environment per engineer or pull request - which gives everyone an isolated sandbox to play in!
-- **Service**: This file specifies the container workload you want to run (usually a microservice). You can also specify any non-k8s
-  resources that this container needs - and Opta will connect them seamlessly.
-
-![Service and environment files link](/images/service_environment_files_linking.png)
-
-
 ## Next steps
 
 - Getting started with Opta: [guide](/getting-started)
 - Check out more examples: [github](https://github.com/run-x/opta/tree/main/examples)
-- Explore all the infrastructure that Opta sets up for you: [Architecture](/architecture/aws/)
+- Explore all the infrastructure that Opta sets up for you: [Security and Architecture](/security/aws/)
 - Explore the api for all modules: [Reference](/reference/)

@@ -2,7 +2,7 @@
 title: "Azure"
 linkTitle: "Azure"
 date: 2022-01-03
-weight: 3
+weight: 4
 description: >
   Getting started with Opta on Azure.
 ---
@@ -56,7 +56,7 @@ It configures 3 Opta modules:
 - [k8s-cluster](/reference/azurerm/environment_modules/azure-aks/): create a AKS cluster
 - [k8s-base](/reference/azurerm/environment_modules/azure-k8s-base/): setup base infrastructure for k8s
 
-For more information about what is created, see [Azure Architecture](/architecture/azure/).
+For more information about what is created, see [Azure Architecture](/security/azure/).
 
 Once done, the `apply` command lists all the resource created, for example:
 ```tf
@@ -170,11 +170,11 @@ opta destroy -c opta.yaml
 
 ## Next steps
 
-- View the [Azure Architecture](/architecture/azure/)
+- View the [Azure Architecture](/security/azure/)
 - Check out more examples: [github](https://github.com/run-x/opta/tree/main/examples)
-- Use your own docker image: [Custom Image](/tutorials/custom_image)
-- Set up a domain name for your service: [Ingress](/tutorials/ingress)
-- Use secrets: [Secrets](/tutorials/secrets/)
-- Set up observability integrations in one line(!): [Observability](/observability/)
-- Explore all the infrastructure that Opta sets up for you: [Architecture](/architecture/azure)
+- Use your own docker image: [Custom Image](/features/custom_image/)
+- Set up a domain name for your service: [Configure DNS](/features/ingress/)
+- Use secrets: [Secrets](/features/secrets/)
+- Set up observability integrations in one line(!): [Observability](/features/observability/)
+- Explore all the infrastructure that Opta sets up for you: [Architecture](/security/aws/)
 - Explore the api for all modules: [Reference](/reference/azurerm)

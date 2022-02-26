@@ -1,7 +1,7 @@
 ---
 title: "Observability"
 linkTitle: "Observability"
-weight: 5
+date: 2021-07-21
 description: >
   Observability integrations
 ---

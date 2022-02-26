@@ -3,6 +3,7 @@ title: "Securely Accessing Opta Networks Locally"
 linkTitle: "Securely Accessing Opta Networks Locally"
 date: 2022-01-03
 draft: false
+weight: 3
 description: >
   Instructions to securely access network endpoints in an Opta environment
 ---

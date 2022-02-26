@@ -1,10 +1,10 @@
 ---
-title: "Changing Domains"
-linkTitle: "Changing Domains"
+title: "Update DNS"
+linkTitle: "Update DNS"
 date: 2022-01-03
 draft: false
 description: >
-  How to change domains for your Opta environment.
+  How to change update DNS for your Opta environment.
 ---
 
 Currently, Opta does not support multiple domains (except subdomains) per environment, although that may change

@@ -1,7 +1,7 @@
 ---
 title: "Tutorials"
 linkTitle: "Tutorials"
-weight: 6
+weight: 5
 description: >
-  Tutorials and concepts for Opta
+  Step-by-step guides on how to accomplish advanced tasks, check also the [Features](/features) section for simplier tasks
 ---

@@ -1,6 +1,6 @@
 ---
-title: "GKE Upgrades"
-linkTitle: "gkeupgrades"
+title: "Upgrade GKE"
+linkTitle: "Upgrade GKE"
 date: 2022-02-01
 description: >
   Dealing with GKE upgrades

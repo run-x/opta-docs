@@ -3,7 +3,7 @@ title: "IAM Guidance"
 linkTitle: "IAM"
 date: 2021-07-21
 description: >
-  How to configure your iam to work with Opta
+  How to configure your IAM to work with Opta
 ---
 
 ## Overview

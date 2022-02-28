@@ -28,5 +28,5 @@ modules:
     name: app # module name
     port:
       http: 80
-    image: ghcr.io/run-x/opta-examples/hello-app:main
+    image: ghcr.io/run-x/hello-opta/hello-opta:main
 {{< / highlight >}}

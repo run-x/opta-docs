@@ -299,7 +299,7 @@ modules:
     name: hello
     port:
       http: 80
-    image: ghcr.io/run-x/opta-examples/hello-app:main
+    image: ghcr.io/run-x/hello-opta/hello-opta:main
     healthcheck_path: "/"
     public_uri: "hello.{parent.domain}"
 {{< / highlight >}}
@@ -318,7 +318,7 @@ modules:
     name: hello
     port:
       http: 80
-    image: ghcr.io/run-x/opta-examples/hello-app:main
+    image: ghcr.io/run-x/hello-opta/hello-opta:main
     healthcheck_path: "/"
     public_uri: "{parent.domain}/hello"
 {{< / highlight >}}
@@ -337,7 +337,7 @@ modules:
     name: hello
     port:
       http: 80
-    image: ghcr.io/run-x/opta-examples/hello-app:main
+    image: ghcr.io/run-x/hello-opta/hello-opta:main
     healthcheck_path: "/"
     public_uri: "hello.{parent.domain}/v1"
 {{< / highlight >}}
@@ -363,7 +363,7 @@ modules:
       foo: bar
     port:
       http: 80
-    image: ghcr.io/run-x/opta-examples/hello-app:main
+    image: ghcr.io/run-x/hello-opta/hello-opta:main
     healthcheck_path: "/"
     public_uri: "hello.{parent.domain}/v1"
 {{< / highlight >}}

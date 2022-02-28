@@ -32,6 +32,7 @@ This module is responsible for all the base infrastructure we package into the O
 | `nginx_config` | Additional configuration for nginx ingress. [Available options](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#configuration-options) | `{}` | False |
 | `nginx_extra_tcp_ports` | Additional TCP ports to expose from nginx | `[]` | False |
 | `nginx_extra_tcp_ports_tls` | Which additional TCP ports should have TLS enabled | `[]` | False |
+| `expose_self_signed_ssl` | Expose self-signed SSL certs | `False` | False |
 
 ## Outputs
 

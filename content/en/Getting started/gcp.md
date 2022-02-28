@@ -170,7 +170,7 @@ opta destroy -c opta.yaml
 - View the [GCP Architecture](/security/gcp/)
 - Check out more examples: [github](https://github.com/run-x/opta/tree/main/examples)
 - Use your own docker image: [Custom Image](/features/custom_image/)
-- Set up a domain name for your service: [Configure DNS](/features/ingress/)
+- Set up a domain name for your service: [Configure DNS](/features/dns/)
 - Use secrets: [Secrets](/features/secrets/)
 - Set up observability integrations in one line(!): [Observability](/features/observability/)
 - Explore all the infrastructure that Opta sets up for you: [Architecture](/security/aws/)

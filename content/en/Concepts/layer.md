@@ -18,6 +18,16 @@ A layer has the following properties:
 - the environment(s) to use with the layer 
 - a list of modules
 
+## When to use layers?
+
+The most common use cases are:
+- You would like to break down a large environment file into separate layers, so they can be maintained separately.
+- You have more than one environment and would like to avoid repeating the same modules in each environment file.
+
+<figure>
+<img src="/images/service_environment_files_linking.png" alt="Service and environment files link" style="width:100%">
+<figcaption align = "center"><b>service_a.yaml is a layer file defining a kubernetes service</b></figcaption>
+</figure>
 
 ## Definition
 
@@ -41,14 +51,3 @@ modules:
   - name: mongodb
     type: mongodb-atlas
 ```
-
-## When to use layers?
-
-The most common use cases are:
-- You would like to break down a large environment file into separate layers, so they can be maintained separately.
-- You have more than one environment and would like to avoid repeating the same modules in each environment file.
-
-<figure>
-<img src="/images/service_environment_files_linking.png" alt="Service and environment files link" style="width:100%">
-<figcaption align = "center"><b>service_a.yaml is a layer file defining a kubernetes service</b></figcaption>
-</figure>

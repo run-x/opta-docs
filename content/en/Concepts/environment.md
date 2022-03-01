@@ -9,12 +9,14 @@ description: >
 
 ## What is an Environment?
 
-An Environment is the common frame that powers your infrastructure.
+Environment files specify which cloud, account, and region to configure
+infrastructure in. From this file, Opta will create all the
+base resources, including: kubernetes clusters, networks, IAM roles, ingress,
+service mesh, etc. Usually, you'll have one environment file for staging, one
+for production, one for quality assurance (QA), etc.
 
-An environment has the following properties:
-- an unique name
-- the cloud provider connection information
-- a list of modules to be installed
+You can also create one environment per engineer or pull request, which gives
+each member of your team an isolated development sandbox.
 
 
 ## Definition

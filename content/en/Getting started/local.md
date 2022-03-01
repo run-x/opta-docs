@@ -192,7 +192,7 @@ def hello_world():
 
 {{< tab tabName="Dockerfile" >}}
 {{< highlight dockerfile >}}
-FROM python:3.8-slim-buster
+FROM python:3.10-slim-buster
 ENV FLASK_APP=app
 WORKDIR /app
 RUN pip install Flask==2.0.3

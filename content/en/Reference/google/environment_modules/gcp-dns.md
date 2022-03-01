@@ -10,7 +10,7 @@ description: Adds dns to your environment
 This module creates a GCP [managed zone](https://cloud.google.com/dns/docs/zones) for
 your given domain. The [k8s-base]({{< relref "#k8s-base" >}}) module automatically hooks up the load balancer to it
 for the domain and subdomain specified, but in order for this to actually receive traffic you will need to complete
-the [dns setup](/tutorials/ingress).
+the [dns setup](/features/ingress).
 
 ## Changing dns domains
 Currently, Opta does not support multiple domains (except subdomains) per environment, although that may change
@@ -87,7 +87,7 @@ new apply.
 | Name      | Description | Default | Required |
 | ----------- | ----------- | ------- | -------- |
 | `domain` | The domain you want (you will also get the subdomains for your use) | `None` | True |
-| `delegated` | The  Set to true once the extra [dns setup is complete](/tutorials/ingress) and it will add the ssl certs. | `False` | False |
+| `delegated` | The  Set to true once the extra [dns setup is complete](/features/ingress) and it will add the ssl certs. | `False` | False |
 | `subdomains` | A list of subdomains to also get ssl certs for. | `[]` | False |
 
 ## Outputs

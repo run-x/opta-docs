@@ -2,7 +2,7 @@
 title: "Local"
 linkTitle: "Local"
 date: 2022-01-04
-weight: 4
+weight: 5
 description: >
   Getting started with Opta Local on your local machine.
 ---
@@ -23,7 +23,7 @@ To install Opta, follow this one line installation ([detailed instructions](/ins
 
 This diagram shows what an Opta local installation will look like inside your local machine. Opta Local installs a [Kubernetes Kind cluster](https://kind.sigs.k8s.io/). Kind is a tool for running local Kubernetes clusters using Docker container “nodes”. Kind was primarily designed for testing Kubernetes itself, but may be used for local development or CI.
 
-Opta Local also installs a local container image registry to store your application images when you use [`opta deploy`](https://docs.opta.dev/tutorials/custom_image/). This docker registry is available at `http://localhost:5000`. 
+Opta Local also installs a local container image registry to store your application images when you use [`opta deploy`](/features/custom_image/). This docker registry is available at `http://localhost:5000`. 
 
 As a user you can deploy a single Kubernetes Kind cluster on a local machine and then deploy multiple application services (for example, service A and service B) Internally, Kind uses nested containers to run Kubernetes pods inside the Kind container. 
 
@@ -143,7 +143,7 @@ NAME                                                          REFERENCE         
 horizontalpodautoscaler.autoscaling/hello-hello-k8s-service   Deployment/hello-hello-k8s-service   <unknown>/80%, <unknown>/80%   1         3         1          84m
 ```
 
-You can also use Opta's [secret management](https://docs.opta.dev/tutorials/secrets/) to inject sensitive data into your applications.
+You can also use Opta's [secret management](/features/secrets/) to inject sensitive data into your applications.
 
 To uninstall your application from your local Kubernetes cluster run
 

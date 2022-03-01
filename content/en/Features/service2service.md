@@ -1,6 +1,6 @@
 ---
-title: "Inter Service Communication"
-linkTitle: "Inter Service Communication"
+title: "Service Mesh"
+linkTitle: "Service Mesh"
 date: 2022-01-03
 draft: false
 description: >

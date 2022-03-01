@@ -3,6 +3,7 @@ title: "Local Troubleshooting"
 linkTitle: "Local Troubleshooting"
 date: 2021-10-11
 draft: false
+weight: 2
 description: >
   Troubleshooting Opta Local
 ---
@@ -77,7 +78,7 @@ kubectl get node
 
 ### Container Registry
 
-Opta Local creates a local Docker container registry at `http://localhost:5000`. This is used during [Opta Deploy](../tutorials/continuous_deployment.md) to host your images. Confirm it is functioning:
+Opta Local creates a local Docker container registry at `http://localhost:5000`. This is used during [Opta Deploy](/features/continuous_deployment/) to host your images. Confirm it is functioning:
 
   1. Curl the address `http://localhost:5000/v2/`
 ```bash

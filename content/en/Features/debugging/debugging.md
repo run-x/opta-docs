@@ -1,12 +1,13 @@
 ---
-title: "Debugging"
-linkTitle: "Debugging"
+title: "Debug Running Pods"
+linkTitle: "Debug Running Pods"
 date: 2022-01-03
+weight: 1
 description: >
-  How to debug your app
+  How to debug your pods
 ---
 
-> Ideally, you should set up [observability](/observability) so that manual debugging is not needed.
+> Ideally, you should set up [observability](features/observability) so that manual debugging is not needed.
 
 Opta provides 2 helpful commands to help with debugging:
 

@@ -45,3 +45,7 @@ tagged with `env` set to the layer name, and service deployments will have a `se
 
 For a high level view of your cluster, you can view your kubernetes dashboards on the following url:
 https://app.datadoghq.com/screen/integration/86/kubernetes-overview
+
+
+## Further Guides
+- Datadog module reference: [AWS](/reference/aws/modules/datadog/), [GCP](/reference/google/modules/datadog/), [Azure](/reference/google/modules/azurerm/)

@@ -24,7 +24,6 @@ This module is responsible for all the base infrastructure we package into the O
 | `linkerd_high_availability` | Deploy the linkerd service mesh in a high-availability configuration for its control plane. | `False` | False |
 | `linkerd_enabled` | Enable the linkerd service mesh installation. | `True` | False |
 | `nginx_config` | Additional configuration for nginx ingress. [Available options](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#configuration-options) | `{}` | False |
-| `expose_self_signed_ssl` | Expose self-signed SSL certs | `False` | False |
 
 ## Outputs
 

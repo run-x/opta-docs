@@ -11,7 +11,9 @@ Opta gives its users the capability to add Self Signed Certificates over their L
 
 Some reasons could be that the Technology the user wants to test requires an SSL connection, such as a GRPC service, or use secure connections for the Inter-service communications.
 
-***Note: Our Azure offering currently doesn't support Self Signed Certificates.***
+{{% alert title="Warning" color="warning" %}}
+Note: Our Azure offering currently doesn't support Self Signed Certificates.
+{{% /alert %}}
 
 ### How to expose a Secure Port
 
@@ -79,20 +81,27 @@ modules:
 
 The above configurations will help expose the Secure Port for accessing the Hello Opta service.
 
-<figure>
-<img src="/images/insecure-hello-opta.png">
-<figcaption align = "center">Fig. 1: Hello-Opta service called without SSL Certificate</figcaption>
-</figure>
+```bash
+# Get the Load Balancer URL/IP based on the provider using the opta output command
+export load_balancer=<load_balancer_url / load_balancer_ip>
+```
 
-<figure>
-<img src="/images/secure-hello-opta.png">
-<figcaption align = "center">Fig. 2: Hello-Opta service called without SSL Certificate</figcaption>
-</figure>
+```bash
+# Testing without SSL
+curl "http://$load_balancer/hello"
+<p>Hello from Opta.!</p>
+```
 
-<figure>
-<img src="/images/ssl-certificate.png">
-<figcaption align = "center">Fig. 3: Generated Certificate</figcaption>
-</figure>
+```bash
+# Testing with SSL
+curl "https://$load_balancer/hello" --insecure
+<p>Hello from Opta.!</p>
+```
+
+```bash
+# Get the certificate details
+curl -vvI  "https://$load_balancer" --insecure
+```
 
 
 You can use this feature of Opta to create your own Services which may require using an SSL Certificate.

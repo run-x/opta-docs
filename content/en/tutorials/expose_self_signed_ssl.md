@@ -7,9 +7,9 @@ description: >
   Add a Secure SSL on Load Balancer without configuring DNS. 
 ---
 
-Opta gives its users the capability to add Self Signed Certificates over their Load Balancers without the need of configuring a Cloudfront, or a Domain Name.
+Opta enables the capability to add Self Signed Certificates over their Load Balancers without the need of configuring a Cloudfront, or a Domain Name.
 
-Some reasons could be that the Technology the user wants to test requires an SSL connection, such as a GRPC service, or use secure connections for the Inter-service communications.
+This enables testing SSL (with insecure mode) and helps to test features which require SSL like GRPC.
 
 {{% alert title="Warning" color="warning" %}}
 Note: Our Azure offering currently doesn't support Self Signed Certificates.

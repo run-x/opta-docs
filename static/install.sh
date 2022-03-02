@@ -151,12 +151,14 @@ if [[ "$OS" == "Linux" ]]; then
       PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/centos/$VERSION/opta.zip
     else
       PACKAGE=https://github.com/run-x/opta/releases/download/v$VERSION/opta_centos.zip
+      FALLBACK_PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/centos/$VERSION/opta.zip
     fi
   else
     if [[ "$LEGACY_DOWNLOAD" == "1" ]]; then
       PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$VERSION/opta.zip
     else
       PACKAGE=https://github.com/run-x/opta/releases/download/v$VERSION/opta_linux.zip
+      FALLBACK_PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$VERSION/opta.zip
     fi
   fi
   MAC_ADDRESS=`cat /sys/class/net/eth0/address 2> /dev/null` || true
@@ -165,6 +167,7 @@ elif [[ "$OS" == "Darwin" ]]; then
     PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/mac/$VERSION/opta.zip
   else
     PACKAGE=https://github.com/run-x/opta/releases/download/v$VERSION/opta_mac.zip
+    FALLBACK_PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/mac/$VERSION/opta.zip
   fi
   MAC_ADDRESS=`ifconfig en1 2> /dev/null | awk '/ether/{print $2}'` || true
 else
@@ -182,6 +185,9 @@ fi
 
 echo "Downloading installation package..."
 curl -s -L $PACKAGE -o /tmp/opta.zip --fail
+if [[ $? != 0 ]]; then
+  curl -s -L $FALLBACK_PACKAGE -o /tmp/opta.zip --fail
+fi
 if [[ $? != 0 ]]; then
   echo "Version $VERSION not found."
   echo "Please check the available versions at https://github.com/run-x/opta/releases."

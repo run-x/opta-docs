@@ -2,7 +2,7 @@
 title: "AWS"
 linkTitle: "AWS"
 date: 2022-01-03
-weight: 1
+weight: 2
 description: >
   Getting started with Opta on AWS.
 ---
@@ -54,7 +54,7 @@ It configures 3 Opta modules:
 - [k8s-cluster](/reference/aws/environment_modules/aws-eks/): create a EKS cluster
 - [k8s-base](/reference/aws/environment_modules/aws-k8s-base/): setup base infrastructure for k8s
 
-For more information about what is created, see [AWS Architecture](/architecture/aws/).
+For more information about what is created, see [AWS Architecture](/security/aws/).
 
 Once done, the `apply` command lists all the resource created, for example:
 ```tf
@@ -69,7 +69,7 @@ Opta updates complete!
 ## Service creation
 
 In this step we will create a service - which is basically a http server packaged in a docker container.  
-Here is a simple hello world app, the source code is [here](https://github.com/run-x/opta-examples/tree/main/hello-app).
+Here is a simple hello world app, the source code is [here](https://github.com/run-x/hello-opta).
 
 
 Create a new opta file for your service.
@@ -84,8 +84,8 @@ modules:
     name: hello
     port:
       http: 80
-    # from https://github.com/run-x/opta-examples/tree/main/hello-app
-    image: ghcr.io/run-x/opta-examples/hello-app:main
+    # from https://github.com/run-x/hello-opta
+    image: ghcr.io/run-x/hello-opta/hello-opta:main
     healthcheck_path: "/"
     # path on the load balancer to access this service
     public_uri: "/hello"
@@ -116,7 +116,7 @@ export load_balancer_raw_dns=...
 # the service is reachable at /hello (set in the `public_uri` property)
 curl http://$load_balancer_raw_dns/hello
 
-<p>Hello, World!</p>
+<p>Hello from Opta.!</p>
 ```
 
 - SSH into the container
@@ -168,11 +168,11 @@ opta destroy -c opta.yaml
 
 ## Next steps
 
-- View the [AWS Architecture](/architecture/aws/)
+- View the [AWS Architecture](/security/aws/)
 - Check out more examples: [github](https://github.com/run-x/opta/tree/main/examples)
-- Use your own docker image: [Custom Image](/tutorials/custom_image)
-- Set up a domain name for your service: [Ingress](/tutorials/ingress)
-- Use secrets: [Secrets](/tutorials/secrets/)
-- Set up observability integrations in one line(!): [Observability](/observability/)
-- Explore all the infrastructure that Opta sets up for you: [Architecture](/architecture/aws/)
+- Use your own docker image: [Custom Image](/features/custom_image/)
+- Set up a domain name for your service: [Configure DNS](/features/dns/)
+- Use secrets: [Secrets](/features/secrets/)
+- Set up observability integrations in one line(!): [Observability](/features/observability/)
+- Explore all the infrastructure that Opta sets up for you: [Architecture](/security/aws/)
 - Explore the api for all modules: [Reference](/reference/aws/)

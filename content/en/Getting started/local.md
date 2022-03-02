@@ -2,7 +2,7 @@
 title: "Local"
 linkTitle: "Local"
 date: 2022-01-04
-weight: 4
+weight: 5
 description: >
   Getting started with Opta Local on your local machine.
 ---
@@ -23,7 +23,7 @@ To install Opta, follow this one line installation ([detailed instructions](/ins
 
 This diagram shows what an Opta local installation will look like inside your local machine. Opta Local installs a [Kubernetes Kind cluster](https://kind.sigs.k8s.io/). Kind is a tool for running local Kubernetes clusters using Docker container “nodes”. Kind was primarily designed for testing Kubernetes itself, but may be used for local development or CI.
 
-Opta Local also installs a local container image registry to store your application images when you use [`opta deploy`](https://docs.opta.dev/tutorials/custom_image/). This docker registry is available at `http://localhost:5000`. 
+Opta Local also installs a local container image registry to store your application images when you use [`opta deploy`](/features/custom_image/). This docker registry is available at `http://localhost:5000`. 
 
 As a user you can deploy a single Kubernetes Kind cluster on a local machine and then deploy multiple application services (for example, service A and service B) Internally, Kind uses nested containers to run Kubernetes pods inside the Kind container. 
 
@@ -46,7 +46,7 @@ Running your application in Opta Local environment is almost identical to how yo
 
 #### Example 1: Deploy a service using an existing docker image
 
-We will deploy a simple [hello app](https://github.com/run-x/opta-examples/tree/main/hello-app) by defining these files.
+We will deploy a simple [hello app](https://github.com/run-x/hello-opta) by defining these files.
 
 ```yaml
 # hello.yaml
@@ -57,8 +57,8 @@ modules:
     name: hello
     port:
       http: 80
-    # from https://github.com/run-x/opta-examples/tree/main/hello-app
-    image: ghcr.io/run-x/opta-examples/hello-app:main
+    # from https://github.com/run-x/hello-opta
+    image: ghcr.io/run-x/hello-opta/hello-opta:main
     healthcheck_path: "/"
     public_uri: "/hello"
 ```
@@ -102,7 +102,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
 
 You can test your service by visiting [http://localhost:8080/hello](http://localhost:8080/hello) on your local machine browser.
-![Opta Local hello world](/images/hello-world-browser.png)
+![Opta Local hello world](/images/hello-opta-browser.png)
 
 
 - SSH into the container
@@ -143,7 +143,7 @@ NAME                                                          REFERENCE         
 horizontalpodautoscaler.autoscaling/hello-hello-k8s-service   Deployment/hello-hello-k8s-service   <unknown>/80%, <unknown>/80%   1         3         1          84m
 ```
 
-You can also use Opta's [secret management](https://docs.opta.dev/tutorials/secrets/) to inject sensitive data into your applications.
+You can also use Opta's [secret management](/features/secrets/) to inject sensitive data into your applications.
 
 To uninstall your application from your local Kubernetes cluster run
 
@@ -154,7 +154,7 @@ opta destroy --local -c hello.yaml
 
 Now, let's build an application locally and deploy it.
 
-For this example, we will use our hello application (also available on [github](https://github.com/run-x/opta-examples/tree/main/hello-app)).
+For this example, we will use our hello application (also available on [github](https://github.com/run-x/hello-opta)).
 1. Make sure that you have these files locally: 
     - `hello.yaml` The service Opta file. 
     - `app.py` The application code.
@@ -167,7 +167,7 @@ For this example, we will use our hello application (also available on [github](
 {{< highlight yaml "hl_lines=11" >}}
 # hello.yaml
 name: hello
-org: runx
+org_name: runx
 modules:
   - type: k8s-service
     name: hello
@@ -186,23 +186,19 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     #3 Update the returned text
-    return "<p>Hello, World! v2</p>"
+    return "<p>Hello from Opta.! v2</p>"
 {{< / highlight >}}
 {{< /tab >}}
 
 {{< tab tabName="Dockerfile" >}}
 {{< highlight dockerfile >}}
-FROM python:3.8-slim-buster
-
+FROM python:3.10-slim-buster
 ENV FLASK_APP=app
-
 WORKDIR /app
-
-RUN pip install Flask==0.12 
+RUN pip install Flask==2.0.3
 COPY . /app
 ENV PORT 80
-
-CMD python3 -m flask run \-\-host=0.0.0.0 \-\-port=${PORT}
+CMD python3 -m flask run --host=0.0.0.0 --port=${PORT}
 {{< / highlight >}}
 {{< /tab >}}
 
@@ -213,7 +209,7 @@ CMD python3 -m flask run \-\-host=0.0.0.0 \-\-port=${PORT}
 
 Build the image locally, let's tag it with `v2` for this example:
 ```bash
-docker build . -t hello-app:v2
+docker build . -t hello-opta:v2
 ```
 
 
@@ -225,7 +221,7 @@ The `opta deploy` command will:
 1. Create new pods to use the new container image - automatically done by kubernetes.
 
 ```bash
-opta deploy --local --auto-approve -c hello.yaml --image hello-app:v2
+opta deploy --local --auto-approve -c hello.yaml --image hello-opta:v2
 ...
 The push refers to repository [localhost:5000/hello/hello]
 ...
@@ -247,7 +243,7 @@ Now let's verify that the deployed application has our local changes:
 ```
 # check the returned text
 curl http://localhost:8080/hello
-<p>Hello, World! V2</p>%
+<p>Hello from Opta.! V2</p>%
 
 # check the deployed image uses the local registry
 kubectl -n hello get deploy -o yaml | grep image:

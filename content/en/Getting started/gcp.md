@@ -2,7 +2,7 @@
 title: "GCP"
 linkTitle: "GCP"
 date: 2022-01-03
-weight: 2
+weight: 3
 description: >
   Getting started with Opta on GCP.
 ---
@@ -53,7 +53,7 @@ It configures 3 Opta modules:
 - [k8s-cluster](/reference/google/environment_modules/gcp-gke/): create a GKE cluster
 - [k8s-base](/reference/google/environment_modules/gcp-k8s-base/): setup base infrastructure for k8s
 
-For more information about what is created, see [GCP Architecture](/architecture/gcp/).
+For more information about what is created, see [GCP Architecture](/security/gcp/).
 
 Once done, the `apply` command lists all the resource created, for example:
 ```tf
@@ -68,7 +68,7 @@ Opta updates complete!
 ## Service creation
 
 In this step we will create a service - which is basically a http server packaged in a docker container.  
-Here is a simple hello world app, the source code is [here](https://github.com/run-x/opta-examples/tree/main/hello-app).
+Here is a simple hello world app, the source code is [here](https://github.com/run-x/hello-opta).
 
 
 Create a new opta file for your service.
@@ -83,8 +83,8 @@ modules:
     name: hello
     port:
       http: 80
-    # from https://github.com/run-x/opta-examples/tree/main/hello-app
-    image: ghcr.io/run-x/opta-examples/hello-app:main
+    # from https://github.com/run-x/hello-opta
+    image: ghcr.io/run-x/hello-opta/hello-opta:main
     healthcheck_path: "/"
     # path on the load balancer to access this service
     public_uri: "/hello"
@@ -115,7 +115,7 @@ export load_balancer_raw_ip=...
 # the service is reachable at /hello (set in the `public_uri` property)
 curl http://$load_balancer_raw_ip/hello
 
-<p>Hello, World!</p>
+<p>Hello from Opta.!</p>
 ```
 
 - SSH into the container
@@ -167,11 +167,11 @@ opta destroy -c opta.yaml
 
 ## Next steps
 
-- View the [GCP Architecture](/architecture/gcp/)
+- View the [GCP Architecture](/security/gcp/)
 - Check out more examples: [github](https://github.com/run-x/opta/tree/main/examples)
-- Use your own docker image: [Custom Image](/tutorials/custom_image)
-- Set up a domain name for your service: [Ingress](/tutorials/ingress)
-- Use secrets: [Secrets](/tutorials/secrets/)
-- Set up observability integrations in one line(!): [Observability](/observability/)
-- Explore all the infrastructure that Opta sets up for you: [Architecture](/architecture/gcp/)
+- Use your own docker image: [Custom Image](/features/custom_image/)
+- Set up a domain name for your service: [Configure DNS](/features/dns/)
+- Use secrets: [Secrets](/features/secrets/)
+- Set up observability integrations in one line(!): [Observability](/features/observability/)
+- Explore all the infrastructure that Opta sets up for you: [Architecture](/security/aws/)
 - Explore the api for all modules: [Reference](/reference/google/)

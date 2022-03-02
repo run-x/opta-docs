@@ -46,6 +46,9 @@ trap "errorevent" ERR
 
 # Compares two version numbers.
 # Returns 0 if the versions are equal, 1 if the first version is higher, and 2 if the second version is higher.
+# Source Code: https://stackoverflow.com/questions/4023830/how-to-compare-two-strings-in-dot-separated-version-format-in-bash
+# You can run the test cases by using the below command:
+# /bin/bash -c "$(curl -fsSL  https://gist.githubusercontent.com/nsarupr/28a5af20ef5462cdd1f4c95739203246/raw/2cc50b6bd2e973bee8c6ef6269f731a78862bb37/compare_version.sh)"
 compare_version () {
     if [[ $1 == $2 ]]
     then

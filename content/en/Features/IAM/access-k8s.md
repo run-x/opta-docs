@@ -12,6 +12,7 @@ Before you can use `kubectl`, you need to connect it to your kubernetes cluster
 (created by opta). This is pretty simple in the Opta world! Just run:
 
 ```bash
+# note: if you don't want to use the default path $HOME/.kube/config, set the env var KUBECONFIG first
 opta configure-kubectl
 ```
 

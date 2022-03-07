@@ -135,6 +135,10 @@ hello-hello-k8s-service-586447679-fgmld 127.0.0.1 - - [23/Dec/2021 19:42:18] "GE
 ```
 - If you have `kubectl` installed, you can use it to connect to the kubernetes cluster
 ```bash
+# configure the kubeconfig file
+# note: if you don't want to use the default path $HOME/.kube/config, set the env var KUBECONFIG first
+opta configure-kubectl
+
 # Opta created all the kubernetes resources for your service
 kubectl get all --namespace hello
 

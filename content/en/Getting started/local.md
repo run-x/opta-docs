@@ -125,6 +125,10 @@ opta events --local -c hello.yaml
 
 - If you have `kubectl` installed, you can use it to connect to the local kubernetes cluster
 ```bash
+# configure the kubeconfig file
+# note: if you don't want to use the default path $HOME/.kube/config, set the env var KUBECONFIG first
+opta configure-kubectl
+
 # Opta created all the kubernetes resources for your service
 kubectl get all --namespace hello
 NAME                                           READY   STATUS    RESTARTS   AGE

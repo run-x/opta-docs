@@ -1,3 +1,7 @@
+# The Opta Documentation
+[![Netlify Status](https://api.netlify.com/api/v1/badges/35d23cca-0ff2-42cf-ba48-4f5b651c7255/deploy-status)](https://app.netlify.com/sites/opta-docs/deploys)
+
+Latest Main (edge) Deploy: [https://edge.docs.opta.dev](https://edge.docs.opta.dev)
 
 # Development
 

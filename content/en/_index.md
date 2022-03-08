@@ -83,5 +83,5 @@ container needs and Opta will connect them seamlessly.
 
 - Follow the Opta [Getting Started](/getting-started) guide.
 - Explore [Opta Examples](https://github.com/run-x/opta/tree/main/examples)
-- Review [Opta's Architecture](/architecture/aws/)
+- Review [Opta Security Posture](/security/)
 - Explore the [Opta API](/reference/)

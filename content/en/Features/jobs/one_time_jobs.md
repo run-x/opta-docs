@@ -1,6 +1,6 @@
 ---
-title: "One-tine jobs"
-linkTitle: "One-tine jobs"
+title: "One-time jobs"
+linkTitle: "One-time jobs"
 date: 2022-01-03
 draft: false
 description: >
@@ -41,6 +41,7 @@ modules:
               - date; echo Hello from the Kubernetes cluster
 ```
 
+The job will now be run as part of the next opta apply/deploy.
 You can monitor the progress of this job by inspecting the pod created for this job like so:
 
 ```shell

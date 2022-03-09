@@ -72,7 +72,8 @@ modules:
     linkerd_enabled: false
 ```
 
-A user is then responsible to make sure that the services are being added to the service mesh accordingly.
+If installing a different service mesh, a user is then responsible to make sure that the services are being configured 
+accordingly.
 
 ## External Communication
 Opta creates a private subnet where all the services run. So every service is inaccessible from the outside, by default. 

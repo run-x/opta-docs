@@ -141,7 +141,7 @@ else
   VERSION=$(trim_version $VERSION)
 fi
 
-if [[ $(compare_version "$VERSION" "0.26.1") == 1 ]]; then
+if [[ $(compare_version "$VERSION" "0.27.2") == 1 ]]; then
   LEGACY_DOWNLOAD=0
 fi
 

@@ -8,6 +8,8 @@ if [[ ! -t 0 || -n "${CI-}" ]]; then
   NONINTERACTIVE=1
 fi
 
+LEGACY_DOWNLOAD=1
+
 abort() {
   printf "%s\n" "$1"
   exit 1
@@ -41,6 +43,45 @@ errorevent() {
 }
 
 trap "errorevent" ERR
+
+# Compares two version numbers.
+# Returns 0 if the versions are equal, 1 if the first version is higher, and 2 if the second version is higher.
+# Source Code: https://stackoverflow.com/questions/4023830/how-to-compare-two-strings-in-dot-separated-version-format-in-bash
+# You can run the test cases by using the below command:
+# /bin/bash -c "$(curl -fsSL  https://gist.githubusercontent.com/nsarupr/28a5af20ef5462cdd1f4c95739203246/raw/2cc50b6bd2e973bee8c6ef6269f731a78862bb37/compare_version.sh)"
+compare_version () {
+    if [[ $1 == $2 ]]
+    then
+        return 0
+    fi
+    local IFS=.
+    local i ver1=($1) ver2=($2)
+    # fill empty fields in ver1 with zeros
+    for ((i=${#ver1[@]}; i<${#ver2[@]}; i++))
+    do
+        ver1[i]=0
+    done
+    for ((i=0; i<${#ver1[@]}; i++))
+    do
+        if [[ -z ${ver2[i]} ]]
+        then
+            # fill empty fields in ver2 with zeros
+            ver2[i]=0
+        fi
+        if ((10#${ver1[i]} > 10#${ver2[i]}))
+        then
+            echo 1
+            return
+        fi
+        if ((10#${ver1[i]} < 10#${ver2[i]}))
+        then
+            echo 2
+            return
+        fi
+    done
+    echo 0
+    return
+}
 
 trim_version() {
   version="$1"
@@ -100,18 +141,34 @@ else
   VERSION=$(trim_version $VERSION)
 fi
 
+if [[ $(compare_version "$VERSION" "0.27.2") == 1 ]]; then
+  LEGACY_DOWNLOAD=0
+fi
+
 echo "Going to install opta v$VERSION"
 
 if [[ "$OS" == "Linux" ]]; then
   SPECIFIC_OS_ID=`grep "ID=" /etc/os-release | awk -F"=" '{print $2;exit}' | tr -d '"'`
   if [[ "$SPECIFIC_OS_ID" == "amzn" ]] || [[ "$SPECIFIC_OS_ID" == "centos" ]]; then
-    PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/centos/$VERSION/opta.zip
+    if [[ "$LEGACY_DOWNLOAD" == "1" ]]; then
+      PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/centos/$VERSION/opta.zip
+    else
+      PACKAGE=https://github.com/run-x/opta/releases/download/v$VERSION/opta_centos.zip
+    fi
   else
-    PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$VERSION/opta.zip
+    if [[ "$LEGACY_DOWNLOAD" == "1" ]]; then
+      PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$VERSION/opta.zip
+    else
+      PACKAGE=https://github.com/run-x/opta/releases/download/v$VERSION/opta_linux.zip
+    fi
   fi
   MAC_ADDRESS=`cat /sys/class/net/eth0/address 2> /dev/null` || true
 elif [[ "$OS" == "Darwin" ]]; then
-  PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/mac/$VERSION/opta.zip
+  if [[ "$LEGACY_DOWNLOAD" == "1" ]]; then
+    PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/mac/$VERSION/opta.zip
+  else
+    PACKAGE=https://github.com/run-x/opta/releases/download/v$VERSION/opta_mac.zip
+  fi
   MAC_ADDRESS=`ifconfig en1 2> /dev/null | awk '/ether/{print $2}'` || true
 else
   abort "Opta is only supported on macOS and Linux."
@@ -127,7 +184,7 @@ if [[ "$GIT_EMAIL" == "" ]]; then
 fi
 
 echo "Downloading installation package..."
-curl -s $PACKAGE -o /tmp/opta.zip --fail
+curl -s -L $PACKAGE -o /tmp/opta.zip --fail
 if [[ $? != 0 ]]; then
   echo "Version $VERSION not found."
   echo "Please check the available versions at https://github.com/run-x/opta/releases."

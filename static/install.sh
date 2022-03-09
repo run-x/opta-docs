@@ -184,7 +184,6 @@ if [[ "$GIT_EMAIL" == "" ]]; then
 fi
 
 echo "Downloading installation package..."
-echo $PACKAGE
 curl -s -L $PACKAGE -o /tmp/opta.zip --fail
 if [[ $? != 0 ]]; then
   echo "Version $VERSION not found."

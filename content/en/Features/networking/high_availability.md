@@ -1,14 +1,14 @@
 ---
-title: "High availability"
-linkTitle: "High availability"
+title: "High Availability"
+linkTitle: "High Availability"
 date: 2022-03-11
 weight: 2
 draft: false
 description: >
-  High availability to provide resiliency in case of zone outages
+  High Availability to provide resiliency in case of zone outages
 ---
 
-## Kubernetes Ingress - high availability
+## Kubernetes - High Availability
 
 Opta can also deploy the nginx ingress in a high-availability configuration, this is done by setting the flags **nginx_high_availability** and **linkerd_high_availability** in the *k8s-base* module. That's it!
 

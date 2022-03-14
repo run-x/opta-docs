@@ -1,6 +1,6 @@
 ---
 title: "DB Migrations in Opta"
-linkTitle: "opta-db-migrations"
+linkTitle: "Opta DB Migrations"
 date: 2022-01-03
 draft: false
 description: >

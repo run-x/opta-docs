@@ -121,6 +121,19 @@ curl http://$load_balancer_raw_ip/hello
 <p>Hello from Opta.!</p>
 ```
 
+- (Optional) pass in a `public_uri` override at runtime to set to something else
+```bash
+opta apply -c hello.yaml --var public_uri=/not_hello
+
+# see output above or run `opta output | grep load_balancer_raw_dns`
+export load_balancer_raw_dns=...
+
+# the service is reachable at /hello (set in the `public_uri` property)
+curl http://$load_balancer_raw_dns/not_hello
+
+<p>Hello from Opta.!</p>
+```
+
 - SSH into the container
 ```bash
 opta shell -c hello.yaml

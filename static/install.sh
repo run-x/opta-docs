@@ -208,10 +208,10 @@ chmod u+x ~/.opta/opta
 
 RUNPATH=~/.opta
 # Add symlink if possible, or tell the user to use sudo for symlinking
-if ln -fs ~/.opta/opta /usr/local/bin/opta; then
+if ln -fs ~/.opta/opta /usr/local/bin/opta 2>/dev/null; then
   echo "Opta symlinked to /usr/local/bin/opta; You can now type 'opta' in the terminal to run it."
 else
-  echo "Please symlink the opta binary to one of your path directories; for example using 'sudo ln -fs ~/.opta/opta /usr/local/bin/opta'"
+  echo "Please symlink the opta binary to one of your path directories; for example using 'sudo ln -fs $RUNPATH/opta /usr/local/bin/opta'"
   echo "Alternatively, you could add the .opta installation directory to your path like so"
   echo "export PATH=\$PATH:${RUNPATH}"
   echo "to your terminal profile."

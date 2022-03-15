@@ -89,7 +89,6 @@ modules:
     healthcheck_path: "/"
     # path on the load balancer to access this service
     public_uri: "/hello"
-
 ```
 
 Now you are ready to deploy your service.
@@ -173,6 +172,7 @@ opta destroy -c opta.yaml
 ## Next steps
 
 - View the [AWS Architecture](/security/aws/)
+- Check out how to templatize with [input variables](/features/variables/input_variables)
 - Check out more examples: [github](https://github.com/run-x/opta/tree/main/examples)
 - Use your own docker image: [Custom Image](/features/custom_image/)
 - Set up a domain name for your service: [Configure DNS](/features/dns/)

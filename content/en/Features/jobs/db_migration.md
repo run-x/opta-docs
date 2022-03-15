@@ -115,64 +115,6 @@ approach). Take for example the following manifests which starts with a k8s serv
 public helm chart which creates a one-time job for the migration in either the same manifest or a new one:
 
 {{< tabs tabTotal="2" >}}
-{{< tab tabName="New Manifest" >}}
-
-```yaml
-environments:
-  - name: staging
-    path: "./staging.yaml"
-name: my-service-migration
-modules:
-  - type: external-state
-    name: external
-    backend_type: s3
-    config:
-      bucket: opta-tf-state-my-org-staging
-      key: my-service
-      region: us-east-1
-  - type: helm-chart
-    name: dbmigration1
-    namespace: my-service # This should be the name of the original service manifest being referred
-    create_namespace: false
-    repository: https://ameijer.github.io/k8s-as-helm/
-    chart: job
-    chart_version: 1.0.0
-    values:
-      nameOverride: "databaseMigration"
-      restartPolicy: Never
-      containers:
-        hello:
-          image: "${{module.external.outputs.current_image}}"
-          extraSettings:
-            env:
-              - name: DBHOST
-                valueFrom:
-                  secretKeyRef:
-                    name: secret
-                    key: DBHOST
-                    optional: true
-              - name: DBNAME
-                valueFrom:
-                  secretKeyRef:
-                    name: secret
-                    key: DBNAME
-                    optional: true
-              - name: DBPASS
-                valueFrom:
-                  secretKeyRef:
-                    name: secret
-                    key: DBPASS
-                    optional: true
-              - name: DBUSER
-                valueFrom:
-                  secretKeyRef:
-                    name: secret
-                    key: DBUSER
-                    optional: true
-            command:
-              - ./home/app/do_migration.sh # The user-created script to run migrations and added in the docker image
-```
-{{< /tab >}}
 {{< tab tabName="Same Manifest" >}}
 
 ```yaml
@@ -237,6 +179,64 @@ modules:
               - ./home/app/do_migration.sh # The user-created script to run migrations and added in the docker image
 ```
 
+{{< /tab >}}
+{{< tab tabName="New Manifest" >}}
+
+```yaml
+environments:
+  - name: staging
+    path: "./staging.yaml"
+name: my-service-migration
+modules:
+  - type: external-state
+    name: external
+    backend_type: s3
+    config:
+      bucket: opta-tf-state-my-org-staging
+      key: my-service
+      region: us-east-1
+  - type: helm-chart
+    name: dbmigration1
+    namespace: my-service # This should be the name of the original service manifest being referred
+    create_namespace: false
+    repository: https://ameijer.github.io/k8s-as-helm/
+    chart: job
+    chart_version: 1.0.0
+    values:
+      nameOverride: "databaseMigration"
+      restartPolicy: Never
+      containers:
+        hello:
+          image: "${{module.external.outputs.current_image}}"
+          extraSettings:
+            env:
+              - name: DBHOST
+                valueFrom:
+                  secretKeyRef:
+                    name: secret
+                    key: DBHOST
+                    optional: true
+              - name: DBNAME
+                valueFrom:
+                  secretKeyRef:
+                    name: secret
+                    key: DBNAME
+                    optional: true
+              - name: DBPASS
+                valueFrom:
+                  secretKeyRef:
+                    name: secret
+                    key: DBPASS
+                    optional: true
+              - name: DBUSER
+                valueFrom:
+                  secretKeyRef:
+                    name: secret
+                    key: DBUSER
+                    optional: true
+            command:
+              - ./home/app/do_migration.sh # The user-created script to run migrations and added in the docker image
+```
 {{< /tab >}}
 {{< /tabs >}}
 

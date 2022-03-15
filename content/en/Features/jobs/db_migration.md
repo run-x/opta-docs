@@ -74,6 +74,11 @@ as part of the deployment to a "staging/qa" environment.
 Always prepare under the assumption that if something can go wrong, it will go wrong. Hence, always have someone on 
 standby monitoring the migration.
 
+### Run Migrations in Low Hours
+
+Always run your migrations in hours of low usage-- not only will it help prevent database congestions due to long lock,
+but it will also mitigate the publicity of errors.
+
 ## DB Migration Options with Opta
 Now that we have the preparations in place, there are several ways which database migrations can be done with Opta,
 depending on your needs/situation.

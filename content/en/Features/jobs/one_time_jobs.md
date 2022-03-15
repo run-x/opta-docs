@@ -1,10 +1,9 @@
 ---
-title: "One-time jobs"
-linkTitle: "One-time jobs"
+title: "One-time Jobs"
+linkTitle: "One-time Jobs"
 date: 2022-01-03
 draft: false
-description: >
-  How to run one-off jobs with Opta
+description: How to run one-off jobs with Opta
 ---
 
 On occasion one may wish to run one-time jobs for their application, e.g. to run migrations. This can currently be 

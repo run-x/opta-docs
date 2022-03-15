@@ -79,9 +79,6 @@ name: hello
 environments:
   - name: staging
     path: "opta.yaml" # the file we created in previous step
-input_variables:
-  - name: public_uri
-    default: "/hello"
 modules:
   - type: k8s-service
     name: hello
@@ -91,8 +88,7 @@ modules:
     image: ghcr.io/run-x/hello-opta/hello-opta:main
     healthcheck_path: "/"
     # path on the load balancer to access this service
-    public_uri: "{vars.public_uri}"
-
+    public_uri: "/hello"
 ```
 
 Now you are ready to deploy your service.
@@ -118,19 +114,6 @@ export load_balancer_raw_dns=...
 
 # the service is reachable at /hello (set in the `public_uri` property)
 curl http://$load_balancer_raw_dns/hello
-
-<p>Hello from Opta.!</p>
-```
-
-- (Optional) pass in a `public_uri` override at runtime to set to something else
-```bash
-opta apply -c hello.yaml --var public_uri=/not_hello
-
-# see output above or run `opta output | grep load_balancer_raw_dns`
-export load_balancer_raw_dns=...
-
-# the service is reachable at /hello (set in the `public_uri` property)
-curl http://$load_balancer_raw_dns/not_hello
 
 <p>Hello from Opta.!</p>
 ```
@@ -189,6 +172,7 @@ opta destroy -c opta.yaml
 ## Next steps
 
 - View the [AWS Architecture](/security/aws/)
+- Check out how to templatize with [input variables](/features/variables/input-variables)
 - Check out more examples: [github](https://github.com/run-x/opta/tree/main/examples)
 - Use your own docker image: [Custom Image](/features/custom_image/)
 - Set up a domain name for your service: [Configure DNS](/features/dns/)

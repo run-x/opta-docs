@@ -6,8 +6,8 @@ description: Passing Input Variables to Opta
 ---
 
 Opta supports passing input variables at runtime to be used when generating the underlying terraform
-specifications. This is done by first specifying which input variables to accept within the manifest via the
-optional `input_variables` field like so:
+specifications. This allows you to make your Opta template file reusable. This is done by first specifying which input 
+variables to accept within the manifest via the optional `input_variables` field like so:
 
 ```yaml
 # opta.yaml

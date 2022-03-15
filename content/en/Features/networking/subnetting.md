@@ -31,7 +31,7 @@ By default, Opta use the following CIDR:
 - VMs 10.0.0.0/19 - 8,192 IPs
 - k8s pods 10.0.32.0/19  - 8,192 IPs
 - k8s services 10.0.64.0/20 - 4,096 IPs
-- k8s master - 10.0.80.0/28 - 13 IPs (number of clusters - AWS limitation)
+- k8s master - 10.0.80.0/28 - 13 IPs (number of clusters - GCP limitation)
 
 ### Azure
 

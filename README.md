@@ -4,7 +4,7 @@
 
 Latest Main (edge) Deploy: [https://edge.docs.opta.dev](https://edge.docs.opta.dev)
 
-## Development
+# Development
 
 ## Traditional
 

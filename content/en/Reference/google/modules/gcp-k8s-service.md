@@ -188,3 +188,4 @@ Cron Jobs are currently created outside the default linkerd service mesh.
 | Name      | Description |
 | ----------- | ----------- |
 | `docker_repo_url` | Url to the docker repository created for images to be deployed in this env |
+| `current_image` | The full name plus tag of the docker imge used by the deployment. |

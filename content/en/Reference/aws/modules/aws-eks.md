@@ -41,3 +41,4 @@ For information about the default IAM permissions given to the node group please
 | `k8s_openid_provider_url` | The openid provider url for AWS IAM <--> Kubernetes RBAC integration. |
 | `k8s_openid_provider_arn` | The openid provider arn for AWS IAM <--> Kubernetes RBAC integration. |
 | `k8s_node_group_security_id` | The id of the security group of the cluster nodepools. |
+| `k8s_version` | The version of the K8s Cluster |

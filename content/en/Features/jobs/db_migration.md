@@ -102,8 +102,9 @@ flask db upgrade # Does the migrations
 gunicorn -c gunicorn.py wsgi # Starts the server
 ```
 
-This strategy may potentially cause your health checs to fail if a migration takes too long but as long as the migrations 
-are short, this option should work fine, keep your database and server changes in lock step and keep your ci/cd unchanged.
+This strategy may potentially cause your health checks to fail if a migration takes too long but as long as the migrations 
+are short (< 30 seconds), this option should work fine, keep your database and server changes in lock step and keep your 
+ci/cd unchanged.
 
 ### In a Running Server's Container
 An alternative route is having a user enter one of the running containers via the `opta shell` command and execute the 

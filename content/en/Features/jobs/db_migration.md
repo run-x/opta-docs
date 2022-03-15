@@ -77,7 +77,7 @@ as part of the deployment to a "staging/qa" environment.
 Always prepare under the assumption that if something can go wrong, it will go wrong. Hence, always have someone on 
 standby monitoring the migration.
 
-## DB Migration Options with Pure Opta
+## DB Migration Options with Opta
 Now that we have the preparations in place, there are several ways which database migrations can be done with Opta,
 depending on your needs/situation.
 
@@ -100,8 +100,8 @@ flask db upgrade # Does the migrations
 gunicorn -c gunicorn.py wsgi # Starts the server
 ```
 
-As long as the migrations are short, this option should work fine, keep your database and server changes in lock step 
-and keep your ci/cd unchanged.
+This strategy may potentially cause your health checs to fail if a migration takes too long but as long as the migrations 
+are short, this option should work fine, keep your database and server changes in lock step and keep your ci/cd unchanged.
 
 ### In a Running Server's Container
 An alternative route is having a user enter one of the running containers via the `opta shell` command and execute the 
@@ -135,7 +135,7 @@ modules:
       region: us-east-1
   - type: helm-chart
     name: dbmigration1
-    namespace: my-service
+    namespace: my-service # This should be the name of the original service manifest being referred
     create_namespace: false
     repository: https://ameijer.github.io/k8s-as-helm/
     chart: job
@@ -173,7 +173,7 @@ modules:
                     key: DBUSER
                     optional: true
             command:
-              - ./home/app/do_migration.sh
+              - ./home/app/do_migration.sh # The user-created script to run migrations and added in the docker image
 ```
 {{< /tab >}}
 {{< tab tabName="Same Manifest" >}}
@@ -199,7 +199,7 @@ modules:
             DBPASS: DBPASS
   - type: helm-chart
     name: dbmigration1
-    namespace: my-service
+    namespace: my-service # This should be the name of the service manifest
     create_namespace: false
     repository: https://ameijer.github.io/k8s-as-helm/
     chart: job
@@ -237,7 +237,7 @@ modules:
                     key: DBUSER
                     optional: true
             command:
-              - ./home/app/do_migration.sh
+              - ./home/app/do_migration.sh # The user-created script to run migrations and added in the docker image
 ```
 
 {{< /tab >}}
@@ -245,7 +245,8 @@ modules:
 
 This approach, while more explicit, does require the user to have knowledge of Kubernetes jobs, and to manually
 connect the required database secrets from the secret set up for the k8s service link (**DO NOT** reference the db creds
-as direct environment variables-- they will be very visible). The user will additionally need to update the `nameOverride` 
+as direct environment variables as they will be very visible-- note how in the examples we referred to the Kubernetes 
+secrets created by the k8s service linking). The user will additionally need to update the `nameOverride` 
 field for each run as each job run must have a new name (they can streamline this via [input variables](/features/input-variables)).
 If these difficulties are manageable, then this approach offers a more formalized solution.
 

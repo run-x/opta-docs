@@ -17,7 +17,7 @@ Note: Our Azure offering currently doesn't support Self Signed Certificates.
 
 ### How to expose a Secure Port
 
-With Opta configurations, just set the `expose_self_signed_ssl` flag as `true` with the k8s-base ([AWS](/reference/aws/environment_modules/aws-k8s-base)/[GCP](/reference/google/environment_modules/gcp-k8s-base)) opta module.
+With Opta configurations, just set the `expose_self_signed_ssl` flag as `true` with the k8s-base ([AWS](/reference/aws/modules/aws-k8s-base)/[GCP](/reference/google/modules/gcp-k8s-base)) opta module.
 
 {{< tabs tabTotal="3" >}}
 {{< tab tabName="Aws" >}}

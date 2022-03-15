@@ -167,10 +167,15 @@ enable = false
 [params.links]
 # End user relevant links. These will show up on left side of footer and in the community page if you have one.
 [[params.links.user]]
-name = "User support list"
-url = "support@runx.dev"
+name = "User support email"
+url = "mailto:info@runx.dev"
 icon = "fa fa-envelope"
 desc = "Help from your fellow users"
+[[params.links.user]]
+name = "Mailing List"
+url = "https://bit.ly/3KC0HKF"
+icon = "fa fa-newspaper"
+desc = "Mailing list for Opta news and updates"
 [[params.links.developer]]
 name = "GitHub"
 url = "https://github.com/run-x/opta"

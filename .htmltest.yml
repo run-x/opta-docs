@@ -1,0 +1,9 @@
+DirectoryPath: "public"
+IgnoreAltMissing: true
+CheckMailto: false
+EnforceHTTPS: true
+IgnoreDirectoryMissingTrailingSlash: true
+IgnoreURLs:
+  - "startup.com"
+  - "localhost"
+CacheExpires: "1m"

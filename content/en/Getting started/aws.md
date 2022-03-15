@@ -50,9 +50,9 @@ opta apply
 
 For the first run, this step takes approximately 15 min.  
 It configures 3 Opta modules:
-- [base](/reference/aws/environment_modules/aws-base/): setup networking
-- [k8s-cluster](/reference/aws/environment_modules/aws-eks/): create a EKS cluster
-- [k8s-base](/reference/aws/environment_modules/aws-k8s-base/): setup base infrastructure for k8s
+- [base](/reference/aws/modules/aws-base/): setup networking
+- [k8s-cluster](/reference/aws/modules/aws-eks/): create a EKS cluster
+- [k8s-base](/reference/aws/modules/aws-k8s-base/): setup base infrastructure for k8s
 
 For more information about what is created, see [AWS Architecture](/security/aws/).
 
@@ -175,7 +175,7 @@ opta destroy -c opta.yaml
 - Check out how to templatize with [input variables](/features/variables/input_variables)
 - Check out more examples: [github](https://github.com/run-x/opta/tree/main/examples)
 - Use your own docker image: [Custom Image](/features/custom_image/)
-- Set up a domain name for your service: [Configure DNS](/features/dns/)
+- Set up a domain name for your service: [Configure DNS](/features/dns-and-cert/dns/)
 - Use secrets: [Secrets](/features/secrets/)
 - Set up observability integrations in one line(!): [Observability](/features/observability/)
 - Explore all the infrastructure that Opta sets up for you: [Architecture](/security/aws/)

@@ -86,10 +86,10 @@ This section presents the high level components by following the route of a HTTP
 </a>
 
 
-**1 - A client sends a request such as [https://mycompany.com/api/list-objects](https://mycompany.com/api/list-objects)**
+**1 - A client sends a request such as [https://startup.com/api/list-objects](https://startup.com/api/list-objects)**
 
 - The DNS is publicly resolved to point to one of the public IPs of the load balancer.
-- The load balancer serves the public TLS certificate for [mycompany.com](http://mycompany.com) and as such is able to decrypt the HTTPS. The TLS termination is done at this level.
+- The load balancer serves the public TLS certificate for [startup.com](http://startup.com) and as such is able to decrypt the HTTPS. The TLS termination is done at this level.
 - The load balancer can scale its capacity to adjust to the load.
 
 **2 - The load balancer forwards the https request to an Nginx proxy in the Kubernetes cluster.**
@@ -100,7 +100,7 @@ This section presents the high level components by following the route of a HTTP
 
 **3 - The ingress controller forwards the request to a pod running the api container.**
 
-- The ingress controller uses the ingress rules to know which Kubernetes service should be matched with the url. Ex:  [/api/list-objects](https://mycompany.com/api/list-objects) is for api-service. The ingress rule is set using the `public_uri` [field](/reference/aws/service_modules/aws-k8s-service).
+- The ingress controller uses the ingress rules to know which Kubernetes service should be matched with the url. Ex:  [/api/list-objects](https://startup.com/api/list-objects) is for api-service. The ingress rule is set using the `public_uri` [field](/reference/aws/modules/aws-k8s-service).
 - Linkerd enables mutually-authenticated Transport Layer Security (mTLS) for all TCP traffic between meshed pods.
 - The number of pods for a given service is managed by an auto-scaler.
 

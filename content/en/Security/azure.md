@@ -34,7 +34,7 @@ There currently is no module for for a user to provision their own storage accou
 time.
 
 Lastly, Opta does not handle DNS or SSL in Azure due to complexities of Azure. Opta does provide ways of adding your
-[own ssl certificate into our system](/miscellaneous/ingress) to get SSL. Once your DNS zone points to the IP address of the load balancer
+[own ssl certificate into our system](/features/dns-and-cert/dns) to get SSL. Once your DNS zone points to the IP address of the load balancer
 provisioned by Opta your application will be live and protected by SSL.
 
 ## Security Overview

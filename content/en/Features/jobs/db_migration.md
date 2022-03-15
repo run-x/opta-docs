@@ -27,10 +27,7 @@ simultaneously. Protocol buffers offer a similar alternative with its versioning
 [backwards and forward compatibility](https://stackoverflow.com/questions/8519381/how-does-protocol-buffer-handle-versioning).
 
 If you are using one of these non-relational databases, then consider what alternatives you have at your disposal, before
-fully committing. Even if you are using relational databases, many like postgres and mysql have been capable of storing
-and [even indexing](https://www.postgresql.org/docs/9.4/datatype-json.html) json fields -- while this feature does not
-entirely solve maintenance for the truly relational fields, it can offer a respite for excessive migrations, possibly
-even make it a problem for later.
+fully committing.
 
 ### Use a Trusted Migration Tool
 Nothing is forcing a user to use a particular ORM or SQL client/framework, but it should be noted that many have
@@ -65,7 +62,7 @@ database, and as staging databases are typically a fraction of the size of produ
 Aside from a full production replication for testing, the only reasonable deterrent would be a database-educated engineer
 approving/guarding db migration addition.
 
-### Validate on as Valid as Data as Possible Outside of Production
+### Validate on non Production instance first
 
 Even in small datasets, database migrations will always face the danger of improper data transformations which cause errors.
 One of the best countermeasures for such errors is testing the migrations in non-production databases which closely

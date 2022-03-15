@@ -11,8 +11,8 @@ With Opta, you can easily create cron jobs - jobs that run on a schedule. This c
 with the `helm-chart` (legacy) or the `k8s-service` opta module.
 
 ## Using K8s Service
-The k8s-service module for [AWS](/reference/aws/service_modules/aws-k8s-service) or
-[GCP](/reference/gcp/service_modules/gcp-k8s-service) supports adding a list of cron job to Kubernetes service 
+The k8s-service module for [AWS](/reference/aws/modules/aws-k8s-service) or
+[GCP](/reference/google/modules/gcp-k8s-service) supports adding a list of cron job to Kubernetes service 
 deployments via the `cron_jobs` field. To this field you must provide as input an execution 
 [schedule](https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#cron-schedule-syntax),
 and an array dictating the command to run. If one wishes to simply run a cron job as part of this service

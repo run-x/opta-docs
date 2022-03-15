@@ -11,7 +11,7 @@ description: >
 ### Set custom environment variables
 
 Opta allows you to pass in custom environment variables to your k8s-service
-([AWS](/reference/service-modules/aws/#k8s-service) or [GCP](/reference/service-modules/gcp/#k8s-service)).
+([AWS](/reference/aws/modules/aws-k8s-service) or [GCP](/reference/google/modules/gcp-k8s-service)).
 
 Just use the `env_vars` field:
 
@@ -38,7 +38,7 @@ the value `value`!
 
 You can also use Opta's interpolation features to refer to other values:
 
-- "{variables}" refers to [templatization variables](/features/environment_variables/#specify-the-environment-to-use)
+- "{variables}" refers to [templatization variables](/features/variables/environment_variables/#specify-the-environment-to-use)
 - "{parent.output}" where `output` is the name of one of parent module's outputs
   (consult the module reference for output names)
 

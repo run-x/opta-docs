@@ -1,0 +1,42 @@
+name: Link Checker
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+
+jobs:
+  link_checker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Fetch submodules
+        run: git submodule update --init --recursive
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '17.6.0'
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.87.0'
+          extended: true
+
+      - name: NPM install
+        run: |
+          npm install
+
+      - name: Build
+        env:
+          HUGO_ENV: production
+        run: hugo --cleanDestinationDir
+
+      - name: Install htmltest
+        run: curl https://htmltest.wjdp.uk | bash
+
+      - name: Run htmltest
+        run: ./bin/htmltest

@@ -49,9 +49,9 @@ opta apply
 
 For the first run, this step takes approximately 15 min.  
 It configures 3 Opta modules:
-- [base](/reference/google/environment_modules/gcp-base/): setup networking
-- [k8s-cluster](/reference/google/environment_modules/gcp-gke/): create a GKE cluster
-- [k8s-base](/reference/google/environment_modules/gcp-k8s-base/): setup base infrastructure for k8s
+- [base](/reference/google/modules/gcp-base/): setup networking
+- [k8s-cluster](/reference/google/modules/gcp-gke/): create a GKE cluster
+- [k8s-base](/reference/google/modules/gcp-k8s-base/): setup base infrastructure for k8s
 
 For more information about what is created, see [GCP Architecture](/security/gcp/).
 
@@ -174,7 +174,7 @@ opta destroy -c opta.yaml
 - Check out how to templatize with [input variables](/features/variables/input_variables)
 - Check out more examples: [github](https://github.com/run-x/opta/tree/main/examples)
 - Use your own docker image: [Custom Image](/features/custom_image/)
-- Set up a domain name for your service: [Configure DNS](/features/dns/)
+- Set up a domain name for your service: [Configure DNS](/features/dns-and-cert/dns/)
 - Use secrets: [Secrets](/features/secrets/)
 - Set up observability integrations in one line(!): [Observability](/features/observability/)
 - Explore all the infrastructure that Opta sets up for you: [Architecture](/security/aws/)

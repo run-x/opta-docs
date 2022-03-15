@@ -347,7 +347,7 @@ Following the domain examples above, this will expose the service at https://hel
 
 ## Advanced Topic: Adding Extra Annotations to Ingress Objects
 
-While Opta will automatically add the ingress object and required annotations, you an add extra [Nginx ingress annotations]((https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/)) to control traffic via Nginx ingress for your service. For example:
+While Opta will automatically add the ingress object and required annotations, you an add extra [Nginx ingress annotations](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/) to control traffic via Nginx ingress for your service. For example:
 
 {{< highlight yaml "hl_lines=8-11" >}}
 name: hello

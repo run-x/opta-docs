@@ -4,7 +4,7 @@ linkTitle: "Update DNS"
 date: 2022-01-03
 draft: false
 description: >
-  How to change update DNS for your Opta environment.
+  How to update DNS for your Opta environment.
 ---
 
 Currently, Opta does not support multiple domains (except subdomains) per environment, although that may change

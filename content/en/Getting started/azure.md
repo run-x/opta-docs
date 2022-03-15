@@ -174,7 +174,7 @@ opta destroy -c opta.yaml
 ## Next steps
 
 - View the [Azure Architecture](/security/azure/)
-- Check out how to templatize with [input variables](/features/variables/input-variables)
+- Check out how to templatize with [input variables](/features/variables/input_variables)
 - Check out more examples: [github](https://github.com/run-x/opta/tree/main/examples)
 - Use your own docker image: [Custom Image](/features/custom_image/)
 - Set up a domain name for your service: [Configure DNS](/features/dns/)

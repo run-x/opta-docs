@@ -1,78 +1,77 @@
 #!/bin/bash
 
-OPTAVERSION=0.23.0
+# curl -w "%{url_effective}\n" -I -L -s -S https://github.com/run-x/opta/releases/latest -o /dev/null | grep -E 'tag/v\S+'
+OPTAVERSION=0.27.2
 
 # Architecture check
 ARCH=""
 case $(uname -m) in
-    x86_64) ARCH="amd64" ;;
-    arm64) ARCH="arm64" ;;
-    *) 
-      echo -n "Unknown machine architecture, opta.sh is not supported in this environment"
-      exit 1
-      ;;
+  x86_64) ARCH="amd64" ;;
+  arm64) ARCH="arm64" ;;
+  *)
+    echo -n "Unknown machine architecture, opta.sh is not supported in this environment"
+    exit 1
+  ;;
 esac
 
 unameOut="$(uname -s)"
 case "${unameOut}" in
-    Linux*)     OSNAME=Linux;;
-    Darwin*)    OSNAME=Darwin;;
-    *)          
-        echo -n "Unknown OS UNKNOWN:${unameOut}, opta.sh is not supported in this environment"
-        exit 1
-        ;;
+  Linux*) OSNAME=Linux ;;
+  Darwin*) OSNAME=Darwin ;;
+  *)
+    echo -n "Unknown OS UNKNOWN:${unameOut}, opta.sh is not supported in this environment"
+    exit 1
+  ;;
 esac
 
-if [[ "$ARCH" == "amd64" && "$OSNAME" == "Linux" ]]; then
-#Versions and binary URLs
-    echo "Detected Linux + Amd64!"
-    OPTAURL="https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$OPTAVERSION/opta.zip"
-    TERRAFORMURL="https://releases.hashicorp.com/terraform/1.0.11/terraform_1.0.11_linux_amd64.zip"
-    AWSCLI2URL="https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
-    KUBECTLURL="https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$ARCH/kubectl"
-    GOOGLEURL="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-365.0.1-linux-x86_64.tar.gz"
-    DOCKERURL="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.9.tgz"
+if [[ $ARCH == "amd64" && $OSNAME == "Linux" ]]; then
+  #Versions and binary URLs
+  echo "Detected Linux + Amd64!"
+  OPTAURL="https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$OPTAVERSION/opta.zip"
+  TERRAFORMURL="https://releases.hashicorp.com/terraform/1.0.11/terraform_1.0.11_linux_amd64.zip"
+  AWSCLI2URL="https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+  KUBECTLURL="https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$ARCH/kubectl"
+  GOOGLEURL="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-365.0.1-linux-x86_64.tar.gz"
+  DOCKERURL="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.9.tgz"
 fi
 
-if [[ "$ARCH" == "arm64" && "$OSNAME" == "Darwin" ]]; then
-    echo "Detected Apple Silicon Darwin + Arm64!"
-    echo "Sorry, Opta docker run is not available for this configuration."
-    echo "Please follow the instructions at https://docs.opta.dev/installation/ to install Opta directly on your host."
-    exit 1
-    # Apple silicon issues, some of these binaries are not working https://github.com/docker/for-mac/issues/5123
-    # OPTAURL="https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$OPTAVERSION/opta.zip"
-    # TERRAFORMURL="https://releases.hashicorp.com/terraform/1.0.11/terraform_1.0.11_linux_amd64.zip"
-    # AWSCLI2URL="https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
-    # KUBECTLURL="https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$ARCH/kubectl"
-    # GOOGLEURL="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-365.0.1-linux-x86_64.tar.gz"
-    # DOCKERURL="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.9.tgz"
+if [[ $ARCH == "arm64" && $OSNAME == "Darwin" ]]; then
+  echo "Detected Apple Silicon Darwin + Arm64!"
+  echo "Sorry, Opta docker run is not available for this configuration."
+  echo "Please follow the instructions at https://docs.opta.dev/installation/ to install Opta directly on your host."
+  exit 1
+  # Apple silicon issues, some of these binaries are not working https://github.com/docker/for-mac/issues/5123
+  # OPTAURL="https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$OPTAVERSION/opta.zip"
+  # TERRAFORMURL="https://releases.hashicorp.com/terraform/1.0.11/terraform_1.0.11_linux_amd64.zip"
+  # AWSCLI2URL="https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+  # KUBECTLURL="https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$ARCH/kubectl"
+  # GOOGLEURL="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-365.0.1-linux-x86_64.tar.gz"
+  # DOCKERURL="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.9.tgz"
 fi
 
-if [[ "$ARCH" == "amd64" && "$OSNAME" == "Darwin" ]]; then
-    echo "Detected Apple Intel Darwin + Amd64!"
-    OPTAURL="https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$OPTAVERSION/opta.zip"
-    TERRAFORMURL="https://releases.hashicorp.com/terraform/1.0.11/terraform_1.0.11_linux_amd64.zip"
-    AWSCLI2URL="https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
-    KUBECTLURL="https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$ARCH/kubectl"
-    GOOGLEURL="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-365.0.1-linux-x86_64.tar.gz"
-    DOCKERURL="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.9.tgz"
+if [[ $ARCH == "amd64" && $OSNAME == "Darwin" ]]; then
+  echo "Detected Apple Intel Darwin + Amd64!"
+  OPTAURL="https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$OPTAVERSION/opta.zip"
+  TERRAFORMURL="https://releases.hashicorp.com/terraform/1.0.11/terraform_1.0.11_linux_amd64.zip"
+  AWSCLI2URL="https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+  KUBECTLURL="https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$ARCH/kubectl"
+  GOOGLEURL="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-365.0.1-linux-x86_64.tar.gz"
+  DOCKERURL="https://download.docker.com/linux/static/stable/x86_64/docker-20.10.9.tgz"
 fi
 
-if  [ ! "$(command -v docker)" ]; then
-    echo "opta.sh requires Docker on your machine, please install docker."
-    exit 1
+if [[ -n "$(command -v docker)" ]]; then
+  echo "opta.sh requires Docker on your machine, please install docker."
+  exit 1
 fi
 
 ##
-MYUID=`id -u ${USER}`
-MYGID=`id -g ${USER}`
-CONTAINERGID=$(( MYGID < 1000 ? 12345 : MYGID ))
-
-
+MYUID=$(id -u "${USER}")
+MYGID=$(id -g "${USER}")
+CONTAINERGID=$((MYGID < 1000 ? 12345 : MYGID))
 
 mkdir -p /tmp/opta
 
-cat << EOF > /tmp/opta/install.sh
+cat <<EOF >/tmp/opta/install.sh
 #! /usr/bin/env bash
 
 set -u
@@ -100,7 +99,7 @@ EOF
 
 chmod +x /tmp/opta/install.sh
 
-cat << EOF > /tmp/opta/Dockerfile
+cat <<EOF >/tmp/opta/Dockerfile
 # base image
 FROM python:3.8.12-bullseye
 RUN apt-get update
@@ -112,7 +111,7 @@ RUN unzip awscliv2.zip
 RUN ./aws/install
 RUN rm  awscliv2.zip
 
-# gcp cli 
+# gcp cli
 RUN curl "$GOOGLEURL" -o "googlecloudsdk.tar.gz"
 RUN tar -xvzf googlecloudsdk.tar.gz; sleep 1
 RUN rm googlecloudsdk.tar.gz
@@ -147,7 +146,7 @@ ARG OPTAVERSION
 
 # add user
 RUN groupadd -g ${CONTAINERGID} ${USER}
-RUN useradd ${USER} -m -d ${HOME} -u ${MYUID} -g ${CONTAINERGID} 
+RUN useradd ${USER} -m -d ${HOME} -u ${MYUID} -g ${CONTAINERGID}
 
 # docker (install after adding docker group above)
 RUN curl $DOCKERURL -o docker.tar.gz
@@ -173,23 +172,23 @@ EOF
 echo "Building your Opta image"
 # Build the docker image
 docker build --quiet /tmp/opta \
---build-arg HOME=${HOME} \
---build-arg OPTAVERSION=${OPTAVERSION} \
---tag=opta-${USER}:${OPTAVERSION} 
+  --build-arg HOME="${HOME}" \
+  --build-arg OPTAVERSION=${OPTAVERSION} \
+  --tag=opta-"${USER}":${OPTAVERSION}
 echo "Done building Opta image"
+
 ## Inject Opta-specific env vars from host env shell into the docker container
 # declare -a opta_envvars=("AWS_ACCESS_KEY_ID" "AWS_SECRET_ACCESS_KEY" "MONGODB_ATLAS_PUBLIC_KEY" "MONGODB_ATLAS_PRIVATE_KEY")
-declare -a opta_envvars=(`env`)
->/tmp/opta/opta_env_vars #Empty out any pre-existing file
-for i in "${opta_envvars[@]}"
-do
-if [[  "${i}" ]]; then
-    env | grep ${i} >> /tmp/opta/opta_env_vars
-fi
+declare -a opta_envvars=$(env)
+true >/tmp/opta/opta_env_vars #Empty out any pre-existing file
+for i in "${opta_envvars[@]}"; do
+  if [[ -n "${i}" ]]; then
+    env | grep "${i}" >>/tmp/opta/opta_env_vars
+  fi
 done
 
 # Docker proxy to connect to docker daemon on host from the container
-cat << EOF > /tmp/opta/proxy_env_vars
+cat <<EOF >/tmp/opta/proxy_env_vars
 AUTH=1
 SECRETS=1
 POST=1
@@ -214,27 +213,26 @@ VOLUMES=1
 EOF
 
 # Docker run docker proxy that controls host docker daemon from inside a container
-docker stop  dockerproxy > /dev/null 2>&1
-docker rm  dockerproxy  > /dev/null 2>&1
+docker stop dockerproxy >/dev/null 2>&1
+docker rm dockerproxy >/dev/null 2>&1
 sleep 1
 docker container run \
-    -d --privileged \
-    --name dockerproxy \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -p 127.0.0.1:2375:2375 \
-    --env-file /tmp/opta/proxy_env_vars \
-    tecnativa/docker-socket-proxy
+  -d --privileged \
+  --name dockerproxy \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -p 127.0.0.1:2375:2375 \
+  --env-file /tmp/opta/proxy_env_vars \
+  tecnativa/docker-socket-proxy
 
 # Docker run opta container
 docker run -it \
--v $HOME:$HOME \
--v /tmp:/tmp \
---env-file /tmp/opta/opta_env_vars \
---net="host" \
---user ${MYUID}:${CONTAINERGID} \
---workdir $PWD \
-opta-${USER}:${OPTAVERSION}  $@
-
+  -v "$HOME":"$HOME" \
+  -v /tmp:/tmp \
+  --env-file /tmp/opta/opta_env_vars \
+  --net="host" \
+  --user "${MYUID}":${CONTAINERGID} \
+  --workdir "$PWD" \
+  opta-"${USER}":${OPTAVERSION} "$@"
 
 # Reset permissions of files on host if needed
 # if [[ "$MYGID" != "$CONTAINERGID" ]]; then
@@ -243,5 +241,5 @@ opta-${USER}:${OPTAVERSION}  $@
 
 # Cleanup
 rm -rf /tmp/opta
-docker stop  dockerproxy > /dev/null 2>&1
-docker rm  dockerproxy  > /dev/null 2>&1
+docker stop dockerproxy >/dev/null 2>&1
+docker rm dockerproxy >/dev/null 2>&1

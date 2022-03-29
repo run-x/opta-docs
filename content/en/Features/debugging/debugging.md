@@ -66,7 +66,7 @@ You can see the pods for a given service by running:
 kubectl get pods -n <service-name>
 ```
 
-> If this doesn't show any pods, that means your service hasn't been deployed. Check out the [deployment docs](/getting-started/aws/#service-creation) to fix that.
+> If this doesn't show any pods, that means your service hasn't been deployed. Check out the [deployment docs](/getting-started/aws/#3-service-creation) to fix that.
 
 Note that `<service-name>` is specified in your yaml file:
 

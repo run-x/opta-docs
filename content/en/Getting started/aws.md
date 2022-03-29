@@ -7,22 +7,27 @@ description: >
   Getting started with Opta on AWS.
 ---
 
-To use Opta, you first need to create some simple yaml configuration files that describe your needs. You can use our [**Magical UI**](https://app.runx.dev/yaml-generator) to help generate these files or do it manually (described below).
+To use Opta, you first need to create some simple yaml configuration files that describe your needs. In the following guide we will deploy a simple python flask application.
 
-## Installation
+## 1: Installation
 
-One line installation ([detailed instructions](/installation)):
+For Opta to work, the prerequisite tools needed are:
+- [terraform](https://www.terraform.io/downloads.html) (v0.14+)
+- [docker](https://docker.com/products/docker-desktop) (v19+)
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) (v2) (For AWS only)
+
+Then you can simply install opta using this command ([detailed instructions](/installation)):
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
 ```
 
-Make sure the AWS cloud credentails are configured in your terminal for the account you would be using in this demo.
+Make sure the AWS cloud credentials are configured in your terminal for the account you would be using in this demo.
 
-## Environment creation
+## 2: Environment creation
 
 Before you can deploy your app, you need to first create an environment (like staging, prod etc.)
-This set up the base infrastructure (like network and cluster) that is the foundation for your app.
+This sets up the base infrastructure (like network and cluster) that is the foundation for your app.
 
 > Note that it costs around $5 per day to run this on AWS. So make sure to destroy it after you're done 
 > (opta has a destroy command so it should be easy :))!
@@ -66,7 +71,7 @@ load_balancer_raw_dns = [Load Balancer hostname]
 Opta updates complete!
 ```
 
-## Service creation
+## 3: Service creation
 
 In this step we will create a service - which is basically a http server packaged in a docker container.  
 Here is a simple hello world app, the source code is [here](https://github.com/run-x/hello-opta).
@@ -157,7 +162,7 @@ NAME                                                            REFERENCE       
 horizontalpodautoscaler.autoscaling/hello-hello-k8s-service   Deployment/hello-hello-k8s-service   18%/80%, 1%/80%   1         3         1          17m
 ```
 
-## Cleanup
+## 4: Cleanup
 
 Once you're finished playing around with these examples, you may clean up by running the following command from the environment directory:
 
@@ -169,7 +174,7 @@ opta destroy -c hello.yaml
 opta destroy -c opta.yaml
 ```
 
-## Next steps
+## 5: Next steps
 
 - View the [AWS Architecture](/security/aws/)
 - Check out how to templatize with [input variables](/features/variables/input_variables)

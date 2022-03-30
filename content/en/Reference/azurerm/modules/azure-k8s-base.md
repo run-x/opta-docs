@@ -23,6 +23,9 @@ This module is responsible for all the base infrastructure we package into the O
 | `linkerd_high_availability` | Deploy the linkerd service mesh in a high-availability configuration for its control plane. | `False` | False |
 | `linkerd_enabled` | Enable the linkerd service mesh installation. | `True` | False |
 | `nginx_config` | Additional configuration for nginx ingress. [Available options](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#configuration-options) | `{}` | False |
+| `cert_manager_values` | Certificate Manager helm chart additional values. [Available options](https://artifacthub.io/packages/helm/cert-manager/cert-manager?modal=values) | `{}` | False |
+| `linkerd_values` | Linkerd helm chart additional values. [Available options](https://artifacthub.io/packages/helm/linkerd2/linkerd2/2.10.2?modal=values) | `{}` | False |
+| `ingress_nginx_values` | Ingress Nginx helm chart additional values. [Available options](https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx?modal=values) | `{}` | False |
 
 ## Outputs
 

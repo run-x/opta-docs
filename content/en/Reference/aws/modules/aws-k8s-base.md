@@ -33,6 +33,9 @@ This module is responsible for all the base infrastructure we package into the O
 | `nginx_extra_tcp_ports` | Additional TCP ports to expose from nginx | `[]` | False |
 | `nginx_extra_tcp_ports_tls` | Which additional TCP ports should have TLS enabled | `[]` | False |
 | `expose_self_signed_ssl` | Expose self-signed SSL certs. | `False` | False |
+| `cert_manager_values` | Certificate Manager helm chart additional values. [Available options](https://artifacthub.io/packages/helm/cert-manager/cert-manager?modal=values) | `{}` | False |
+| `linkerd_values` | Linkerd helm chart additional values. [Available options](https://artifacthub.io/packages/helm/linkerd2/linkerd2/2.10.2?modal=values) | `{}` | False |
+| `ingress_nginx_values` | Ingress Nginx helm chart additional values. [Available options](https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx/4.0.17?modal=values) | `{}` | False |
 
 ## Outputs
 

@@ -1,0 +1,8 @@
+.td-sidebar-nav__section > ul {
+    padding-left: 10px;
+}
+
+.td-sidebar-nav .td-sidebar-link__page {
+    font-weight: 400;
+    color: #222;
+}

@@ -33,6 +33,7 @@ jobs:
       - name: Build
         env:
           HUGO_ENV: production
+          HUGOxPARAMSxgithub_branch: ${{ github.head_ref }}
         run: hugo --cleanDestinationDir
 
       - name: Install htmltest

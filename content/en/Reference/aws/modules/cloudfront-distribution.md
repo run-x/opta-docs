@@ -73,11 +73,40 @@ If you are ready to start hosting your site with your domain via the cloudfront 
 1. Get an [AWS ACM certificate](https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-request-public.html) for your site. 
    Make sure that you get it in region us-east-1. If you already have one at hand in your account (e.g. from another 
    active Opta deployment), then feel free to reuse that.
-2. [Validate](https://docs.aws.amazon.com/acm/latest/userguide/dns-validation.html) the certificate by adding the correct CNAME entries in your domain's DNS settings. 
+2. [Validate](https://docs.aws.amazon.com/acm/latest/userguide/dns-validation.html) the certificate by adding the correct CNAME entries in your domain's DNS settings. Specific instructions for popular domain providers are [explained here](https://docs.aws.amazon.com/amplify/latest/userguide/custom-domains.html).
 3. Create a new separate CNAME record for the domain you wish to use for cloudfront and point it at the `cloudfront_domain` gotten above.
 3. Set the acm_cert_arn and domains fields in opta accordingly
 4. Opta apply and you're done!
 
+### AWS WAF with Cloudfront
+
+[AWS WAF](https://aws.amazon.com/waf/) is a web application firewall that helps protect your web applications or APIs against common web exploits and bots that may affect availability, compromise security, or consume excessive resources. In this section we explain how to configure AWS WAF with your Cloudfront distribution. 
+
+As a pre-requisite, follow the steps in the previous section (__Using your own domain__) to create a and validate a certificate for the custom domain. After completing those steps, users have the ability to access your services at `https://your-custom-domain`; and because your CNAME record for your custom domain points to the cloudfront distribution URL, traffic will be directed through your cloud-front distribution.
+
+Next, we need to create an AWS WAF to protect our service and cloudfront CDN cache. We do this via the [AWS WAF GUI](https://us-east-1.console.aws.amazon.com/wafv2/homev2).
+
+Here are a few screen shots showing how the WAF GUI values can be configured for a "passthrough" WAF to start with.
+
+We start at the WAF landing page in the AWS Console:
+
+<a href="/images/opta-aws-1.png" target="_blank">
+  <img src="/images/opta-aws-1.png" align="center"/>
+</a>
+
+We configure the WAF to use the cloudfront distribution we created with Opta:
+
+<a href="/images/opta-aws-2.png" target="_blank">
+  <img src="/images/opta-aws-2.png" align="center"/>
+</a>
+
+The initial configuration of the WAF allows all traffic:
+
+<a href="/images/opta-aws-3.png" target="_blank">
+  <img src="/images/opta-aws-3.png" align="center"/>
+</a>
+
+Finally, please [configure AWS WAF rules](https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html) for your specific application protection needs.
 
 ## Fields
 

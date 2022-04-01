@@ -90,20 +90,20 @@ Here are a few screen shots showing how the WAF GUI values can be configured for
 
 We start at the WAF landing page in the AWS Console:
 
-<a href="/images/opta-aws-1.png" target="_blank">
-  <img src="/images/opta-aws-1.png" align="center"/>
+<a href="/images/aws-waf-1.png" target="_blank">
+  <img src="/images/aws-waf-1.png" align="center"/>
 </a>
 
 We configure the WAF to use the cloudfront distribution we created with Opta:
 
-<a href="/images/opta-aws-2.png" target="_blank">
-  <img src="/images/opta-aws-2.png" align="center"/>
+<a href="/images/aws-waf-2.png" target="_blank">
+  <img src="/images/aws-waf-2.png" align="center"/>
 </a>
 
 The initial configuration of the WAF allows all traffic:
 
-<a href="/images/opta-aws-3.png" target="_blank">
-  <img src="/images/opta-aws-3.png" align="center"/>
+<a href="/images/aws-waf-3.png" target="_blank">
+  <img src="/images/aws-waf-3.png" align="center"/>
 </a>
 
 Finally, please [configure AWS WAF rules](https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html) for your specific application protection needs.

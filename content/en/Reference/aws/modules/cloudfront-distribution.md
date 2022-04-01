@@ -84,7 +84,7 @@ If you are ready to start hosting your site with your domain via the cloudfront 
 
 As a pre-requisite, follow the steps in the previous section (__Using your own domain__) to create a and validate a certificate for the custom domain. After completing those steps, users have the ability to access your services at `https://your-custom-domain`; and because your CNAME record for your custom domain points to the cloudfront distribution URL, traffic will be directed through your cloud-front distribution.
 
-Next, we need to create an AWS WAF to protect our service and cloudfront CDN cache. We do this via the [AWS WAF GUI](https://us-east-1.console.aws.amazon.com/wafv2/homev2).
+Next, we need to create an AWS WAF to protect our service and cloudfront CDN cache. We do this via the [AWS WAF GUI](https://console.aws.amazon.com/wafv2/homev2).
 
 Here are a few screen shots showing how the WAF GUI values can be configured for a "passthrough" WAF to start with.
 
@@ -94,7 +94,7 @@ We start at the WAF landing page in the AWS Console:
   <img src="/images/aws-waf-1.png" align="center"/>
 </a>
 
-We configure the WAF to use the cloudfront distribution we created with Opta:
+We configure the WAF to use the cloudfront distribution we created with Opta; this can be selected by selecting the `Cloudfront distribution` radio button and then clicking on the `Add AWS Resources` button to select the cloudfront distribution; you should then end up with something like so:
 
 <a href="/images/aws-waf-2.png" target="_blank">
   <img src="/images/aws-waf-2.png" align="center"/>

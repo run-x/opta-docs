@@ -40,8 +40,6 @@ modules:
   - type: base
   - type: dns
     domain: staging.startup.com
-    subdomains:
-      - hello
   - type: k8s-cluster
   - type: k8s-base
 {{< / highlight >}}
@@ -114,8 +112,6 @@ modules:
   - type: dns
     domain: staging.startup.com
     delegated: true # <-- THIS
-    subdomains:
-      - hello
   - type: k8s-cluster
   - type: k8s-base
 {{< / highlight >}}

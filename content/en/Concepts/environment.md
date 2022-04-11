@@ -39,7 +39,7 @@ modules:
 ```
 
 ## State Storage
-Unless you're using Opta's remote option, the state will be stored in your cloud's native bucket solution (e.g. S3, GCS, 
+Unless you're using Opta's `local` option, the state will be stored in your cloud's native bucket solution (e.g. S3, GCS, 
 etc...) in the account/project you specified. This bucket lives outside of the underlying terraform state (because of
 chicken-egg), but is still "managed" by Opta and will be cleaned up on deletion. Opta creates one bucket per environment
 and stores the state plus metadata of the environment and all services created there as different objects inside said

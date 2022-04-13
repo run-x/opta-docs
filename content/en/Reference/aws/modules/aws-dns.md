@@ -91,6 +91,7 @@ new apply.
 | `domain` | The domain you want (you will also get the subdomains for your use) | `None` | True |
 | `delegated` | Set to true once the extra [dns setup is complete](/features/dns-and-cert/dns/) and it will add the ssl certs. | `False` | False |
 | `upload_cert` | Deprecated | `False` | False |
+| `linked_module` | The module type (or name if given) to automatically add root dns records for. | `` | False |
 
 ## Outputs
 

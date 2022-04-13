@@ -17,6 +17,15 @@ Opta will provision your database with 7 days of automatic daily backups in the 
 You can find them either programmatically via the aws cli, or through the AWS web console (they will be called
 system snapshots, and they have a different tab than the manual ones).
 
+### Performance and Scaling
+
+You can modify the DB instance class with the field `instance_class` in the module configuration.
+
+Storage scaling is automatically managed by AWS Aurora, see the [official documentation](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Managing.Performance.html).
+
+To add replicas to an existing cluser, follow the [official guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-replicas-adding.html).
+
+
 ### Linking
 
 When linked to a k8s-service, it adds connection credentials to your container's environment variables as:
@@ -64,3 +73,14 @@ To those with the permissions, you can view it via the following command (MANIFE
 | `multi_az` | Enable read-write replication across different availability zones on the same reason (doubles the cost, but needed for compliance). Can be added and updated at a later date without need to recreate. | `False` | False |
 | `safety` | Add deletion protection to stop accidental db deletions | `False` | False |
 | `backup_retention_days` | How many days to keep the backup retention | `7` | False |
+| `extra_security_groups_ids` | Ids of extra AWS security groups to add to the database | `[]` | False |
+| `create_global_database` | Create an Aurora Global database with this db as the master/writer | `False` | False |
+| `existing_global_database_id` | ID of the Aurora global database to attach | `None` | False |
+| `database_name` | The name of the database to create. Follow naming conventions [here](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Limits.html#RDS_Limits.Constraints) | `app` | False |
+
+## Outputs
+
+
+| Name      | Description |
+| ----------- | ----------- |
+| `global_database_id` | The id of the global database, if created |

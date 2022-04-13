@@ -12,7 +12,6 @@ description: Creates base infrastructure for k8s environments
 This module is responsible for all the base infrastructure we package into the Opta K8s environments. This includes:
 
 - [Autoscaler](https://github.com/kubernetes/autoscaler) for scaling up and down the ec2s as needed
-- [External DNS](https://github.com/kubernetes-sigs/external-dns) to automatically hook up the ingress to the hosted zone and its domain
 - [Ingress Nginx](https://github.com/kubernetes/ingress-nginx) to expose services to the public
 - [Metrics server](https://github.com/kubernetes-sigs/metrics-server) for scaling different deployments based on cpu/memory usage
 - [Linkerd](https://linkerd.io/) as our service mesh.
@@ -24,7 +23,6 @@ This module is responsible for all the base infrastructure we package into the O
 
 | Name      | Description | Default | Required |
 | ----------- | ----------- | ------- | -------- |
-| `cert_arn` | The arn of the ACM certificate to use for SSL. By default uses the one created by the DNS module if the module is found and delegation enabled. | `` | False |
 | `nginx_high_availability` | Deploy the nginx ingress in a high-availability configuration. | `False` | False |
 | `linkerd_high_availability` | Deploy the linkerd service mesh in a high-availability configuration for its control plane. | `False` | False |
 | `linkerd_enabled` | Enable the linkerd service mesh installation. | `True` | False |
@@ -36,6 +34,9 @@ This module is responsible for all the base infrastructure we package into the O
 | `cert_manager_values` | Certificate Manager helm chart additional values. [Available options](https://artifacthub.io/packages/helm/cert-manager/cert-manager?modal=values) | `{}` | False |
 | `linkerd_values` | Linkerd helm chart additional values. [Available options](https://artifacthub.io/packages/helm/linkerd2/linkerd2/2.10.2?modal=values) | `{}` | False |
 | `ingress_nginx_values` | Ingress Nginx helm chart additional values. [Available options](https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx/4.0.17?modal=values) | `{}` | False |
+| `domain` | Domain to setup the ingress with. By default uses the one specified in the DNS module if the module is found. | `` | False |
+| `zone_id` | ID of Route53 hosted zone to add a record for. By default uses the one created by the DNS module if the module is found. | `` | False |
+| `cert_arn` | The arn of the ACM certificate to use for SSL. By default uses the one created by the DNS module if the module is found and delegation enabled. | `` | False |
 
 ## Outputs
 
@@ -43,3 +44,4 @@ This module is responsible for all the base infrastructure we package into the O
 | Name      | Description |
 | ----------- | ----------- |
 | `load_balancer_raw_dns` | The dns of the network load balancer provisioned to handle ingress to your environment |
+| `load_balancer_arn` | The arn of the network load balancer provisioned to handle ingress to your environment |

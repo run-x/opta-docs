@@ -181,6 +181,8 @@ Cron Jobs are currently created outside the default linkerd service mesh.
 | `additional_iam_roles` | A list of extra project-level iam roles to grant to the service account created for this k8s service | `[]` | False |
 | `tolerations` | Taint tolerations to add to the pods. | `[]` | False |
 | `cron_jobs` | A list of cronjobs to execute as part of this service | `[]` | False |
+| `pod_annotations` | These are extra annotations to add to k8s-service pod objects  | `{}` | False |
+| `timeout` | Time in seconds to wait for deployment. | `300` | False |
 
 ## Outputs
 

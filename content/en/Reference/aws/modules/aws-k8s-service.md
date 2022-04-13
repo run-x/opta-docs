@@ -182,6 +182,8 @@ Cron Jobs are currently created outside the default linkerd service mesh.
 | `ingress_extra_annotations` | These are extra annotations to add to ingress objects  | `{}` | False |
 | `tolerations` | Taint tolerations to add to the pods. | `[]` | False |
 | `cron_jobs` | A list of cronjobs to execute as part of this service | `[]` | False |
+| `pod_annotations` | These are extra annotations to add to k8s-service pod objects   | `{}` | False |
+| `timeout` | Time in seconds to wait for deployment. | `300` | False |
 
 ## Outputs
 

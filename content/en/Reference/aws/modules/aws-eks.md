@@ -29,6 +29,7 @@ For information about the default IAM permissions given to the node group please
 | `spot_instances` | A boolean specifying whether to use [spot instances](https://aws.amazon.com/ec2/spot/) for the default nodegroup or not. The spot instances will be configured to have the max price equal to the on-demand price (so no danger of overcharging). _WARNING_: By using spot instances you must accept the real risk of frequent abrupt node terminations and possibly (although extremely rarely) even full blackouts (all nodes die). The former is a small risk as containers of Opta services will be automatically restarted on surviving nodes. So just make sure to specify a minimum of more than 1 containers -- Opta by default attempts to spread them out amongst many nodes. The former is a graver concern which can be addressed by having multiple node groups of different instance types (see aws nodegroup module) and ideally at least one non-spot.  | `False` | False |
 | `enable_metrics` | Enable autoscaling group cloudwatch metrics collection for the default nodegroup. | `False` | False |
 | `node_launch_template` | Custom launch template for the underlying ec2s. | `{}` | False |
+| `ami_type` | The AMI type to use for the nodes. For more information about this, please visit [here](https://docs.aws.amazon.com/eks/latest/APIReference/API_Nodegroup.html#AmazonEKS-Type-Nodegroup-amiType) Note: Currently, "CUSTOM" ami type is not supported.  | `AL2_x86_64` | False |
 
 ## Outputs
 

@@ -116,6 +116,8 @@ deleting the kubernetes persistent volume claims.
 | `links` | A list of extra IAM role policies not captured by Opta which you wish to give to your service. | `[]` | False |
 | `persistent_storage` | A list persistent storages to add to each instance of your service (need to give a `size` which is the size in GB for the storage volume to be, and `path` which is the path in the filesystem of each instance to place it under)  | `[]` | False |
 | `ingress_extra_annotations` | These are extra annotations to add to ingress objects  | `{}` | False |
+| `pod_annotations` | These are extra annotations to add to k8s-service pod objects  | `{}` | False |
+| `timeout` | Time in seconds to wait for deployment. | `300` | False |
 
 ## Outputs
 

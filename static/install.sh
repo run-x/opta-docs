@@ -54,12 +54,12 @@ compare_version() {
     return 0
   fi
   local IFS=.
-  local i ver1=("$1") ver2=("$2")
+  local i ver1=($1) ver2=($2)
   # fill empty fields in ver1 with zeros
-  for ((i = ${#ver1[@]}; i < ${#ver2[@]}; i++)); do
+  for ((i=${#ver1[@]}; i<${#ver2[@]}; i++)); do
     ver1[i]=0
   done
-  for ((i = 0; i < ${#ver1[@]}; i++)); do
+  for ((i=0; i<${#ver1[@]}; i++)); do
     if [[ -z ${ver2[i]} ]]; then
       # fill empty fields in ver2 with zeros
       ver2[i]=0
@@ -133,8 +133,7 @@ if [[ -z ${VERSION} ]]; then
 else
   VERSION=$(trim_version "${VERSION}")
 fi
-
-if [[ $(compare_version "$VERSION" "0.27.2") == 1 ]]; then
+if [[ $(compare_version ${VERSION} '0.27.2') == 1 ]]; then
   LEGACY_DOWNLOAD=0
 fi
 

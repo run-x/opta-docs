@@ -9,6 +9,7 @@ if [[ ! -t 0 || -n ${CI-} ]]; then
 fi
 
 LEGACY_DOWNLOAD=1
+TEMP_LOCAL="/tmp/opta_local"
 
 abort() {
   printf "%s\n" "$1"
@@ -185,14 +186,19 @@ if [[ $? != 0 ]]; then
 fi
 echo "Downloaded"
 
+rm -rf $TEMP_LOCAL
+mkdir $TEMP_LOCAL
+
 if [[ -d ~/.opta ]]; then
   if [[ -n ${NONINTERACTIVE-} ]]; then
     echo "Opta already installed. Overwriting..."
+    mv ~/.opta/local $TEMP_LOCAL
     rm -rf ~/.opta
   else
     read -p "Opta already installed. Overwrite? " -n 1 -r
     echo
     if [[ ${REPLY} =~ ^[Yy]$ ]]; then
+      mv ~/.opta/local $TEMP_LOCAL
       rm -rf ~/.opta
     else
       rm -rf /tmp/opta.zip
@@ -204,6 +210,8 @@ fi
 echo "Installing..."
 unzip -q /tmp/opta.zip -d ~/.opta
 rm -rf /tmp/opta.zip
+mv $TEMP_LOCAL/local ~/.opta/
+rm -rf $TEMP_LOCAL
 chmod u+x ~/.opta/opta
 
 RUNPATH=~/.opta

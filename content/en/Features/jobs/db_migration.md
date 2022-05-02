@@ -250,7 +250,7 @@ This approach, while more explicit, does require the user to have knowledge of K
 connect the required database secrets from the secret set up for the k8s service link (**DO NOT** reference the db creds
 as direct environment variables as they will be very visible-- note how in the examples we referred to the Kubernetes 
 secrets created by the k8s service linking). The user will additionally need to update the `nameOverride` 
-field for each run as each job run must have a new name (they can streamline this via [variables](/features/variables/variables)).
+field for each run as each job run must have a new name (they can streamline this via [variables](/features/variables)).
 If these difficulties are manageable, then this approach offers a more formalized solution.
 
 ## Migrations Outside Opta

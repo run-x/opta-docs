@@ -265,7 +265,7 @@ opta destroy --local --auto-approve  --config hello.yaml
 #### Example 3: Stateful Example: A Todo list with Prometheus/Grafana
 In this example we will deploy a Todo list with a Vuejs single page application frontend, a Django Rest Framework API backend and a Postgres database to store state. Additionally, we will also show how to enable a Prometheus/Grafana observability stack.
 
-Follow [this documentation](https://github.com/run-x/opta-examples/tree/main/full-stack-example) for the full stack Opta example.
+Follow [this documentation](https://github.com/run-x/opta/tree/main/examples/full-stack-example) for the full stack Opta example.
 
 ## Limitations: What Opta Local is not
 

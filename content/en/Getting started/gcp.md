@@ -176,7 +176,7 @@ opta destroy -c opta.yaml
 ## 5: Next steps
 
 - View the [GCP Architecture](/security/gcp/)
-- Check out how to templatize with [input variables](/features/variables/input_variables)
+- Check out how to templatize with [variables](/features/variables)
 - Check out more examples: [github](https://github.com/run-x/opta/tree/main/examples)
 - Use your own docker image: [Custom Image](/features/custom_image/)
 - Set up a domain name for your service: [Configure DNS](/features/dns-and-cert/dns/)

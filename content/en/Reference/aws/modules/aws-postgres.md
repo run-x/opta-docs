@@ -26,6 +26,32 @@ Storage scaling is automatically managed by AWS Aurora, see the [official docume
 To add replicas to an existing cluser, follow the [official guide](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-replicas-adding.html).
 
 
+### Restoring from Snapshot
+
+Opta supports creating a new database not just from scratch, but from database snapshots you have in your
+desired account + region. To do this, simply set the `restore_from_snapshot` to the ARN of said snapshot you
+wish to restore from.
+
+There is a big caveat: as Opta has no knowledge of the initial db setup from which the snapshot was created, we
+do not know what database name, username, or password the database would be created with-- these will always
+be set to those of the original database. If you try to link this module to a k8s-service, the db name/username/password
+secrets will be set to `UNKNOWN_SEE_ORIGINAL_DB`. To overcome this limitation, please use `opta secret update`
+on the your k8s-service yaml to manually populate the secrets in with the original values.
+
+__NOTE__: Do not remove the `restore_from_snapshot` input after creation, even if the snapshot is created as it
+will cause the database to recreate.
+
+### Adding to Global Database
+
+Opta supports distributed databases via AWS' Aurora Global database. This subject is talked in detail in the 
+[multi-region section of the docs](/features/multi-region/multi-region-dbs/)
+
+There is a big caveat: as the execution of Opta has no knowledge of the initial db serving as the primary, we
+do not know what database name, username, or password the database would be created with-- these will always
+be set to those of the original database. If you try to link this module to a k8s-service, the db name/username/password
+secrets will be set to `UNKNOWN_SEE_PRIMARY_DB`. To overcome this limitation, please use `opta secret update`
+on the your k8s-service yaml to manually populate the secrets in with the original values.
+
 ### Linking
 
 When linked to a k8s-service, it adds connection credentials to your container's environment variables as:
@@ -77,6 +103,7 @@ To those with the permissions, you can view it via the following command (MANIFE
 | `create_global_database` | Create an Aurora Global database with this db as the master/writer | `False` | False |
 | `existing_global_database_id` | ID of the Aurora global database to attach | `None` | False |
 | `database_name` | The name of the database to create. Follow naming conventions [here](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Limits.html#RDS_Limits.Constraints) | `app` | False |
+| `restore_from_snapshot` | The arn of the snapshot to "restore" this database from. | `None` | False |
 
 ## Outputs
 

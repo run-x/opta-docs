@@ -13,6 +13,35 @@ can even expose it to the world, complete with load balancing both internally an
 
 ## Features
 
+### Set custom environment variables
+
+Opta allows you to pass in custom environment variables to your k8s-service.
+
+Just use the `env_vars` field:
+
+```yaml
+name: hello
+environments:
+- name: staging
+  path: "opta.yaml"
+  modules:
+- name: hello
+  type: k8s-service
+  port:
+  http: 80
+  image: ghcr.io/run-x/hello-opta/hello-opta:main
+  healthcheck_path: "/"
+  public_uri: "/hello"
+  env_vars:
+    - name: "API_KEY"
+      value: "value"
+```
+
+With this configuration, your container will get an env var named `API_KEY` with
+the value `value`!
+
+You can also use [Opta's interpolation variables]((/features/variables)) features to refer to other values.
+
 ### External/Internal Image
 
 This module supports deploying from an "external" image repository (currently only public ones supported)
@@ -39,13 +68,28 @@ The autoscaler then uses this logic to try and balance the cpu/memory usage at t
 if the target memory is 80% and we requested 100mb, then it'll try to keep the memory usage at 80mb. If it finds that
 the average memory usage was 160mb, it would logically try to double the number of replicas.
 
-### Container Resources
+### Resource Requests
 
-One of the other benefits of kubernetes is that a user can have fine control over the [resources used by each of their containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
-A user can control the cpu, memory and disk usage with which scheduling is made, and the max limit after which the container is killed.
-With Opta, we expose such settings to the user, while keeping sensible defaults.
+One of the other benefits of kubernetes is that a user can have fine control over the 
+[resources used by each of their containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
+A user can control the cpu, memory and disk usage with which scheduling is made. With Opta, we expose such settings to 
+the user, while keeping sensible defaults.
 
-_NOTE_ We expose the resource requests and set the limits to twice the request values.
+
+### Resource Limits
+
+While the Container Resources specify the "planned" amount of resource allocation (and thereby which pods are deployed
+to which nodes given the available CPU and memory), a pod can go over their requested CPU/memory if there is more available
+on its running node. The resource limits, however, specify the max amount of resources allocated to a pod at any time.
+These limits exist for (obvious) safety measures (e.g. preventing one app from starving the whole cluster). By default,
+this limit is set in Opta to twice the resource request value, but is exposed to users for further configuration.
+
+Please refer to the official 
+[kubernetes resource management page](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
+for more info.
+
+**NOTE**: Based on reasons outlined [here](https://github.com/robusta-dev/alert-explanations/wiki/CPUThrottlingHigh-(Prometheus-Alert)#why-you-dont-need-cpu-limits)
+Opta does not add CPU limits, only memory.
 
 ### Ingress
 
@@ -173,7 +217,8 @@ Cron Jobs are currently created outside the default linkerd service mesh.
 | `consistent_hash` | Use [consistent hashing](https://www.nginx.com/resources/wiki/modules/consistent_hash/) | `None` | False |
 | `sticky_session` | Use [sticky sessions](https://stackoverflow.com/questions/10494431/sticky-and-non-sticky-sessions) via cookies for your service (first request will send you a cookie called opta_cookie which you should add on future requests). | `False` | False |
 | `sticky_session_max_age` | If the sticky session is enabled, how long should the cookie last? | `86400` | False |
-| `resource_request` | See the [container resources](https://docs.opta.dev/reference/aws/modules/aws-k8s-service/#container-resources) section. Default ```yaml cpu: 100 # in millicores memory: 128 # in megabytes ``` CPU is given in millicores, and Memory is in megabytes.  | `{'cpu': 100, 'memory': 128}` | False |
+| `resource_request` | See the [container resources](https://docs.opta.dev/reference/aws/modules/aws-k8s-service/#resource-requests) section. CPU is given in millicores, and Memory is in megabytes.  | `{'cpu': 100, 'memory': 128}` | False |
+| `resource_limits` | See the [container resources]({{< relref "#container-resources" >}}) section. Memory is in megabytes..  | `None` | False |
 | `public_uri` | The full domain to expose your app under as well as path prefix. Must be the full parent domain or a subdomain referencing the parent as such: "dummy.{parent[domain]}/my/path/prefix"  | `[]` | False |
 | `keep_path_prefix` | Should we keep the prefix path which you set in the public uri when forwarding requests to your service? | `False` | False |
 | `additional_iam_policies` | A list of extra IAM role policies not captured by Opta which you wish to give to your service. | `[]` | False |
@@ -184,6 +229,7 @@ Cron Jobs are currently created outside the default linkerd service mesh.
 | `cron_jobs` | A list of cronjobs to execute as part of this service | `[]` | False |
 | `pod_annotations` | These are extra annotations to add to k8s-service pod objects   | `{}` | False |
 | `timeout` | Time in seconds to wait for deployment. | `300` | False |
+| `max_history` | The max amount of helm revisions to keep track of (0 for infinite) | `25` | False |
 
 ## Outputs
 

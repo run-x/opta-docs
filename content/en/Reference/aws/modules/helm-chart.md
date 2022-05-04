@@ -26,3 +26,4 @@ description: Plugs a custom helm chart into your Opta k8s cluster
 | `timeout` | Time in seconds to wait for any individual kubernetes operation (like Jobs for hooks). | `600` | False |
 | `dependency_update` | Runs helm dependency update before installing the chart. | `True` | False |
 | `wait` | Will wait (for as long as timeout) until all resources are in a ready state before marking the release as successful. | `True` | False |
+| `max_history` | The max amount of helm revisions to keep track of (0 for infinite) | `25` | False |

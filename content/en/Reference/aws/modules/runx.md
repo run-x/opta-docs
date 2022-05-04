@@ -12,3 +12,9 @@ environments and services. Talk to the RunX team to get set up: info@runx.dev!
 
 ![image alt text](/images/runx-dashboard.png)
 
+## Fields
+
+
+| Name      | Description | Default | Required |
+| ----------- | ----------- | ------- | -------- |
+| `deploy_opta_agent` | Deploy opta agent helm chart to monitor opta activity in your cluster. | `True` | False |

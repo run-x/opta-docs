@@ -192,13 +192,17 @@ mkdir $TEMP_LOCAL
 if [[ -d ~/.opta ]]; then
   if [[ -n ${NONINTERACTIVE-} ]]; then
     echo "Opta already installed. Overwriting..."
-    mv ~/.opta/local $TEMP_LOCAL
+    if [[ -d ~/.opta/local ]]; then
+      mv ~/.opta/local $TEMP_LOCAL
+    fi
     rm -rf ~/.opta
   else
     read -p "Opta already installed. Overwrite? " -n 1 -r
     echo
     if [[ ${REPLY} =~ ^[Yy]$ ]]; then
-      mv ~/.opta/local $TEMP_LOCAL
+      if [[ -d ~/.opta/local ]]; then
+        mv ~/.opta/local $TEMP_LOCAL
+      fi
       rm -rf ~/.opta
     else
       rm -rf /tmp/opta.zip
@@ -207,10 +211,14 @@ if [[ -d ~/.opta ]]; then
   fi
 fi
 
+echo "Sleeping..."
+sleep 15
 echo "Installing..."
 unzip -q /tmp/opta.zip -d ~/.opta
 rm -rf /tmp/opta.zip
-mv $TEMP_LOCAL/local ~/.opta/
+if [[ -d $TEMP_LOCAL/local ]]; then
+  mv $TEMP_LOCAL/local ~/.opta/
+fi
 rm -rf $TEMP_LOCAL
 chmod u+x ~/.opta/opta
 

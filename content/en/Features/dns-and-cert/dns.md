@@ -21,15 +21,19 @@ or "real" names. To get those features, Opta offers 2 options:
 2. You "import" your SSL certificate into the Opta system and point your DNS zone straight to the load balancer's ip/dns name
 
 ### Setting the domain for an Environment via Domain Delegation
-
-***NOTE: Our Azure offering currently does not support domain delegation. Please use the external ssl and CNAME option below***
+{{% alert title="Warning" color="warning" %}}
+Our Azure offering currently does not support domain delegation. Please use the external ssl and CNAME option below***
+{{% /alert %}}
 
 With Opta, you can specify a domain for each environment which can be used by all the services running in that
-environment. This is done with the aws-dns/gcp-dns module like so:
+environment. This is done with the aws-dns/gcp-dns module with the following steps:
+
+#### Step 1: Apply your Opta Environment YAML with the DNS module added
+See the following for example:
+
 {{< tabs tabTotal="2" >}}
 {{< tab tabName="AWS" >}}
-
-{{< highlight yaml "hl_lines=9-12" >}}
+```yaml
 name: staging
 org_name: my-org
 providers:
@@ -42,12 +46,10 @@ modules:
     domain: staging.startup.com
   - type: k8s-cluster
   - type: k8s-base
-{{< / highlight >}}
-
+```
 {{< /tab >}}
 {{< tab tabName="GCP" >}}
-
-{{< highlight yaml "hl_lines=9-12" >}}
+```yaml
 name: staging
 org_name: my-org
 providers:
@@ -62,31 +64,36 @@ modules:
       - hello
   - type: k8s-cluster
   - type: k8s-base
-{{< / highlight >}}
-
+```
 {{< /tab >}}
 {{< /tabs >}}
 
 As is, the dns module will create the "hosted zone" resource which manages your dns rules
 for the domain you listed. In order for it to receive public traffic and get ssl
-(to have https instead of http connections), you have to do some extra setup which
-_proves_ that you own it.
+(to have https instead of http connections), continue with the next steps.
 
-This extra setup is updating the domain's nameservers to point to your Opta environment's AWS/GCP "hosted zone". This is how you do it:
+#### Step 2: Figure out your hosted zone's nameservers 
 
-- Run `opta apply` on the yaml file at least once to create the underlying resources
-- Run `opta output` and note down the nameservers that get printed. It's usually a set of 4 servers.
-- Assuming you own example.com and want to map staging.example.com to this environment. Then you'd add the following NS records in your domain registrar, where ns1-ns4 are the nameservers from the previous step.
-  ```
-  staging				1h			ns1
-  staging				1h			ns2
-  staging				1h			ns3
-  staging				1h			ns4
-  ```
+These values are needed in the next steps  to tell your domain registrar (e.g. Google Domains, Godaddy) where to 
+delegate. You can find these values out by running `opta output` and note down the nameservers that get printed. It's 
+usually a set of 4 servers.
 
-It will take a few minutes for this change to sync with the internet, so just go and grab some coffee for 10 minutes.
+#### Step 3: Update your domain registrar with the new nameservers
+Assuming you own example.com and want to map staging.example.com to this environment. Then you'd add the following NS 
+records in your domain registrar, where ns1-ns4 are the nameservers from the previous step.
+```
+staging				1h			ns1
+staging				1h			ns2
+staging				1h			ns3
+staging				1h			ns4
+```
 
-You can verify that you did this properly by running this command:
+Typically you do this by selecting the option of adding a new dns record, selecting the NS type, and in the values
+you typically can pass in a list (so you only need to create 1 new record).
+
+#### Step 4: Wait ~10 minutes
+Seriously, DNS propagation takes a while and there's no way of making it faster, so just go and grab some coffee for 
+10 minutes. You can verify that you did this properly by running this command:
 
 ```shell
 dig staging.startup.com NS
@@ -94,13 +101,14 @@ dig staging.startup.com NS
 
 You should see your name servers under the `ANSWER SECTION` part.
 
-Once this is done and verified, please update your Opta yaml aws-dns/gcp-dns section to have a new field `delegated: true` like
-so:
+#### Step 5: Set delegated to true in your DNS module and Opta apply
+
+Please update your Opta yaml aws-dns/gcp-dns section to have a new field `delegated: true`. Following the past
+yaml examples, it should look like:
 
 {{< tabs tabTotal="2" >}}
 {{< tab tabName="AWS" >}}
-
-{{< highlight yaml "hl_lines=11" >}}
+```yaml
 name: staging
 org_name: my-org
 providers:
@@ -114,12 +122,10 @@ modules:
     delegated: true # <-- THIS
   - type: k8s-cluster
   - type: k8s-base
-{{< / highlight >}}
-
+```
 {{< /tab >}}
 {{< tab tabName="GCP" >}}
-
-{{< highlight yaml "hl_lines=11" >}}
+```yaml
 name: staging
 org_name: my-org
 providers:
@@ -135,8 +141,7 @@ modules:
       - hello
   - type: k8s-cluster
   - type: k8s-base
-{{< / highlight >}}
-
+```
 {{< /tab >}}
 {{< /tabs >}}
 

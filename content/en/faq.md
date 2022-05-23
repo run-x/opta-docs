@@ -27,3 +27,8 @@ the flag `--platform=linux/arm64` and use that image.
 ## I can't seem to have access to my Kubernetes Cluster
 Are you sure it's not an RBAC issue? For all clouds the role which created the cluster is automatically an admin,
 but additional roles require extra steps/specifications. Please see the details in the references.
+
+## I am unable to remove the delegated DNS Module in AWS infrastructure as it's stuck in Certificate deletion.
+This is a known issue with AWS. There is a dependency between the AWS Load Balancer and Certificate for the 
+Domain. Delete the Helm Release with ingress-nginx and then try to remove the DNS Module from the configuration.
+Note: This will lead to a new Load Balancer to be created with a different URL.

@@ -14,6 +14,7 @@ description: Plugs a custom helm chart into your Opta k8s cluster
 | Name      | Description | Default | Required |
 | ----------- | ----------- | ------- | -------- |
 | `chart` | Name of the helm chart. Note that you don't need to use `<repo_name>/<chart_name>` - as repo is specified separately. Just do `<chart_name>`. If you're using a local chart, then this will be the path to the chart.  | `None` | True |
+| `release_name` | The name the chart installation is to have. | `None` | False |
 | `repository` | The helm repository to use (null means local chart) | `None` | False |
 | `namespace` | The kubernetes namespace to put the chart in | `default` | False |
 | `create_namespace` | Create namespace as well. | `False` | False |

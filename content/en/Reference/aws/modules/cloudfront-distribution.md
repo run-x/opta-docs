@@ -52,7 +52,6 @@ modules:
   - type: k8s-cluster
   - type: k8s-base
     name: testbase
-    expose_self_signed_ssl: true
   - type: cloudfront-distribution
     links:
       - testbase

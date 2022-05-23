@@ -58,6 +58,23 @@ tl;dr An (optional) liveness probe determines whether your server should be rest
 be sent to a replica or be temporarily rerouted to other replicas. Essentially smart healthchecks. For websockets Opta
 just checks the tcp connection on the given port.
 
+Opta supports 2 types of possible health checks (please be advised that while they're not required, they're highly 
+recommended):
+
+#### Option 1: Health Check HTTP Ping
+Quite straightforward, K8s does regular http get requests to your server under a specific given path.
+[Any code greater than or equal to 200 and less than 400 indicates success](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
+Any other code indicates failure. You can specify this by setting the `healthcheck_path` input, or alternatively the
+`liveness_probe_path` and/or the `readiness_probe_path` if you want different behavior for the liveness and readiness
+checks.
+
+#### Option 2: Health Check Command
+Also simple to understand, K8s regularly execute a shell command of your choosing and considers the
+server healthy if it has and exit code of 0. Commands should be passed in as a list of the different
+parts (e.g. ["echo", "hello"]). You can specify this by setting the `healthcheck_command` input, or alternatively the 
+`liveness_probe_command` and/or the `readiness_probe_command` if you want different behavior for the liveness and 
+readiness checks.
+
 ### Autoscaling
 
 As mentioned, autoscaling is available out of the box. We currently only support autoscaling
@@ -209,16 +226,19 @@ Cron Jobs are currently created outside the default linkerd service mesh.
 | `autoscaling_target_mem_percentage` | See the [autoscaling](https://docs.opta.dev/reference/aws/modules/aws-k8s-service/#autoscaling) section. | `80` | False |
 | `secrets` | Deprecated, see [secrets instructions](/features/secrets). | `[]` | False |
 | `env_vars` | A map of key values to add to the container as environment variables (key is name, value is value). ```yaml env_vars:  FLAG: "true" ```  | `[]` | False |
-| `healthcheck_path` | See the See the [liveness/readiness](https://docs.opta.dev/reference/aws/modules/aws-k8s-service/#healthcheck-probe) section. Default `null` (i.e., no user-specified healthchecks) | `None` | False |
-| `liveness_probe_path` | Use if liveness probe != readiness probe | `None` | False |
-| `readiness_probe_path` | Use if liveness probe != readiness probe | `None` | False |
+| `healthcheck_path` | See the See the [healthcheck probe](https://docs.opta.dev/reference/aws/modules/aws-k8s-service/#healthcheck-probe) section. Default `null` (i.e., no user-specified healthchecks) | `None` | False |
+| `healthcheck_command` | See the See the [healthcheck probe](https://docs.opta.dev/reference/aws/modules/aws-k8s-service/#healthcheck-probe) section. Default `[]` (i.e., no user-specified healthchecks) | `[]` | False |
+| `liveness_probe_command` | Use if using shell command liveness checks and liveness probe != readiness probe | `[]` | False |
+| `readiness_probe_command` | Use if using shell command readiness checks and liveness probe != readiness probe | `[]` | False |
+| `liveness_probe_path` | Use if using http ping liveness checks and liveness probe != readiness probe | `None` | False |
+| `readiness_probe_path` | Use if using http ping readiness checks and liveness probe != readiness probe | `None` | False |
 | `initial_liveness_delay` | Use if the initial delay needs to be changed. | `30` | False |
 | `initial_readiness_delay` | Use if the initial delay needs to be changed. | `30` | False |
 | `consistent_hash` | Use [consistent hashing](https://www.nginx.com/resources/wiki/modules/consistent_hash/) | `None` | False |
 | `sticky_session` | Use [sticky sessions](https://stackoverflow.com/questions/10494431/sticky-and-non-sticky-sessions) via cookies for your service (first request will send you a cookie called opta_cookie which you should add on future requests). | `False` | False |
 | `sticky_session_max_age` | If the sticky session is enabled, how long should the cookie last? | `86400` | False |
-| `resource_request` | See the [resource requests](https://docs.opta.dev/reference/google/modules/gcp-k8s-service/#resource-requests) section. CPU is given in millicores, and Memory is in megabytes.  | `{'cpu': 100, 'memory': 128}` | False |
-| `resource_limits` | See the [resource limits]({{< relref "#resource-limits" >}}) section. Memory is in megabytes..  | `None` | False |
+| `resource_request` | See the [container resources](https://docs.opta.dev/reference/aws/modules/aws-k8s-service/#resource-requests) section. CPU is given in millicores, and Memory is in megabytes.  | `{'cpu': 100, 'memory': 128}` | False |
+| `resource_limits` | See the [container resources]({{< relref "#container-resources" >}}) section. Memory is in megabytes..  | `None` | False |
 | `public_uri` | The full domain to expose your app under as well as path prefix. Must be the full parent domain or a subdomain referencing the parent as such: "dummy.{parent[domain]}/my/path/prefix"  | `[]` | False |
 | `keep_path_prefix` | Should we keep the prefix path which you set in the public uri when forwarding requests to your service? | `False` | False |
 | `additional_iam_policies` | A list of extra IAM role policies not captured by Opta which you wish to give to your service. | `[]` | False |
@@ -227,7 +247,8 @@ Cron Jobs are currently created outside the default linkerd service mesh.
 | `ingress_extra_annotations` | These are extra annotations to add to ingress objects  | `{}` | False |
 | `tolerations` | Taint tolerations to add to the pods. | `[]` | False |
 | `cron_jobs` | A list of cronjobs to execute as part of this service | `[]` | False |
-| `pod_annotations` | These are extra annotations to add to k8s-service pod objects   | `{}` | False |
+| `pod_annotations` | These are extra annotations to add to k8s-service pod objects / replace defaults  | `{}` | False |
+| `pod_labels` | These are extra labels to add to k8s-service pod objects / replace defaults  | `{}` | False |
 | `timeout` | Time in seconds to wait for deployment. | `300` | False |
 | `max_history` | The max amount of helm revisions to keep track of (0 for infinite) | `25` | False |
 

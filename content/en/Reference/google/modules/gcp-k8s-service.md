@@ -235,7 +235,7 @@ Cron Jobs are currently created outside the default linkerd service mesh.
 | `sticky_session` | Use [sticky sessions](https://stackoverflow.com/questions/10494431/sticky-and-non-sticky-sessions) via cookies for your service (first request will send you a cookie called opta_cookie which you should add on future requests). | `False` | False |
 | `sticky_session_max_age` | If the sticky session is enabled, how long should the cookie last? | `86400` | False |
 | `resource_request` | See the [container resources](https://docs.opta.dev/reference/google/modules/gcp-k8s-service/#resource_requests) section. CPU is given in millicores, and Memory is in megabytes.  | `{'cpu': 100, 'memory': 128}` | False |
-| `resource_limits` | See the [container resources]({{< relref "resource_limits" >}}) section. Memory is in megabytes..  | `None` | False |
+| `resource_limits` | See the [container resources]({{< relref "resource-limits" >}}) section. Memory is in megabytes..  | `None` | False |
 | `public_uri` | The full domain to expose your app under as well as path prefix. Must be the full parent domain or a subdomain referencing the parent as such: "dummy.{parent[domain]}/my/path/prefix"  | `[]` | False |
 | `keep_path_prefix` | Should we keep the prefix path which you set in the public uri when forwarding requests to your service? | `False` | False |
 | `links` | A list of extra IAM role policies not captured by Opta which you wish to give to your service. | `[]` | False |

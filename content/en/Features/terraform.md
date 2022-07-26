@@ -89,7 +89,6 @@ opta generate-terraform -c hello.yaml
 
 This will generate a new output directory:
 ```
-# updated files in "./generated-terraform"
 .
 ├── modules/                   # Contain the k8s-service module
 ├── data.tf.json               # Data sources definition
@@ -105,7 +104,7 @@ For more information about the terraform commands check the generated readme fil
 
 ## Migrate from Opta to Terraform
 
-If you have already provisonned your infrastructure with Opta and would like to use terraform instead and keep the existing infrastructure, you can use `generate-terraform` to generate the terraform files.  
+If you have already provisonned your infrastructure with Opta and would like to use terraform instead and keep the existing infrastructure, you can use `generate-terraform` command to generate the terraform files.  
 Once you have generated these files, you can start using terraform to provision your infrastucture instead of opta. Once you have migrated, you can make some changes to your infrastructure by updating the terraform files.
 
 1. Make sure to run `opta apply` on all your opta configuration files to migrate to make sure that your infrastructure is current.
@@ -122,10 +121,6 @@ Once you have generated these files, you can start using terraform to provision 
 4. We recommend that you save the generated files to your source code management tool (ex: github).
 
 That's it! Now you can use terraform to provision the infrastructure.
-
-If you have more than one environment, use  the `--directory` option with a different value for each environment name.
-
-Note: The service depends on the environment creation, for example a service needs to install itself on a Kubernetes cluster. For this reason, the terraform files for the environment and the service need to be exported in the same output directory. The generated terraform code is already modularized so feel free to reorganize it differently if you would like a different layout.
 
 ## Support and limitation
 

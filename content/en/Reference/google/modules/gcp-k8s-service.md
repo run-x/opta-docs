@@ -215,41 +215,41 @@ Cron Jobs are currently created outside the default linkerd service mesh.
 ## Fields
 
 
-| Name      | Description | Default | Required |
-| ----------- | ----------- | ------- | -------- |
-| `image` | Set to AUTO to create a private repo for your own images. Otherwises attempts to pull image from public dockerhub | `AUTO` | True |
-| `port` | Specifies what port your app was made to be listened to. Currently it must be a map of the form `http: [PORT_NUMBER_HERE]` or `tcp: [PORT_NUMBER_HERE]`. Use http if you just have a vanilla http server and tcp for websockets.  | *none* | False |
-| `min_containers` | The minimum number of replicas your app can autoscale to. | `1` | False |
-| `max_containers` | The maximum number of replicas your app can autoscale to. | `3` | False |
-| `autoscaling_target_cpu_percentage` | See the [autoscaling](https://docs.opta.dev/reference/google/modules/gcp-k8s-service/#autoscaling) section. | `80` | False |
-| `autoscaling_target_mem_percentage` | See the [autoscaling](https://docs.opta.dev/reference/google/modules/gcp-k8s-service/#autoscaling) section. | `80` | False |
-| `secrets` | Deprecated, see [secrets instructions](/features/secrets). | `[]` | False |
-| `env_vars` | A map of key values to add to the container as environment variables (key is name, value is value). ```yaml env_vars:  FLAG: "true" ```  | `[]` | False |
-| `healthcheck_path` | See the See the [healthcheck probe](https://docs.opta.dev/reference/aws/modules/aws-k8s-service/#healthcheck-probe) section. Default `null` (i.e., no user-specified healthchecks) | `None` | False |
-| `healthcheck_command` | See the See the [healthcheck probe](https://docs.opta.dev/reference/aws/modules/aws-k8s-service/#healthcheck-probe) section. Default `[]` (i.e., no user-specified healthchecks) | `[]` | False |
-| `liveness_probe_command` | Use if using shell command liveness checks and liveness probe != readiness probe | `[]` | False |
-| `readiness_probe_command` | Use if using shell command readiness checks and liveness probe != readiness probe | `[]` | False |
-| `liveness_probe_path` | Use if using http ping liveness checks and liveness probe != readiness probe | `None` | False |
-| `readiness_probe_path` | Use if using http ping readiness checks and liveness probe != readiness probe | `None` | False |
-| `consistent_hash` | Use [consistent hashing](https://www.nginx.com/resources/wiki/modules/consistent_hash/) | `None` | False |
+| Name      | Description                                                                                                                                                                                                                        | Default | Required |
+| ----------- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ------- | -------- |
+| `image` | Set to AUTO to create a private repo for your own images. Otherwises attempts to pull image from public dockerhub                                                                                                                  | `AUTO` | True |
+| `port` | Specifies what port your app was made to be listened to. Currently it must be a map of the form `http: [PORT_NUMBER_HERE]` or `tcp: [PORT_NUMBER_HERE]`. Use http if you just have a vanilla http server and tcp for websockets.   | *none* | False |
+| `min_containers` | The minimum number of replicas your app can autoscale to.                                                                                                                                                                          | `1` | False |
+| `max_containers` | The maximum number of replicas your app can autoscale to.                                                                                                                                                                          | `3` | False |
+| `autoscaling_target_cpu_percentage` | See the [autoscaling](https://docs.opta.dev/reference/google/modules/gcp-k8s-service/#autoscaling) section.                                                                                                                        | `80` | False |
+| `autoscaling_target_mem_percentage` | See the [autoscaling](https://docs.opta.dev/reference/google/modules/gcp-k8s-service/#autoscaling) section.                                                                                                                        | `80` | False |
+| `secrets` | Deprecated, see [secrets instructions](/features/secrets).                                                                                                                                                                         | `[]` | False |
+| `env_vars` | A map of key values to add to the container as environment variables (key is name, value is value). ```yaml env_vars:  FLAG: "true" ```                                                                                            | `[]` | False |
+| `healthcheck_path` | See the See the [healthcheck probe](https://docs.opta.dev/reference/aws/modules/aws-k8s-service/#healthcheck-probe) section. Default `null` (i.e., no user-specified healthchecks)                                                 | `None` | False |
+| `healthcheck_command` | See the See the [healthcheck probe](https://docs.opta.dev/reference/aws/modules/aws-k8s-service/#healthcheck-probe) section. Default `[]` (i.e., no user-specified healthchecks)                                                   | `[]` | False |
+| `liveness_probe_command` | Use if using shell command liveness checks and liveness probe != readiness probe                                                                                                                                                   | `[]` | False |
+| `readiness_probe_command` | Use if using shell command readiness checks and liveness probe != readiness probe                                                                                                                                                  | `[]` | False |
+| `liveness_probe_path` | Use if using http ping liveness checks and liveness probe != readiness probe                                                                                                                                                       | `None` | False |
+| `readiness_probe_path` | Use if using http ping readiness checks and liveness probe != readiness probe                                                                                                                                                      | `None` | False |
+| `consistent_hash` | Use [consistent hashing](https://www.nginx.com/resources/wiki/modules/consistent_hash/)                                                                                                                                            | `None` | False |
 | `sticky_session` | Use [sticky sessions](https://stackoverflow.com/questions/10494431/sticky-and-non-sticky-sessions) via cookies for your service (first request will send you a cookie called opta_cookie which you should add on future requests). | `False` | False |
-| `sticky_session_max_age` | If the sticky session is enabled, how long should the cookie last? | `86400` | False |
-| `resource_request` | See the [container resources](https://docs.opta.dev/reference/google/modules/gcp-k8s-service/#container-resources) section. CPU is given in millicores, and Memory is in megabytes.  | `{'cpu': 100, 'memory': 128}` | False |
-| `resource_limits` | See the [container resources]({{< relref "#container-resources" >}}) section. Memory is in megabytes..  | `None` | False |
-| `public_uri` | The full domain to expose your app under as well as path prefix. Must be the full parent domain or a subdomain referencing the parent as such: "dummy.{parent[domain]}/my/path/prefix"  | `[]` | False |
-| `keep_path_prefix` | Should we keep the prefix path which you set in the public uri when forwarding requests to your service? | `False` | False |
-| `links` | A list of extra IAM role policies not captured by Opta which you wish to give to your service. | `[]` | False |
-| `persistent_storage` | A list persistent storages to add to each instance of your service (need to give a `size` which is the size in GB for the storage volume to be, and `path` which is the path in the filesystem of each instance to place it under)  | `[]` | False |
-| `ingress_extra_annotations` | These are extra annotations to add to ingress objects  | `{}` | False |
-| `additional_iam_roles` | A list of extra project-level iam roles to grant to the service account created for this k8s service | `[]` | False |
-| `tolerations` | Taint tolerations to add to the pods. | `[]` | False |
-| `cron_jobs` | A list of cronjobs to execute as part of this service | `[]` | False |
-| `pod_annotations` | These are extra annotations to add to k8s-service pod objects / replace defaults  | `{}` | False |
-| `pod_labels` | These are extra labels to add to k8s-service pod objects / replace defaults  | `{}` | False |
-| `timeout` | Time in seconds to wait for deployment. | `300` | False |
-| `max_history` | The max amount of helm revisions to keep track of (0 for infinite) | `25` | False |
-| `commands` | The commands override to execute in your container (corresponds to EntryPoint in docker) | `[]` | False |
-| `args` | The args override to pass to your container (corresponds to Cmd in docker) | `[]` | False |
+| `sticky_session_max_age` | If the sticky session is enabled, how long should the cookie last?                                                                                                                                                                 | `86400` | False |
+| `resource_request` | See the [container resources](https://docs.opta.dev/reference/google/modules/gcp-k8s-service/#resource-requests) section. CPU is given in millicores, and Memory is in megabytes.                                                  | `{'cpu': 100, 'memory': 128}` | False |
+| `resource_limits` | See the [container resources](https://docs.opta.dev/reference/google/modules/gcp-k8s-service/#resource-limits) section. Memory is in megabytes..                                                                                                                             | `None` | False |
+| `public_uri` | The full domain to expose your app under as well as path prefix. Must be the full parent domain or a subdomain referencing the parent as such: "dummy.{parent[domain]}/my/path/prefix"                                             | `[]` | False |
+| `keep_path_prefix` | Should we keep the prefix path which you set in the public uri when forwarding requests to your service?                                                                                                                           | `False` | False |
+| `links` | A list of extra IAM role policies not captured by Opta which you wish to give to your service.                                                                                                                                     | `[]` | False |
+| `persistent_storage` | A list persistent storages to add to each instance of your service (need to give a `size` which is the size in GB for the storage volume to be, and `path` which is the path in the filesystem of each instance to place it under) | `[]` | False |
+| `ingress_extra_annotations` | These are extra annotations to add to ingress objects                                                                                                                                                                              | `{}` | False |
+| `additional_iam_roles` | A list of extra project-level iam roles to grant to the service account created for this k8s service                                                                                                                               | `[]` | False |
+| `tolerations` | Taint tolerations to add to the pods.                                                                                                                                                                                              | `[]` | False |
+| `cron_jobs` | A list of cronjobs to execute as part of this service                                                                                                                                                                              | `[]` | False |
+| `pod_annotations` | These are extra annotations to add to k8s-service pod objects / replace defaults                                                                                                                                                   | `{}` | False |
+| `pod_labels` | These are extra labels to add to k8s-service pod objects / replace defaults                                                                                                                                                        | `{}` | False |
+| `timeout` | Time in seconds to wait for deployment.                                                                                                                                                                                            | `300` | False |
+| `max_history` | The max amount of helm revisions to keep track of (0 for infinite)                                                                                                                                                                 | `25` | False |
+| `commands` | The commands override to execute in your container (corresponds to EntryPoint in docker)                                                                                                                                           | `[]` | False |
+| `args` | The args override to pass to your container (corresponds to Cmd in docker)                                                                                                                                                         | `[]` | False |
 
 ## Outputs
 

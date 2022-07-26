@@ -60,7 +60,7 @@ opta generate-terraform -c opta.yaml
 ```
 
 ```
-# generated files in "./generated-terraform"
+# generated files:
 .
 ├── modules/                   # Contain the module terraform files
 ├── data.tf.json               # Data sources definition
@@ -87,46 +87,39 @@ Now that you have generated the terraform files for the environment, you can pro
 opta generate-terraform -c hello.yaml
 ```
 
-This will add and update some files in the generated directory:
+This will generate a new output directory:
 ```
 # updated files in "./generated-terraform"
 .
-├── modules/                   # Added the k8s-service module
+├── modules/                   # Contain the k8s-service module
+├── data.tf.json               # Data sources definition
 ├── module-hello.tf.json       # Configuration for the k8s-service module
-├── output.tf.json             # Updated to include the output related to the service
+├── output.tf.json             # Output values
+├── provider.tf.json           # Provider definition (cloud provider info)
 ├── readme-hello.html          # Documentation on how to use terraform for the service stack
+└── terraform.tf.json          # Backend configuration (local or remote)
 ```
 
 That's it! Now you can run terraform to provision the service.
 For more information about the terraform commands check the generated readme file.
 
-Note: The service depends on the environment creation, for example a service needs to install itself on a Kubernetes cluster. For this reason, the terraform files for the environment and the service need to be exported in the same output directory. The generated terraform code is already modularized so feel free to reorganize it differently if you would like a different layout.
-
 ## Migrate from Opta to Terraform
 
-If you have already provisonned your infrastructure with Opta and would like to use terraform instead and keep the existing infrastructure, set the `--backend remote` option.
+If you have already provisonned your infrastructure with Opta and would like to use terraform instead and keep the existing infrastructure, you can use `generate-terraform` to generate the terraform files.  
+Once you have generated these files, you can start using terraform to provision your infrastucture instead of opta. Once you have migrated, you can make some changes to your infrastructure by updating the terraform files.
 
-```shell
-opta generate-terraform -c env-file.yaml --backend remote
+1. Make sure to run `opta apply` on all your opta configuration files to migrate to make sure that your infrastructure is current.
+2. For each infrastructure stack managed by opta run `generate-terraform` for it using the `--backend remote`. Setting `remote` will ensure that your existing infrastucture state is migrated, so you can use terraform to maintain your existing infrastructure without having to recreate it from scratch.
+  ```shell
+  # repeat for every environment file (or use the --env variable)
+  opta generate-terraform --backend remote -c env-file.yaml
 
-# repeat for every opta config file
-opta generate-terraform -c service-file.yaml --backend remote
-```
-
-```
-# generated files in "./generated-terraform"
-.
-├── modules/                   # Contain the module terraform files
-├── data.tf.json               # Data sources definition
-├── module-base.tf.json        # Configuration for the base module (VPC, Network)
-├── module-k8sbase.tf.json     # Configuration for the base module (Kubernetes add-ons: mesh, load balancer)
-├── module-k8scluster.tf.json  # Configuration for the base module (Kubernetes cluster)
-├── output.tf.json             # Output values
-├── provider.tf.json           # Provider definition (cloud provider info)
-├── readme-service.html        # Documentation on how to use terraform for the service stack
-├── readme-env.html            # Documentation on how to use terraform for the environment stack
-└── terraform.tf.json          # Backend configuration, use the existing remote backend
-```
+  # repeat for every service
+  opta generate-terraform --backend remote -c service-a.yaml
+  opta generate-terraform --backend remote -c service-b.yaml
+  ```
+3. Each `opta generate-terraform `command will generate a new local folder containing the terraform files. Follow the instructions on each readme file on how to use terraform to provision your infrastructure for each stack.
+4. We recommend that you save the generated files to your source code management tool (ex: github).
 
 That's it! Now you can use terraform to provision the infrastructure.
 
@@ -139,6 +132,6 @@ Note: The service depends on the environment creation, for example a service nee
 - Clouds: AWS, GCP, Azure are supported.
 - Modules: Most opta modules are supported except for a few (ex: DNS, Datadog) where Opta does some processing outside of terraform. 
 
-If your configuration uses a module that is not supported, the command will output a warning listing the unsupported modules. For most cases, there will be additional documentation generated in the readme on how to configure these modules outside of terraform.
+If your configuration uses a module that is not supported, the command will output a warning listing the unsupported modules. For most cases, there will be additional documentation generated in the readme on how to configure these modules outside of terraform.  If you have already configured these modules (ex: DNS) and migrate your infrastucture from Opta to Terraform, it will still work as expected. 
 
 If you run into an issue or would like extra support, please join our [slack](https://slack.opta.dev/) and reach out to us there.

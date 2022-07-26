@@ -195,10 +195,11 @@ For example, here is a service which has a cron job that runs every minute and s
     port:
       http: 80
     cron_jobs:
-      - commands:
+      - args: # Args is an optional field
+          - "-c"
+          - 'echo "Hello world!"'
+        commands:
         - /bin/sh
-        - -c
-        - 'echo "Hello world!"'
         schedule: "* * * * *"
 ```
 
@@ -238,7 +239,7 @@ Cron Jobs are currently created outside the default linkerd service mesh.
 | `sticky_session` | Use [sticky sessions](https://stackoverflow.com/questions/10494431/sticky-and-non-sticky-sessions) via cookies for your service (first request will send you a cookie called opta_cookie which you should add on future requests). | `False` | False |
 | `sticky_session_max_age` | If the sticky session is enabled, how long should the cookie last? | `86400` | False |
 | `resource_request` | See the [container resources](https://docs.opta.dev/reference/aws/modules/aws-k8s-service/#resource-requests) section. CPU is given in millicores, and Memory is in megabytes.  | `{'cpu': 100, 'memory': 128}` | False |
-| `resource_limits` | See the [container resources]({{< relref "#resource-limits" >}}) section. Memory is in megabytes..  | `None` | False |
+| `resource_limits` | See the [container resources]({{< relref "#container-resources" >}}) section. Memory is in megabytes..  | `None` | False |
 | `public_uri` | The full domain to expose your app under as well as path prefix. Must be the full parent domain or a subdomain referencing the parent as such: "dummy.{parent[domain]}/my/path/prefix"  | `[]` | False |
 | `keep_path_prefix` | Should we keep the prefix path which you set in the public uri when forwarding requests to your service? | `False` | False |
 | `additional_iam_policies` | A list of extra IAM role policies not captured by Opta which you wish to give to your service. | `[]` | False |
@@ -251,6 +252,8 @@ Cron Jobs are currently created outside the default linkerd service mesh.
 | `pod_labels` | These are extra labels to add to k8s-service pod objects / replace defaults  | `{}` | False |
 | `timeout` | Time in seconds to wait for deployment. | `300` | False |
 | `max_history` | The max amount of helm revisions to keep track of (0 for infinite) | `25` | False |
+| `commands` | The commands override to execute in your container (corresponds to EntryPoint in docker) | `[]` | False |
+| `args` | The args override to pass to your container (corresponds to Cmd in docker) | `[]` | False |
 
 ## Outputs
 
@@ -258,4 +261,6 @@ Cron Jobs are currently created outside the default linkerd service mesh.
 | Name      | Description |
 | ----------- | ----------- |
 | `docker_repo_url` | The url of the docker repo created to host this app's images in this environment. Does not exist when using external images. |
-| `current_image` | The full name plus tag of the docker imge used by the deployment. |
+| `current_image` | The full name of the docker image used by the deployment. |
+| `current_tag` | The tag of the docker image used by the deployment ("" if not using tags). |
+| `current_digest` | The digest of the docker image used by the deployment ("" if not using digests). |

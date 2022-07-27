@@ -65,7 +65,6 @@ currently holds the latest public key needed for documentdb usage.
 
 ## Security Overview
 
-- [Here is Linkerd's security audit](https://github.com/linkerd/linkerd2/blob/main/SECURITY_AUDIT.pdf)
 - All cross-service communication is encrypted via mTLS
 - All 3rd party charts used are the official ones when applicable or provided by bitnami and version-locked.
 - All IAM roles for 3rd party charts are endowed with just the required permissions for their roles following the

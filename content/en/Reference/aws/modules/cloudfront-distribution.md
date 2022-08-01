@@ -53,6 +53,8 @@ modules:
   - type: k8s-base
     name: testbase
   - type: cloudfront-distribution
+    # Uncomment to add an AWS WAF to your cloudfront distribution
+    # web_acl_id: "your_web_acl_id_or_arn"
     links:
       - testbase
 ```
@@ -116,6 +118,9 @@ The initial configuration of the WAF allows all traffic:
 Finally, please [configure AWS WAF rules](https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html) for your specific application protection needs.
 
 
+Lastly, make sure to pass your new WAF to Opta by setting the `web_acl_id` input (if you're using WAFv2
+set it to the arn of the ACL created, if you used AWS WAF Classic, then use the ACL ID).
+
 ## Fields
 
 
@@ -133,6 +138,8 @@ Finally, please [configure AWS WAF rules](https://docs.aws.amazon.com/waf/latest
 | `allowed_methods` | HTTP methods CloudFront processes and forwards to your Amazon S3 bucket or your custom origin. | `['GET', 'HEAD', 'OPTIONS']` | False |
 | `cached_methods` | CloudFront caches the response to the specified HTTP method requests. | `['GET', 'HEAD', 'OPTIONS']` | False |
 | `zone_id` | ID of Route53 hosted zone to add a record for. By default uses the one created by the DNS module if the module is found. | `` | False |
+| `extra_headers` | Extra headers to forward pass cloudfront | `[]` | False |
+| `web_acl_id` | The ID of the WAF ACL to add to cloudfront | `None` | False |
 
 ## Outputs
 

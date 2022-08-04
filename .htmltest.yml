@@ -1,7 +1,7 @@
 DirectoryPath: "public"
 IgnoreAltMissing: true
 CheckMailto: false
-EnforceHTTPS: true
+EnforceHTTPS: false
 IgnoreDirectoryMissingTrailingSlash: true
 IgnoreURLs:
   - "startup.com"

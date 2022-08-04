@@ -38,7 +38,7 @@ fi
 if [[ $ARCH == "arm64" && $OSNAME == "Darwin" ]]; then
   echo "Detected Apple Silicon Darwin + Arm64!"
   echo "Sorry, Opta docker run is not available for this configuration."
-  echo "Please follow the instructions at https://docs.opta.dev/installation/ to install Opta directly on your host."
+  echo "Please follow the instructions at http://run-x.github.io/installation/ to install Opta directly on your host."
   exit 1
   # Apple silicon issues, some of these binaries are not working https://github.com/docker/for-mac/issues/5123
   # OPTAURL="https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$OPTAVERSION/opta.zip"

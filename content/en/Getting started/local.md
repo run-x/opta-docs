@@ -15,7 +15,7 @@ Opta Local enables you to setup a local Kubernetes environment on your PC using 
 To install Opta, follow this one line installation ([detailed instructions](/installation)):
 
 ```bash
-/bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
+/bin/bash -c "$(curl -fsSL http://run-x.github.io/install.sh)"
 ```
 
 ## Architecture
@@ -36,7 +36,7 @@ Running Opta Local needs a reasonably powerful PC. These requirements are not fo
   1. A Mac OS or Linux PC with a minimum 8GB RAM and a recent i5 processor.
   2. Fast internet connection
   3. Ample diskspace (at least 10GB free) to store container images locally
-  4. Please install the prerequistes for opta [listed here](https://docs.opta.dev/installation/#prerequisites). You can exclude the public cloud specific pre-requisites if you only want to run Opta Local.
+  4. Please install the prerequistes for opta [listed here](http://run-x.github.io/installation/#prerequisites). You can exclude the public cloud specific pre-requisites if you only want to run Opta Local.
   5. Opta Local assumes that the logged-in user can operate docker without sudo; to enable this follow the steps here: [MacOS](https://docs.docker.com/desktop/mac/install/) or [Linux](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user) ).
   6. Opta Local requires local ports `5000` (docker registry) and `8080` (ingress port for local Kubernetes cluster) to be free.
 
@@ -278,7 +278,7 @@ Follow [this documentation](https://github.com/run-x/opta/tree/main/examples/ful
 6. Opta Local's Kubernetes cluster survives reboots, but it may be several minutes before the services deployed inside it are restored on the newly rebooted host. In general it is not recommended to store valuable information inside the local cluster.
    
 All these features are supported in the public cloud. Opta makes it super-convenient to graduate from Opta Local to any of the big-3 public cloud providers (AWS, Azure or GCP).  
-Learn more about Opta for public cloud [here](https://docs.opta.dev/getting-started/).
+Learn more about Opta for public cloud [here](http://run-x.github.io/getting-started/).
 
 ## A Note on the Environment and Service Opta Files for Local
 

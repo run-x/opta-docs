@@ -19,7 +19,7 @@ For Opta to work, the prerequisite tools needed are:
 Then you can simply install opta using this command ([detailed instructions](/installation)):
 
 ```
-/bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
+/bin/bash -c "$(curl -fsSL http://run-x.github.io/install.sh)"
 ```
 
 Make sure the Azure cloud credentials are configured in your terminal.

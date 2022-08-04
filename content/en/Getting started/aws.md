@@ -19,7 +19,7 @@ For Opta to work, the prerequisite tools needed are:
 Then you can simply install opta using this command ([detailed instructions](/installation)):
 
 ```bash
-/bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
+/bin/bash -c "$(curl -fsSL http://run-x.github.io/install.sh)"
 ```
 
 Make sure the AWS cloud credentials are configured in your terminal for the account you would be using in this demo.

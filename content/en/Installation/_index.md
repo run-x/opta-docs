@@ -25,13 +25,13 @@ Run this script to install or upgrade to the latest version of Opta (see below f
 and release history).
 
 ```bash
-/bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
+/bin/bash -c "$(curl -fsSL http://run-x.github.io/install.sh)"
 ```
 
 You can specify a particular version as well.
 
 ```bash
-VERSION=0.x /bin/bash -c "$(curl -fsSL https://docs.opta.dev/install.sh)"
+VERSION=0.x /bin/bash -c "$(curl -fsSL http://run-x.github.io/install.sh)"
 ```
 
 ## Run Opta in a Docker Container via opta.sh script (Pre-release)
@@ -44,7 +44,7 @@ versions of all of Opta's dependencies are invoked when run.
 
 ```bash
 # Download the script and add it as an executable on your machine
-sudo curl  https://docs.opta.dev/opta.sh -o /usr/local/bin/opta.sh
+sudo curl  http://run-x.github.io/opta.sh -o /usr/local/bin/opta.sh
 sudo chmod +x /usr/local/bin/opta.sh
 opta.sh # This first invocation builds a docker image
 ```

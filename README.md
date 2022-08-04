@@ -2,7 +2,7 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/35d23cca-0ff2-42cf-ba48-4f5b651c7255/deploy-status)](https://app.netlify.com/sites/opta-docs/deploys)
 
-Latest Main (edge) Deploy: [https://edge.run-x.github.io](https://edge.run-x.github.io)
+Latest Main (edge) Deploy: [https://edge.docs.opta.dev](https://edge.docs.opta.dev)
 
 # Development
 
@@ -26,4 +26,4 @@ You can now see the site at <http://localhost:1313> Any changes you make will ge
 
 ## Deployment
 
-We have continuous deployment set up. Once your PR gets merged, it will automatically get deployed to <http://run-x.github.io>
+We have continuous deployment set up. Once your PR gets merged, it will automatically get deployed to <https://docs.opta.dev>

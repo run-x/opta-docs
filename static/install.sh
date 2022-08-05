@@ -8,42 +8,12 @@ if [[ ! -t 0 || -n ${CI-} ]]; then
   NONINTERACTIVE=1
 fi
 
-LEGACY_DOWNLOAD=1
 TEMP_LOCAL="/tmp/opta_local"
 
 abort() {
   printf "%s\n" "$1"
   exit 1
 }
-
-sendamplitudeevent() {
-  (curl -X POST https://api2.amplitude.com/2/httpapi \
-      -H 'Content-Type: application/json' \
-      -H 'Accept: */*' \
-      -s \
-      -o /dev/null \
-      --data-binary @- <<EOF
-      {
-          "api_key": "751db5fc75ff34f08a83381f4d54ead6",
-          "events": [
-              {
-                "device_id": "${MAC_ADDRESS}",
-                "user_id": "${GIT_EMAIL}",
-                "app_version": "${VERSION}",
-                "os_name": "${OS}",
-                "event_type": "$1"
-              }
-          ]
-      }
-EOF
-    ) || true
-}
-
-errorevent() {
-  sendamplitudeevent "OPTA_INSTALL_FAILURE"
-}
-
-trap "errorevent" ERR
 
 # Compares two version numbers.
 # Returns 0 if the versions are equal, 1 if the first version is higher, and 2 if the second version is higher.
@@ -130,13 +100,9 @@ VERSION="${VERSION:-}"
 if [[ -z ${VERSION} ]]; then
   # Determine latest VERSION
   echo "Determining latest version"
-  VERSION="$(curl -s https://dev-runx-opta-binaries.s3.amazonaws.com/latest)"
+  VERSION="$(curl -s https://api.github.com/repos/run-x/opta/releases/latest | grep 'tag_name' | grep -oP '[0-9.]+')"
 else
   VERSION=$(trim_version "${VERSION}")
-fi
-
-if [[ $(compare_version "$VERSION" "0.27.2") == 1 ]]; then
-  LEGACY_DOWNLOAD=0
 fi
 
 echo "Going to install opta v${VERSION}"
@@ -144,37 +110,14 @@ echo "Going to install opta v${VERSION}"
 if [[ ${OS} == "Linux" ]]; then
   SPECIFIC_OS_ID=$(grep "ID=" /etc/os-release | awk -F"=" '{print $2;exit}' | tr -d '"')
   if [[ ${SPECIFIC_OS_ID} == "amzn" ]] || [[ ${SPECIFIC_OS_ID} == "centos" ]]; then
-    if [[ ${LEGACY_DOWNLOAD} == "1" ]]; then
-      PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/centos/$VERSION/opta.zip
-    else
-      PACKAGE=https://github.com/run-x/opta/releases/download/v$VERSION/opta_centos.zip
-    fi
+    PACKAGE=https://github.com/run-x/opta/releases/download/v$VERSION/opta_centos.zip
   else
-    if [[ ${LEGACY_DOWNLOAD} == "1" ]]; then
-      PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/linux/$VERSION/opta.zip
-    else
-      PACKAGE=https://github.com/run-x/opta/releases/download/v$VERSION/opta_linux.zip
-    fi
+    PACKAGE=https://github.com/run-x/opta/releases/download/v$VERSION/opta_linux.zip
   fi
-  MAC_ADDRESS=$(cat /sys/class/net/eth0/address 2>/dev/null) || true
 elif [[ ${OS} == "Darwin" ]]; then
-  if [[ ${LEGACY_DOWNLOAD} == "1" ]]; then
-    PACKAGE=https://dev-runx-opta-binaries.s3.amazonaws.com/mac/$VERSION/opta.zip
-  else
-    PACKAGE=https://github.com/run-x/opta/releases/download/v$VERSION/opta_mac.zip
-  fi
-  MAC_ADDRESS=$(ifconfig en1 2>/dev/null | awk '/ether/{print $2}') || true
+  PACKAGE=https://github.com/run-x/opta/releases/download/v$VERSION/opta_mac.zip
 else
   abort "Opta is only supported on macOS and Linux."
-fi
-
-if [[ ${MAC_ADDRESS} == "" ]]; then
-  MAC_ADDRESS="unknown"
-fi
-
-GIT_EMAIL=$(git config user.email 2>/dev/null) || true
-if [[ ${GIT_EMAIL} == "" ]]; then
-  GIT_EMAIL="unknown"
 fi
 
 echo "Downloading installation package..."
@@ -232,5 +175,3 @@ else
   echo "export PATH=\$PATH:${RUNPATH}"
   echo "to your terminal profile."
 fi
-
-sendamplitudeevent "OPTA_INSTALL_SUCCESS"
